@@ -4,5 +4,7 @@ export { default as ModalContainer } from './ModalContainer.svelte';
 export {
     openModal,
     closeModal,
-    closeAllModals
+    closeAllModals,
+    modals,
+    type ModalConfig
 } from './modalConfig.js'; 
