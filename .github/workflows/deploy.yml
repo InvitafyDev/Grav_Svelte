@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./build/  # ajusta si tu carpeta de build es distinta
-          security: "insecure"
+          security: "loose"
 
       - name: Check if version changed
         id: version-check
