@@ -1,7 +1,11 @@
 <script lang="ts">
-    import { Grav_Modal } from "$lib/Modals/index.js";
+    import {
+        Grav_Modal,
+        Grav_ModalContainer,
+        openModal,
+    } from "$lib/Modals/index.js";
+    import ModalEx from "./modalEx.svelte";
 
-    let isOpen = false;
     let modalConfig = {
         title: "Modal Title",
         size: "sm" as "sm" | "md" | "lg",
@@ -117,7 +121,7 @@
     <button
         class="bg-emerald-500 text-white px-6 py-3 rounded-md hover:bg-emerald-600 transition-colors"
         on:click={() => {
-            isOpen = true;
+            openModal("modalEx", ModalEx, { modalConfig });
         }}
     >
         Open Modal Demo
@@ -142,24 +146,5 @@
             ></pre>
     </div>
 
-    {#if isOpen}
-        <Grav_Modal
-            {...modalConfig}
-            onClose={() => {
-                isOpen = false;
-            }}
-            onSave={() => {
-                alert("Save clicked!");
-            }}
-        >
-            <div class="p-4">
-                <h2 class="text-xl font-semibold mb-4">Modal Content</h2>
-                <p class="text-gray-600">
-                    This is a dynamic example of the Modal component. You can
-                    modify all its properties using the configuration form
-                    above.
-                </p>
-            </div>
-        </Grav_Modal>
-    {/if}
+    <Grav_ModalContainer />
 </div>
