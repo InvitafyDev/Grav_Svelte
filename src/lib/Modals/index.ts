@@ -1,5 +1,5 @@
 export { default as Grav_Modal } from './Grav_Modal.svelte';
-export { default as Grav_ModalContainer } from './ModalContainer.svelte';
+export { default as ModalContainer } from './ModalContainer.svelte';
 
 export {
     openModal,
