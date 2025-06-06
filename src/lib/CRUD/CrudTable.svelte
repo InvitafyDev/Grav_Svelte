@@ -20,7 +20,6 @@
     let selectedRowId: string | number | null = null;
 
     function handleRowClick(id: string | number) {
-        if (id === 0) return;
         selectedRowId = selectedRowId === id ? null : id;
         dispatch("rowClick", { id: selectedRowId });
     }
