@@ -1,7 +1,6 @@
 <script lang="ts">
     import {
-        Grav_Modal,
-        Grav_ModalContainer,
+        ModalContainer,
         openModal,
     } from "$lib/Modals/index.js";
     import ModalEx from "./modalEx.svelte";
@@ -146,5 +145,5 @@
             ></pre>
     </div>
 
-    <Grav_ModalContainer />
+    <ModalContainer />
 </div>
