@@ -190,6 +190,22 @@
     onMount(async () => {
         await enlistar();
     });
+
+    const codePreview = `<CrudWrapper
+    {todosLosObjetos}
+    {tableH}
+    {totalRows}
+    bind:Filtros
+    bind:PageSize
+    bind:currentPage
+    bind:selectedAscOrDesc
+    bind:selectedSort
+    {loading}
+    showAddButton={true}
+    showImportButton={false}
+    onFilter={enlistar}
+    onAdd={handleAdd}
+/>`;
 </script>
 
 <svelte:head>
@@ -212,4 +228,18 @@
     onFilter={enlistar}
     onAdd={handleAdd}
 />
+    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Code Preview</h2>
+            <button
+                class="text-emerald-500 hover:text-emerald-600 text-sm font-medium"
+                on:click={() => {
+                    navigator.clipboard.writeText(codePreview);
+                }}
+            >
+                Copy Code
+            </button>
+        </div>
+        <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codePreview}</code></pre>
+    </div>
 </div>
