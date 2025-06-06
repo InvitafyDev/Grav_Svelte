@@ -35,6 +35,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./build/  # ajusta si tu carpeta de build es distinta
           security: "loose"
+          protocol: ftps
 
       - name: Check if version changed
         id: version-check
