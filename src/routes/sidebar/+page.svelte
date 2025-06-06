@@ -64,10 +64,11 @@
         />
     {:else}
         <button
+            aria-label="Toggle full screen"
             on:click={() => (storefullScreen = false)}
             class="text-xl border-2 h-8 w-8 rounded-full absolute top-3 left-3 z-[70] flex justify-center items-center border-black"
         >
-            <i class="fas fa-caret-right" />
+            <i class="fas fa-caret-right"></i>
         </button>
     {/if}
 

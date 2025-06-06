@@ -1,6 +1,6 @@
 {
 	"name": "grav-svelte",
-	"version": "0.0.15",
+	"version": "0.0.16",
 	"description": "A collection of Svelte components",
 	"license": "MIT",
 	"scripts": {
@@ -35,6 +35,10 @@
 		"./Inputs": {
 			"types": "./dist/Inputs/index.d.ts",
 			"svelte": "./dist/Inputs/index.js"
+		},
+		"./Sidebar": {
+			"types": "./dist/Sidebar/index.d.ts",
+			"svelte": "./dist/Sidebar/index.js"
 		},
 		"./CRUD": {
 			"types": "./dist/CRUD/index.d.ts",
