@@ -155,7 +155,7 @@
             </ul>
             <p class="text-gray-600 my-4">Then install Grav Svelte:</p>
             <pre class="bg-gray-50 p-4 rounded-md overflow-x-auto mb-6">
-npm install grav-svelte</pre>
+npm install grav-svelte@0.0.12</pre>
 
             <h3 class="text-lg font-medium text-gray-800 mb-2">Usage</h3>
             <p class="text-gray-600 mb-4">
