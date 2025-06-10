@@ -1,25 +1,103 @@
 <script lang="ts">
-	export let valueVar: number | null = null;
-	export let label: string;
-	export let disabled = false;
-	export let obligatory = false;
+    export let valueVar: number = 0;
+    export let label: string;
+    export let disabled = false;
+    export let obligatory = false;
+    export let icon: string | null = null;
 </script>
 
-<div class="relative z-0 mt-4">
-	<input
-		{disabled}
-		name={valueVar?.toString()}
-		id={valueVar?.toString()}
-		type="number"
-		bind:value={valueVar}
-		placeholder=""
-		class="block pt-2.5  px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray appearance-none focus:outline-none focus:ring-0 focus:border-black peer"
-	/>
-	<label
-		for={valueVar?.toString()}
-		class="absolute text-base text-left text-black duration-300 transform -translate-y-6 scale-75 top-2.5 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-		>{label} {#if obligatory}
-			<span class="text-red-600"> *</span>
-		{/if}</label
-	>
+<div class="input-container">
+    {#if icon}
+        <div class="icon-wrapper">
+            <i class="{icon} icon"></i>
+        </div>
+    {/if}
+    <div class="input-wrapper">
+        <input
+            {disabled}
+            type="number"
+            bind:value={valueVar}
+            placeholder=" "
+            class="input-field"
+        />
+
+        <label for="input-number" class="input-label"
+            >{label}
+            {#if obligatory}
+                <span class="required-mark"> *</span>
+            {/if}</label
+        >
+    </div>
 </div>
+
+<style>
+    .input-container {
+        display: flex;
+        align-items: center;
+        margin-top: 0.75rem;
+        border: 0;
+        border-bottom: 2px solid #9ca3af;
+    }
+
+    .icon-wrapper {
+        width: 1rem;
+        position: relative;
+        margin-right: 0.5rem;
+    }
+
+    .icon {
+        position: absolute;
+        top: -0.25rem;
+        left: 0.25rem;
+    }
+
+    .input-wrapper {
+        position: relative;
+        z-index: 0;
+        width: 100%;
+    }
+
+    .input-field {
+        display: block;
+        padding-top: 0.625rem;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        font-size: 1rem;
+        color: #111827;
+        background: transparent;
+        appearance: none;
+    }
+
+    .input-field:focus {
+        outline: none;
+        border-color: black;
+    }
+
+    .input-label {
+        position: absolute;
+        font-size: 1rem;
+        text-align: left;
+        color: black;
+        transition: all 0.3s;
+        top: 0.625rem;
+        z-index: -10;
+        transform-origin: left;
+    }
+
+    .input-field:focus + .input-label,
+    .input-field:not(:placeholder-shown) + .input-label {
+        left: 0;
+        color: #4b5563;
+        translate: 0rem -1.25rem;
+        scale: 0.75;
+    }
+
+    .input-field:placeholder-shown + .input-label {
+        transform: translateY(0) scale(1);
+    }
+
+    .required-mark {
+        color: #dc2626;
+    }
+</style>

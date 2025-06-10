@@ -9,7 +9,6 @@
         InputFormImage,
         InputFormSelect,
         InputFormTextArea,
-        InputFormTextWithSlide,
         InputFormCascade,
         InputFormPassword,
     } from "$lib/Inputs/index.js";
@@ -30,7 +29,6 @@
     let base64Preview = "";
     let selectInput: SelectValue | null = null;
     let textAreaInput = "";
-    let textWithSlideInput = "";
     let cascadeInput: Record<string, string | null> = {};
 
     // Example data for cascade select
@@ -42,6 +40,8 @@
                 { value: "1", label: "USA" },
                 { value: "2", label: "Canada" },
                 { value: "3", label: "Mexico" },
+                { value: "4", label: "Brazil" },
+                { value: "5", label: "Australia" },
             ],
         },
         {
@@ -52,6 +52,41 @@
                     return [
                         { value: "1", label: "California" },
                         { value: "2", label: "New York" },
+                        { value: "3", label: "Texas" },
+                        { value: "4", label: "Florida" },
+                        { value: "5", label: "Illinois" },
+                    ];
+                }
+                if (countryId === "2") {
+                    return [
+                        { value: "1", label: "Ontario" },
+                        { value: "2", label: "Quebec" },
+                        { value: "3", label: "British Columbia" },
+                        { value: "4", label: "Alberta" },
+                    ];
+                }
+                if (countryId === "3") {
+                    return [
+                        { value: "1", label: "Mexico City" },
+                        { value: "2", label: "Jalisco" },
+                        { value: "3", label: "Nuevo León" },
+                        { value: "4", label: "Baja California" },
+                    ];
+                }
+                if (countryId === "4") {
+                    return [
+                        { value: "1", label: "São Paulo" },
+                        { value: "2", label: "Rio de Janeiro" },
+                        { value: "3", label: "Minas Gerais" },
+                        { value: "4", label: "Bahia" },
+                    ];
+                }
+                if (countryId === "5") {
+                    return [
+                        { value: "1", label: "New South Wales" },
+                        { value: "2", label: "Victoria" },
+                        { value: "3", label: "Queensland" },
+                        { value: "4", label: "Western Australia" },
                     ];
                 }
                 return [];
@@ -70,15 +105,19 @@
     const codeExamples = {
         text: 'let textInput = "";\n\n<InputFormText \n    label="Text Input" \n    bind:valueVar={textInput} \n/>',
         number: 'let numberInput: number | null = null;\n\n<InputFormNumber \n    label="Number Input" \n    bind:valueVar={numberInput} \n/>',
-        textWithSlide: 'let textWithSlideInput = "";\n\n<InputFormTextWithSlide\n    label="Text with Slide"\n    bind:valueVar={textWithSlideInput}\n/>',
-        textArea: 'let textAreaInput = "";\n\n<InputFormTextArea\n    label="Text Area"\n    bind:valueVar={textAreaInput}\n    rows={4}\n/>',
+        textWithSlide:
+            'let textWithSlideInput = "";\n\n<InputFormTextWithSlide\n    label="Text with Slide"\n    bind:valueVar={textWithSlideInput}\n/>',
+        textArea:
+            'let textAreaInput = "";\n\n<InputFormTextArea\n    label="Text Area"\n    bind:valueVar={textAreaInput}\n    rows={4}\n/>',
         date: 'let dateInput: string | null = null;\n\n<InputFormDate \n    label="Date Input" \n    bind:valueVar={dateInput} \n/>',
-        dateTime: 'let dateTimeInput: string | null = null;\n\n<InputFormDateAndHours\n    label="Date and Time Input"\n    bind:valueVar={dateTimeInput}\n/>',
+        dateTime:
+            'let dateTimeInput: string | null = null;\n\n<InputFormDateAndHours\n    label="Date and Time Input"\n    bind:valueVar={dateTimeInput}\n/>',
         color: 'let colorInput = "#000000";\n\n<InputFormColor \n    label="Color Input" \n    bind:valueVar={colorInput} \n/>',
         bool: 'let boolInput = false;\n\n<InputFormBool \n    label="Boolean Input" \n    bind:valueVar={boolInput} \n/>',
         select: 'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\n<InputFormSelect\n    label="Select Input"\n    bind:value={selectInput}\n    res={selectOptions}\n/>',
-        cascade: 'let cascadeInput: Record<string, string | null> = {};\nconst cascadeLevels = [\n    {\n        label: "Country",\n        field: "country",\n        fetchFn: async () => [\n            { value: "1", label: "USA" },\n            { value: "2", label: "Canada" },\n        ],\n    },\n    {\n        label: "State",\n        field: "state",\n        fetchFn: async (countryId?: string) => {\n            if (countryId === "1") {\n                return [\n                    { value: "1", label: "California" },\n                    { value: "2", label: "New York" },\n                ];\n            }\n            return [];\n        },\n    },\n];\n\n<InputFormCascade\n    levels={cascadeLevels}\n    bind:selectedValues={cascadeInput}\n/>',
-        image: 'let imageInput: HTMLInputElement;\nlet base64Preview = "";\n\n<InputFormImage \n    bind:inputFile={imageInput} \n    bind:base64Preview \n/>'
+        cascade:
+            'let cascadeInput: Record<string, string | null> = {};\nconst cascadeLevels = [\n    {\n        label: "Country",\n        field: "country",\n        fetchFn: async () => [\n            { value: "1", label: "USA" },\n            { value: "2", label: "Canada" },\n        ],\n    },\n    {\n        label: "State",\n        field: "state",\n        fetchFn: async (countryId?: string) => {\n            if (countryId === "1") {\n                return [\n                    { value: "1", label: "California" },\n                    { value: "2", label: "New York" },\n                ];\n            }\n            return [];\n        },\n    },\n];\n\n<InputFormCascade\n    levels={cascadeLevels}\n    bind:selectedValues={cascadeInput}\n/>',
+        image: 'let imageInput: HTMLInputElement;\nlet base64Preview = "";\n\n<InputFormImage \n    bind:inputFile={imageInput} \n    bind:base64Preview \n/>',
     };
 </script>
 
@@ -97,17 +136,27 @@
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.text}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.text}</code
+                    ></pre>
             </div>
         </div>
         <div class="mb-6">
-            <InputFormPassword label="Text Input with Icon and Password" icon="fas fa-user" bind:valueVar={textInputWithIcon} />
+            <InputFormPassword
+                label="Text Input with Icon and Password"
+                icon="fas fa-user"
+                bind:valueVar={textInputWithIcon}
+            />
             <span class="block mt-1 text-sm text-gray-600"
                 >Value: {textInputWithIcon}</span
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.text}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.text}</code
+                    ></pre>
             </div>
         </div>
 
@@ -118,21 +167,10 @@
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.number}</code></pre>
-            </div>
-        </div>
-
-        <div class="mb-6">
-            <InputFormTextWithSlide
-                label="Text with Slide"
-                bind:valueVar={textWithSlideInput}
-            />
-            <span class="block mt-1 text-sm text-gray-600"
-                >Value: {textWithSlideInput}</span
-            >
-            <div class="mt-4">
-                <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.textWithSlide}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.number}</code
+                    ></pre>
             </div>
         </div>
 
@@ -147,7 +185,10 @@
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.textArea}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.textArea}</code
+                    ></pre>
             </div>
         </div>
     </section>
@@ -164,7 +205,10 @@
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.date}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.date}</code
+                    ></pre>
             </div>
         </div>
 
@@ -178,7 +222,10 @@
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.dateTime}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.dateTime}</code
+                    ></pre>
             </div>
         </div>
     </section>
@@ -193,7 +240,10 @@
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.color}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.color}</code
+                    ></pre>
             </div>
         </div>
 
@@ -204,7 +254,10 @@
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.bool}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.bool}</code
+                    ></pre>
             </div>
         </div>
     </section>
@@ -223,7 +276,10 @@
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.select}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.select}</code
+                    ></pre>
             </div>
         </div>
 
@@ -240,7 +296,10 @@
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.cascade}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.cascade}</code
+                    ></pre>
             </div>
         </div>
     </section>
@@ -259,7 +318,10 @@
             </span>
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
-                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.image}</code></pre>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.image}</code
+                    ></pre>
             </div>
         </div>
     </section>

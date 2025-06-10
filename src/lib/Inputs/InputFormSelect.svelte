@@ -17,8 +17,8 @@
     export let label = "";
 </script>
 
-<div class=" flex flex-col border-b w-full mt-1">
-    <p class=" text-sm text-gray-800">{label}</p>
+<div class="select-container">
+    <p class="select-label">{label}</p>
     <Select
         items={res}
         name="inCbArea"
@@ -34,3 +34,18 @@
         showChevron
     />
 </div>
+
+<style>
+    .select-container {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid;
+        width: 100%;
+        margin-top: 0.25rem;
+    }
+
+    .select-label {
+        font-size: 0.875rem;
+        color: #1f2937; /* equivalent to text-gray-800 */
+    }
+</style>

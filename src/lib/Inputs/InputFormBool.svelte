@@ -1,24 +1,62 @@
 <script>
-	export let valueVar = false;
-	export let label;
-	export let disabled = false;
+    export let valueVar = false;
+    export let label;
+    export let disabled = false;
 </script>
 
-<div class="flex items-center mt-2">
-	{#if valueVar}
-		<button
-			{disabled}
-			on:click={() => (valueVar = false)}
-			class=" mr-2 bg-black border h-8 w-8 border-black"
-			>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-		</button>
-	{:else}
-		<button {disabled} on:click={() => (valueVar = true)} class=" mr-2 border h-8 w-8 border-black"
-			>-
-		</button>
-	{/if}
-	<h1>{label}</h1>
+<div class="input-container">
+    {#if valueVar}
+        <button
+            aria-label="checkbox"
+            {disabled}
+            on:click={() => (valueVar = false)}
+            class="checkbox-button checked"
+        >
+            <i class="fas fa-check checkwhite"></i>
+        </button>
+    {:else}
+        <button
+            {disabled}
+            on:click={() => (valueVar = true)}
+            class="checkbox-button"
+        >
+            -
+        </button>
+    {/if}
+    <h1 class="label">{label}</h1>
 </div>
+
+<style>
+    .input-container {
+        display: flex;
+        align-items: center;
+        margin-top: 0.5rem;
+    }
+
+    .checkbox-button {
+        margin-right: 0.5rem;
+        height: 2rem;
+        width: 2rem;
+        border: 1px solid black;
+        background: white;
+        cursor: pointer;
+    }
+
+    .checkbox-button.checked {
+        background: black;
+    }
+
+    .checkwhite {
+        color: white;
+    }
+
+    .label {
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>

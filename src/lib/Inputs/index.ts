@@ -9,4 +9,3 @@ export { default as InputFormSelect } from './InputFormSelect.svelte';
 export { default as InputFormText } from './InputFormText.svelte';
 export { default as InputFormPassword } from './InputFormPassword.svelte';
 export { default as InputFormTextArea } from './InputFormTextArea.svelte';
-export { default as InputFormTextWithSlide } from './InputFormTextWithSlide.svelte'; 
