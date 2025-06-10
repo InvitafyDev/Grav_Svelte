@@ -15,7 +15,7 @@
     <div class="relative z-0 w-full">
         <input
             {disabled}
-            type="text"
+            type="password"
             bind:value={valueVar}
             placeholder=" "
             class="block pt-2.5 px-0 w-full text-base text-gray-900 bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-black peer"

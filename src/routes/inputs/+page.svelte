@@ -11,6 +11,7 @@
         InputFormTextArea,
         InputFormTextWithSlide,
         InputFormCascade,
+        InputFormPassword,
     } from "$lib/Inputs/index.js";
 
     interface SelectValue {
@@ -100,7 +101,7 @@
             </div>
         </div>
         <div class="mb-6">
-            <InputFormText label="Text Input with Icon and Password" icon="fas fa-user" inputType="password" bind:valueVar={textInputWithIcon} />
+            <InputFormPassword label="Text Input with Icon and Password" icon="fas fa-user" bind:valueVar={textInputWithIcon} />
             <span class="block mt-1 text-sm text-gray-600"
                 >Value: {textInputWithIcon}</span
             >
