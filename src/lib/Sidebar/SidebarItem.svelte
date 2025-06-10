@@ -9,19 +9,50 @@
 </script>
 
 {#if permiso == true}
-    <li class="items-center flex">
+    <div class="sidebar-item">
         <a
             href="{base}/administracion/{nombreRuta}"
-            class="text-xs uppercase py-3 font-bold block"
+            class="sidebar-link"
         >
-            <i class="{nombreIcono}  mr-2 text-sm"> </i>
+            <i class="sidebar-icon {nombreIcono}"></i>
             {nombreModulo}
         </a>
         {#if notifiacion != null}
-            <span
-                class="bg-white flex justify-center items-center rounded-full text-sm text-black w-5 h-5 ml-1 p-1"
-                >{notifiacion}</span
-            >
+            <span class="notification-badge">{notifiacion}</span>
         {/if}
-    </li>
+    </div>
 {/if}
+
+<style>
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .sidebar-link {
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        padding: 0.75rem 0;
+        font-weight: bold;
+        display: block;
+    }
+
+    .sidebar-icon {
+        margin-right: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .notification-badge {
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        color: black;
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-left: 0.25rem;
+        padding: 0.25rem;
+    }
+</style>

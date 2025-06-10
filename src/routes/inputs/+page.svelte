@@ -19,6 +19,7 @@
     }
 
     let textInput = "";
+    let textInputWithIcon = "";
     let numberInput: number | null = null;
     let boolInput = false;
     let colorInput = "#000000";
@@ -92,6 +93,16 @@
             <InputFormText label="Text Input" bind:valueVar={textInput} />
             <span class="block mt-1 text-sm text-gray-600"
                 >Value: {textInput}</span
+            >
+            <div class="mt-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
+                <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codeExamples.text}</code></pre>
+            </div>
+        </div>
+        <div class="mb-6">
+            <InputFormText label="Text Input with Icon and Password" icon="fas fa-user" inputType="password" bind:valueVar={textInputWithIcon} />
+            <span class="block mt-1 text-sm text-gray-600"
+                >Value: {textInputWithIcon}</span
             >
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
