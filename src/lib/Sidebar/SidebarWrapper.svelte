@@ -7,6 +7,7 @@
     export let sections: SidebarSection[];
     export let brandName: string;
     export let brandLink: string;
+    export let baseRoute: string;
     export let showLogout: boolean = true;
     export let logoutLink: string = "/";
     export let customClass: string = "";
@@ -97,6 +98,7 @@
                                         nombreIcono={module.icono}
                                         notifiacion={module.notifiacion ?? null}
                                         permiso={module.permiso ?? true}
+                                        baseRoute={baseRoute}
                                     />
                                 {/each}
                             {/if}

@@ -6,12 +6,13 @@
     export let nombreIcono;
     export let notifiacion: number | null;
     export let permiso: boolean;
+    export let baseRoute: string;
 </script>
 
 {#if permiso == true}
     <div class="sidebar-item">
         <a
-            href="{base}/{nombreRuta}"
+            href="{base}/{baseRoute}/{nombreRuta}"
             class="sidebar-link"
         >
             <i class="sidebar-icon {nombreIcono}"></i>
