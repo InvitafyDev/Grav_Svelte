@@ -11,7 +11,7 @@
 {#if permiso == true}
     <div class="sidebar-item">
         <a
-            href="{base}/administracion/{nombreRuta}"
+            href="{base}/{nombreRuta}"
             class="sidebar-link"
         >
             <i class="sidebar-icon {nombreIcono}"></i>
