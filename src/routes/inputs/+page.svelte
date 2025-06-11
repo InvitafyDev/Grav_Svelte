@@ -147,7 +147,7 @@
                 label="Text Input with Icon and Password"
                 icon="fas fa-user"
                 bind:valueVar={textInputWithIcon}
-                validation={true}
+                validation={false}
             />
             <span class="block mt-1 text-sm text-gray-600"
                 >Value: {textInputWithIcon}</span
