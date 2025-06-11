@@ -4,6 +4,7 @@
     export let disabled = false;
     export let obligatory = false;
     export let icon: string | null = null;
+    export let validation: boolean = false;
 
     let validationMessage = "";
     let isValid = true;
@@ -66,7 +67,7 @@
         >
     </div>
 </div>
-{#if validationMessage}
+{#if validation && validationMessage}
     <div class="validation-message" class:valid={isValid} class:invalid={!isValid}>
         {validationMessage}
     </div>
