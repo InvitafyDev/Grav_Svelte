@@ -6,6 +6,7 @@
     import InputFormDateAndHours from "../Inputs/InputFormDateAndHours.svelte";
     import InputFormDate from "../Inputs/InputFormDate.svelte";
     import { slide } from "svelte/transition";
+    import "./CrudFilters.css";
 
     import { createEventDispatcher } from "svelte";
     import type { FiltrosI } from "./interfaces.js";
@@ -14,15 +15,22 @@
     let showTooltip = "";
     export let PageSize = 50;
     let localPageSize = 50;
+    let localPageSizeStr = "50";
     let showFilters = false;
 
     export let Filtros: FiltrosI[];
     export let showAddButton: boolean = true;
     export let showImportButton: boolean = true;
 
-    // Ensure localPageSize is never 0
-    $: if (localPageSize == 0) {
-        localPageSize = 1;
+    // Convert string to number and ensure it's never 0
+    $: {
+        const num = parseInt(localPageSizeStr);
+        if (!isNaN(num)) {
+            const newValue = num === 0 ? 1 : num;
+            if (newValue !== localPageSize) {
+                localPageSize = newValue;
+            }
+        }
     }
 
     function clearFilters() {
@@ -43,10 +51,7 @@
     }
 
     // Handle keydown event
-    function handleKeydown(event) {
-        // Check if the event target is a textarea or input
-        // const isInputElement = event.target.tagName === 'TEXTAREA' || event.target.tagName === 'INPUT';
-
+    function handleKeydown(event: KeyboardEvent) {
         if (event.key === "Enter") {
             event.preventDefault();
             event.stopPropagation();
@@ -55,10 +60,17 @@
     }
 
     // Handle click to focus the modal
-    function handleClick(event) {
+    function handleClick(event: MouseEvent) {
         // Only focus if clicking directly on the modal container
         if (event.target === event.currentTarget) {
-            event.target.focus();
+            (event.target as HTMLElement).focus();
+        }
+    }
+
+    function handlePageSizeInput(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (input) {
+            localPageSizeStr = input.value;
         }
     }
 </script>
@@ -66,31 +78,29 @@
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-    class="sm:mb-0 sm:mt-1 p-2"
+    class="crud-filters-container"
     on:keydown={handleKeydown}
     on:click={handleClick}
     tabindex="0"
 >
     <!-- Filtros CORE -->
     <!--------------------------------------------------------------------->
-    <div class="sm:flex sm:space-x-3 w-full">
-        <div class=" flex items-center space-x-3">
-            <h1 class=" font-bold text-2xl">Transacciones</h1>
-            <div class="flex justify-start items-center space-x-3 w-full">
+    <div class="filters-core">
+        <div class="filters-header">
+            <h1 class="filters-title">Transacciones</h1>
+            <div class="filters-actions">
                 {#if showAddButton}
                     <div>
-                        <div class="relative">
+                        <div class="tooltip-container">
                             {#if showTooltip == "Agregar"}
-                                <div
-                                    class="absolute z-[10000] p-1 text-white text-xs bg-gray-500 rounded shadow -top-5 -left-10"
-                                >
+                                <div class="tooltip">
                                     Agregar
                                 </div>
                             {/if}
                         </div>
                         <!-- svelte-ignore a11y_consider_explicit_label -->
                         <button
-                            class=" flex justify-center items-center cursor-pointer border border-black w-12 h-12 rounded-lg shadow-md"
+                            class="action-button"
                             type="button"
                             on:mouseenter={() => (showTooltip = "Agregar")}
                             on:mouseleave={() => (showTooltip = "")}
@@ -115,18 +125,16 @@
                 {/if}
                 {#if showImportButton}
                     <div>
-                        <div class="relative">
+                        <div class="tooltip-container">
                             {#if showTooltip == "Importar"}
-                                <div
-                                    class="absolute z-[10000] p-1 text-white text-xs bg-gray-500 rounded shadow -top-5 -left-10"
-                                >
+                                <div class="tooltip">
                                     Importar Excel
                                 </div>
                             {/if}
                         </div>
                         <!-- svelte-ignore a11y_consider_explicit_label -->
                         <button
-                            class=" flex justify-center items-center border border-black w-12 h-12 rounded-lg shadow-md"
+                            class="action-button"
                             type="button"
                             on:mouseenter={() => (showTooltip = "Importar")}
                             on:mouseleave={() => (showTooltip = "")}
@@ -153,15 +161,15 @@
                 {/if}
             </div>
         </div>
-        <div class=" flex items-center space-x-3 mt-2 sm:mt-0">
+        <div class="filters-controls">
             <!-- Show Filters Button -->
-            <div class="inline-flex shadow-sm" role="group">
+            <div class="filter-group" role="group">
                 {#if Filtros && Filtros.length > 0}
                     {#if showFilters}
                         <button
                             type="button"
                             on:click={() => (showFilters = !showFilters)}
-                            class="inline-flex items-center cursor-pointer h-12 sm:px-4 sm:py-3 px-3 py-2 sm:text-sm text-xs font-medium border border-black text-black rounded-l-lg"
+                            class="filter-button"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -185,7 +193,7 @@
                         <button
                             type="button"
                             on:click={() => (showFilters = !showFilters)}
-                            class="inline-flex items-center cursor-pointer h-12 sm:px-4 sm:py-3 px-3 py-2 sm:text-sm text-xs font-medium border border-black text-black rounded-l-lg"
+                            class="filter-button"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -208,12 +216,9 @@
                     {/if}
 
                     <!-- Btn de limpiar filtros -->
-
-                    <div class="relative">
+                    <div class="tooltip-container">
                         {#if showTooltip == "Borrar"}
-                            <div
-                                class="absolute z-[10000] p-1 text-white text-xs bg-gray-500 rounded shadow -top-5 -left-10"
-                            >
+                            <div class="tooltip">
                                 Borrar filtro
                             </div>
                         {/if}
@@ -224,7 +229,7 @@
                         on:click={() => clearFilters()}
                         on:mouseenter={() => (showTooltip = "Borrar")}
                         on:mouseleave={() => (showTooltip = "nada")}
-                        class="inline-flex items-center cursor-pointer sm:px-4 sm:py-3 px-3 py-2 sm:text-sm text-xs font-medium border border-black rounded-r-lg text-black"
+                        class="filter-button filter-button-right"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -247,21 +252,20 @@
             </div>
 
             <!-- Filtro 2 -->
-            <div class=" w-16">
+            <div class="page-size-input">
                 <InputFormText
                     label="Mostrando:"
-                    bind:valueVar={localPageSize}
+                    valueVar={localPageSizeStr}
+                    on:input={handlePageSizeInput}
                 />
             </div>
             <!-- /Filtro 2 -->
 
             <!-- Btn de aplicar filtro (siempre visible) -->
-            <div class="inline-flex rounded-md shadow-sm" role="group">
-                <div class="relative">
+            <div class="filter-group" role="group">
+                <div class="tooltip-container">
                     {#if showTooltip == "Aplicar"}
-                        <div
-                            class="absolute z-[10000] p-1 transition-all ease-in duration-200 text-white text-xs bg-gray-500 rounded shadow -top-5 -left-10"
-                        >
+                        <div class="tooltip">
                             Aplicar filtro
                         </div>
                     {/if}
@@ -271,7 +275,7 @@
                     on:click={() => actualizarFiltro()}
                     on:mouseenter={() => (showTooltip = "Aplicar")}
                     on:mouseleave={() => (showTooltip = "nada")}
-                    class="inline-flex h-12 cursor-pointer items-center shadow-md sm:px-4 sm:py-3 px-3 py-2 sm:text-sm text-xs font-medium border border-black text-black rounded-lg"
+                    class="apply-filter-button"
                     >Filtrar</button
                 >
             </div>
@@ -281,40 +285,40 @@
     <!-- Filtros Dynamic -->
     {#if showFilters}
         <div
-            class="grid sm:grid-cols-5 grid-cols-1 gap-3 mt-4"
+            class="filters-grid"
             transition:slide|local={{ duration: 300, delay: 100 }}
         >
             {#each Filtros as { tipo, label, options }, i}
                 {#if tipo == "text"}
-                    <div class="relative z-0 my-auto">
+                    <div class="filter-item">
                         <InputFormText
                             {label}
                             bind:valueVar={Filtros[i].value}
                         />
                     </div>
                 {:else if tipo == "number"}
-                    <div class="z-50">
+                    <div class="filter-item filter-item-number">
                         <InputFormNumber
                             {label}
                             bind:valueVar={Filtros[i].value}
                         />
                     </div>
                 {:else if tipo == "datetime"}
-                    <div class="z-50">
+                    <div class="filter-item filter-item-datetime">
                         <InputFormDateAndHours
                             {label}
                             bind:valueVar={Filtros[i].value}
                         />
                     </div>
                 {:else if tipo == "date"}
-                    <div class="z-50">
+                    <div class="filter-item filter-item-date">
                         <InputFormDate
                             {label}
                             bind:valueVar={Filtros[i].value}
                         />
                     </div>
                 {:else if tipo == "select"}
-                    <div class="z-50">
+                    <div class="filter-item filter-item-select">
                         <InputFormSelect
                             {label}
                             res={options}
@@ -322,7 +326,7 @@
                         />
                     </div>
                 {:else if tipo == "bool"}
-                    <div class="my-auto">
+                    <div class="filter-item filter-item-bool">
                         <InputFormBool
                             {label}
                             bind:valueVar={Filtros[i].value}

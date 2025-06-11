@@ -65,7 +65,7 @@
     }
 </script>
 
-<div class=" min-h-screen">
+<div class="crud-wrapper">
     <CrudFilters
         bind:PageSize
         bind:Filtros
@@ -87,20 +87,49 @@
         on:pageChange={handlePageChange}
     />
 
-    <div class="flex gap-4 mt-4 justify-end">
+    <div class="export-buttons">
         <button
             type="button"
             on:click={() => handleExport("excel")}
-            class="bg-green-600 text-center cursor-pointer text-white p-4 rounded"
+            class="export-button excel-button"
         >
             <i class="fas fa-file-excel pr-3"> </i>EXCEL
         </button>
         <button
             type="button"
             on:click={() => handleExport("pdf")}
-            class="bg-orange-500 text-center cursor-pointer text-white p-4 rounded"
+            class="export-button pdf-button"
         >
             <i class="far fa-file-pdf pr-3"> </i>PDF
         </button>
     </div>
 </div>
+
+<style>
+    .crud-wrapper {
+        min-height: 100vh;
+    }
+
+    .export-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        justify-content: flex-end;
+    }
+
+    .export-button {
+        text-align: center;
+        cursor: pointer;
+        color: white;
+        padding: 1rem;
+        border-radius: 0.25rem;
+    }
+
+    .excel-button {
+        background-color: #16a34a; /* green-600 */
+    }
+
+    .pdf-button {
+        background-color: #f97316; /* orange-500 */
+    }
+</style>
