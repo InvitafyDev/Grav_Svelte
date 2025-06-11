@@ -32,6 +32,8 @@
 .filters-title {
     font-weight: 700;
     font-size: 1.5rem;
+    white-space: nowrap;
+    max-width: 100%;
 }
 
 .filters-actions {

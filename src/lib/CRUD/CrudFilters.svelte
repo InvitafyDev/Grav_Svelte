@@ -21,6 +21,7 @@
     export let Filtros: FiltrosI[];
     export let showAddButton: boolean = true;
     export let showImportButton: boolean = true;
+    export let Titulo_Crud: string;
 
     // Convert string to number and ensure it's never 0
     $: {
@@ -87,7 +88,7 @@
     <!--------------------------------------------------------------------->
     <div class="filters-core">
         <div class="filters-header">
-            <h1 class="filters-title">Transacciones</h1>
+            <h1 class="filters-title">{Titulo_Crud}</h1>
             <div class="filters-actions">
                 {#if showAddButton}
                     <div>

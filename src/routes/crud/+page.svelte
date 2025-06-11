@@ -214,6 +214,7 @@
 
 <div class="min-h-screen p-4 bg-white">
 <CrudWrapper
+    Titulo_Crud="Catálogo Meses"
     {todosLosObjetos}
     {tableH}
     {totalRows}

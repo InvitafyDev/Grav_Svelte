@@ -16,6 +16,7 @@
     export let loading: boolean = false;
     export let showAddButton: boolean = true;
     export let showImportButton: boolean = true;
+    export let Titulo_Crud: string;
 
     // Event handlers from parent
     export let onFilter: (filters: FiltrosI[]) => void;
@@ -73,6 +74,7 @@
         on:add={handleAdd}
         {showAddButton}
         {showImportButton}
+        {Titulo_Crud}
     />
     <CrudTable
         tableHeaders={tableH}
