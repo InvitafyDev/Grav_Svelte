@@ -4,6 +4,43 @@
     export let disabled = false;
     export let obligatory = false;
     export let icon: string | null = null;
+
+    let validationMessage = "";
+    let isValid = true;
+
+    $: {
+        if (valueVar) {
+            // Password validation rules
+            const hasMinLength = valueVar.length >= 8;
+            const hasUpperCase = /[A-Z]/.test(valueVar);
+            const hasLowerCase = /[a-z]/.test(valueVar);
+            const hasNumbers = /\d/.test(valueVar);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(valueVar);
+
+            if (!hasMinLength) {
+                validationMessage = "Password must be at least 8 characters long";
+                isValid = false;
+            } else if (!hasUpperCase) {
+                validationMessage = "Password must contain at least one uppercase letter";
+                isValid = false;
+            } else if (!hasLowerCase) {
+                validationMessage = "Password must contain at least one lowercase letter";
+                isValid = false;
+            } else if (!hasNumbers) {
+                validationMessage = "Password must contain at least one number";
+                isValid = false;
+            } else if (!hasSpecialChar) {
+                validationMessage = "Password must contain at least one special character";
+                isValid = false;
+            } else {
+                validationMessage = "Password is valid";
+                isValid = true;
+            }
+        } else {
+            validationMessage = "";
+            isValid = true;
+        }
+    }
 </script>
 
 <div class="input-container">
@@ -29,6 +66,11 @@
         >
     </div>
 </div>
+{#if validationMessage}
+    <div class="validation-message" class:valid={isValid} class:invalid={!isValid}>
+        {validationMessage}
+    </div>
+{/if}
 
 <style>
     .input-container {
@@ -98,6 +140,20 @@
     }
 
     .required-mark {
+        color: #dc2626;
+    }
+
+    .validation-message {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        padding-left: 0.25rem;
+    }
+
+    .valid {
+        color: #059669;
+    }
+
+    .invalid {
         color: #dc2626;
     }
 </style>
