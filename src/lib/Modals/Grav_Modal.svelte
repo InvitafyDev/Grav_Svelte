@@ -1,4 +1,6 @@
 <script lang="ts">
+    import './Grav_Modal.css';
+    
     // Define size type
     type ModalSize = "lg" | "md" | "sm";
 
@@ -71,30 +73,26 @@
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div
-    class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
+    class="modal-overlay"
     on:keydown={handleKeydown}
     on:click={handleClick}
     tabindex="0"
 >
     <!--content-->
-    <div
-        class="border-0 shadow-lg relative flex flex-col {currentSizeClass} bg-white outline-none focus:outline-none"
-    >
+    <div class="modal-content {size}">
         <!-- Encabezado Modal -->
-        <div
-            class="flex items-start justify-between p-4 border-b border-solid border-blueGray-200 rounded-t"
-        >
-            <h3 class="text-xl font-semibold">
+        <div class="modal-header">
+            <h3 class="modal-title">
                 {title}
             </h3>
             <!-- Cerrar Modal -->
             <button
-                class="p-1 cursor-pointer ml-auto bg-transparent border-0 text-black float-right text-2xl leading-none font-semibold outline-none focus:outline-none"
+                class="modal-close-button"
                 on:click={onClose}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6"
+                    class="modal-close-icon"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -112,10 +110,10 @@
         <!-- Encabezado Modal -->
 
         {#if loading}
-            <div class="relative p-6 flex-1 flex justify-center items-center">
-                <div class="flex justify-center text-4xl items-center">
+            <div class="modal-loading">
+                <div class="modal-loading-spinner">
                     <svg
-                        class="animate-spin h-8 w-8 text-emerald-500"
+                        class="modal-loading-svg"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -138,19 +136,17 @@
             </div>
         {:else}
             <!-- Cuerpo Modal -->
-            <div class="relative sm:p-4 p-2 flex-auto">
+            <div class="modal-body">
                 <slot />
             </div>
             <!-- /Cuerpo Modal -->
 
             {#if !isVista}
                 <!-- Pie Modal -->
-                <div
-                    class="flex items-center justify-end p-3 border-t border-solid border-blueGray-200"
-                >
+                <div class="modal-footer">
                     <!-- Btn Guardar -->
                     <button
-                        class="bg-emerald-500 cursor-pointer disabled:bg-emerald-300 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                        class="modal-save-button"
                         type="button"
                         on:click={onSave}
                         disabled={saveButtonDisabled}
@@ -160,7 +156,7 @@
                     <!-- /Btn Guardar -->
                     <!-- Cerrar Modal -->
                     <button
-                        class=" disabled:bg-emerald-300 cursor-pointer text-red-500 font-bold uppercase text-sm px-6 py-3 rounded hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                        class="modal-cancel-button"
                         type="button"
                         on:click={onClose}
                     >
@@ -173,4 +169,4 @@
         {/if}
     </div>
 </div>
-<div class="opacity-25 fixed inset-0 z-40 bg-black" />
+<div class="modal-backdrop" />
