@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import './alertStyles.css';
 
 export function Exito_Alert(titulo = 'Se guardo correctamente') {
     Swal.fire({
@@ -21,8 +22,7 @@ export function Error_Alert(titulo = 'Algo salió mal') {
         buttonsStyling: false,
         customClass: {
             denyButton: 'hidden',
-            confirmButton:
-                'text-red-500 background-transparent font-bold uppercase px-6 py-2 text-base  focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+            confirmButton: 'alert-error-button'
         }
     });
 }
@@ -42,10 +42,8 @@ export function Confirmacion_Alert(titulo = 'Confirmación', texto = 'Desea guar
         buttonsStyling: false,
         customClass: {
             denyButton: 'hidden',
-            confirmButton:
-                'bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150',
-            cancelButton:
-                'text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150'
+            confirmButton: 'alert-confirm-button',
+            cancelButton: 'alert-cancel-button'
         }
     }).then((result) => {
         if (result.isConfirmed) {
