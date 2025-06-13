@@ -49,6 +49,7 @@
                                 class="table-header-cell {index == 0
                                     ? 'borderleft'
                                     : ''} non-sortable"
+                                style="text-align: {tableHeader.align ?? 'center'}"
                             >
                                 {tableHeader.titulo}
                             </th>
@@ -58,6 +59,7 @@
                                 class="table-header-cell {index == 0
                                     ? 'borderleft'
                                     : ''} sortable"
+                                style="text-align: {tableHeader.align ?? 'left'}"
                             >
                                 <h1>{tableHeader.titulo}</h1>
                                 {#if selectedSort == tableHeader.campo}
@@ -127,6 +129,7 @@
                                             class="cell-content {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
+                                            style="text-align: {tableBodyItem.align ?? 'left'}"
                                         >
                                             {item[tableBodyItem.campo] ?? ""}
                                         </p>
@@ -141,6 +144,7 @@
                                             class="cell-content {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
+                                            style="text-align: {tableBodyItem.align ?? 'left'}"
                                         >
                                             {item[tableBodyItem.campo] ?? ""}
                                         </p>
@@ -155,6 +159,7 @@
                                             class="cell-content {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
+                                            style="text-align: {tableBodyItem.align ?? 'left'}"
                                         >
                                             {#if item[tableBodyItem.campo] === true}
                                                 <i class="fas fa-check"></i>
@@ -168,6 +173,7 @@
                                         id={item[tableBodyItem.campo]}
                                         buttonsConfig={tableBodyItem.buttonsConfig ??
                                             []}
+                                        align={tableBodyItem.align ?? 'center'}
                                     />
                                 {/if}
                             {/each}
