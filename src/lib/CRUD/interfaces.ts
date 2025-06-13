@@ -10,6 +10,11 @@ export interface TableHeader {
     biSort: boolean;
     tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image';
     biBold: boolean;
+    /**
+     * Alignment for the content of the cells belonging to this header.
+     * Defaults to 'left' when not provided.
+     */
+    align?: 'left' | 'right' | 'center';
     campo: string;
     buttonsConfig: ButtonConfig[] | null;
 }

@@ -3,10 +3,11 @@
 
     export let id = 1;
     export let buttonsConfig: ButtonConfig[];
+    export let align: 'left' | 'right' | 'center' = 'center';
     let showTooltip = "";
 </script>
 
-<td class="table-cell">
+<td class="table-cell" style="text-align: {align}">
     <div class="button-group" role="group">
         {#each buttonsConfig as button, i}
             <div class="tooltip-container">
