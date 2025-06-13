@@ -275,7 +275,17 @@
         background-color: #f5f5f5;
     }
 
+    /* ensure sticky cells follow row hover */
+    .table-row:hover .sticky-cell {
+        background-color: #f5f5f5;
+    }
+
     .table-row.selected {
+        background-color: #e8e8e8;
+    }
+
+    /* keep first column selected state consistent */
+    .table-row.selected .sticky-cell {
         background-color: #e8e8e8;
     }
 
