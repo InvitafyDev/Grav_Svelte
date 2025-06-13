@@ -319,6 +319,8 @@
 
     .loading-animation {
         display: flex;
+        flex-direction: column;
+        width: 100%;
         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
 
@@ -328,8 +330,8 @@
         background-color: #e0e0e0;
         margin-bottom: 0.5rem;
         width: 100%;
-        flex: 1;
-        margin: 0 0.5rem;
+        margin: 0 0 0.5rem 0;
+        flex: none;
     }
 
     @keyframes pulse {
