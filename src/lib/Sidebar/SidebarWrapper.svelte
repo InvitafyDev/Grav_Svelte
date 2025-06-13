@@ -2,6 +2,7 @@
     import type { SidebarSection } from "./sidebarConfig.js";
     import SidebarItem from "./SidebarItem.svelte";
     import "./SidebarWrapper.css";
+    import { Confirmacion_Alert } from "$lib/index.js";
     import { onMount } from 'svelte';
     // Props
     export let sections: SidebarSection[];
@@ -25,6 +26,17 @@
     function toggleCollapseShow() {
         console.log("toggleCollapseShow");
         collapseShow = !collapseShow;
+    }
+
+    function handleLogout(event: MouseEvent) {
+        event.preventDefault();
+        Confirmacion_Alert(
+            "Confirmar cierre de sesión",
+            "¿Desea cerrar sesión?",
+            () => {
+                window.location.href = logoutLink;
+            }
+        );
     }
 </script>
 
@@ -107,8 +119,13 @@
 
                     {#if showLogout}
                         <li class="logout-item">
-                            <a class="logout-link" href={logoutLink}>
-                                Log Out <i class="fas fa-sign-out-alt ml-2"></i>
+                            <a
+                                class="logout-link"
+                                href={logoutLink}
+                                on:click|preventDefault={handleLogout}
+                            >
+                                Log Out
+                                <i class="fas fa-sign-out-alt ml-2"></i>
                             </a>
                         </li>
                     {/if}
