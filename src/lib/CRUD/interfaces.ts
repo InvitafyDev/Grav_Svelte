@@ -8,7 +8,7 @@ export interface ButtonConfig {
 export interface TableHeader {
     titulo: string;
     biSort: boolean;
-    tipo: 'Text' | 'Number' | 'Buttons';
+    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool';
     biBold: boolean;
     campo: string;
     buttonsConfig: ButtonConfig[] | null;

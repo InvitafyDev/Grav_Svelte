@@ -77,6 +77,14 @@
             buttonsConfig: [],
         },
         {
+            titulo: "Activo",
+            biSort: false,
+            tipo: "Bool",
+            biBold: false,
+            campo: "biActivo",
+            buttonsConfig: [],
+        },
+        {
             titulo: "Acciones",
             biSort: false,
             tipo: "Buttons",
@@ -116,6 +124,7 @@
             inCantidadDias: number;
             txComentariosMes: string;
             nvStatus: string;
+            biActivo: boolean;
         }[];
         total: number;
         page: number;
@@ -146,6 +155,7 @@
                         inCantidadDias: 31,
                         txComentariosMes: "Primer mes del año",
                         nvStatus: "Activo",
+                        biActivo: true,
                     },
                     {
                         noMesA: 2,
@@ -156,6 +166,7 @@
                         inCantidadDias: 29,
                         txComentariosMes: "Mes bisiesto",
                         nvStatus: "Activo",
+                        biActivo: false,
                     },
                     {
                         noMesA: 3,
@@ -166,6 +177,7 @@
                         inCantidadDias: 31,
                         txComentariosMes: "Inicio de primavera",
                         nvStatus: "Activo",
+                        biActivo: true,
                     },
                 ],
                 total: 3,
