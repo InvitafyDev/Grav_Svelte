@@ -77,6 +77,14 @@
             buttonsConfig: [],
         },
         {
+            titulo: "Imagen",
+            biSort: false,
+            tipo: "Image",
+            biBold: false,
+            campo: "image",
+            buttonsConfig: [],
+        },
+        {
             titulo: "Acciones",
             biSort: false,
             tipo: "Buttons",
@@ -116,6 +124,7 @@
             inCantidadDias: number;
             txComentariosMes: string;
             nvStatus: string;
+            image: string;
         }[];
         total: number;
         page: number;
@@ -146,6 +155,7 @@
                         inCantidadDias: 31,
                         txComentariosMes: "Primer mes del año",
                         nvStatus: "Activo",
+                        image: "https://via.placeholder.com/50",
                     },
                     {
                         noMesA: 2,
@@ -156,6 +166,7 @@
                         inCantidadDias: 29,
                         txComentariosMes: "Mes bisiesto",
                         nvStatus: "Activo",
+                        image: "https://via.placeholder.com/50",
                     },
                     {
                         noMesA: 3,
@@ -166,6 +177,7 @@
                         inCantidadDias: 31,
                         txComentariosMes: "Inicio de primavera",
                         nvStatus: "Activo",
+                        image: "https://via.placeholder.com/50",
                     },
                 ],
                 total: 3,

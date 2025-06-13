@@ -87,6 +87,7 @@ Available components:
 - `FormBuilder` - Dynamic form generation
 - `Pagination` - Page navigation
 - `SearchInput` - Search with debounce
+- Image columns with URL support in data tables
 
 ## Documentation
 
