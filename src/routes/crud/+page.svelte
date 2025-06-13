@@ -155,7 +155,7 @@
                         inCantidadDias: 31,
                         txComentariosMes: "Primer mes del año",
                         nvStatus: "Activo",
-                        image: "https://via.placeholder.com/50",
+                        image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275e1.jpg",
                     },
                     {
                         noMesA: 2,
@@ -166,7 +166,7 @@
                         inCantidadDias: 29,
                         txComentariosMes: "Mes bisiesto",
                         nvStatus: "Activo",
-                        image: "https://via.placeholder.com/50",
+                        image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
                     },
                     {
                         noMesA: 3,
@@ -177,7 +177,7 @@
                         inCantidadDias: 31,
                         txComentariosMes: "Inicio de primavera",
                         nvStatus: "Activo",
-                        image: "https://via.placeholder.com/50",
+                        image: "https://catalogowebapi.kibi.com.mx/img/subformProductosImagenes/227_x2.png",
                     },
                 ],
                 total: 3,
@@ -225,22 +225,22 @@
 </svelte:head>
 
 <div class="min-h-screen p-4 bg-white">
-<CrudWrapper
-    Titulo_Crud="Catálogo Meses"
-    {todosLosObjetos}
-    {tableH}
-    {totalRows}
-    bind:Filtros
-    bind:PageSize
-    bind:currentPage
-    bind:selectedAscOrDesc
-    bind:selectedSort
-    {loading}
-    showAddButton={true}
-    showImportButton={false}
-    onFilter={enlistar}
-    onAdd={handleAdd}
-/>
+    <CrudWrapper
+        Titulo_Crud="Catálogo Meses"
+        {todosLosObjetos}
+        {tableH}
+        {totalRows}
+        bind:Filtros
+        bind:PageSize
+        bind:currentPage
+        bind:selectedAscOrDesc
+        bind:selectedSort
+        {loading}
+        showAddButton={true}
+        showImportButton={false}
+        onFilter={enlistar}
+        onAdd={handleAdd}
+    />
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Code Preview</h2>
@@ -253,6 +253,9 @@
                 Copy Code
             </button>
         </div>
-        <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codePreview}</code></pre>
+        <pre
+            class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                >{codePreview}</code
+            ></pre>
     </div>
 </div>
