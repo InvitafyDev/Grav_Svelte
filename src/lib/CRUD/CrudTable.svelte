@@ -163,6 +163,19 @@
                                             {/if}
                                         </p>
                                     </td>
+                                {:else if tableBodyItem.tipo == "Image"}
+                                    <td
+                                        class="table-cell {i == 0
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                    >
+                                        <img
+                                            class="crud-image"
+                                            src={item[tableBodyItem.campo] ??
+                                                ""}
+                                            alt="image"
+                                        />
+                                    </td>
                                 {:else if tableBodyItem.tipo == "Buttons"}
                                     <CrudTableButtons
                                         id={item[tableBodyItem.campo]}
@@ -364,5 +377,12 @@
         .cell-content {
             font-size: 1rem;
         }
+    }
+
+    .crud-image {
+        max-width: 4rem;
+        max-height: 4rem;
+        object-fit: contain;
+        margin: auto;
     }
 </style>
