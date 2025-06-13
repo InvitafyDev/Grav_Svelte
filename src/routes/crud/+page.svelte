@@ -7,10 +7,38 @@
         {
             label: "Mes",
             value: "",
-            tipo: "text",
+            tipo: "select",
             options: [],
+            service: fakeService,
+        },
+        {
+            label: "Mes sin service",
+            value: "",
+            tipo: "select",
+            options: [
+                { value: "01", label: "Enero" },
+                { value: "02", label: "Febrero" },
+                { value: "03", label: "Marzo" },
+            ],
         },
     ];
+
+    async function fakeService() {
+        await new Promise((res) => setTimeout(res, 500));
+        console.log("fakeService");
+        return [
+            { value: "01", label: "Enero" },
+            { value: "02", label: "Febrero" },
+            { value: "03", label: "Marzo" },
+            { value: "04", label: "Abril" },
+            { value: "05", label: "Mayo" },
+            { value: "06", label: "Junio" },
+            { value: "07", label: "Julio" },
+            { value: "08", label: "Agosto" },
+            { value: "09", label: "Septiembre" },
+            { value: "10", label: "Octubre" },
+        ];
+    }
 
     let todosLosObjetos: any[] = [];
     let totalRows = 0;
