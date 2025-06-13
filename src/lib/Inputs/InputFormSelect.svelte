@@ -2,12 +2,12 @@
     import Select from "svelte-select";
 
     interface SelectValue {
-        value: string;
+        value: any;
         label: string;
     }
 
     export let value: SelectValue | null = null;
-    export let justValue: string | null = null;
+    export let justValue: any | null = null;
     export let res: any[] = [];
     export let changeFunction: (
         e: CustomEvent<SelectValue | null>
