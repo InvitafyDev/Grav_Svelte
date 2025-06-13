@@ -179,7 +179,7 @@
             <InputFormTextArea
                 label="Text Area"
                 bind:valueVar={textAreaInput}
-                rows={4}
+                rows={2}
             />
             <span class="block mt-1 text-sm text-gray-600"
                 >Value: {textAreaInput}</span
