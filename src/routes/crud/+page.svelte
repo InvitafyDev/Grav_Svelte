@@ -7,8 +7,16 @@
         {
             label: "Mes",
             value: "",
-            tipo: "text",
+            tipo: "select",
             options: [],
+            service: async () => {
+                await new Promise((res) => setTimeout(res, 500));
+                return [
+                    { value: "01", label: "Enero" },
+                    { value: "02", label: "Febrero" },
+                    { value: "03", label: "Marzo" },
+                ];
+            },
         },
     ];
 

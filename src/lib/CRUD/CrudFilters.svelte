@@ -289,7 +289,7 @@
             class="filters-grid"
             transition:slide|local={{ duration: 300, delay: 100 }}
         >
-            {#each Filtros as { tipo, label, options }, i}
+            {#each Filtros as { tipo, label, options, service }, i}
                 {#if tipo == "text"}
                     <div class="filter-item">
                         <InputFormText
@@ -320,11 +320,25 @@
                     </div>
                 {:else if tipo == "select"}
                     <div class="filter-item filter-item-select">
-                        <InputFormSelect
-                            {label}
-                            res={options}
-                            bind:justValue={Filtros[i].value}
-                        />
+                        {#if service}
+                            {#await service() then asyncOptions}
+                                <InputFormSelect
+                                    {label}
+                                    res={asyncOptions}
+                                    bind:justValue={Filtros[i].value}
+                                />
+                            {:catch err}
+                                <span>Error loading options</span>
+                            {:pending}
+                                <span>Loading...</span>
+                            {/await}
+                        {:else}
+                            <InputFormSelect
+                                {label}
+                                res={options}
+                                bind:justValue={Filtros[i].value}
+                            />
+                        {/if}
                     </div>
                 {:else if tipo == "bool"}
                     <div class="filter-item filter-item-bool">

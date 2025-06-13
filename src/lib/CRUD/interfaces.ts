@@ -18,7 +18,8 @@ export interface FiltrosI {
     tipo: 'number' | 'text' | 'date' | 'datetime' | 'select' | 'bool';
     label: string;
     value: any;
-    options: { value: any; label: string }[];
+    options?: { value: any; label: string }[];
+    service?: () => Promise<{ value: any; label: string }[]>;
 };
 
 export interface CrudWrapperProps {
