@@ -1,5 +1,7 @@
 <script lang="ts">
-    import CrudTableButtons from "./CrudTableButtons.svelte";
+import CrudTableButtons from "./CrudTableButtons.svelte";
+import { openModal, closeModal } from "$lib/Modals/index.js";
+import ImageModal from "./ImageModal.svelte";
 
     // COMPONENTES imports
 
@@ -35,6 +37,11 @@
             selectedSort: selection,
             selectedAsc: selectedAscOrDesc,
         });
+    }
+
+    function openImageModal(src: string) {
+        closeModal("crud-image-modal");
+        openModal("crud-image-modal", ImageModal, { src });
     }
 </script>
 
@@ -175,10 +182,10 @@
                                             : ''}"
                                     >
                                         <img
-                                            class="crud-image"
-                                            src={item[tableBodyItem.campo] ??
-                                                ""}
+                                            class="crud-image cursor-pointer"
+                                            src={item[tableBodyItem.campo] ?? ''}
                                             alt="image"
+                                            on:click={() => openImageModal(item[tableBodyItem.campo])}
                                         />
                                     </td>
                                 {:else if tableBodyItem.tipo == "Buttons"}
