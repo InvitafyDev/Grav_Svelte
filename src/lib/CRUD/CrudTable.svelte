@@ -145,6 +145,24 @@
                                             {item[tableBodyItem.campo] ?? ""}
                                         </p>
                                     </td>
+                                {:else if tableBodyItem.tipo == "Bool"}
+                                    <td
+                                        class="table-cell {i == 0
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                    >
+                                        <p
+                                            class="cell-content {tableBodyItem.biBold
+                                                ? 'bold'
+                                                : ''}"
+                                        >
+                                            {#if item[tableBodyItem.campo] === true}
+                                                <i class="fas fa-check"></i>
+                                            {:else}
+                                                -
+                                            {/if}
+                                        </p>
+                                    </td>
                                 {:else if tableBodyItem.tipo == "Buttons"}
                                     <CrudTableButtons
                                         id={item[tableBodyItem.campo]}
