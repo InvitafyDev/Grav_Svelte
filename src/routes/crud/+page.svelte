@@ -9,16 +9,36 @@
             value: "",
             tipo: "select",
             options: [],
-            service: async () => {
-                await new Promise((res) => setTimeout(res, 500));
-                return [
-                    { value: "01", label: "Enero" },
-                    { value: "02", label: "Febrero" },
-                    { value: "03", label: "Marzo" },
-                ];
-            },
+            service: fakeService,
+        },
+        {
+            label: "Mes sin service",
+            value: "",
+            tipo: "select",
+            options: [
+                { value: "01", label: "Enero" },
+                { value: "02", label: "Febrero" },
+                { value: "03", label: "Marzo" },
+            ],
         },
     ];
+
+    async function fakeService() {
+        await new Promise((res) => setTimeout(res, 500));
+        console.log("fakeService");
+        return [
+            { value: "01", label: "Enero" },
+            { value: "02", label: "Febrero" },
+            { value: "03", label: "Marzo" },
+            { value: "04", label: "Abril" },
+            { value: "05", label: "Mayo" },
+            { value: "06", label: "Junio" },
+            { value: "07", label: "Julio" },
+            { value: "08", label: "Agosto" },
+            { value: "09", label: "Septiembre" },
+            { value: "10", label: "Octubre" },
+        ];
+    }
 
     let todosLosObjetos: any[] = [];
     let totalRows = 0;
@@ -221,22 +241,22 @@
 </svelte:head>
 
 <div class="min-h-screen p-4 bg-white">
-<CrudWrapper
-    Titulo_Crud="Catálogo Meses"
-    {todosLosObjetos}
-    {tableH}
-    {totalRows}
-    bind:Filtros
-    bind:PageSize
-    bind:currentPage
-    bind:selectedAscOrDesc
-    bind:selectedSort
-    {loading}
-    showAddButton={true}
-    showImportButton={false}
-    onFilter={enlistar}
-    onAdd={handleAdd}
-/>
+    <CrudWrapper
+        Titulo_Crud="Catálogo Meses"
+        {todosLosObjetos}
+        {tableH}
+        {totalRows}
+        bind:Filtros
+        bind:PageSize
+        bind:currentPage
+        bind:selectedAscOrDesc
+        bind:selectedSort
+        {loading}
+        showAddButton={true}
+        showImportButton={false}
+        onFilter={enlistar}
+        onAdd={handleAdd}
+    />
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Code Preview</h2>
@@ -249,6 +269,9 @@
                 Copy Code
             </button>
         </div>
-        <pre class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code>{codePreview}</code></pre>
+        <pre
+            class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                >{codePreview}</code
+            ></pre>
     </div>
 </div>

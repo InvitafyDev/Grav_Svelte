@@ -8,7 +8,7 @@
     import { slide } from "svelte/transition";
     import "./CrudFilters.css";
 
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import type { FiltrosI } from "./interfaces.js";
     const dispatch = createEventDispatcher();
 
@@ -17,6 +17,7 @@
     let localPageSize = 50;
     let localPageSizeStr = "50";
     let showFilters = false;
+    let isLoading = false;
 
     export let Filtros: FiltrosI[];
     export let showAddButton: boolean = true;
@@ -74,6 +75,29 @@
             localPageSizeStr = input.value;
         }
     }
+
+    let dataFetched: { value: any; label: string }[][] = [];
+    onMount(async () => {
+        console.log("Filtros", Filtros);
+        if (Filtros.length > 0) {
+            isLoading = true;
+            try {
+                const promises = Filtros.map(async (filtro) => {
+                    console.log("filtro", filtro);
+                    if (filtro.service) {
+                        const data = await filtro.service();
+                        return data;
+                    }
+                    return [];
+                });
+                
+                dataFetched = await Promise.all(promises);
+                console.log("dataFetched", dataFetched);
+            } finally {
+                isLoading = false;
+            }
+        }
+    });
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -94,9 +118,7 @@
                     <div>
                         <div class="tooltip-container">
                             {#if showTooltip == "Agregar"}
-                                <div class="tooltip">
-                                    Agregar
-                                </div>
+                                <div class="tooltip">Agregar</div>
                             {/if}
                         </div>
                         <!-- svelte-ignore a11y_consider_explicit_label -->
@@ -128,9 +150,7 @@
                     <div>
                         <div class="tooltip-container">
                             {#if showTooltip == "Importar"}
-                                <div class="tooltip">
-                                    Importar Excel
-                                </div>
+                                <div class="tooltip">Importar Excel</div>
                             {/if}
                         </div>
                         <!-- svelte-ignore a11y_consider_explicit_label -->
@@ -219,9 +239,7 @@
                     <!-- Btn de limpiar filtros -->
                     <div class="tooltip-container">
                         {#if showTooltip == "Borrar"}
-                            <div class="tooltip">
-                                Borrar filtro
-                            </div>
+                            <div class="tooltip">Borrar filtro</div>
                         {/if}
                     </div>
                     <!-- svelte-ignore a11y_consider_explicit_label -->
@@ -266,9 +284,7 @@
             <div class="filter-group" role="group">
                 <div class="tooltip-container">
                     {#if showTooltip == "Aplicar"}
-                        <div class="tooltip">
-                            Aplicar filtro
-                        </div>
+                        <div class="tooltip">Aplicar filtro</div>
                     {/if}
                 </div>
                 <button
@@ -276,8 +292,7 @@
                     on:click={() => actualizarFiltro()}
                     on:mouseenter={() => (showTooltip = "Aplicar")}
                     on:mouseleave={() => (showTooltip = "nada")}
-                    class="apply-filter-button"
-                    >Filtrar</button
+                    class="apply-filter-button">Filtrar</button
                 >
             </div>
             <!-- /Btn de aplicar filtro -->
@@ -287,7 +302,6 @@
     {#if showFilters}
         <div
             class="filters-grid"
-            transition:slide|local={{ duration: 300, delay: 100 }}
         >
             {#each Filtros as { tipo, label, options, service }, i}
                 {#if tipo == "text"}
@@ -321,17 +335,17 @@
                 {:else if tipo == "select"}
                     <div class="filter-item filter-item-select">
                         {#if service}
-                            {#await service() then asyncOptions}
+                            {#if isLoading}
+                                <div class="loading-spinner">
+                                    <div class="spinner"></div>
+                                </div>
+                            {:else}
                                 <InputFormSelect
                                     {label}
-                                    res={asyncOptions}
+                                    res={dataFetched[i]}
                                     bind:justValue={Filtros[i].value}
                                 />
-                            {:catch err}
-                                <span>Error loading options</span>
-                            {:pending}
-                                <span>Loading...</span>
-                            {/await}
+                            {/if}
                         {:else}
                             <InputFormSelect
                                 {label}
