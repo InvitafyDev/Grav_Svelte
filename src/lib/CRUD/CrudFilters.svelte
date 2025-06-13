@@ -42,6 +42,10 @@
             value: filtro.tipo === "bool" ? false : "",
         }));
         console.log(Filtros);
+
+        // Inform parent components that filters were cleared so other
+        // states like sorting can be reset as well
+        dispatch("clearFilters");
         dispatch("filtrar", { filtros: Filtros }); // puedes pasar los filtros actualizados
     }
 

@@ -54,6 +54,12 @@
         onFilter(Filtros);
     }
 
+    function handleClearFilters() {
+        // Reset sorting when filters are cleared
+        selectedSort = "";
+        selectedAscOrDesc = "asc";
+    }
+
     function handleExport(type: "excel" | "pdf") {
         const table = document.querySelector("table");
         if (!table) return;
@@ -71,6 +77,7 @@
         bind:PageSize
         bind:Filtros
         on:filtrar={handleFiltroAplicado}
+        on:clearFilters={handleClearFilters}
         on:add={handleAdd}
         {showAddButton}
         {showImportButton}
