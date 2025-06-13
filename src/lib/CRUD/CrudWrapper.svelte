@@ -3,7 +3,8 @@
     import CrudFilters from "./CrudFilters.svelte";
     import CrudTable from "./CrudTable.svelte";
     import type { FiltrosI, TableHeader, CrudWrapperProps } from "./interfaces.js";
-    import PaginationCrud from "./PaginationCRUD.svelte";
+import PaginationCrud from "./PaginationCRUD.svelte";
+import { ModalContainer } from "$lib/Modals/index.js";
 
     export let Filtros: FiltrosI[];
     export let todosLosObjetos: any[];
@@ -105,6 +106,7 @@
             <i class="far fa-file-pdf pr-3"> </i>PDF
         </button>
     </div>
+    <ModalContainer />
 </div>
 
 <style>
