@@ -14,11 +14,13 @@
 .filters-core {
     display: flex;
     width: 100%;
+    gap: 0.75rem;
 }
 
-@media (min-width: 640px) {
+@media (max-width: 640px) {
     .filters-core {
         display: flex;
+        flex-direction: column;
         gap: 0.75rem;
     }
 }

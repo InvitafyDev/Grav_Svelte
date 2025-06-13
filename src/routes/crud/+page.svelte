@@ -49,7 +49,7 @@
 
     let tableH: TableHeader[] = [
         {
-            titulo: "Mes con nombre",
+            titulo: "Nombre",
             biSort: true,
             tipo: "Text",
             biBold: true,
@@ -286,7 +286,7 @@
         bind:selectedSort
         {loading}
         showAddButton={true}
-        showImportButton={false}
+        showImportButton={true}
         onFilter={enlistar}
         onAdd={handleAdd}
     />
