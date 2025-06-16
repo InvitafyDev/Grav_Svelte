@@ -58,6 +58,7 @@
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
         top: -1.5rem;
         right: -2.5rem;
+        pointer-events: none;
     }
 
     .action-buttons-group {
