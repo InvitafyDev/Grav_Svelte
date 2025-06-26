@@ -96,14 +96,14 @@ import { ModalContainer } from "$lib/Modals/index.js";
             on:click={() => handleExport("excel")}
             class="export-button excel-button"
         >
-            <i class="fas fa-file-excel pr-3"> </i>EXCEL
+            <i class="fas fa-file-excel"></i>EXCEL
         </button>
         <button
             type="button"
             on:click={() => handleExport("pdf")}
             class="export-button pdf-button"
         >
-            <i class="far fa-file-pdf pr-3"> </i>PDF
+            <i class="far fa-file-pdf"></i>PDF
         </button>
     </div>
     <ModalContainer />
@@ -127,6 +127,10 @@ import { ModalContainer } from "$lib/Modals/index.js";
         color: white;
         padding: 1rem;
         border-radius: 0.25rem;
+    }
+
+    .export-button i {
+        margin-right: 0.75rem;
     }
 
     .excel-button {
