@@ -5,11 +5,13 @@
     export let buttonsConfig: ButtonConfig[];
     export let align: 'left' | 'right' | 'center' = 'center';
     let showTooltip = "";
+
+    $: visibleButtons = buttonsConfig.filter((btn) => btn.show ?? true);
 </script>
 
 <td class="table-cell" style="text-align: {align}">
     <div class="button-group" role="group">
-        {#each buttonsConfig as button, i}
+        {#each visibleButtons as button, i}
             <div class="tooltip-container">
                 {#if showTooltip == button.tooltip}
                     <div class="tooltip">
@@ -23,7 +25,7 @@
                 on:mouseenter={() => (showTooltip = button.tooltip)}
                 on:mouseleave={() => (showTooltip = "")}
                 type="button"
-                class="action-buttons-group {i == 0 ? 'rounded-left' : i == buttonsConfig.length - 1 ? 'rounded-right' : ''} {button.color}"
+                class="action-buttons-group {i == 0 ? 'rounded-left' : i == visibleButtons.length - 1 ? 'rounded-right' : ''} {button.color}"
             >
                 <i class={button.icon}> </i>
             </button>

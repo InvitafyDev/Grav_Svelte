@@ -3,6 +3,10 @@ export interface ButtonConfig {
     color: string;
     action: (id: number) => void;
     tooltip: string;
+    /**
+     * When set to false the button will not be rendered. Defaults to true.
+     */
+    show?: boolean;
 }
 
 export interface TableHeader {
