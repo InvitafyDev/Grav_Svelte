@@ -140,6 +140,7 @@
                     icon: "fa-solid fa-pencil",
                     tooltip: "Editar",
                     color: "bg-yellow-500 hover:bg-yellow-700",
+                    show: true,
                     action: (id: number) => {
                         alert("Editar");
                     },
@@ -148,6 +149,7 @@
                     icon: "fa-solid fa-trash",
                     tooltip: "Eliminar",
                     color: "bg-red-500 hover:bg-red-700",
+                    show: true,
                     action: (id: number) => {
                         alert("Eliminar");
                     },
