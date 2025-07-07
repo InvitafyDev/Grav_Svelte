@@ -25,7 +25,7 @@
                 on:mouseenter={() => (showTooltip = button.tooltip)}
                 on:mouseleave={() => (showTooltip = "")}
                 type="button"
-                class="action-buttons-group {i == 0 ? 'rounded-left' : i == visibleButtons.length - 1 ? 'rounded-right' : ''} {button.color}"
+                class="action-buttons-group {visibleButtons.length === 1 ? 'rounded-left rounded-right' : i == 0 ? 'rounded-left' : i == visibleButtons.length - 1 ? 'rounded-right' : ''} {button.color}"
             >
                 <i class={button.icon}> </i>
             </button>
