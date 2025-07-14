@@ -16,10 +16,18 @@ import ImageModal from "./ImageModal.svelte";
     export let todosLosRegistros: any[] = [];
     export let tableHeaders: TableHeader[];
     export let loading: boolean = false;
+    export let dragEnabled: boolean = false;
+    export let orderField: string = 'inOrden';
 
     let selectedAscOrDesc = "asc";
     let selectedSort = "";
     let selectedRowId: string | number | null = null;
+    
+    // Drag and drop variables
+    let draggedIndex: number | null = null;
+    let dragOverIndex: number | null = null;
+    let isDragging = false;
+    let reorderedItems: any[] = [];
 
     function handleRowClick(id: string | number) {
         selectedRowId = selectedRowId === id ? null : id;
@@ -43,6 +51,90 @@ import ImageModal from "./ImageModal.svelte";
         closeModal("crud-image-modal");
         openModal("crud-image-modal", ImageModal, { src });
     }
+
+    // Drag and drop functions
+    function handleDragStart(event: DragEvent, index: number) {
+        if (!dragEnabled) return;
+        
+        draggedIndex = index;
+        isDragging = true;
+        
+        if (event.dataTransfer) {
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/html', '');
+        }
+    }
+
+    function handleDragOver(event: DragEvent, index: number) {
+        if (!dragEnabled || draggedIndex === null) return;
+        
+        event.preventDefault();
+        dragOverIndex = index;
+        
+        if (event.dataTransfer) {
+            event.dataTransfer.dropEffect = 'move';
+        }
+    }
+
+    function handleDragLeave() {
+        dragOverIndex = null;
+    }
+
+    function handleDrop(event: DragEvent, dropIndex: number) {
+        if (!dragEnabled || draggedIndex === null || draggedIndex === dropIndex) {
+            resetDragState();
+            return;
+        }
+        
+        event.preventDefault();
+        
+        // Create a new array with reordered items
+        const newItems = [...todosLosRegistros];
+        const draggedItem = newItems[draggedIndex];
+        
+        // Remove the dragged item from its original position
+        newItems.splice(draggedIndex, 1);
+        
+        // Insert the dragged item at the new position
+        newItems.splice(dropIndex, 0, draggedItem);
+        
+        // Update the order values and track changes
+        const changes: any[] = [];
+        
+        newItems.forEach((item, index) => {
+            const newOrder = index + 1;
+            const originalOrder = item[orderField];
+            
+            if (originalOrder !== newOrder) {
+                changes.push({
+                    ...item,
+                    [orderField]: newOrder
+                });
+            }
+            
+            // Update the item's order in the array
+            item[orderField] = newOrder;
+        });
+        
+        // Update the items array
+        todosLosRegistros = newItems;
+        reorderedItems = changes;
+        
+        // Emit the reorder event
+        dispatch("reorderChange", { reorderedItems: changes });
+        
+        resetDragState();
+    }
+
+    function handleDragEnd() {
+        resetDragState();
+    }
+
+    function resetDragState() {
+        draggedIndex = null;
+        dragOverIndex = null;
+        isDragging = false;
+    }
 </script>
 
 <div class="table-container">
@@ -50,10 +142,34 @@ import ImageModal from "./ImageModal.svelte";
         <table class="data-table" bind:this={tablaExport}>
             <thead class="table-header">
                 <tr>
+                    {#if dragEnabled}
+                        <th class="table-header-cell drag-header borderleft non-sortable">
+                            <div class="drag-handle-header">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <circle cx="9" cy="12" r="1"></circle>
+                                    <circle cx="9" cy="5" r="1"></circle>
+                                    <circle cx="9" cy="19" r="1"></circle>
+                                    <circle cx="15" cy="12" r="1"></circle>
+                                    <circle cx="15" cy="5" r="1"></circle>
+                                    <circle cx="15" cy="19" r="1"></circle>
+                                </svg>
+                            </div>
+                        </th>
+                    {/if}
                     {#each tableHeaders as tableHeader, index}
                         {#if tableHeader.biSort == false}
                             <th
-                                class="table-header-cell {index == 0
+                                class="table-header-cell {index == 0 && !dragEnabled
                                     ? 'borderleft'
                                     : ''} non-sortable"
                                 style="text-align: {tableHeader.align ?? 'center'}"
@@ -63,7 +179,7 @@ import ImageModal from "./ImageModal.svelte";
                         {:else}
                             <th
                                 on:click={() => dispatchSort(tableHeader.campo)}
-                                class="table-header-cell {index == 0
+                                class="table-header-cell {index == 0 && !dragEnabled
                                     ? 'borderleft'
                                     : ''} sortable"
                                 style="text-align: {tableHeader.align ?? 'left'}"
@@ -122,13 +238,47 @@ import ImageModal from "./ImageModal.svelte";
                         <tr
                             class="table-row {selectedRowId === index
                                 ? 'selected'
+                                : ''} {dragEnabled ? 'draggable-row' : ''} {draggedIndex === index
+                                ? 'dragging'
+                                : ''} {dragOverIndex === index
+                                ? 'drag-over'
                                 : ''}"
+                            draggable={dragEnabled}
                             on:click={() => handleRowClick(index)}
+                            on:dragstart={(e) => handleDragStart(e, index)}
+                            on:dragover={(e) => handleDragOver(e, index)}
+                            on:dragleave={handleDragLeave}
+                            on:drop={(e) => handleDrop(e, index)}
+                            on:dragend={handleDragEnd}
                         >
+                            {#if dragEnabled}
+                                <td class="table-cell drag-handle-cell sticky-cell">
+                                    <div class="drag-handle" title="Drag to reorder">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <circle cx="9" cy="12" r="1"></circle>
+                                            <circle cx="9" cy="5" r="1"></circle>
+                                            <circle cx="9" cy="19" r="1"></circle>
+                                            <circle cx="15" cy="12" r="1"></circle>
+                                            <circle cx="15" cy="5" r="1"></circle>
+                                            <circle cx="15" cy="19" r="1"></circle>
+                                        </svg>
+                                    </div>
+                                </td>
+                            {/if}
                             {#each tableHeaders as tableBodyItem, i}
                                 {#if tableBodyItem.tipo == "Text"}
                                     <td
-                                        class="table-cell {i == 0
+                                        class="table-cell {i == 0 && !dragEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -143,7 +293,7 @@ import ImageModal from "./ImageModal.svelte";
                                     </td>
                                 {:else if tableBodyItem.tipo == "Number"}
                                     <td
-                                        class="table-cell {i == 0
+                                        class="table-cell {i == 0 && !dragEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -158,7 +308,7 @@ import ImageModal from "./ImageModal.svelte";
                                     </td>
                                 {:else if tableBodyItem.tipo == "Bool"}
                                     <td
-                                        class="table-cell {i == 0
+                                        class="table-cell {i == 0 && !dragEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -177,7 +327,7 @@ import ImageModal from "./ImageModal.svelte";
                                     </td>
                                 {:else if tableBodyItem.tipo == "Image"}
                                     <td
-                                        class="table-cell {i == 0
+                                        class="table-cell {i == 0 && !dragEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -203,7 +353,7 @@ import ImageModal from "./ImageModal.svelte";
             {:else if !loading}
                 <tbody>
                     <tr>
-                        <td colspan={tableHeaders.length} class="no-data">
+                        <td colspan={tableHeaders.length + (dragEnabled ? 1 : 0)} class="no-data">
                             No hay datos disponibles
                         </td>
                     </tr>
@@ -409,5 +559,104 @@ import ImageModal from "./ImageModal.svelte";
         max-height: 4rem;
         object-fit: contain;
         margin: auto;
+    }
+
+    /* Drag and drop styles */
+    .drag-header {
+        width: 40px;
+        text-align: center;
+        cursor: default;
+    }
+
+    .drag-handle-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9ca3af;
+    }
+
+    .drag-handle-cell {
+        width: 40px;
+        text-align: center;
+        padding: 0.5rem;
+        cursor: grab;
+        border-right: 1px solid #e0e0e0;
+    }
+
+    .drag-handle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9ca3af;
+        transition: color 0.2s;
+        padding: 0.25rem;
+    }
+
+    .drag-handle:hover {
+        color: #6b7280;
+    }
+
+    .draggable-row {
+        transition: all 0.3s ease;
+    }
+
+    .draggable-row:hover .drag-handle {
+        color: #4b5563;
+    }
+
+    .draggable-row.dragging {
+        opacity: 0.5;
+        transform: scale(0.98);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        background-color: #f9fafb;
+        cursor: grabbing;
+    }
+
+    .draggable-row.dragging .drag-handle {
+        cursor: grabbing;
+    }
+
+    .draggable-row.drag-over {
+        background-color: #e0f2fe;
+        border-top: 2px solid #0284c7;
+        border-bottom: 2px solid #0284c7;
+        box-shadow: 0 4px 8px -2px rgba(2, 132, 199, 0.2);
+    }
+
+    .draggable-row.drag-over .sticky-cell {
+        background-color: #e0f2fe;
+    }
+
+    .draggable-row.drag-over .drag-handle-cell {
+        background-color: #e0f2fe;
+    }
+
+    .draggable-row.selected.drag-over {
+        background-color: #bfdbfe;
+    }
+
+    .draggable-row.selected.drag-over .sticky-cell {
+        background-color: #bfdbfe;
+    }
+
+    .draggable-row.selected.drag-over .drag-handle-cell {
+        background-color: #bfdbfe;
+    }
+
+    /* Ensure sticky cells follow drag states */
+    .draggable-row.dragging .sticky-cell {
+        background-color: #f9fafb;
+    }
+
+    .draggable-row.dragging .drag-handle-cell {
+        background-color: #f9fafb;
+    }
+
+    .draggable-row:hover .drag-handle-cell {
+        background-color: #f5f5f5;
+    }
+
+    .draggable-row.selected .drag-handle-cell {
+        background-color: #e8e8e8;
     }
 </style>

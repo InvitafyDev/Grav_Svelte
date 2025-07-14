@@ -18,10 +18,13 @@ import { ModalContainer } from "$lib/Modals/index.js";
     export let showAddButton: boolean = true;
     export let showImportButton: boolean = true;
     export let Titulo_Crud: string;
+    export let dragEnabled: boolean = false;
+    export let orderField: string = 'inOrden';
 
     // Event handlers from parent
     export let onFilter: (filters: FiltrosI[]) => void;
     export let onAdd: () => void;
+    export let onReorder: (reorderedItems: any[]) => void = () => {};
 
     function handleFiltroAplicado() {
         onFilter(Filtros);
@@ -65,6 +68,16 @@ import { ModalContainer } from "$lib/Modals/index.js";
             createPDF(table);
         }
     }
+
+    interface ReorderEvent {
+        detail: {
+            reorderedItems: any[];
+        };
+    }
+
+    function handleReorder(event: ReorderEvent) {
+        onReorder(event.detail.reorderedItems);
+    }
 </script>
 
 <div class="crud-wrapper">
@@ -81,7 +94,10 @@ import { ModalContainer } from "$lib/Modals/index.js";
         tableHeaders={tableH}
         todosLosRegistros={todosLosObjetos}
         on:selectedSort={handleSort}
+        on:reorderChange={handleReorder}
         {loading}
+        {dragEnabled}
+        {orderField}
     />
     <PaginationCrud
         perPage={PageSize}

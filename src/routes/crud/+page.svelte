@@ -173,6 +173,7 @@
             nvStatus: string;
             biActivo: boolean;
             image: string;
+            inOrden: number;
         }[];
         total: number;
         page: number;
@@ -205,6 +206,7 @@
                         nvStatus: "Activo",
                         biActivo: true,
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275e1.jpg",
+                        inOrden: 1,
                     },
                     {
                         noMesA: 2,
@@ -217,6 +219,7 @@
                         nvStatus: "Activo",
                         biActivo: false,
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
+                        inOrden: 2,
                     },
                     {
                         noMesA: 3,
@@ -229,9 +232,36 @@
                         nvStatus: "Activo",
                         biActivo: true,
                         image: "https://catalogowebapi.kibi.com.mx/img/subformProductosImagenes/227_x2.png",
+                        inOrden: 3,
+                    },
+                    {
+                        noMesA: 4,
+                        nvMesTxt: "Abril",
+                        nvMesNumeros: "04",
+                        nvMes: "Abr",
+                        inAnio: 2024,
+                        inCantidadDias: 30,
+                        txComentariosMes: "Mes de primavera",
+                        nvStatus: "Activo",
+                        biActivo: true,
+                        image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275e1.jpg",
+                        inOrden: 4,
+                    },
+                    {
+                        noMesA: 5,
+                        nvMesTxt: "Mayo",
+                        nvMesNumeros: "05",
+                        nvMes: "May",
+                        inAnio: 2024,
+                        inCantidadDias: 31,
+                        txComentariosMes: "Mes de las madres",
+                        nvStatus: "Activo",
+                        biActivo: true,
+                        image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
+                        inOrden: 5,
                     },
                 ],
-                total: 3,
+                total: 5,
                 page: 1,
                 pageSize: 10,
             };
@@ -249,12 +279,17 @@
         alert("Agregar");
     }
 
+    function handleReorder(reorderedItems: any[]) {
+        console.log("Reordered items:", reorderedItems);
+    }
+
     // Initial data load
     onMount(async () => {
         await enlistar();
     });
 
     const codePreview = `<CrudWrapper
+    Titulo_Crud="Catálogo Meses"
     {todosLosObjetos}
     {tableH}
     {totalRows}
@@ -265,10 +300,20 @@
     bind:selectedSort
     {loading}
     showAddButton={true}
-    showImportButton={false}
+    showImportButton={true}
+    dragEnabled={true}
+    orderField="inOrden"
     onFilter={enlistar}
     onAdd={handleAdd}
-/>`;
+    onReorder={handleReorder}
+/>
+
+// Handler for drag and drop reordering
+function handleReorder(reorderedItems: any[]) {
+    console.log("Reordered items:", reorderedItems);
+    // Here you would typically send the reordered items to your API
+    // For this demo, we'll just log them
+}`;
 </script>
 
 <svelte:head>
@@ -289,9 +334,28 @@
         {loading}
         showAddButton={true}
         showImportButton={true}
+        dragEnabled={true}
+        orderField="inOrden"
         onFilter={enlistar}
         onAdd={handleAdd}
+        onReorder={handleReorder}
     />
+    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Drag and Drop Feature</h2>
+        </div>
+        <div class="mb-4">
+            <p class="text-gray-700 mb-2">
+                The table now supports drag and drop reordering! Try dragging rows using the drag handle (⋮⋮) in the first column.
+            </p>
+            <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                <li>Click and drag the handle to reorder rows</li>
+                <li>Visual feedback shows when dragging and dropping</li>
+                <li>The <code>onReorder</code> event returns an array of items that changed position</li>
+                <li>Each item includes the original data plus the new <code>inOrden</code> value</li>
+            </ul>
+        </div>
+    </div>
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Code Preview</h2>
