@@ -54,7 +54,10 @@ import ImageModal from "./ImageModal.svelte";
 
     // Drag and drop functions
     function handleDragStart(event: DragEvent, index: number) {
-        if (!dragEnabled) return;
+        if (!dragEnabled || !todosLosRegistros || todosLosRegistros.length === 0 || loading) {
+            event.preventDefault();
+            return;
+        }
         
         draggedIndex = index;
         isDragging = true;
@@ -82,6 +85,12 @@ import ImageModal from "./ImageModal.svelte";
 
     function handleDrop(event: DragEvent, dropIndex: number) {
         if (!dragEnabled || draggedIndex === null || draggedIndex === dropIndex) {
+            resetDragState();
+            return;
+        }
+        
+        // Prevent reordering if there's no data or data is still loading
+        if (!todosLosRegistros || todosLosRegistros.length === 0 || loading) {
             resetDragState();
             return;
         }
@@ -238,12 +247,12 @@ import ImageModal from "./ImageModal.svelte";
                         <tr
                             class="table-row {selectedRowId === index
                                 ? 'selected'
-                                : ''} {dragEnabled ? 'draggable-row' : ''} {draggedIndex === index
+                                : ''} {dragEnabled && !loading && todosLosRegistros.length > 0 ? 'draggable-row' : ''} {draggedIndex === index
                                 ? 'dragging'
                                 : ''} {dragOverIndex === index
                                 ? 'drag-over'
                                 : ''}"
-                            draggable={dragEnabled}
+                            draggable={dragEnabled && !loading && todosLosRegistros.length > 0}
                             on:click={() => handleRowClick(index)}
                             on:dragstart={(e) => handleDragStart(e, index)}
                             on:dragover={(e) => handleDragOver(e, index)}
