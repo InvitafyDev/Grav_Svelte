@@ -1,6 +1,6 @@
 <script lang="ts">
-    import './Grav_Modal.css';
-    
+    import "./Grav_Modal.css";
+
     // Define size type
     type ModalSize = "lg" | "md" | "sm";
 
@@ -86,10 +86,7 @@
                 {title}
             </h3>
             <!-- Cerrar Modal -->
-            <button
-                class="modal-close-button"
-                on:click={onClose}
-            >
+            <button class="modal-close-button" on:click={onClose}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="modal-close-icon"

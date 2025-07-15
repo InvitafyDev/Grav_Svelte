@@ -18,6 +18,8 @@
     flex-direction: column;
     background-color: white;
     outline: none;
+    max-height: 90vh;
+    overflow: hidden;
 }
 
 .modal-content.lg {
@@ -107,7 +109,9 @@
 .modal-body {
     position: relative;
     padding: 0.5rem;
-    flex: auto;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 @media (min-width: 640px) {
