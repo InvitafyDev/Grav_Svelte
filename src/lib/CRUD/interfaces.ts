@@ -12,7 +12,7 @@ export interface ButtonConfig {
 export interface TableHeader {
     titulo: string;
     biSort: boolean;
-    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image';
+    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date';
     biBold: boolean;
     /**
      * Alignment for the content of the cells belonging to this header.

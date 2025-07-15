@@ -1,7 +1,7 @@
 <script lang="ts">
-import CrudTableButtons from "./CrudTableButtons.svelte";
-import { openModal, closeModal } from "$lib/Modals/index.js";
-import ImageModal from "./ImageModal.svelte";
+    import CrudTableButtons from "./CrudTableButtons.svelte";
+    import { openModal, closeModal } from "$lib/Modals/index.js";
+    import ImageModal from "./ImageModal.svelte";
 
     // COMPONENTES imports
 
@@ -17,12 +17,12 @@ import ImageModal from "./ImageModal.svelte";
     export let tableHeaders: TableHeader[];
     export let loading: boolean = false;
     export let dragEnabled: boolean = false;
-    export let orderField: string = 'inOrden';
+    export let orderField: string = "inOrden";
 
     let selectedAscOrDesc = "asc";
     let selectedSort = "";
     let selectedRowId: string | number | null = null;
-    
+
     // Drag and drop variables
     let draggedIndex: number | null = null;
     let dragOverIndex: number | null = null;
@@ -54,28 +54,33 @@ import ImageModal from "./ImageModal.svelte";
 
     // Drag and drop functions
     function handleDragStart(event: DragEvent, index: number) {
-        if (!dragEnabled || !todosLosRegistros || todosLosRegistros.length === 0 || loading) {
+        if (
+            !dragEnabled ||
+            !todosLosRegistros ||
+            todosLosRegistros.length === 0 ||
+            loading
+        ) {
             event.preventDefault();
             return;
         }
-        
+
         draggedIndex = index;
         isDragging = true;
-        
+
         if (event.dataTransfer) {
-            event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.setData('text/html', '');
+            event.dataTransfer.effectAllowed = "move";
+            event.dataTransfer.setData("text/html", "");
         }
     }
 
     function handleDragOver(event: DragEvent, index: number) {
         if (!dragEnabled || draggedIndex === null) return;
-        
+
         event.preventDefault();
         dragOverIndex = index;
-        
+
         if (event.dataTransfer) {
-            event.dataTransfer.dropEffect = 'move';
+            event.dataTransfer.dropEffect = "move";
         }
     }
 
@@ -84,54 +89,58 @@ import ImageModal from "./ImageModal.svelte";
     }
 
     function handleDrop(event: DragEvent, dropIndex: number) {
-        if (!dragEnabled || draggedIndex === null || draggedIndex === dropIndex) {
+        if (
+            !dragEnabled ||
+            draggedIndex === null ||
+            draggedIndex === dropIndex
+        ) {
             resetDragState();
             return;
         }
-        
+
         // Prevent reordering if there's no data or data is still loading
         if (!todosLosRegistros || todosLosRegistros.length === 0 || loading) {
             resetDragState();
             return;
         }
-        
+
         event.preventDefault();
-        
+
         // Create a new array with reordered items
         const newItems = [...todosLosRegistros];
         const draggedItem = newItems[draggedIndex];
-        
+
         // Remove the dragged item from its original position
         newItems.splice(draggedIndex, 1);
-        
+
         // Insert the dragged item at the new position
         newItems.splice(dropIndex, 0, draggedItem);
-        
+
         // Update the order values and track changes
         const changes: any[] = [];
-        
+
         newItems.forEach((item, index) => {
             const newOrder = index + 1;
             const originalOrder = item[orderField];
-            
+
             if (originalOrder !== newOrder) {
                 changes.push({
                     ...item,
-                    [orderField]: newOrder
+                    [orderField]: newOrder,
                 });
             }
-            
+
             // Update the item's order in the array
             item[orderField] = newOrder;
         });
-        
+
         // Update the items array
         todosLosRegistros = newItems;
         reorderedItems = changes;
-        
+
         // Emit the reorder event
         dispatch("reorderChange", { reorderedItems: changes });
-        
+
         resetDragState();
     }
 
@@ -152,7 +161,9 @@ import ImageModal from "./ImageModal.svelte";
             <thead class="table-header">
                 <tr>
                     {#if dragEnabled}
-                        <th class="table-header-cell drag-header borderleft non-sortable">
+                        <th
+                            class="table-header-cell drag-header borderleft non-sortable"
+                        >
                             <div class="drag-handle-header">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -178,20 +189,24 @@ import ImageModal from "./ImageModal.svelte";
                     {#each tableHeaders as tableHeader, index}
                         {#if tableHeader.biSort == false}
                             <th
-                                class="table-header-cell {index == 0 && !dragEnabled
+                                class="table-header-cell {index == 0 &&
+                                !dragEnabled
                                     ? 'borderleft'
                                     : ''} non-sortable"
-                                style="text-align: {tableHeader.align ?? 'center'}"
+                                style="text-align: {tableHeader.align ??
+                                    'center'}"
                             >
                                 {tableHeader.titulo}
                             </th>
                         {:else}
                             <th
                                 on:click={() => dispatchSort(tableHeader.campo)}
-                                class="table-header-cell {index == 0 && !dragEnabled
+                                class="table-header-cell {index == 0 &&
+                                !dragEnabled
                                     ? 'borderleft'
                                     : ''} sortable"
-                                style="text-align: {tableHeader.align ?? 'left'}"
+                                style="text-align: {tableHeader.align ??
+                                    'left'}"
                             >
                                 <h1>{tableHeader.titulo}</h1>
                                 {#if selectedSort == tableHeader.campo}
@@ -247,12 +262,18 @@ import ImageModal from "./ImageModal.svelte";
                         <tr
                             class="table-row {selectedRowId === index
                                 ? 'selected'
-                                : ''} {dragEnabled && !loading && todosLosRegistros.length > 0 ? 'draggable-row' : ''} {draggedIndex === index
+                                : ''} {dragEnabled &&
+                            !loading &&
+                            todosLosRegistros.length > 0
+                                ? 'draggable-row'
+                                : ''} {draggedIndex === index
                                 ? 'dragging'
                                 : ''} {dragOverIndex === index
                                 ? 'drag-over'
                                 : ''}"
-                            draggable={dragEnabled && !loading && todosLosRegistros.length > 0}
+                            draggable={dragEnabled &&
+                                !loading &&
+                                todosLosRegistros.length > 0}
                             on:click={() => handleRowClick(index)}
                             on:dragstart={(e) => handleDragStart(e, index)}
                             on:dragover={(e) => handleDragOver(e, index)}
@@ -261,8 +282,13 @@ import ImageModal from "./ImageModal.svelte";
                             on:dragend={handleDragEnd}
                         >
                             {#if dragEnabled}
-                                <td class="table-cell drag-handle-cell sticky-cell">
-                                    <div class="drag-handle" title="Drag to reorder">
+                                <td
+                                    class="table-cell drag-handle-cell sticky-cell"
+                                >
+                                    <div
+                                        class="drag-handle"
+                                        title="Drag to reorder"
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="16"
@@ -274,12 +300,18 @@ import ImageModal from "./ImageModal.svelte";
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
                                         >
-                                            <circle cx="9" cy="12" r="1"></circle>
-                                            <circle cx="9" cy="5" r="1"></circle>
-                                            <circle cx="9" cy="19" r="1"></circle>
-                                            <circle cx="15" cy="12" r="1"></circle>
-                                            <circle cx="15" cy="5" r="1"></circle>
-                                            <circle cx="15" cy="19" r="1"></circle>
+                                            <circle cx="9" cy="12" r="1"
+                                            ></circle>
+                                            <circle cx="9" cy="5" r="1"
+                                            ></circle>
+                                            <circle cx="9" cy="19" r="1"
+                                            ></circle>
+                                            <circle cx="15" cy="12" r="1"
+                                            ></circle>
+                                            <circle cx="15" cy="5" r="1"
+                                            ></circle>
+                                            <circle cx="15" cy="19" r="1"
+                                            ></circle>
                                         </svg>
                                     </div>
                                 </td>
@@ -287,7 +319,8 @@ import ImageModal from "./ImageModal.svelte";
                             {#each tableHeaders as tableBodyItem, i}
                                 {#if tableBodyItem.tipo == "Text"}
                                     <td
-                                        class="table-cell {i == 0 && !dragEnabled
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -295,14 +328,16 @@ import ImageModal from "./ImageModal.svelte";
                                             class="cell-content {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
-                                            style="text-align: {tableBodyItem.align ?? 'left'}"
+                                            style="text-align: {tableBodyItem.align ??
+                                                'left'}"
                                         >
                                             {item[tableBodyItem.campo] ?? ""}
                                         </p>
                                     </td>
                                 {:else if tableBodyItem.tipo == "Number"}
                                     <td
-                                        class="table-cell {i == 0 && !dragEnabled
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -310,14 +345,16 @@ import ImageModal from "./ImageModal.svelte";
                                             class="cell-content {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
-                                            style="text-align: {tableBodyItem.align ?? 'left'}"
+                                            style="text-align: {tableBodyItem.align ??
+                                                'left'}"
                                         >
                                             {item[tableBodyItem.campo] ?? ""}
                                         </p>
                                     </td>
-                                {:else if tableBodyItem.tipo == "Bool"}
+                                {:else if tableBodyItem.tipo == "Datetime"}
                                     <td
-                                        class="table-cell {i == 0 && !dragEnabled
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -325,7 +362,47 @@ import ImageModal from "./ImageModal.svelte";
                                             class="cell-content {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
-                                            style="text-align: {tableBodyItem.align ?? 'left'}"
+                                            style="text-align: {tableBodyItem.align ??
+                                                'left'}"
+                                        >
+                                            {item[tableBodyItem.campo]?.replace(
+                                                "T",
+                                                ":"
+                                            ) ?? ":"}
+                                        </p>
+                                    </td>
+                                {:else if tableBodyItem.tipo == "Date"}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                    >
+                                        <p
+                                            class="cell-content {tableBodyItem.biBold
+                                                ? 'bold'
+                                                : ''}"
+                                            style="text-align: {tableBodyItem.align ??
+                                                'left'}"
+                                        >
+                                            {item[tableBodyItem.campo]?.split(
+                                                "T"
+                                            )[0] ?? ":"}
+                                        </p>
+                                    </td>
+                                {:else if tableBodyItem.tipo == "Bool"}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                    >
+                                        <p
+                                            class="cell-content {tableBodyItem.biBold
+                                                ? 'bold'
+                                                : ''}"
+                                            style="text-align: {tableBodyItem.align ??
+                                                'left'}"
                                         >
                                             {#if item[tableBodyItem.campo] === true}
                                                 <i class="fas fa-check"></i>
@@ -336,15 +413,20 @@ import ImageModal from "./ImageModal.svelte";
                                     </td>
                                 {:else if tableBodyItem.tipo == "Image"}
                                     <td
-                                        class="table-cell {i == 0 && !dragEnabled
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
                                         <img
                                             class="crud-image cursor-pointer"
-                                            src={item[tableBodyItem.campo] ?? ''}
+                                            src={item[tableBodyItem.campo] ??
+                                                ""}
                                             alt="image"
-                                            on:click={() => openImageModal(item[tableBodyItem.campo])}
+                                            on:click={() =>
+                                                openImageModal(
+                                                    item[tableBodyItem.campo]
+                                                )}
                                         />
                                     </td>
                                 {:else if tableBodyItem.tipo == "Buttons"}
@@ -352,7 +434,7 @@ import ImageModal from "./ImageModal.svelte";
                                         id={item[tableBodyItem.campo]}
                                         buttonsConfig={tableBodyItem.buttonsConfig ??
                                             []}
-                                        align={tableBodyItem.align ?? 'center'}
+                                        align={tableBodyItem.align ?? "center"}
                                     />
                                 {/if}
                             {/each}
@@ -362,7 +444,11 @@ import ImageModal from "./ImageModal.svelte";
             {:else if !loading}
                 <tbody>
                     <tr>
-                        <td colspan={tableHeaders.length + (dragEnabled ? 1 : 0)} class="no-data">
+                        <td
+                            colspan={tableHeaders.length +
+                                (dragEnabled ? 1 : 0)}
+                            class="no-data"
+                        >
                             No hay datos disponibles
                         </td>
                     </tr>

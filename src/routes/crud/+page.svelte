@@ -53,7 +53,7 @@
             biSort: true,
             tipo: "Text",
             biBold: true,
-            align: 'left',
+            align: "left",
             campo: "nvMesTxt",
             buttonsConfig: [],
         },
@@ -62,7 +62,7 @@
             biSort: true,
             tipo: "Text",
             biBold: false,
-            align: 'left',
+            align: "left",
             campo: "nvMesNumeros",
             buttonsConfig: [],
         },
@@ -71,7 +71,7 @@
             biSort: true,
             tipo: "Text",
             biBold: false,
-            align: 'left',
+            align: "left",
             campo: "nvMes",
             buttonsConfig: [],
         },
@@ -80,8 +80,17 @@
             biSort: true,
             tipo: "Number",
             biBold: false,
-            align: 'right',
+            align: "right",
             campo: "inAnio",
+            buttonsConfig: [],
+        },
+        {
+            titulo: "Fecha",
+            biSort: true,
+            tipo: "Date",
+            biBold: false,
+            align: "left",
+            campo: "fecha",
             buttonsConfig: [],
         },
         {
@@ -89,7 +98,7 @@
             biSort: true,
             tipo: "Number",
             biBold: false,
-            align: 'right',
+            align: "right",
             campo: "inCantidadDias",
             buttonsConfig: [],
         },
@@ -98,7 +107,7 @@
             biSort: false,
             tipo: "Text",
             biBold: false,
-            align: 'left',
+            align: "left",
             campo: "txComentariosMes",
             buttonsConfig: [],
         },
@@ -107,7 +116,7 @@
             biSort: true,
             tipo: "Text",
             biBold: false,
-            align: 'left',
+            align: "left",
             campo: "nvStatus",
             buttonsConfig: [],
         },
@@ -116,7 +125,7 @@
             biSort: false,
             tipo: "Bool",
             biBold: false,
-            align: 'center',
+            align: "center",
             campo: "biActivo",
             buttonsConfig: [],
         },
@@ -133,7 +142,7 @@
             biSort: false,
             tipo: "Buttons",
             biBold: false,
-            align: 'center',
+            align: "center",
             campo: "noMesA",
             buttonsConfig: [
                 {
@@ -174,6 +183,7 @@
             biActivo: boolean;
             image: string;
             inOrden: number;
+            fecha: string;
         }[];
         total: number;
         page: number;
@@ -200,6 +210,7 @@
                         nvMesTxt: "Enero",
                         nvMesNumeros: "01",
                         nvMes: "Ene",
+                        fecha: "2024-01-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 31,
                         txComentariosMes: "Primer mes del año",
@@ -213,6 +224,7 @@
                         nvMesTxt: "Febrero",
                         nvMesNumeros: "02",
                         nvMes: "Feb",
+                        fecha: "2024-02-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 29,
                         txComentariosMes: "Mes bisiesto",
@@ -226,6 +238,7 @@
                         nvMesTxt: "Marzo",
                         nvMesNumeros: "03",
                         nvMes: "Mar",
+                        fecha: "2024-03-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 31,
                         txComentariosMes: "Inicio de primavera",
@@ -239,6 +252,7 @@
                         nvMesTxt: "Abril",
                         nvMesNumeros: "04",
                         nvMes: "Abr",
+                        fecha: "2024-04-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 30,
                         txComentariosMes: "Mes de primavera",
@@ -252,6 +266,7 @@
                         nvMesTxt: "Mayo",
                         nvMesNumeros: "05",
                         nvMes: "May",
+                        fecha: "2024-05-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 31,
                         txComentariosMes: "Mes de las madres",
@@ -346,13 +361,21 @@ function handleReorder(reorderedItems: any[]) {
         </div>
         <div class="mb-4">
             <p class="text-gray-700 mb-2">
-                The table now supports drag and drop reordering! Try dragging rows using the drag handle (⋮⋮) in the first column.
+                The table now supports drag and drop reordering! Try dragging
+                rows using the drag handle (⋮⋮) in the first column.
             </p>
             <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
                 <li>Click and drag the handle to reorder rows</li>
                 <li>Visual feedback shows when dragging and dropping</li>
-                <li>The <code>onReorder</code> event returns an array of items that changed position</li>
-                <li>Each item includes the original data plus the new <code>inOrden</code> value</li>
+                <li>
+                    The <code>onReorder</code> event returns an array of items that
+                    changed position
+                </li>
+                <li>
+                    Each item includes the original data plus the new <code
+                        >inOrden</code
+                    > value
+                </li>
             </ul>
         </div>
     </div>
