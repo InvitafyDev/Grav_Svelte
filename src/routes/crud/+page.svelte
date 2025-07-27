@@ -294,6 +294,10 @@
         alert("Agregar");
     }
 
+    function handleImport() {
+        alert("Importar");
+    }
+
     function handleReorder(reorderedItems: any[]) {
         console.log("Reordered items:", reorderedItems);
     }
@@ -320,6 +324,7 @@
     orderField="inOrden"
     onFilter={enlistar}
     onAdd={handleAdd}
+    onImport={handleImport}
     onReorder={handleReorder}
 />
 
@@ -353,6 +358,7 @@ function handleReorder(reorderedItems: any[]) {
         orderField="inOrden"
         onFilter={enlistar}
         onAdd={handleAdd}
+        onImport={handleImport}
         onReorder={handleReorder}
     />
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">

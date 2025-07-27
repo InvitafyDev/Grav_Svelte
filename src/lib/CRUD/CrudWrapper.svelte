@@ -24,6 +24,7 @@ import { ModalContainer } from "$lib/Modals/index.js";
     // Event handlers from parent
     export let onFilter: (filters: FiltrosI[]) => void;
     export let onAdd: () => void;
+    export let onImport: () => void;
     export let onReorder: (reorderedItems: any[]) => void = () => {};
 
     function handleFiltroAplicado() {
@@ -32,6 +33,10 @@ import { ModalContainer } from "$lib/Modals/index.js";
 
     function handleAdd() {
         onAdd();
+    }
+
+    function handleImport() {
+        onImport();
     }
 
     interface PageChangeEvent {
@@ -86,6 +91,7 @@ import { ModalContainer } from "$lib/Modals/index.js";
         bind:Filtros
         on:filtrar={handleFiltroAplicado}
         on:add={handleAdd}
+        on:import={handleImport}
         {showAddButton}
         {showImportButton}
         {Titulo_Crud}

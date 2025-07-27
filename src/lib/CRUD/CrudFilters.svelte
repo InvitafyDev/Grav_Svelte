@@ -159,6 +159,7 @@
                             type="button"
                             on:mouseenter={() => (showTooltip = "Importar")}
                             on:mouseleave={() => (showTooltip = "")}
+                            on:click={() => dispatch("import")}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
