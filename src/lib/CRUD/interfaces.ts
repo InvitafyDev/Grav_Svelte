@@ -45,5 +45,5 @@ export interface CrudWrapperProps {
     showImportButton?: boolean;
     onFilter: (filters: FiltrosI[]) => void;
     onAdd: () => void;
-    onImport: () => void;
+    onImport?: () => void;
 }
