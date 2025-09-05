@@ -105,8 +105,6 @@
     const codeExamples = {
         text: 'let textInput = "";\n\n<InputFormText \n    label="Text Input" \n    bind:valueVar={textInput} \n/>',
         number: 'let numberInput: number | null = null;\n\n<InputFormNumber \n    label="Number Input" \n    bind:valueVar={numberInput} \n/>',
-        textWithSlide:
-            'let textWithSlideInput = "";\n\n<InputFormTextWithSlide\n    label="Text with Slide"\n    bind:valueVar={textWithSlideInput}\n/>',
         textArea:
             'let textAreaInput = "";\n\n<InputFormTextArea\n    label="Text Area"\n    bind:valueVar={textAreaInput}\n    rows={4}\n/>',
         date: 'let dateInput: string | null = null;\n\n<InputFormDate \n    label="Date Input" \n    bind:valueVar={dateInput} \n/>',

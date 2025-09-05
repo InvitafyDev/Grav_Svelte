@@ -9,7 +9,6 @@
         InputFormImage,
         InputFormSelect,
         InputFormTextArea,
-        InputFormTextWithSlide,
         InputFormCascade,
     } from "$lib/Inputs/index.js";
 
@@ -28,7 +27,6 @@
     let base64Preview = "";
     let selectInput: SelectValue | null = null;
     let textAreaInput = "";
-    let textWithSlideInput = "";
     let cascadeInput: Record<string, string | null> = {};
 
     // Example data for cascade select
@@ -165,7 +163,7 @@ npm install grav-svelte@0.0.12</pre>
 import InputFormText from 'grav-svelte';
 
 // In your component
-&lt;InputFormText label="Name" bind:valueVar={name} /&gt;</pre>
+&lt;InputFormText label="Name" bind:valueVar=NAME /&gt;</pre>
 
             <h3 class="text-lg font-medium text-gray-800 mb-2">
                 Component Documentation
@@ -186,7 +184,6 @@ import InputFormText from 'grav-svelte';
                         <li>InputFormImage - Image upload with preview</li>
                         <li>InputFormSelect - Dropdown select</li>
                         <li>InputFormTextArea - Multi-line text input</li>
-                        <li>InputFormTextWithSlide - Text with slider</li>
                         <li>InputFormCascade - Cascading dropdowns</li>
                     </ul>
                 </div>

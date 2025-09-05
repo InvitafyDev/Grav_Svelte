@@ -20,11 +20,13 @@
     outline: none;
     max-height: 90vh;
     overflow: hidden;
+    border-radius: 1rem;
 }
 
 .modal-content.lg {
     width: 100%;
     min-height: 100vh;
+    border-radius: 0;
 }
 
 .modal-content.md {
