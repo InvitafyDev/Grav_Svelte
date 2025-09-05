@@ -18,7 +18,16 @@
     const sizes = ["sm", "md", "lg"] as const;
 
     // Function to generate code preview
-    $: codePreview = `<Grav_Modal
+    $: codePreview = `
+   
+    <!-- +layout.svelte -->
+    import { ModalContainer } from "grav-svelte";
+    <ModalContainer />
+    
+    <!-- component.svelte -->
+    import { Grav_Modal, closeModal, openModal } from "grav-svelte";
+
+    <Grav_Modal
     title="${modalConfig.title}"
     size="${modalConfig.size}"
     isVista={${modalConfig.isVista}}
@@ -27,14 +36,14 @@
     saveButtonText="${modalConfig.saveButtonText}"
     cancelButtonText="${modalConfig.cancelButtonText}"
     onClose={() => {
-        // Your close logic
+        closeModal("modalID");
     }}
     onSave={() => {
         // Your save logic
     }}
->
-    {/* Your modal content */}
-</Grav_Modal>`;
+    >
+        {/* Your modal content */}
+    </Grav_Modal>`;
 </script>
 
 <div class="p-8">
