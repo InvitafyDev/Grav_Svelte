@@ -55,7 +55,7 @@
             biSort: true,
             tipo: "Text",
             biBold: true,
-            align: "left",
+            align: "right",
             campo: "nvMesTxt",
             buttonsConfig: [],
         },
@@ -144,7 +144,7 @@
             biSort: false,
             tipo: "Buttons",
             biBold: false,
-            align: "center",
+            align: "right",
             campo: "noMesA",
             buttonsConfig: [
                 {
@@ -273,6 +273,7 @@
                         inCantidadDias: 31,
                         txComentariosMes: "Mes de las madres",
                         nvStatus: "Activo",
+
                         biActivo: true,
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
                         inOrden: 5,

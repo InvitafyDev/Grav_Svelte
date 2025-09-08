@@ -585,6 +585,7 @@
         white-space: nowrap;
         vertical-align: middle;
         z-index: 10;
+        padding-right: 0.3rem;
     }
 
     .sticky-cell {

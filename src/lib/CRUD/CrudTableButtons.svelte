@@ -37,6 +37,7 @@
     .table-cell {
         font-size: 0.75rem;
         text-align: center;
+        padding-right: 0.3rem;
     }
 
     .button-group {
