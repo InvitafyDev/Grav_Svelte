@@ -337,12 +337,12 @@ function handleReorder(reorderedItems: any[]) {
 </script>
 
 <svelte:head>
-    <title>Catálogo Meses</title>
+    <title>Ejemplo de CRUD</title>
 </svelte:head>
 
 <div class="min-h-screen p-4 bg-white">
     <CrudWrapper
-        Titulo_Crud="Catálogo Meses"
+        Titulo_Crud="Ejemplo de CRUD"
         {todosLosObjetos}
         {tableH}
         {totalRows}

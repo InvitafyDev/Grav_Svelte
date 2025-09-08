@@ -80,7 +80,7 @@
         <div class=" md:px-10 mx-auto w-full sm:px-5">
             <main>
                 <main class="flex-1 p-8 bg-gray-100">
-                    <h1 class="text-2xl font-bold mb-4">Sidebar Example</h1>
+                    <h1 class="text-2xl font-bold mb-4">Ejemplo de Sidebar</h1>
                     <p class="text-gray-600">
                         This is an example of how to use the Sidebar component
                         in your application. The sidebar includes collapsible

@@ -121,7 +121,7 @@
 
 <div class="max-w-4xl mx-auto p-8">
     <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">
-        Input Components Examples
+        Ejemplo de Inputs
     </h1>
 
     <section class="mb-8 p-6 bg-white rounded-lg shadow-sm">

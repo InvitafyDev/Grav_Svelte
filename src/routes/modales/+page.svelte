@@ -47,7 +47,7 @@
 </script>
 
 <div class="p-8">
-    <h1 class="text-2xl font-bold mb-6">Modal Component Demo</h1>
+    <h1 class="text-2xl font-bold mb-6">Ejemplo de Modales</h1>
 
     <!-- Configuration Form -->
     <div class="bg-white p-6 rounded-lg shadow-md mb-6">
