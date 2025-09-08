@@ -1,5 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { ModalContainer } from "$lib/index.js";
     import "../app.css";
 </script>
 
@@ -112,6 +113,7 @@
 
     <!-- Page content -->
     <main class="sm:pt-0 pt-16">
+        <ModalContainer />
         <slot />
     </main>
 </div>

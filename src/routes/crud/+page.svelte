@@ -1,7 +1,9 @@
 <script lang="ts">
     import { CrudWrapper } from "$lib/CRUD/index.js";
     import type { FiltrosI, TableHeader } from "$lib/CRUD/interfaces.js";
+    import { openModal } from "$lib/index.js";
     import { onMount } from "svelte";
+    import ModalCrud from "./ModalCrud.svelte";
 
     let Filtros: FiltrosI[] = [
         {
@@ -361,6 +363,7 @@ function handleReorder(reorderedItems: any[]) {
         onImport={handleImport}
         onReorder={handleReorder}
     />
+
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Drag and Drop Feature</h2>
