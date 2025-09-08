@@ -20,6 +20,7 @@ export interface TableHeader {
      */
     align?: 'left' | 'right' | 'center';
     campo: string;
+    colorCampo?: string;
     buttonsConfig: ButtonConfig[] | null;
 }
 

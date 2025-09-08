@@ -325,7 +325,9 @@
                                             : ''}"
                                     >
                                         <p
-                                            class="cell-content {tableBodyItem.biBold
+                                            class="cell-content {item[
+                                                tableBodyItem.colorCampo ?? ''
+                                            ] ?? ''} {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
                                             style="text-align: {tableBodyItem.align ??
@@ -342,7 +344,8 @@
                                             : ''}"
                                     >
                                         <p
-                                            class="cell-content {tableBodyItem.biBold
+                                            class="cell-content {item[tableBodyItem.colorCampo ?? ''] ??
+                                                ''} {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
                                             style="text-align: {tableBodyItem.align ??
@@ -359,7 +362,8 @@
                                             : ''}"
                                     >
                                         <p
-                                            class="cell-content {tableBodyItem.biBold
+                                            class="cell-content {item[tableBodyItem.colorCampo ?? ''] ??
+                                                ''} {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
                                             style="text-align: {tableBodyItem.align ??
@@ -379,7 +383,8 @@
                                             : ''}"
                                     >
                                         <p
-                                            class="cell-content {tableBodyItem.biBold
+                                            class="cell-content {item[tableBodyItem.colorCampo ?? ''] ??
+                                                ''} {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
                                             style="text-align: {tableBodyItem.align ??
@@ -398,7 +403,8 @@
                                             : ''}"
                                     >
                                         <p
-                                            class="cell-content {tableBodyItem.biBold
+                                            class="cell-content {item[tableBodyItem.colorCampo ?? ''] ??
+                                                ''} {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
                                             style="text-align: {tableBodyItem.align ??
@@ -585,7 +591,7 @@
         white-space: nowrap;
         vertical-align: middle;
         z-index: 10;
-        padding-right: 0.3rem;
+        
     }
 
     .sticky-cell {
@@ -600,6 +606,11 @@
         word-break: break-word;
         font-size: 0.875rem;
         color: #4a4a4a;
+        margin-left: 3px;
+        margin-right: 3px;
+        padding-right: 0.3rem;
+        padding-left: 0.3rem;
+        border-radius: 0.375rem;
     }
 
     .cell-content.bold {
