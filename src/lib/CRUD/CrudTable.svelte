@@ -163,7 +163,7 @@
                 <tr>
                     {#if dragEnabled}
                         <th
-                            class="table-header-cell drag-header borderleft non-sortable"
+                            class="table-header-cell drag-header  non-sortable"
                         >
                             <div class="drag-handle-header">
                                 <svg
@@ -516,17 +516,14 @@
         position: sticky;
         top: 0;
         z-index: 20;
-        background-color: #fafafa;
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid #e5e7eb;
+        border-bottom-style: solid;
+        border-bottom-color: #e0e0e0;
+        border-bottom-width: var(--grav-crud-cell-border-width, 1.5px);
     }
 
     .table-header-cell {
         padding: 0.75rem;
         text-align: center;
-        border-width: var(--grav-crud-table-border-width, 1.5px);
-        border-style: solid;
-        border-color: #e0e0e0;
         padding-top: 0.25rem;
         padding-bottom: 0.25rem;
         font-family: var(--grav-crud-header-font-family, 'mundial', sans-serif);
@@ -535,12 +532,9 @@
         line-height: var(--grav-crud-header-line-height, 1.5);
         text-transform: uppercase;
         white-space: nowrap;
-        background-color: #f5f5f5;
+        background-color: transparent;
         color: #4a4a4a;
         border-left: 0;
-        border-right-width: var(--grav-crud-table-border-width, 1.5px);
-        border-right-style: solid;
-        border-right-color: #e0e0e0;
     }
 
     .non-sortable {
@@ -706,9 +700,6 @@
         text-align: center;
         padding: 0.5rem;
         cursor: grab;
-        border-right-width: var(--grav-crud-table-border-width, 1.5px);
-        border-right-style: solid;
-        border-right-color: #e0e0e0;
     }
 
     .drag-handle {

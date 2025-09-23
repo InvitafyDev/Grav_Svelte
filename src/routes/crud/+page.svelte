@@ -120,7 +120,7 @@
             biSort: true,
             tipo: "Number",
             biBold: false,
-            align: "right",
+            align: "center",
             campo: "inMesesFaltantes",
             buttonsConfig: [],
         },
