@@ -76,6 +76,14 @@ Add this to your `app.css` to customize typography:
   --grav-font-family-heading: 'Montserrat', sans-serif;
   --grav-crud-title-font-size: 2rem;
   --grav-crud-title-font-weight: 800;
+
+  /* Customize border radius globally */
+  --grav-border-radius-md: 1rem;  /* Makes all buttons more rounded */
+  --grav-crud-image-border-radius: 0.5rem;  /* Only affects images */
+
+  /* Customize border width globally */
+  --grav-border-width-normal: 2px;  /* Makes all borders thicker */
+  --grav-crud-table-border-width: 1px;  /* Only table borders */
 }
 ```
 
@@ -97,6 +105,33 @@ Add this to your `app.css` to customize typography:
 | `--grav-crud-button-font-family` | Font family for buttons | `var(--grav-font-family)` |
 | `--grav-crud-button-font-size` | Font size for buttons | `0.875rem` |
 | `--grav-crud-button-font-weight` | Font weight for buttons | `500` |
+
+#### Border Radius Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `--grav-border-radius-xs` | Extra small border radius | `0.125rem` |
+| `--grav-border-radius-sm` | Small border radius | `0.25rem` |
+| `--grav-border-radius-md` | Medium border radius | `0.5rem` |
+| `--grav-border-radius-lg` | Large border radius | `0.75rem` |
+| `--grav-border-radius-xl` | Extra large border radius | `1rem` |
+| `--grav-crud-button-border-radius` | Border radius for CRUD buttons | `var(--grav-border-radius-md)` |
+| `--grav-crud-image-border-radius` | Border radius for CRUD images | `var(--grav-border-radius-sm)` |
+| `--grav-crud-filter-border-radius` | Border radius for filters | `var(--grav-border-radius-md)` |
+| `--grav-crud-tooltip-border-radius` | Border radius for tooltips | `var(--grav-border-radius-sm)` |
+
+#### Border Width Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `--grav-border-width-thin` | Thin border width | `1px` |
+| `--grav-border-width-normal` | Normal border width | `1.5px` |
+| `--grav-border-width-thick` | Thick border width | `2px` |
+| `--grav-border-width-extra` | Extra thick border width | `3px` |
+| `--grav-crud-button-border-width` | Border width for CRUD buttons | `var(--grav-border-width-normal)` |
+| `--grav-crud-table-border-width` | Border width for table elements | `var(--grav-border-width-normal)` |
+| `--grav-crud-filter-border-width` | Border width for filters | `var(--grav-border-width-normal)` |
+| `--grav-crud-cell-border-width` | Border width for table cells | `var(--grav-border-width-normal)` |
 
 ### Common Font Examples
 

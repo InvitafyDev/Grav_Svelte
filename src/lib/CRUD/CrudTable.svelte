@@ -414,7 +414,7 @@
                                             {#if item[tableBodyItem.campo] === true}
                                                 <i class="fas fa-check"></i>
                                             {:else}
-                                                -
+                                            <i class="fas fa-minus"></i>
                                             {/if}
                                         </p>
                                     </td>
@@ -525,7 +525,9 @@
     .table-header-cell {
         padding: 0.75rem;
         text-align: center;
-        border: 1px solid #e0e0e0;
+        border-width: var(--grav-crud-table-border-width, 1.5px);
+        border-style: solid;
+        border-color: #e0e0e0;
         padding-top: 0.25rem;
         padding-bottom: 0.25rem;
         font-family: var(--grav-crud-header-font-family, 'mundial', sans-serif);
@@ -537,7 +539,9 @@
         background-color: #f5f5f5;
         color: #4a4a4a;
         border-left: 0;
-        border-right: 1px solid #e0e0e0;
+        border-right-width: var(--grav-crud-table-border-width, 1.5px);
+        border-right-style: solid;
+        border-right-color: #e0e0e0;
     }
 
     .non-sortable {
@@ -550,7 +554,9 @@
     }
 
     .borderleft {
-        border-left: 1px solid #e0e0e0;
+        border-left-width: var(--grav-crud-table-border-width, 1.5px);
+        border-left-style: solid;
+        border-left-color: #e0e0e0;
     }
 
     .sort-icon {
@@ -564,7 +570,9 @@
     }
 
     .table-row {
-        border-bottom: 2px solid #e0e0e0;
+        border-bottom-width: var(--grav-crud-cell-border-width, 1.5px);
+        border-bottom-style: solid;
+        border-bottom-color: #e0e0e0;
         cursor: pointer;
         transition: background-color 0.2s;
     }
@@ -672,10 +680,12 @@
     }
 
     .crud-image {
-        max-width: 4rem;
-        max-height: 4rem;
-        object-fit: contain;
-        margin: auto;
+        width: 4rem;
+        height: 4rem;
+        object-fit: cover;
+        margin: 0.5rem auto;
+        border-radius: var(--grav-crud-image-border-radius, 0.25rem);
+        display: block;
     }
 
     /* Drag and drop styles */
@@ -697,7 +707,9 @@
         text-align: center;
         padding: 0.5rem;
         cursor: grab;
-        border-right: 1px solid #e0e0e0;
+        border-right-width: var(--grav-crud-table-border-width, 1.5px);
+        border-right-style: solid;
+        border-right-color: #e0e0e0;
     }
 
     .drag-handle {

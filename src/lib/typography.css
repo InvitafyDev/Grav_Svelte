@@ -54,6 +54,33 @@
     --grav-crud-filter-font-size: var(--grav-font-size-sm);
     --grav-crud-filter-font-weight: var(--grav-font-weight-normal);
     --grav-crud-filter-line-height: var(--grav-line-height-normal);
+
+    /* Border Radius Variables */
+    --grav-border-radius-xs: 0.125rem;     /* 2px - Para elementos muy pequeños */
+    --grav-border-radius-sm: 0.25rem;      /* 4px - Para elementos pequeños */
+    --grav-border-radius-md: 0.5rem;       /* 8px - Para botones y elementos medianos */
+    --grav-border-radius-lg: 0.75rem;      /* 12px - Para cards y contenedores */
+    --grav-border-radius-xl: 1rem;         /* 16px - Para elementos grandes */
+
+    /* CRUD Specific Border Radius */
+    --grav-crud-button-border-radius: var(--grav-border-radius-md);
+    --grav-crud-image-border-radius: var(--grav-border-radius-sm);
+    --grav-crud-filter-border-radius: var(--grav-border-radius-md);
+    --grav-crud-table-border-radius: var(--grav-border-radius-sm);
+    --grav-crud-tooltip-border-radius: var(--grav-border-radius-sm);
+
+    /* Border Width Variables */
+    --grav-border-width-thin: 1px;         /* Para elementos delgados */
+    --grav-border-width-normal: 1.5px;     /* Valor por defecto */
+    --grav-border-width-thick: 2px;        /* Para elementos prominentes */
+    --grav-border-width-extra: 3px;        /* Para elementos muy destacados */
+
+    /* CRUD Specific Border Width */
+    --grav-crud-button-border-width: var(--grav-border-width-normal);
+    --grav-crud-table-border-width: var(--grav-border-width-normal);
+    --grav-crud-filter-border-width: var(--grav-border-width-normal);
+    --grav-crud-input-border-width: var(--grav-border-width-normal);
+    --grav-crud-cell-border-width: var(--grav-border-width-normal);
 }
 
 /* Example usage for users to customize in their app.css:

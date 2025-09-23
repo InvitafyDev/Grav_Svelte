@@ -240,10 +240,14 @@ import InputFormText from 'grav-svelte';
   --grav-font-family-heading: 'Montserrat', sans-serif;
   --grav-crud-title-font-size: 2rem;
   --grav-crud-title-font-weight: 800;
+
+  /* Customize border width globally */
+  --grav-border-width-normal: 2px;  /* Makes all borders thicker */
+  --grav-crud-table-border-width: 1px;  /* Only table borders */
 }</code></pre>
 
             <h3 class="text-lg font-medium text-gray-800 mb-2">Available Variables</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                     <h4 class="font-medium text-gray-700 mb-2">Font Families</h4>
                     <ul class="text-sm text-gray-600 space-y-1">
@@ -262,6 +266,26 @@ import InputFormText from 'grav-svelte';
                         <li><code>--grav-crud-header-font-size</code></li>
                         <li><code>--grav-crud-cell-font-size</code></li>
                         <li><code>--grav-crud-button-font-weight</code></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-700 mb-2">Border Radius</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li><code>--grav-border-radius-md</code> (0.5rem)</li>
+                        <li><code>--grav-crud-button-border-radius</code></li>
+                        <li><code>--grav-crud-image-border-radius</code></li>
+                        <li><code>--grav-crud-filter-border-radius</code></li>
+                        <li><code>--grav-crud-tooltip-border-radius</code></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-700 mb-2">Border Width</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li><code>--grav-border-width-normal</code> (1.5px)</li>
+                        <li><code>--grav-crud-button-border-width</code></li>
+                        <li><code>--grav-crud-table-border-width</code></li>
+                        <li><code>--grav-crud-filter-border-width</code></li>
+                        <li><code>--grav-crud-cell-border-width</code></li>
                     </ul>
                 </div>
             </div>

@@ -42,7 +42,8 @@
 
     .button-group {
         display: inline-flex;
-        border-radius: 0.375rem;
+        border-radius: var(--grav-crud-button-border-radius, 0.5rem);
+        gap: 0.1rem;
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     }
 
@@ -55,11 +56,12 @@
         z-index: 10000;
         padding: 0.25rem;
         color: white;
+        text-align: center;
         font-size: 0.75rem;
         background-color: #6b7280;
-        border-radius: 0.25rem;
+        border-radius: var(--grav-crud-tooltip-border-radius, 0.25rem);
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-        top: -1.5rem;
+        top: -1.8rem;
         right: -2.5rem;
         pointer-events: none;
     }
@@ -72,8 +74,14 @@
         min-height: 1.5rem;
         min-width: 1.25rem;
         font-size: 0.75rem;
-        border: 1px solid #e5e7eb;
-        color: white;
+        border-width: var(--grav-crud-button-border-width, 1.5px);
+        border-style: solid;
+        background-color: transparent;
+        transition: all 0.2s ease;
+    }
+
+    .action-buttons-group:hover {
+        background-color: rgba(0, 0, 0, 0.05);
     }
 
     @media (min-width: 640px) {
@@ -83,12 +91,12 @@
     }
 
     .rounded-left {
-        border-top-left-radius: 0.5rem;
-        border-bottom-left-radius: 0.5rem;
+        border-top-left-radius: var(--grav-crud-button-border-radius, 0.5rem);
+        border-bottom-left-radius: var(--grav-crud-button-border-radius, 0.5rem);
     }
 
     .rounded-right {
-        border-top-right-radius: 0.5rem;
-        border-bottom-right-radius: 0.5rem;
+        border-top-right-radius: var(--grav-crud-button-border-radius, 0.5rem);
+        border-bottom-right-radius: var(--grav-crud-button-border-radius, 0.5rem);
     }
 </style>
