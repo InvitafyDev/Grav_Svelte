@@ -84,6 +84,12 @@ Add this to your `app.css` to customize typography:
   /* Customize border width globally */
   --grav-border-width-normal: 2px;  /* Makes all borders thicker */
   --grav-crud-table-border-width: 1px;  /* Only table borders */
+
+  /* Customize CRUD colors */
+  --grav-crud-color-neutral: #1f2937;  /* Darker text */
+  --grav-crud-color-light: #f3f4f6;    /* Lighter hover backgrounds */
+  --grav-crud-color-border: #d1d5db;   /* Lighter borders */
+  --grav-crud-color-selected: #dbeafe; /* Blue-tinted selection */
 }
 ```
 
@@ -132,6 +138,19 @@ Add this to your `app.css` to customize typography:
 | `--grav-crud-table-border-width` | Border width for table elements | `var(--grav-border-width-normal)` |
 | `--grav-crud-filter-border-width` | Border width for filters | `var(--grav-border-width-normal)` |
 | `--grav-crud-cell-border-width` | Border width for table cells | `var(--grav-border-width-normal)` |
+
+#### CRUD Color Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `--grav-crud-color-neutral` | Text color for headers and cells | `#4a4a4a` |
+| `--grav-crud-color-light` | Background color for hover states | `#f5f5f5` |
+| `--grav-crud-color-border` | Border color for table elements | `#e0e0e0` |
+| `--grav-crud-color-selected` | Background color for selected rows | `#e8e8e8` |
+| `--grav-crud-color-drag` | Background color for drag states | `#f9fafb` |
+| `--grav-crud-color-icon` | Color for icons and secondary elements | `#9ca3af` |
+| `--grav-crud-color-icon-hover` | Color for icons on hover | `#6b7280` |
+| `--grav-crud-color-icon-active` | Color for icons in active state | `#4b5563` |
 
 ### Common Font Examples
 

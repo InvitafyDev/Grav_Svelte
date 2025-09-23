@@ -2,8 +2,12 @@
     import { createPDF, html_table_to_excel } from "$lib/generics.js";
     import CrudFilters from "./CrudFilters.svelte";
     import CrudTable from "./CrudTable.svelte";
-    import type { FiltrosI, TableHeader, CrudWrapperProps } from "./interfaces.js";
-import PaginationCrud from "./PaginationCRUD.svelte";
+    import type {
+        FiltrosI,
+        TableHeader,
+        CrudWrapperProps,
+    } from "./interfaces.js";
+    import PaginationCrud from "./PaginationCRUD.svelte";
 
     export let Filtros: FiltrosI[];
     export let todosLosObjetos: any[];
@@ -18,7 +22,7 @@ import PaginationCrud from "./PaginationCRUD.svelte";
     export let showImportButton: boolean = true;
     export let Titulo_Crud: string;
     export let dragEnabled: boolean = false;
-    export let orderField: string = 'inOrden';
+    export let orderField: string = "inOrden";
 
     // Event handlers from parent
     export let onFilter: (filters: FiltrosI[]) => void;
@@ -97,21 +101,23 @@ import PaginationCrud from "./PaginationCRUD.svelte";
         {showImportButton}
         {Titulo_Crud}
     />
-    <CrudTable
-        tableHeaders={tableH}
-        todosLosRegistros={todosLosObjetos}
-        on:selectedSort={handleSort}
-        on:reorderChange={handleReorder}
-        {loading}
-        {dragEnabled}
-        {orderField}
-    />
-    <PaginationCrud
-        perPage={PageSize}
-        {totalRows}
-        bind:currentPage
-        on:pageChange={handlePageChange}
-    />
+    <div class="crud-table-container">
+        <CrudTable
+            tableHeaders={tableH}
+            todosLosRegistros={todosLosObjetos}
+            on:selectedSort={handleSort}
+            on:reorderChange={handleReorder}
+            {loading}
+            {dragEnabled}
+            {orderField}
+        />
+        <PaginationCrud
+            perPage={PageSize}
+            {totalRows}
+            bind:currentPage
+            on:pageChange={handlePageChange}
+        />
+    </div>
 
     <div class="export-buttons">
         <button
@@ -119,14 +125,14 @@ import PaginationCrud from "./PaginationCRUD.svelte";
             on:click={() => handleExport("excel")}
             class="export-button excel-button"
         >
-            <i class="fas fa-file-excel"></i>EXCEL
+            <i class="fas fa-file-excel"></i> EXCEL
         </button>
         <button
             type="button"
             on:click={() => handleExport("pdf")}
             class="export-button pdf-button"
         >
-            <i class="far fa-file-pdf"></i>PDF
+            <i class="far fa-file-pdf"></i> PDF
         </button>
     </div>
 </div>
@@ -134,6 +140,13 @@ import PaginationCrud from "./PaginationCRUD.svelte";
 <style>
     .crud-wrapper {
         min-height: 100vh;
+    }
+
+    .crud-table-container {
+        background-color: var(--grav-crud-color-bg);
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        box-shadow: var(--grav-crud-box-shadow);
     }
 
     .export-buttons {

@@ -57,7 +57,7 @@
         color: white;
         text-align: center;
         font-size: 0.75rem;
-        background-color: #6b7280;
+        background-color: var(--grav-crud-color-icon-hover);
         border-radius: var(--grav-crud-tooltip-border-radius, 0.25rem);
         top: -1.8rem;
         right: -2.5rem;
@@ -74,7 +74,6 @@
         font-size: 0.75rem;
         border-width: var(--grav-crud-button-border-width, 1.5px);
         border-style: solid;
-        background-color: transparent;
         transition: all 0.2s ease;
     }
 

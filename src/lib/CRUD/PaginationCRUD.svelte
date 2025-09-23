@@ -29,7 +29,7 @@
         <button
             on:click={() => handlePageChange(1)}
             disabled={currentPage === 1}
-            class="mr-auto p-2 text-xs hover:bg-black hover:text-white bg-white  text-black border border-black tracking-wider rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            class="mr-auto p-2 text-xs hover:bg-black hover:text-white bg-white text-black border border-black tracking-wider rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Go to first page"
         >
             <i class="fas fa-chevron-left" />
@@ -76,7 +76,7 @@
         <button
             on:click={() => handlePageChange(totalPages)}
             disabled={currentPage === totalPages}
-            class="ml-auto p-2 text-xs hover:bg-black hover:text-white bg-white  text-black border border-black tracking-wider rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            class="ml-auto p-2 text-xs hover:bg-black hover:text-white bg-white text-black border border-black tracking-wider rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Go to last page"
         >
             <i class="fas fa-chevron-right" />
@@ -87,10 +87,16 @@
 
 <div
     class="flex items-center justify-center my-2 {theme === 'black'
-        ? 'text-black'
+        ? 'texto-pagination'
         : 'text-white'}"
 >
     <p class="text-sm">
         Mostrando: {start + 1} - {end + 1} de {totalRows} registros
     </p>
 </div>
+
+<style>
+    .texto-pagination {
+        color: var(--grav-crud-color-neutral);
+    }
+</style>

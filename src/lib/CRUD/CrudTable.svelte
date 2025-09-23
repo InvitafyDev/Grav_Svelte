@@ -497,7 +497,6 @@
         width: 100%;
         margin-bottom: 0.75rem;
         margin-top: 0.75rem;
-        background-color: white;
     }
 
     .table-scroll {
@@ -507,7 +506,6 @@
 
     .data-table {
         width: 100%;
-        background-color: transparent;
         border-collapse: collapse;
         table-layout: auto;
     }
@@ -517,7 +515,7 @@
         top: 0;
         z-index: 20;
         border-bottom-style: solid;
-        border-bottom-color: #e0e0e0;
+        border-bottom-color: var(--grav-crud-color-border);
         border-bottom-width: var(--grav-crud-cell-border-width, 1.5px);
     }
 
@@ -528,12 +526,12 @@
         padding-bottom: 0.25rem;
         font-family: var(--grav-crud-header-font-family, 'mundial', sans-serif);
         font-size: var(--grav-crud-header-font-size, 0.75rem);
-        font-weight: var(--grav-crud-header-font-weight, 600);
+        font-weight: var(--grav-crud-header-font-weight, 400);
         line-height: var(--grav-crud-header-line-height, 1.5);
         text-transform: uppercase;
         white-space: nowrap;
         background-color: transparent;
-        color: #4a4a4a;
+        color: var(--grav-crud-color-neutral);
         border-left: 0;
     }
 
@@ -549,7 +547,7 @@
     .borderleft {
         border-left-width: var(--grav-crud-table-border-width, 1.5px);
         border-left-style: solid;
-        border-left-color: #e0e0e0;
+        border-left-color: var(--grav-crud-color-border);
     }
 
     .sort-icon {
@@ -565,28 +563,20 @@
     .table-row {
         border-bottom-width: var(--grav-crud-cell-border-width, 1.5px);
         border-bottom-style: solid;
-        border-bottom-color: #e0e0e0;
+        border-bottom-color: var(--grav-crud-color-border);
         cursor: pointer;
         transition: background-color 0.2s;
     }
 
     .table-row:hover {
-        background-color: #f5f5f5;
+        background-color: var(--grav-crud-color-light);
     }
 
-    /* ensure sticky cells follow row hover */
-    .table-row:hover .sticky-cell {
-        background-color: #f5f5f5;
-    }
 
     .table-row.selected {
-        background-color: #e8e8e8;
+        background-color: var(--grav-crud-color-drag);
     }
 
-    /* keep first column selected state consistent */
-    .table-row.selected .sticky-cell {
-        background-color: #e8e8e8;
-    }
 
     .table-cell {
         border-top: 0;
@@ -600,7 +590,6 @@
 
     .sticky-cell {
         position: sticky;
-        background-color: white;
         left: 0;
     }
 
@@ -612,7 +601,7 @@
         font-size: var(--grav-crud-cell-font-size, 0.875rem);
         font-weight: var(--grav-crud-cell-font-weight, 400);
         line-height: var(--grav-crud-cell-line-height, 1.5);
-        color: #4a4a4a;
+        color: var(--grav-crud-color-neutral);
         margin-left: 3px;
         margin-right: 3px;
         padding-right: 0.3rem;
@@ -626,7 +615,7 @@
 
     .no-data {
         text-align: center;
-        padding: 1rem 0;
+        padding: 1rem 0;    
         font-family: var(--grav-crud-cell-font-family, 'mundial', sans-serif);
         font-size: var(--grav-crud-cell-font-size, 0.875rem);
         font-weight: var(--grav-crud-cell-font-weight, 400);
@@ -649,7 +638,7 @@
     .loading-line {
         height: 1rem;
         border-radius: 0.25rem;
-        background-color: #e0e0e0;
+        background-color: var(--grav-crud-color-border);
         margin-bottom: 0.5rem;
         width: 100%;
         margin: 0 0 0.5rem 0;
@@ -692,7 +681,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #9ca3af;
+        color: var(--grav-crud-color-icon);
     }
 
     .drag-handle-cell {
@@ -706,27 +695,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #9ca3af;
+        color: var(--grav-crud-color-icon);
         transition: color 0.2s;
         padding: 0.25rem;
-    }
-
-    .drag-handle:hover {
-        color: #6b7280;
     }
 
     .draggable-row {
         transition: all 0.3s ease;
     }
 
-    .draggable-row:hover .drag-handle {
-        color: #4b5563;
-    }
 
     .draggable-row.dragging {
         opacity: 0.5;
         transform: scale(0.98);
-        background-color: #f9fafb;
+        background-color: var(--grav-crud-color-drag);
         cursor: grabbing;
     }
 
@@ -735,45 +717,9 @@
     }
 
     .draggable-row.drag-over {
-        background-color: #e0f2fe;
-        border-top: 2px solid #0284c7;
-        border-bottom: 2px solid #0284c7;
+        background-color: var(--grav-crud-color-drag);
+        border-top: 2px solid var(--grav-crud-color-drag);
+        border-bottom: 2px solid var(--grav-crud-color-drag);
     }
 
-    .draggable-row.drag-over .sticky-cell {
-        background-color: #e0f2fe;
-    }
-
-    .draggable-row.drag-over .drag-handle-cell {
-        background-color: #e0f2fe;
-    }
-
-    .draggable-row.selected.drag-over {
-        background-color: #bfdbfe;
-    }
-
-    .draggable-row.selected.drag-over .sticky-cell {
-        background-color: #bfdbfe;
-    }
-
-    .draggable-row.selected.drag-over .drag-handle-cell {
-        background-color: #bfdbfe;
-    }
-
-    /* Ensure sticky cells follow drag states */
-    .draggable-row.dragging .sticky-cell {
-        background-color: #f9fafb;
-    }
-
-    .draggable-row.dragging .drag-handle-cell {
-        background-color: #f9fafb;
-    }
-
-    .draggable-row:hover .drag-handle-cell {
-        background-color: #f5f5f5;
-    }
-
-    .draggable-row.selected .drag-handle-cell {
-        background-color: #e8e8e8;
-    }
 </style>

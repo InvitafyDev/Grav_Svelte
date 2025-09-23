@@ -1,20 +1,23 @@
 .crud-filters-container {
-    margin-bottom: 0;
-    margin-top: 0.25rem;
+    border-radius: 0.5rem;
+    background-color: var(--grav-crud-color-bg);
+    width: fit-content;
     padding: 0.5rem;
+    box-shadow: var(--grav-crud-box-shadow);
+    margin-bottom: 0.5rem;
 }
 
 @media (min-width: 640px) {
     .crud-filters-container {
-        margin-bottom: 0;
+        margin-bottom: 0.5rem;
         margin-top: 0.25rem;
     }
 }
 
 .filters-core {
     display: flex;
-    width: 100%;
     gap: 0.75rem;
+    padding: 0.5rem;
 }
 
 @media (max-width: 640px) {
@@ -38,6 +41,7 @@
     line-height: var(--grav-crud-title-line-height, 1.25);
     white-space: nowrap;
     max-width: 100%;
+    color: var(--grav-crud-color-neutral);
 }
 
 .filters-actions {
@@ -71,7 +75,7 @@
     padding: 0.25rem;
     color: white;
     font-size: 0.75rem;
-    background-color: #6b7280;
+    background-color: var(--grav-crud-color-icon-hover);
     border-radius: var(--grav-crud-tooltip-border-radius, 0.25rem);
     top: -1.25rem;
     left: -2.5rem;
@@ -85,7 +89,8 @@
     cursor: pointer;
     border-width: var(--grav-crud-filter-border-width, 1.5px);
     border-style: solid;
-    border-color: black;
+    border-color: var(--grav-crud-color-neutral);
+    color: var(--grav-crud-color-neutral);
     width: 3rem;
     height: 2.5rem;
     border-radius: var(--grav-crud-filter-border-radius, 0.5rem);
@@ -107,8 +112,8 @@
     line-height: var(--grav-crud-button-line-height, 1.5);
     border-width: var(--grav-crud-filter-border-width, 1.5px);
     border-style: solid;
-    border-color: black;
-    color: black;
+    border-color: var(--grav-crud-color-neutral);
+    color: var(--grav-crud-color-neutral);
     border-radius: var(--grav-crud-filter-border-radius, 0.5rem) 0 0 var(--grav-crud-filter-border-radius, 0.5rem);
 }
 
@@ -143,8 +148,8 @@
     line-height: var(--grav-crud-button-line-height, 1.5);
     border-width: var(--grav-crud-filter-border-width, 1.5px);
     border-style: solid;
-    border-color: black;
-    color: black;
+    border-color: var(--grav-crud-color-neutral);
+    color: var(--grav-crud-color-neutral);
     border-radius: var(--grav-crud-filter-border-radius, 0.5rem);
 }
 

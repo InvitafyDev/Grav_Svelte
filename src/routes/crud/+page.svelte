@@ -161,7 +161,7 @@
                 {
                     icon: "fa-solid fa-pencil",
                     tooltip: "Editar",
-                    color: "border-[1.5px] border-blue-500 text-blue-500 hover:bg-blue-700 hover:border-blue-700 hover:text-white",
+                    color: " text-[#fe6b91] border-white bg-white hover:text-white",
                     show: true,
                     action: (id: number) => {
                         alert("Editar");
@@ -170,7 +170,7 @@
                 {
                     icon: "fa-solid fa-trash",
                     tooltip: "Eliminar",
-                    color: " border-[1.5px]  border-red-500 text-red-500 hover:bg-red-700 hover:border-red-700 hover:text-white",
+                    color: " text-[#fe6b91] border-white bg-white hover:text-white",
                     show: true,
                     action: (id: number) => {
                         alert("Eliminar");
@@ -371,7 +371,7 @@ function handleReorder(reorderedItems: any[]) {
     <title>Ejemplo de CRUD</title>
 </svelte:head>
 
-<div class="min-h-screen p-4 bg-white">
+<div class="min-h-screen p-4 bg-gradient-to-br from-[#ff9878] to-[#fe6b91]">
     <CrudWrapper
         Titulo_Crud="Ejemplo de CRUD"
         {todosLosObjetos}
@@ -435,3 +435,9 @@ function handleReorder(reorderedItems: any[]) {
             ></pre>
     </div>
 </div>
+
+<style>
+    .bg-blue-500 {
+        background-color: #0284c7;
+    }
+</style>

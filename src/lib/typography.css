@@ -42,7 +42,7 @@
 
     --grav-crud-cell-font-family: var(--grav-font-family);
     --grav-crud-cell-font-size: var(--grav-font-size-sm);
-    --grav-crud-cell-font-weight: var(--grav-font-weight-normal);
+    --grav-crud-cell-font-weight: var(--grav-font-weight-light);
     --grav-crud-cell-line-height: var(--grav-line-height-normal);
 
     --grav-crud-button-font-family: var(--grav-font-family);
@@ -81,6 +81,18 @@
     --grav-crud-filter-border-width: var(--grav-border-width-normal);
     --grav-crud-input-border-width: var(--grav-border-width-normal);
     --grav-crud-cell-border-width: var(--grav-border-width-normal);
+
+    /* CRUD Color Variables */
+    --grav-crud-color-bg: #ffffff2f;        /* Texto principal en headers y celdas */
+    --grav-crud-color-neutral: #ffffff;        /* Texto principal en headers y celdas */
+    --grav-crud-color-light: #f5f5f549;          /* Fondos hover y estados */
+    --grav-crud-color-border: #f4f4f4;         /* Bordes, separadores y loading */
+    --grav-crud-color-selected: #e8e8e8;       /* Estados seleccionados */
+    --grav-crud-color-drag: #f9fafb62;           /* Estados de drag and drop */
+    --grav-crud-color-icon: #ffffff;           /* Iconos y elementos secundarios */
+    --grav-crud-color-icon-hover: #000000;     /* Iconos en hover */
+    --grav-crud-color-icon-active: #000000;    /* Iconos en estado activo */
+    --grav-crud-box-shadow: 7.2px 7.2px 5px 0px rgba(0, 0, 0, 0.028);
 }
 
 /* Example usage for users to customize in their app.css:
