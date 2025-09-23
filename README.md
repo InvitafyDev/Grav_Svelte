@@ -32,7 +32,8 @@ Built with modern styling features:
 - Tailwind CSS integration
 - Consistent design system
 - Responsive layouts
-- Customizable themes
+- Customizable typography
+- CSS custom properties support
 
 ## Installation
 
@@ -55,6 +56,80 @@ import InputFormText from 'grav-svelte';
 
 // In your component
 <InputFormText label="Name" bind:valueVar={name} />
+```
+
+## Typography Customization
+
+Customize fonts across all components using CSS custom properties. No need to pass props to individual components.
+
+### Quick Setup
+
+Add this to your `app.css` to customize typography:
+
+```css
+/* Import the typography system */
+@import 'grav-svelte/typography.css';
+
+/* Customize fonts */
+:root {
+  --grav-font-family: 'Roboto', sans-serif;
+  --grav-font-family-heading: 'Montserrat', sans-serif;
+  --grav-crud-title-font-size: 2rem;
+  --grav-crud-title-font-weight: 800;
+}
+```
+
+### Available CSS Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `--grav-font-family` | Base font family for all components | `'mundial', sans-serif` |
+| `--grav-font-family-heading` | Font family for headings | `'mundial', sans-serif` |
+| `--grav-crud-title-font-family` | Font family for CRUD titles | `var(--grav-font-family-heading)` |
+| `--grav-crud-title-font-size` | Font size for CRUD titles | `1.5rem` |
+| `--grav-crud-title-font-weight` | Font weight for CRUD titles | `700` |
+| `--grav-crud-header-font-family` | Font family for table headers | `var(--grav-font-family)` |
+| `--grav-crud-header-font-size` | Font size for table headers | `0.875rem` |
+| `--grav-crud-header-font-weight` | Font weight for table headers | `600` |
+| `--grav-crud-cell-font-family` | Font family for table cells | `var(--grav-font-family)` |
+| `--grav-crud-cell-font-size` | Font size for table cells | `0.875rem` |
+| `--grav-crud-cell-font-weight` | Font weight for table cells | `400` |
+| `--grav-crud-button-font-family` | Font family for buttons | `var(--grav-font-family)` |
+| `--grav-crud-button-font-size` | Font size for buttons | `0.875rem` |
+| `--grav-crud-button-font-weight` | Font weight for buttons | `500` |
+
+### Common Font Examples
+
+#### Google Fonts
+```css
+/* In your HTML head */
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+/* In your CSS */
+:root {
+  --grav-font-family: 'Inter', sans-serif;
+  --grav-font-family-heading: 'Poppins', sans-serif;
+}
+```
+
+#### Adobe Fonts (Typekit)
+```css
+/* In your HTML head */
+<link rel="stylesheet" href="https://use.typekit.net/gjf4hoq.css">
+
+/* In your CSS */
+:root {
+  --grav-font-family: 'mundial', sans-serif;
+  --grav-font-family-heading: 'highest-praise', sans-serif;
+}
+```
+
+#### System Fonts
+```css
+:root {
+  --grav-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --grav-font-family-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
 ```
 
 ## Component Documentation

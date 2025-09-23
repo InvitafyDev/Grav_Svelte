@@ -7,6 +7,7 @@
 
     import { createEventDispatcher } from "svelte";
     import type { TableHeader } from "./interfaces.js";
+    import "../typography.css";
 
     const dispatch = createEventDispatcher();
 
@@ -527,10 +528,12 @@
         border: 1px solid #e0e0e0;
         padding-top: 0.25rem;
         padding-bottom: 0.25rem;
-        font-size: 0.75rem;
+        font-family: var(--grav-crud-header-font-family, 'mundial', sans-serif);
+        font-size: var(--grav-crud-header-font-size, 0.75rem);
+        font-weight: var(--grav-crud-header-font-weight, 600);
+        line-height: var(--grav-crud-header-line-height, 1.5);
         text-transform: uppercase;
         white-space: nowrap;
-        font-weight: 600;
         background-color: #f5f5f5;
         color: #4a4a4a;
         border-left: 0;
@@ -604,7 +607,10 @@
         padding-left: 0.25rem;
         white-space: normal;
         word-break: break-word;
-        font-size: 0.875rem;
+        font-family: var(--grav-crud-cell-font-family, 'mundial', sans-serif);
+        font-size: var(--grav-crud-cell-font-size, 0.875rem);
+        font-weight: var(--grav-crud-cell-font-weight, 400);
+        line-height: var(--grav-crud-cell-line-height, 1.5);
         color: #4a4a4a;
         margin-left: 3px;
         margin-right: 3px;
@@ -620,6 +626,10 @@
     .no-data {
         text-align: center;
         padding: 1rem 0;
+        font-family: var(--grav-crud-cell-font-family, 'mundial', sans-serif);
+        font-size: var(--grav-crud-cell-font-size, 0.875rem);
+        font-weight: var(--grav-crud-cell-font-weight, 400);
+        line-height: var(--grav-crud-cell-line-height, 1.5);
     }
 
     .loading-container {

@@ -5,7 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
 	plugins: [sveltekit(), tailwindcss()],
 	optimizeDeps: {
-		include: ['svelte-floating-ui']
+		include: ['svelte-floating-ui'],
+		exclude: ['sweetalert2', 'xlsx']
 	},
 	ssr: {
 		noExternal: ['svelte-floating-ui']

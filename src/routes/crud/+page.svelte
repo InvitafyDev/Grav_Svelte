@@ -187,10 +187,12 @@
         data: {
             noMesA: number;
             nvMesTxt: string;
+            colorMesTxt: string;
             nvMesNumeros: string;
             nvMes: string;
             inAnio: number;
             inCantidadDias: number;
+            colorCantidadDias: string;
             txComentariosMes: string;
             nvStatus: string;
             biActivo: boolean;
@@ -222,13 +224,13 @@
                     {
                         noMesA: 1,
                         nvMesTxt: "Enero",
-                        colorMesTxt: "!text-white bg-yellow-500",
+                        colorMesTxt: "!text-white bg-red-500",
                         nvMesNumeros: "01",
                         nvMes: "Ene",
                         fecha: "2024-01-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 31,
-                        colorCantidadDias: "!text-white bg-cyan-500",
+                        colorCantidadDias: "!text-white bg-blue-500",
                         txComentariosMes: "Primer mes del año",
                         nvStatus: "Activo",
                         biActivo: true,
@@ -245,7 +247,7 @@
                         fecha: "2024-02-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 29,
-                        colorCantidadDias: "!text-white bg-orange-500",
+                        colorCantidadDias: "!text-white bg-red-500",
                         txComentariosMes: "Mes bisiesto",
                         nvStatus: "Activo",
                         biActivo: false,
@@ -262,7 +264,7 @@
                         fecha: "2024-03-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 31,
-                        colorCantidadDias: "!text-white bg-cyan-500",
+                        colorCantidadDias: "!text-white bg-blue-500",
                         txComentariosMes: "Inicio de primavera",
                         nvStatus: "Activo",
                         biActivo: true,
@@ -279,7 +281,7 @@
                         fecha: "2024-04-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 30,
-                        colorCantidadDias: "!text-white bg-orange-500",
+                        colorCantidadDias: "!text-white bg-red-500",
                         txComentariosMes: "Mes de primavera",
                         nvStatus: "Activo",
                         biActivo: true,
@@ -290,13 +292,13 @@
                     {
                         noMesA: 5,
                         nvMesTxt: "Mayo",
-                        colorMesTxt: "!text-white bg-green-500",
+                        colorMesTxt: "!text-white bg-blue-500",
                         nvMesNumeros: "05",
                         nvMes: "May",
                         fecha: "2024-05-01T00:00:00",
                         inAnio: 2024,
                         inCantidadDias: 31,
-                        colorCantidadDias: "!text-white bg-cyan-500",
+                        colorCantidadDias: "!text-white bg-blue-500",
                         txComentariosMes: "Mes de las madres",
                         nvStatus: "Activo",
                         biActivo: true,

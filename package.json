@@ -47,7 +47,8 @@
 		"./Alerts": {
 			"types": "./dist/Alerts/index.d.ts",
 			"svelte": "./dist/Alerts/index.js"
-		}
+		},
+		"./typography.css": "./dist/typography.css"
 	},
 	"dependencies": {
 		"sweetalert2": "^11.22.0",

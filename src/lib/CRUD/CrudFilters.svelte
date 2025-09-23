@@ -7,6 +7,7 @@
     import InputFormDate from "../Inputs/InputFormDate.svelte";
     import { slide } from "svelte/transition";
     import "./CrudFilters.css";
+    import "../typography.css";
 
     import { createEventDispatcher, onMount } from "svelte";
     import type { FiltrosI } from "./interfaces.js";

@@ -1,0 +1,66 @@
+/* Grav Svelte Typography Variables */
+:root {
+    /* Font Families */
+    --grav-font-family: 'mundial', sans-serif;
+    --grav-font-family-heading: 'mundial', sans-serif;
+    --grav-font-family-mono: 'Courier New', monospace;
+
+    /* Font Sizes */
+    --grav-font-size-xs: 0.75rem;      /* 12px */
+    --grav-font-size-sm: 0.875rem;     /* 14px */
+    --grav-font-size-base: 1rem;       /* 16px */
+    --grav-font-size-lg: 1.125rem;     /* 18px */
+    --grav-font-size-xl: 1.25rem;      /* 20px */
+    --grav-font-size-2xl: 1.5rem;      /* 24px */
+    --grav-font-size-3xl: 1.875rem;    /* 30px */
+    --grav-font-size-4xl: 2.25rem;     /* 36px */
+
+    /* Font Weights */
+    --grav-font-weight-light: 300;
+    --grav-font-weight-normal: 400;
+    --grav-font-weight-medium: 500;
+    --grav-font-weight-semibold: 600;
+    --grav-font-weight-bold: 700;
+    --grav-font-weight-extrabold: 800;
+
+    /* Line Heights */
+    --grav-line-height-tight: 1.25;
+    --grav-line-height-normal: 1.5;
+    --grav-line-height-relaxed: 1.625;
+    --grav-line-height-loose: 2;
+
+    /* CRUD Specific Typography */
+    --grav-crud-title-font-family: var(--grav-font-family-heading);
+    --grav-crud-title-font-size: var(--grav-font-size-2xl);
+    --grav-crud-title-font-weight: var(--grav-font-weight-bold);
+    --grav-crud-title-line-height: var(--grav-line-height-tight);
+
+    --grav-crud-header-font-family: var(--grav-font-family);
+    --grav-crud-header-font-size: var(--grav-font-size-sm);
+    --grav-crud-header-font-weight: var(--grav-font-weight-semibold);
+    --grav-crud-header-line-height: var(--grav-line-height-normal);
+
+    --grav-crud-cell-font-family: var(--grav-font-family);
+    --grav-crud-cell-font-size: var(--grav-font-size-sm);
+    --grav-crud-cell-font-weight: var(--grav-font-weight-normal);
+    --grav-crud-cell-line-height: var(--grav-line-height-normal);
+
+    --grav-crud-button-font-family: var(--grav-font-family);
+    --grav-crud-button-font-size: var(--grav-font-size-sm);
+    --grav-crud-button-font-weight: var(--grav-font-weight-medium);
+    --grav-crud-button-line-height: var(--grav-line-height-normal);
+
+    --grav-crud-filter-font-family: var(--grav-font-family);
+    --grav-crud-filter-font-size: var(--grav-font-size-sm);
+    --grav-crud-filter-font-weight: var(--grav-font-weight-normal);
+    --grav-crud-filter-line-height: var(--grav-line-height-normal);
+}
+
+/* Example usage for users to customize in their app.css:
+:root {
+    --grav-font-family: 'Roboto', sans-serif;
+    --grav-font-family-heading: 'Montserrat', sans-serif;
+    --grav-crud-title-font-size: 2rem;
+    --grav-crud-title-font-weight: 800;
+}
+*/
