@@ -162,17 +162,18 @@
         color: white;
         padding: 1rem;
         border-radius: 0.25rem;
+        background-color: var(--grav-crud-color-neutral);
+        color: var(--grav-crud-color-button);
+        border: 1px solid var(--grav-crud-color-neutral);
+    }
+
+    .export-button:hover {
+        transition: all 0.2s ease;
+        background-color: transparent;
+        color: var(--grav-crud-color-neutral);
     }
 
     .export-button i {
         margin-right: 0.75rem;
-    }
-
-    .excel-button {
-        background-color: #16a34a; /* green-600 */
-    }
-
-    .pdf-button {
-        background-color: #f97316; /* orange-500 */
     }
 </style>
