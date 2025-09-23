@@ -91,7 +91,7 @@
                     }
                     return [];
                 });
-                
+
                 dataFetched = await Promise.all(promises);
                 console.log("dataFetched", dataFetched);
             } finally {
@@ -238,12 +238,20 @@
                         </button>
                     {/if}
 
+                    <!-- Btn de aplicar filtro -->
+                    <!-- svelte-ignore a11y_consider_explicit_label -->
+                    <button
+                        type="button"
+                        on:click={() => actualizarFiltro()}
+                        on:mouseenter={() => (showTooltip = "Aplicar")}
+                        on:mouseleave={() => (showTooltip = "nada")}
+                        class="filter-button filter-button-middle"
+                        aria-label="Aplicar filtros"
+                    >
+                        <i class="fas fa-search"></i>
+                    </button>
+
                     <!-- Btn de limpiar filtros -->
-                    <div class="tooltip-container">
-                        {#if showTooltip == "Borrar"}
-                            <div class="tooltip">Borrar filtro</div>
-                        {/if}
-                    </div>
                     <!-- svelte-ignore a11y_consider_explicit_label -->
                     <button
                         type="button"
@@ -269,6 +277,18 @@
                             ></path>
                         </svg>
                     </button>
+
+                    <!-- Tooltip containers (outside the button flow) -->
+                    <div class="tooltip-container">
+                        {#if showTooltip == "Aplicar"}
+                            <div class="tooltip">Aplicar filtro</div>
+                        {/if}
+                    </div>
+                    <div class="tooltip-container">
+                        {#if showTooltip == "Borrar"}
+                            <div class="tooltip">Borrar filtro</div>
+                        {/if}
+                    </div>
                 {/if}
             </div>
 
@@ -282,29 +302,11 @@
             </div>
             <!-- /Filtro 2 -->
 
-            <!-- Btn de aplicar filtro (siempre visible) -->
-            <div class="filter-group" role="group">
-                <div class="tooltip-container">
-                    {#if showTooltip == "Aplicar"}
-                        <div class="tooltip">Aplicar filtro</div>
-                    {/if}
-                </div>
-                <button
-                    type="button"
-                    on:click={() => actualizarFiltro()}
-                    on:mouseenter={() => (showTooltip = "Aplicar")}
-                    on:mouseleave={() => (showTooltip = "nada")}
-                    class="apply-filter-button">Filtrar</button
-                >
-            </div>
-            <!-- /Btn de aplicar filtro -->
         </div>
     </div>
     <!-- Filtros Dynamic -->
     {#if showFilters}
-        <div
-            class="filters-grid"
-        >
+        <div class="filters-grid">
             {#each Filtros as { tipo, label, options, service }, i}
                 {#if tipo == "text"}
                     <div class="filter-item">
