@@ -50,7 +50,7 @@
     <h1 class="text-2xl font-bold mb-6">Ejemplo de Modales</h1>
 
     <!-- Configuration Form -->
-    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+    <div class="bg-white p-6 rounded-lg  mb-6">
         <h2 class="text-xl font-semibold mb-4">Configuration</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="space-y-2">
@@ -59,7 +59,7 @@
                     <input
                         type="text"
                         bind:value={modalConfig.title}
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+                        class="mt-1 block w-full rounded-md border-gray-300  focus:border-emerald-500 focus:ring-emerald-500"
                     />
                 </label>
 
@@ -67,7 +67,7 @@
                     <span class="text-gray-700">Size</span>
                     <select
                         bind:value={modalConfig.size}
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+                        class="mt-1 block w-full rounded-md border-gray-300  focus:border-emerald-500 focus:ring-emerald-500"
                     >
                         {#each sizes as size}
                             <option value={size}>{size.toUpperCase()}</option>
@@ -80,7 +80,7 @@
                     <input
                         type="text"
                         bind:value={modalConfig.saveButtonText}
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+                        class="mt-1 block w-full rounded-md border-gray-300  focus:border-emerald-500 focus:ring-emerald-500"
                     />
                 </label>
 
@@ -89,7 +89,7 @@
                     <input
                         type="text"
                         bind:value={modalConfig.cancelButtonText}
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+                        class="mt-1 block w-full rounded-md border-gray-300  focus:border-emerald-500 focus:ring-emerald-500"
                     />
                 </label>
             </div>
@@ -136,7 +136,7 @@
     </button>
 
     <!-- Code Preview -->
-    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+    <div class="bg-white p-6 rounded-lg  mt-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Code Preview</h2>
             <button

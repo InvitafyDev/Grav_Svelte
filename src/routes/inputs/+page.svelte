@@ -124,7 +124,7 @@
         Ejemplo de Inputs
     </h1>
 
-    <section class="mb-8 p-6 bg-white rounded-lg shadow-sm">
+    <section class="mb-8 p-6 bg-white rounded-lg ">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">Text Inputs</h2>
 
         <div class="mb-6">
@@ -192,7 +192,7 @@
         </div>
     </section>
 
-    <section class="mb-8 p-6 bg-gray-50 rounded-lg shadow-sm">
+    <section class="mb-8 p-6 bg-gray-50 rounded-lg ">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">
             Date and Time Inputs
         </h2>
@@ -229,7 +229,7 @@
         </div>
     </section>
 
-    <section class="mb-8 p-6 bg-gray-50 rounded-lg shadow-sm">
+    <section class="mb-8 p-6 bg-gray-50 rounded-lg ">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">Special Inputs</h2>
 
         <div class="mb-6">
@@ -261,7 +261,7 @@
         </div>
     </section>
 
-    <section class="mb-8 p-6 bg-gray-50 rounded-lg shadow-sm">
+    <section class="mb-8 p-6 bg-gray-50 rounded-lg ">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">Select Inputs</h2>
 
         <div class="mb-6">
@@ -303,7 +303,7 @@
         </div>
     </section>
 
-    <section class="mb-8 p-6 bg-gray-50 rounded-lg shadow-sm">
+    <section class="mb-8 p-6 bg-gray-50 rounded-lg ">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">Image Input</h2>
 
         <div class="mb-6">

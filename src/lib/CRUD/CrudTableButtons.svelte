@@ -44,7 +44,6 @@
         display: inline-flex;
         border-radius: var(--grav-crud-button-border-radius, 0.5rem);
         gap: 0.1rem;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     }
 
     .tooltip-container {
@@ -60,7 +59,6 @@
         font-size: 0.75rem;
         background-color: #6b7280;
         border-radius: var(--grav-crud-tooltip-border-radius, 0.25rem);
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
         top: -1.8rem;
         right: -2.5rem;
         pointer-events: none;

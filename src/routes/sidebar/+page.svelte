@@ -87,7 +87,7 @@
                         sections with modules and notifications.
                     </p>
 
-                    <div class="mt-8 bg-white p-6 rounded-lg shadow-sm">
+                    <div class="mt-8 bg-white p-6 rounded-lg ">
                         <h2 class="text-xl font-semibold mb-4">Script</h2>
                         <pre
                             class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
@@ -143,7 +143,7 @@ let storefullScreen = false;`}</code
                             ></pre>
                     </div>
 
-                    <div class="mt-8 bg-white p-6 rounded-lg shadow-sm">
+                    <div class="mt-8 bg-white p-6 rounded-lg ">
                         <h2 class="text-xl font-semibold mb-4">Content</h2>
                         <pre
                             class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code

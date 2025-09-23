@@ -73,7 +73,6 @@
     font-size: 0.75rem;
     background-color: #6b7280;
     border-radius: var(--grav-crud-tooltip-border-radius, 0.25rem);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     top: -1.25rem;
     left: -2.5rem;
     pointer-events: none;
@@ -90,13 +89,11 @@
     width: 3rem;
     height: 2.5rem;
     border-radius: var(--grav-crud-filter-border-radius, 0.5rem);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .filter-group {
     display: inline-flex;
     gap: 0.2rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .filter-button {
@@ -139,7 +136,6 @@
     height: 3rem;
     cursor: pointer;
     align-items: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     padding: 0.75rem 1rem;
     font-family: var(--grav-crud-button-font-family, 'mundial', sans-serif);
     font-size: var(--grav-crud-button-font-size, 0.875rem);

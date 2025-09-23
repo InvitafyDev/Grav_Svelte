@@ -49,7 +49,7 @@
     <h1 class="text-3xl font-bold mb-8">Ejemplo de Alertas</h1>
 
     <div class="space-y-4">
-        <div class="p-4 bg-white rounded-lg shadow">
+        <div class="p-4 bg-white rounded-lg ">
             <h2 class="text-xl font-semibold mb-4">Alerta de Éxito</h2>
             <div class="mb-4 p-4 bg-gray-100 rounded">
                 {@html "Exito_Alert('¡Operación exitosa!');"}
@@ -62,7 +62,7 @@
             </button>
         </div>
 
-        <div class="p-4 bg-white rounded-lg shadow">
+        <div class="p-4 bg-white rounded-lg ">
             <h2 class="text-xl font-semibold mb-4">Alerta de Error</h2>
             <div class="mb-4 p-4 bg-gray-100 rounded">
                 {@html "Error_Alert('Ha ocurrido un error');"}
@@ -75,7 +75,7 @@
             </button>
         </div>
 
-        <div class="p-4 bg-white rounded-lg shadow">
+        <div class="p-4 bg-white rounded-lg ">
             <h2 class="text-xl font-semibold mb-4">Alerta de Confirmación</h2>
             <div class="mb-4 p-4 bg-gray-100 rounded">
                 {@html `Confirmacion_Alert(

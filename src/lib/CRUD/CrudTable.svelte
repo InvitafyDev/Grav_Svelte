@@ -496,7 +496,6 @@
         z-index: 30;
         width: 100%;
         margin-bottom: 0.75rem;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         margin-top: 0.75rem;
         background-color: white;
     }
@@ -510,16 +509,16 @@
         width: 100%;
         background-color: transparent;
         border-collapse: collapse;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
         table-layout: auto;
     }
 
     .table-header {
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         position: sticky;
         top: 0;
         z-index: 20;
-        background-color: white;
+        background-color: #fafafa;
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid #e5e7eb;
     }
 
     .table-header-cell {
@@ -736,7 +735,6 @@
     .draggable-row.dragging {
         opacity: 0.5;
         transform: scale(0.98);
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
         background-color: #f9fafb;
         cursor: grabbing;
     }
@@ -749,7 +747,6 @@
         background-color: #e0f2fe;
         border-top: 2px solid #0284c7;
         border-bottom: 2px solid #0284c7;
-        box-shadow: 0 4px 8px -2px rgba(2, 132, 199, 0.2);
     }
 
     .draggable-row.drag-over .sticky-cell {

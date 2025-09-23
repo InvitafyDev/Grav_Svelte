@@ -75,7 +75,7 @@
     <section class="mb-12">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Features</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="bg-white p-6 rounded-lg ">
                 <h3 class="text-lg font-medium text-gray-800 mb-2">
                     Form Inputs
                 </h3>
@@ -93,7 +93,7 @@
                 </ul>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="bg-white p-6 rounded-lg ">
                 <h3 class="text-lg font-medium text-gray-800 mb-2">Modals</h3>
                 <p class="text-gray-600 mb-4">
                     Flexible modal components for various use cases:
@@ -106,7 +106,7 @@
                 </ul>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="bg-white p-6 rounded-lg ">
                 <h3 class="text-lg font-medium text-gray-800 mb-2">
                     CRUD Operations
                 </h3>
@@ -121,7 +121,7 @@
                 </ul>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="bg-white p-6 rounded-lg ">
                 <h3 class="text-lg font-medium text-gray-800 mb-2">Styling</h3>
                 <p class="text-gray-600 mb-4">
                     Built with modern styling features:
@@ -141,7 +141,7 @@
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">
             Getting Started
         </h2>
-        <div class="bg-white p-6 rounded-lg shadow-sm">
+        <div class="bg-white p-6 rounded-lg ">
             <h3 class="text-lg font-medium text-gray-800 mb-2">Installation</h3>
             <p class="text-gray-600 mb-4">
                 First, install the needed dependencies:
@@ -221,7 +221,7 @@ import InputFormText from 'grav-svelte';
 
     <section class="mb-12">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Typography Customization</h2>
-        <div class="bg-white p-6 rounded-lg shadow-sm">
+        <div class="bg-white p-6 rounded-lg ">
             <p class="text-gray-600 mb-4">
                 Customize fonts across all components using CSS custom properties. No need to pass props to individual components.
             </p>
@@ -294,7 +294,7 @@ import InputFormText from 'grav-svelte';
 
     <section class="mb-12">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Documentation</h2>
-        <div class="bg-white p-6 rounded-lg shadow-sm">
+        <div class="bg-white p-6 rounded-lg ">
             <p class="text-gray-600 mb-4">
                 Explore our components and their usage in the following
                 sections:
