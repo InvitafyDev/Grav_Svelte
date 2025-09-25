@@ -272,6 +272,7 @@
                     label="Mostrando:"
                     valueVar={localPageSizeStr}
                     on:input={handlePageSizeInput}
+                    noMarginTop={true}
                 />
             </div>
             <!-- /Filtro 2 -->

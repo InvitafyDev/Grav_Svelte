@@ -23,6 +23,12 @@
                 { value: "03", label: "Marzo" },
             ],
         },
+        {
+            label: "Mes",
+            value: "",
+            tipo: "text",
+            options: [],
+        },
     ];
 
     async function fakeService() {

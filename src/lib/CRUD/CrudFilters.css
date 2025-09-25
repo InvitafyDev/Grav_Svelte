@@ -6,12 +6,15 @@
     box-shadow: var(--grav-crud-box-shadow);
     margin-bottom: 0.5rem;
     padding-top: 0.7rem;
+    width: 100%;
+
 }
 
 @media (min-width: 640px) {
     .crud-filters-container {
         margin-bottom: 0.5rem;
         margin-top: 0.25rem;
+        width: fit-content;
     }
 }
 
@@ -26,6 +29,7 @@
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
+        padding: 0;
     }
 }
 
@@ -100,6 +104,14 @@
 .filter-group {
     display: inline-flex;
     gap: 0.2rem;
+    padding: 0.5rem;
+}
+
+@media (min-width: 640px) {
+    .filter-group {
+        padding: 0;
+        gap: 0.2rem;
+    }
 }
 
 .filter-button {
@@ -116,6 +128,7 @@
     border-color: var(--grav-crud-color-neutral);
     color: var(--grav-crud-color-neutral);
     border-radius: var(--grav-crud-filter-border-radius, 0.5rem) 0 0 var(--grav-crud-filter-border-radius, 0.5rem);
+    padding: 0.8rem;
 }
 
 @media (min-width: 640px) {
@@ -163,19 +176,19 @@
 
 .filters-grid {
     display: grid;
-    gap: 0.75rem;
     grid-template-columns: repeat(1, 1fr);
+    gap: 0.2rem;
 }
 
 @media (min-width: 640px) {
     .filters-grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(5, 1fr); 
+        gap: 0.8rem;
     }
 }
 
 .filter-item {
     position: relative;
-    z-index: 0;
     margin: auto 0;
 }
 
@@ -188,10 +201,6 @@
 }
 
 .filter-item-date {
-    z-index: 50;
-}
-
-.filter-item-select {
     z-index: 50;
 }
 

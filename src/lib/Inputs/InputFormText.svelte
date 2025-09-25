@@ -4,9 +4,10 @@
     export let disabled = false;
     export let obligatory = false;
     export let icon: string | null = null;
+    export let noMarginTop = false;
 </script>
 
-<div class="input-container">
+<div class="input-container" class:no-margin={noMarginTop}>
     {#if icon}
         <div class="icon-wrapper">
             <i class="{icon} icon"></i>
@@ -36,6 +37,11 @@
         align-items: center;
         border: 1.2px solid var(--grav-crud-color-neutral);
         border-radius: 0.5rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+        margin-top: 1.95rem;
     }
 
     .icon-wrapper {
@@ -88,8 +94,8 @@
         left: 0;
         top: 0;
         color: var(--grav-crud-color-neutral);
-        translate: 0rem -1.6rem;
-        scale: 0.75;
+        translate: -0.6rem -2.05rem;
+        scale: 1;
     }
 
     .input-field:placeholder-shown + .input-label {
@@ -98,5 +104,15 @@
 
     .required-mark {
         color: #dc2626;
+    }
+
+    .no-margin {
+        margin-top: 0;
+    }
+
+    .no-margin .input-field:focus + .input-label,
+    .no-margin .input-field:not(:placeholder-shown) + .input-label {
+        translate: -0.6rem -1.4rem;
+        font-size: 0.7rem;
     }
 </style>

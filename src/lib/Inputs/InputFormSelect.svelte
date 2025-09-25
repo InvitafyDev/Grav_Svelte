@@ -29,13 +29,14 @@
         disabled={disabledVar}
         class="select-input"
         inputStyles="font-size: 12px; color: currentColor !important; background-color: transparent;"
-        containerStyles="font-size: 12px; background-color: transparent; border: 1px solid currentColor;"
+        containerStyles="font-size: 12px; background-color: transparent; border: 1.2px solid currentColor; border-radius: 0.5rem;"
         placeholder="Seleccione una opción"
         --placeholder-color="currentColor"
         --chevron-color="currentColor"
         --item-color="black"
         --item-hover-bg=" lightgray"
         --item-is-active-bg="black"
+        --list-z-index="9999"
         showChevron
     />
 </div>
@@ -50,7 +51,8 @@
     }
 
     .select-label {
-        font-size: 0.875rem;
-        color: var(--grav-crud-color-neutral); 
+        font-size: 1rem;
+        color: var(--grav-crud-color-neutral);
+        margin-bottom: 0.25rem;
     }
 </style>
