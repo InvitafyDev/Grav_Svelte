@@ -1,7 +1,14 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { ModalContainer } from "$lib/index.js";
+    import { slide } from "svelte/transition";
     import "../app.css";
+
+    let mobileMenuOpen = false;
+
+    function toggleMobileMenu() {
+        mobileMenuOpen = !mobileMenuOpen;
+    }
 </script>
 
 <div class="min-h-screen bg-gray-100">
@@ -61,12 +68,34 @@
                         </a>
                     </div>
                 </div>
+                <!-- Mobile menu button -->
+                <div class="sm:hidden flex items-center">
+                    <button
+                        on:click={toggleMobileMenu}
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                        aria-expanded={mobileMenuOpen}
+                    >
+                        <span class="sr-only">Abrir menú principal</span>
+                        {#if !mobileMenuOpen}
+                            <!-- Hamburger icon -->
+                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        {:else}
+                            <!-- Close icon -->
+                            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        {/if}
+                    </button>
+                </div>
             </div>
         </div>
 
         <!-- Mobile menu -->
-        <div class="sm:hidden">
-            <div class="pt-2 pb-3 space-y-1">
+        {#if mobileMenuOpen}
+            <div class="sm:hidden" transition:slide={{ duration: 300 }}>
+                <div class="pt-2 pb-3 space-y-1">
                 <a
                     href="/inputs"
                     class="{$page.url.pathname === '/inputs'
@@ -107,8 +136,9 @@
                 >
                     Alerts
                 </a>
+                </div>
             </div>
-        </div>
+        {/if}
     </nav>
 
     <!-- Page content -->
