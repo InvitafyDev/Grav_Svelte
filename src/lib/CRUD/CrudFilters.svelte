@@ -8,12 +8,12 @@
     import { slide } from "svelte/transition";
     import "./CrudFilters.css";
     import "../typography.css";
+    import Tooltip from "./Tooltip.svelte";
 
     import { createEventDispatcher, onMount } from "svelte";
     import type { FiltrosI } from "./interfaces.js";
     const dispatch = createEventDispatcher();
 
-    let showTooltip = "";
     export let PageSize = 50;
     let localPageSize = 50;
     let localPageSizeStr = "50";
@@ -116,18 +116,11 @@
             <h1 class="filters-title">{Titulo_Crud}</h1>
             <div class="filters-actions">
                 {#if showAddButton}
-                    <div>
-                        <div class="tooltip-container">
-                            {#if showTooltip == "Agregar"}
-                                <div class="tooltip">Agregar</div>
-                            {/if}
-                        </div>
+                    <Tooltip text="Agregar">
                         <!-- svelte-ignore a11y_consider_explicit_label -->
                         <button
                             class="action-button"
                             type="button"
-                            on:mouseenter={() => (showTooltip = "Agregar")}
-                            on:mouseleave={() => (showTooltip = "")}
                             on:click={() => dispatch("add")}
                         >
                             <svg
@@ -145,21 +138,14 @@
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                         </button>
-                    </div>
+                    </Tooltip>
                 {/if}
                 {#if showImportButton}
-                    <div>
-                        <div class="tooltip-container">
-                            {#if showTooltip == "Importar"}
-                                <div class="tooltip">Importar Excel</div>
-                            {/if}
-                        </div>
+                    <Tooltip text="Importar Excel">
                         <!-- svelte-ignore a11y_consider_explicit_label -->
                         <button
                             class="action-button"
                             type="button"
-                            on:mouseenter={() => (showTooltip = "Importar")}
-                            on:mouseleave={() => (showTooltip = "")}
                             on:click={() => dispatch("import")}
                         >
                             <svg
@@ -180,7 +166,7 @@
                                 <line x1="12" y1="15" x2="12" y2="3"></line>
                             </svg>
                         </button>
-                    </div>
+                    </Tooltip>
                 {/if}
             </div>
         </div>
@@ -239,56 +225,44 @@
                     {/if}
 
                     <!-- Btn de aplicar filtro -->
-                    <!-- svelte-ignore a11y_consider_explicit_label -->
-                    <button
-                        type="button"
-                        on:click={() => actualizarFiltro()}
-                        on:mouseenter={() => (showTooltip = "Aplicar")}
-                        on:mouseleave={() => (showTooltip = "nada")}
-                        class="filter-button filter-button-middle"
-                        aria-label="Aplicar filtros"
-                    >
-                        <i class="fas fa-search"></i>
-                    </button>
+                    <Tooltip text="Aplicar filtro">
+                        <!-- svelte-ignore a11y_consider_explicit_label -->
+                        <button
+                            type="button"
+                            on:click={() => actualizarFiltro()}
+                            class="filter-button filter-button-middle"
+                            aria-label="Aplicar filtros"
+                        >
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </Tooltip>
 
                     <!-- Btn de limpiar filtros -->
-                    <!-- svelte-ignore a11y_consider_explicit_label -->
-                    <button
-                        type="button"
-                        on:click={() => clearFilters()}
-                        on:mouseenter={() => (showTooltip = "Borrar")}
-                        on:mouseleave={() => (showTooltip = "nada")}
-                        class="filter-button filter-button-right"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                    <Tooltip text="Borrar filtro">
+                        <!-- svelte-ignore a11y_consider_explicit_label -->
+                        <button
+                            type="button"
+                            on:click={() => clearFilters()}
+                            class="filter-button filter-button-right"
                         >
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path
-                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                            ></path>
-                        </svg>
-                    </button>
-
-                    <!-- Tooltip containers (outside the button flow) -->
-                    <div class="tooltip-container">
-                        {#if showTooltip == "Aplicar"}
-                            <div class="tooltip">Aplicar filtro</div>
-                        {/if}
-                    </div>
-                    <div class="tooltip-container">
-                        {#if showTooltip == "Borrar"}
-                            <div class="tooltip">Borrar filtro</div>
-                        {/if}
-                    </div>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path
+                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                                ></path>
+                            </svg>
+                        </button>
+                    </Tooltip>
                 {/if}
             </div>
 

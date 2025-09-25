@@ -1,10 +1,10 @@
 <script lang="ts">
     import type { ButtonConfig } from "./interfaces.js";
+    import Tooltip from "./Tooltip.svelte";
 
     export let id = 1;
     export let buttonsConfig: ButtonConfig[];
-    export let align: 'left' | 'right' | 'center' = 'center';
-    let showTooltip = "";
+    export let align: "left" | "right" | "center" = "center";
 
     $: visibleButtons = buttonsConfig.filter((btn) => btn.show ?? true);
 </script>
@@ -12,23 +12,22 @@
 <td class="table-cell" style="text-align: {align}">
     <div class="button-group" role="group">
         {#each visibleButtons as button, i}
-            <div class="tooltip-container">
-                {#if showTooltip == button.tooltip}
-                    <div class="tooltip">
-                        {button.tooltip}
-                    </div>
-                {/if}
-            </div>
-            <button
-                aria-label={button.tooltip}
-                on:click={() => button.action(id)}
-                on:mouseenter={() => (showTooltip = button.tooltip)}
-                on:mouseleave={() => (showTooltip = "")}
-                type="button"
-                class="action-buttons-group {visibleButtons.length === 1 ? 'rounded-left rounded-right' : i == 0 ? 'rounded-left' : i == visibleButtons.length - 1 ? 'rounded-right' : ''} {button.color}"
-            >
-                <i class={button.icon}> </i>
-            </button>
+            <Tooltip text={button.tooltip}>
+                <button
+                    aria-label={button.tooltip}
+                    on:click={() => button.action(id)}
+                    type="button"
+                    class="action-buttons-group {visibleButtons.length === 1
+                        ? 'rounded-left rounded-right'
+                        : i == 0
+                          ? 'rounded-left'
+                          : i == visibleButtons.length - 1
+                            ? 'rounded-right'
+                            : ''} {button.color}"
+                >
+                    <i class={button.icon}> </i>
+                </button>
+            </Tooltip>
         {/each}
     </div>
 </td>
@@ -89,11 +88,17 @@
 
     .rounded-left {
         border-top-left-radius: var(--grav-crud-button-border-radius, 0.5rem);
-        border-bottom-left-radius: var(--grav-crud-button-border-radius, 0.5rem);
+        border-bottom-left-radius: var(
+            --grav-crud-button-border-radius,
+            0.5rem
+        );
     }
 
     .rounded-right {
         border-top-right-radius: var(--grav-crud-button-border-radius, 0.5rem);
-        border-bottom-right-radius: var(--grav-crud-button-border-radius, 0.5rem);
+        border-bottom-right-radius: var(
+            --grav-crud-button-border-radius,
+            0.5rem
+        );
     }
 </style>

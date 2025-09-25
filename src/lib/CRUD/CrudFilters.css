@@ -5,6 +5,7 @@
     padding: 0.5rem;
     box-shadow: var(--grav-crud-box-shadow);
     margin-bottom: 0.5rem;
+    padding-top: 0.7rem;
 }
 
 @media (min-width: 640px) {
@@ -163,7 +164,6 @@
 .filters-grid {
     display: grid;
     gap: 0.75rem;
-    margin-top: 1rem;
     grid-template-columns: repeat(1, 1fr);
 }
 

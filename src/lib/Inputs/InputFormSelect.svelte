@@ -27,10 +27,15 @@
         on:change={changeFunction}
         on:clear={onClear}
         disabled={disabledVar}
-        class=""
-        inputStyles="font-size: 12px; color: #000;"
-        containerStyles="border:none;  font-size: 12px; "
-        placeholder="Seleccione una opción "
+        class="select-input"
+        inputStyles="font-size: 12px; color: currentColor !important; background-color: transparent;"
+        containerStyles="font-size: 12px; background-color: transparent; border: 1px solid currentColor;"
+        placeholder="Seleccione una opción"
+        --placeholder-color="currentColor"
+        --chevron-color="currentColor"
+        --item-color="black"
+        --item-hover-bg=" lightgray"
+        --item-is-active-bg="black"
         showChevron
     />
 </div>
@@ -39,13 +44,13 @@
     .select-container {
         display: flex;
         flex-direction: column;
-        border-bottom: 1px solid;
         width: 100%;
         margin-top: 0.25rem;
+        color: var(--grav-crud-color-neutral);
     }
 
     .select-label {
         font-size: 0.875rem;
-        color: #1f2937; /* equivalent to text-gray-800 */
+        color: var(--grav-crud-color-neutral); 
     }
 </style>

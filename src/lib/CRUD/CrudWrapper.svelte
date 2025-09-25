@@ -5,7 +5,6 @@
     import type {
         FiltrosI,
         TableHeader,
-        CrudWrapperProps,
     } from "./interfaces.js";
     import PaginationCrud from "./PaginationCRUD.svelte";
 
