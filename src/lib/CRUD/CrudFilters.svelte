@@ -25,6 +25,9 @@
     export let showImportButton: boolean = true;
     export let Titulo_Crud: string;
 
+    // Dynamic grid columns calculation
+    $: gridColumns = Math.min(Filtros.length, 6);
+
     // Convert string to number and ensure it's never 0
     $: {
         const num = parseInt(localPageSizeStr);
@@ -280,7 +283,7 @@
     </div>
     <!-- Filtros Dynamic -->
     {#if showFilters}
-        <div class="filters-grid">
+        <div class="filters-grid" style="--grid-columns: {gridColumns}">
             {#each Filtros as { tipo, label, options, service }, i}
                 {#if tipo == "text"}
                     <div class="filter-item">
