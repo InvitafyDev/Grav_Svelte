@@ -24,9 +24,33 @@
             ],
         },
         {
-            label: "Mes",
+            label: "Text",
             value: "",
             tipo: "text",
+            options: [],
+        },
+        {
+            label: "Number",
+            value: "",
+            tipo: "number",
+            options: [],
+        },
+        {
+            label: "Boolean",
+            value: "",
+            tipo: "bool",
+            options: [],
+        },
+        {
+            label: "Date",
+            value: "",
+            tipo: "date",
+            options: [],
+        },
+        {
+            label: "Date and Hours",
+            value: "",
+            tipo: "datetime",
             options: [],
         },
     ];
@@ -399,7 +423,7 @@ function handleReorder(reorderedItems: any[]) {
         onReorder={handleReorder}
     />
 
-    <div class="bg-white p-6 rounded-lg  mt-6">
+    <div class="bg-white p-6 rounded-lg mt-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Drag and Drop Feature</h2>
         </div>
@@ -423,7 +447,7 @@ function handleReorder(reorderedItems: any[]) {
             </ul>
         </div>
     </div>
-    <div class="bg-white p-6 rounded-lg  mt-6">
+    <div class="bg-white p-6 rounded-lg mt-6">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Code Preview</h2>
             <button

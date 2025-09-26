@@ -16,11 +16,12 @@
         </button>
     {:else}
         <button
+            aria-label="checkbox"
             {disabled}
             on:click={() => (valueVar = true)}
             class="checkbox-button"
         >
-            -
+            <i class="fas fa-minus"></i>
         </button>
     {/if}
     <h1 class="label">{label}</h1>
@@ -30,29 +31,37 @@
     .input-container {
         display: flex;
         align-items: center;
-        margin-top: 0.5rem;
+
+        height: fit-content;
+
+        margin-top: 1.95rem;
     }
 
     .checkbox-button {
         margin-right: 0.5rem;
-        height: 2rem;
-        width: 2rem;
-        border: 1px solid black;
-        background: white;
+        height: 2.7rem;
+        width: 2.7rem;
+        background: transparent;
+        border: var(--grav-crud-input-border-width) solid
+            var(--grav-crud-color-neutral);
+        color: var(--grav-crud-color-neutral);
         cursor: pointer;
+        border-radius: 0.5rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
     }
 
     .checkbox-button.checked {
-        background: black;
-    }
-
-    .checkwhite {
-        color: white;
+        background-color: var(--grav-crud-color-primary);
+        color: var(--grav-crud-color-icon);
     }
 
     .label {
         font-size: 1rem;
         margin: 0;
+        color: var(--grav-crud-color-neutral);
     }
 
     button:disabled {

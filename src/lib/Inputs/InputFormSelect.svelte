@@ -29,7 +29,7 @@
         disabled={disabledVar}
         class="select-input"
         inputStyles="font-size: 12px; color: currentColor !important; background-color: transparent;"
-        containerStyles="font-size: 12px; background-color: transparent; border: 1.2px solid currentColor; border-radius: 0.5rem;"
+        containerStyles="font-size: 12px; background-color: transparent; border: var(--grav-crud-input-border-width) solid currentColor; border-radius: 0.5rem;"
         placeholder="Seleccione una opción"
         --placeholder-color="currentColor"
         --chevron-color="currentColor"

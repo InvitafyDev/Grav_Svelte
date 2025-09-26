@@ -35,13 +35,14 @@
     .input-container {
         display: flex;
         align-items: center;
-        border: 1.2px solid var(--grav-crud-color-neutral);
+        border: var(--grav-crud-input-border-width) solid var(--grav-crud-color-neutral);
         border-radius: 0.5rem;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
         padding-top: 0.2rem;
         padding-bottom: 0.2rem;
         margin-top: 1.95rem;
+        height: fit-content;
     }
 
     .icon-wrapper {
@@ -52,7 +53,7 @@
 
     .icon {
         position: absolute;
-        top: -0.25rem;
+        top: -0.4rem;
         left: 0.25rem;
     }
 
