@@ -504,6 +504,33 @@
         max-height: 80vh;
     }
 
+    /* Scrollbar Styles for WebKit browsers (Chrome, Safari, Edge) */
+    .table-scroll::-webkit-scrollbar {
+        width: var(--grav-crud-scrollbar-width);
+        height: var(--grav-crud-scrollbar-width);
+    }
+
+    .table-scroll::-webkit-scrollbar-track {
+        background: var(--grav-crud-scrollbar-track);
+        border-radius: var(--grav-border-radius-sm);
+    }
+
+    .table-scroll::-webkit-scrollbar-thumb {
+        background: var(--grav-crud-scrollbar-thumb);
+        border-radius: var(--grav-border-radius-sm);
+        transition: background-color 0.2s ease;
+    }
+
+    .table-scroll::-webkit-scrollbar-thumb:hover {
+        background: var(--grav-crud-scrollbar-thumb-hover);
+    }
+
+    /* Scrollbar Styles for Firefox */
+    .table-scroll {
+        scrollbar-width: thin;
+        scrollbar-color: var(--grav-crud-scrollbar-thumb) var(--grav-crud-scrollbar-track);
+    }
+
     .data-table {
         width: 100%;
         border-collapse: collapse;

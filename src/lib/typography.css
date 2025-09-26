@@ -95,6 +95,12 @@
     --grav-crud-color-icon-active: #000000;    /* Iconos en estado activo */
     --grav-crud-color-primary: #000000;    /* Iconos en estado activo */
     --grav-crud-box-shadow: 7.2px 7.2px 5px 0px rgba(0, 0, 0, 0.028);
+
+    /* CRUD Scrollbar Variables */
+    --grav-crud-scrollbar-width: 8px;                    /* Ancho del scrollbar */
+    --grav-crud-scrollbar-track: rgba(0, 0, 0, 0.1);     /* Color del fondo del scrollbar */
+    --grav-crud-scrollbar-thumb: rgba(255, 255, 255, 0.3); /* Color de la barra deslizante */
+    --grav-crud-scrollbar-thumb-hover: rgba(255, 255, 255, 0.5); /* Color de la barra en hover */
 }
 
 /* Example usage for users to customize in their app.css:
