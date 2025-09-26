@@ -177,6 +177,24 @@
     background-color: black;
 }
 
+/* Modal-specific CSS variables for inputs */
+.modal-content {
+    /* Override CRUD variables for modal context */
+    --grav-crud-color-bg: #ffffff; /* White background for modal inputs */
+    --grav-crud-color-button: #fe6b91; /* Pink buttons */
+    --grav-crud-color-neutral: #000000; /* Black text for modal inputs */
+    --grav-crud-color-light: #f5f5f5; /* Light gray for hover states */
+    --grav-crud-color-border: #d1d5db; /* Gray borders */
+    --grav-crud-color-selected: #e5e7eb; /* Light gray for selected states */
+    --grav-crud-color-drag: #f9fafb; /* Very light gray for drag states */
+    --grav-crud-color-icon: #6b7280; /* Gray icons */
+    --grav-crud-color-icon-hover: #374151; /* Darker gray on hover */
+    --grav-crud-color-icon-active: #111827; /* Dark gray when active */
+    --grav-crud-color-primary: #000000; /* Black primary color */
+    --grav-crud-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --grav-crud-input-border-width: 1px; /* Ensure border width is defined */
+}
+
 @keyframes spin {
     from {
         transform: rotate(0deg);

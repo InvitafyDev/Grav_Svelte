@@ -50,7 +50,7 @@
         closeModal("formModal");
     }}
 >
-    <div class="p-4 global">
+    <div class="p-4">
         <h2 class="text-xl font-semibold mb-4">Form Modal Content</h2>
         <p class="text-gray-600 ">
             This is the Form Modal. You can add form components and
@@ -72,20 +72,3 @@
     </div>
 </Grav_Modal>
 
-<style>
-    .global {
-        /* CRUD Color Variables */
-        --grav-crud-color-bg: #ffffff2f; /* Texto principal en headers y celdas */
-        --grav-crud-color-button: #fe6b91; /* Texto principal en headers y celdas */
-        --grav-crud-color-neutral: #000000; /* Texto principal en headers y celdas */
-        --grav-crud-color-light: #f5f5f549; /* Fondos hover y estados */
-        --grav-crud-color-border: #f4f4f4; /* Bordes, separadores y loading */
-        --grav-crud-color-selected: #e8e8e8; /* Estados seleccionados */
-        --grav-crud-color-drag: #f9fafb62; /* Estados de drag and drop */
-        --grav-crud-color-icon: #ffffff; /* Iconos y elementos secundarios */
-        --grav-crud-color-icon-hover: #000000; /* Iconos en hover */
-        --grav-crud-color-icon-active: #000000; /* Iconos en estado activo */
-        --grav-crud-color-primary: #000000; /* Iconos en estado activo */
-        --grav-crud-box-shadow: 7.2px 7.2px 5px 0px rgba(0, 0, 0, 0.028);
-    }
-</style>
