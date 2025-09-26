@@ -235,7 +235,7 @@ import InputFormText from 'grav-svelte';
 @import 'grav-svelte/typography.css';
 
 /* Customize fonts */
-:root {
+:root &#123;
   --grav-font-family: 'Roboto', sans-serif;
   --grav-font-family-heading: 'Montserrat', sans-serif;
   --grav-crud-title-font-size: 2rem;
@@ -244,7 +244,7 @@ import InputFormText from 'grav-svelte';
   /* Customize border width globally */
   --grav-border-width-normal: 2px;  /* Makes all borders thicker */
   --grav-crud-table-border-width: 1px;  /* Only table borders */
-}</code></pre>
+&#125;</code></pre>
 
             <h3 class="text-lg font-medium text-gray-800 mb-2">Available Variables</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
