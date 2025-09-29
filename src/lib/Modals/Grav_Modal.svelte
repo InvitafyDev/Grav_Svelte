@@ -2,7 +2,7 @@
     import "./Grav_Modal.css";
 
     // Define size type
-    type ModalSize = "lg" | "md" | "sm";
+    type ModalSize = "lg" | "md" | "sm" | "xs";
 
     // Props interface
     interface $$Props {
@@ -33,6 +33,7 @@
         lg: "w-full min-h-screen",
         md: "sm:w-3/4 w-7/8 min-h-[80vh]",
         sm: "sm:w-1/3 w-3/4 min-h-[60vh]",
+        xs: "sm:w-1/4 w-3/4 min-h-[40vh]",
     };
 
     // Get the current size class

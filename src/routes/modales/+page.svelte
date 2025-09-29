@@ -7,7 +7,7 @@
 
     let modalConfig = {
         title: "Modal Title",
-        size: "sm" as "sm" | "md" | "lg",
+        size: "sm" as "sm" | "md" | "lg" | "xs",
         isVista: false,
         loading: false,
         saveButtonDisabled: false,
@@ -15,7 +15,7 @@
         cancelButtonText: "Cancelar",
     };
 
-    const sizes = ["sm", "md", "lg"] as const;
+    const sizes = ["sm", "md", "lg", "xs"] as const;
 
     // Function to generate code preview
     $: codePreview = `
