@@ -19,6 +19,7 @@
     let localPageSizeStr = "50";
     let showFilters = false;
     let isLoading = false;
+    let clearKey = 0;
 
     export let Filtros: FiltrosI[];
     export let showAddButton: boolean = true;
@@ -44,8 +45,9 @@
 
         Filtros = Filtros.map((filtro) => ({
             ...filtro,
-            value: filtro.tipo === "bool" ? false : "",
+            value: filtro.tipo === "bool" ? false : null,
         }));
+        clearKey++; // Force re-render of select components
         console.log(Filtros);
         dispatch("filtrar", { filtros: Filtros }); // puedes pasar los filtros actualizados
     }
@@ -321,18 +323,22 @@
                                     <div class="spinner"></div>
                                 </div>
                             {:else}
-                                <InputFormSelect
-                                    {label}
-                                    res={dataFetched[i]}
-                                    bind:justValue={Filtros[i].value}
-                                />
+                                {#key clearKey}
+                                    <InputFormSelect
+                                        {label}
+                                        res={dataFetched[i]}
+                                        bind:justValue={Filtros[i].value}
+                                    />
+                                {/key}
                             {/if}
                         {:else}
-                            <InputFormSelect
-                                {label}
-                                res={options}
-                                bind:justValue={Filtros[i].value}
-                            />
+                            {#key clearKey}
+                                <InputFormSelect
+                                    {label}
+                                    res={options}
+                                    bind:justValue={Filtros[i].value}
+                                />
+                            {/key}
                         {/if}
                     </div>
                 {:else if tipo == "bool"}
