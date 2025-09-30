@@ -27,7 +27,11 @@ function html_table_to_excel(type, nombreArchivo, tablaExport) {
     XLSX.writeFile(workbook, `${nombreArchivo}.${type}`);
 }
 
-function createPDF(tablaExport) {
+/**
+ * @param {HTMLElement} tablaExport
+ * @param {string} nombreArchivo
+ */
+function createPDF(tablaExport, nombreArchivo = "PDF") {
     // Crear un nuevo contenido solo con los datos limpios
     let cleanTable = "<table>";
 
@@ -55,7 +59,7 @@ function createPDF(tablaExport) {
 
     // Crear una nueva ventana para el contenido limpio
     const win = window.open("", "", "height=700,width=700");
-    win.document.write("<html><head><title>PDF</title>");
+    win.document.write(`<html><head><title>${nombreArchivo}</title>`);
     win.document.write(style); // Agregar estilos
     win.document.write("</head><body>");
     win.document.write(cleanTable); // Insertar la tabla limpia

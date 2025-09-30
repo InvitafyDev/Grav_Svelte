@@ -67,14 +67,23 @@
         onFilter(Filtros);
     }
 
+    function generateFileName(title: string): string {
+        const today = new Date();
+        const dateStr = today.toISOString().split('T')[0]; // YYYY-MM-DD
+        const cleanTitle = title.replace(/[^a-zA-Z0-9\s]/g, ''); // Remove special chars
+        return `${cleanTitle} - ${dateStr}`;
+    }
+
     function handleExport(type: "excel" | "pdf") {
         const table = document.querySelector("table");
         if (!table) return;
 
+        const fileName = generateFileName(Titulo_Crud);
+
         if (type === "excel") {
-            html_table_to_excel("xlsx", "Date Report", table);
+            html_table_to_excel("xlsx", fileName, table);
         } else {
-            createPDF(table);
+            createPDF(table, fileName);
         }
     }
 
