@@ -287,58 +287,7 @@
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
                         inOrden: 2,
                         inMesesFaltantes: 5,
-                    },
-                    {
-                        noMesA: 3,
-                        nvMesTxt: "Marzo",
-                        colorMesTxt: "!text-white bg-blue-500",
-                        nvMesNumeros: "03",
-                        nvMes: "Mar",
-                        fecha: "2024-03-01T00:00:00",
-                        inAnio: 2024,
-                        inCantidadDias: 31,
-                        colorCantidadDias: "!text-white bg-blue-500",
-                        txComentariosMes: "Inicio de primavera",
-                        nvStatus: "Activo",
-                        biActivo: true,
-                        image: "https://catalogowebapi.kibi.com.mx/img/subformProductosImagenes/227_x2.png",
-                        inOrden: 3,
-                        inMesesFaltantes: 6,
-                    },
-                    {
-                        noMesA: 4,
-                        nvMesTxt: "Abril",
-                        colorMesTxt: "!text-white bg-blue-500",
-                        nvMesNumeros: "04",
-                        nvMes: "Abr",
-                        fecha: "2024-04-01T00:00:00",
-                        inAnio: 2024,
-                        inCantidadDias: 30,
-                        colorCantidadDias: "!text-white bg-red-500",
-                        txComentariosMes: "Mes de primavera",
-                        nvStatus: "Activo",
-                        biActivo: true,
-                        image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275e1.jpg",
-                        inOrden: 4,
-                        inMesesFaltantes: 7,
-                    },
-                    {
-                        noMesA: 5,
-                        nvMesTxt: "Mayo",
-                        colorMesTxt: "!text-white bg-blue-500",
-                        nvMesNumeros: "05",
-                        nvMes: "May",
-                        fecha: "2024-05-01T00:00:00",
-                        inAnio: 2024,
-                        inCantidadDias: 31,
-                        colorCantidadDias: "!text-white bg-blue-500",
-                        txComentariosMes: "Mes de las madres",
-                        nvStatus: "Activo",
-                        biActivo: true,
-                        image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
-                        inOrden: 5,
-                        inMesesFaltantes: 8,
-                    },
+                    }
                 ],
                 total: 5,
                 page: 1,
@@ -404,7 +353,7 @@ function handleReorder(reorderedItems: any[]) {
     <title>Ejemplo de CRUD</title>
 </svelte:head>
 
-<div class="min-h-screen p-4 bg-gradient-to-br from-[#ff9878] to-[#fe6b91]">
+<div class="p-4 bg-gradient-to-br from-[#ff9878] to-[#fe6b91]">
     <CrudWrapper
         Titulo_Crud="Ejemplo de CRUD"
         {todosLosObjetos}

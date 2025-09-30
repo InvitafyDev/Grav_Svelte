@@ -22,6 +22,7 @@
     export let Titulo_Crud: string;
     export let dragEnabled: boolean = false;
     export let orderField: string = "inOrden";
+    export let minHeightScreen: boolean = false;
 
     // Event handlers from parent
     export let onFilter: (filters: FiltrosI[]) => void;
@@ -98,7 +99,7 @@
     }
 </script>
 
-<div class="crud-wrapper">
+<div class="crud-wrapper" class:min-height-screen={minHeightScreen}>
     <CrudFilters
         bind:PageSize
         bind:Filtros
@@ -147,6 +148,10 @@
 
 <style>
     .crud-wrapper {
+        min-height: auto;
+    }
+
+    .crud-wrapper.min-height-screen {
         min-height: 100vh;
     }
 
