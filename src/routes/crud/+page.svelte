@@ -244,6 +244,9 @@
         loading = true;
         error = null;
 
+        console.log(PageSize);
+        
+
         try {
             // Simulate API delay
             await new Promise((resolve) => setTimeout(resolve, 1500));

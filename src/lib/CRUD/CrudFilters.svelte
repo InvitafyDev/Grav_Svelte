@@ -75,13 +75,6 @@
         }
     }
 
-    function handlePageSizeInput(event: Event) {
-        const input = event.target as HTMLInputElement;
-        if (input) {
-            localPageSizeStr = input.value;
-        }
-    }
-
     let dataFetched: { value: any; label: string }[][] = [];
     onMount(async () => {
         console.log("Filtros", Filtros);
@@ -275,8 +268,7 @@
             <div class="page-size-input">
                 <InputFormText
                     label="Mostrando:"
-                    valueVar={localPageSizeStr}
-                    on:input={handlePageSizeInput}
+                    bind:valueVar={localPageSizeStr}
                     noMarginTop={true}
                 />
             </div>
