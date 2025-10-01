@@ -130,7 +130,7 @@
             {dragEnabled}
             {orderField}
             {idField}
-        />
+        /> 
         <PaginationCrud
             perPage={PageSize}
             {totalRows}

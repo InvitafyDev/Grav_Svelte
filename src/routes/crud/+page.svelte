@@ -181,10 +181,26 @@
             campo: "noMesA",
             textField: "statusText",
             colorField: "statusColor",
+            iconField: "statusIcon",
+            iconPosition: "left",
             buttonsConfig: [],
             onButtonClick: (id, row) => {
                 alert(`Estado cambiado para: ${row.nvMesTxt} (ID: ${id})`);
                 console.log("Row data:", row);
+            },
+        },
+        {
+            titulo: "Acción",
+            biSort: false,
+            tipo: "DynamicButton",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            colorField: "actionColor",
+            iconField: "actionIcon",
+            buttonsConfig: [],
+            onButtonClick: (id, row) => {
+                alert(`Acción ejecutada para: ${row.nvMesTxt}`);
             },
         },
         {
@@ -247,6 +263,9 @@
             inMesesFaltantes: number;
             statusText: string;
             statusColor: string;
+            statusIcon: string;
+            actionIcon: string;
+            actionColor: string;
         }[];
         total: number;
         page: number;
@@ -289,6 +308,9 @@
                         inMesesFaltantes: 4,
                         statusText: "Aprobado",
                         statusColor: "!bg-green-500 !text-white",
+                        statusIcon: "fa-solid fa-check",
+                        actionIcon: "fa-solid fa-download",
+                        actionColor: "!bg-purple-500 !text-white",
                     },
                     {
                         noMesA: 2,
@@ -308,6 +330,9 @@
                         inMesesFaltantes: 5,
                         statusText: "Pendiente",
                         statusColor: "!bg-yellow-500 !text-white",
+                        statusIcon: "fa-solid fa-clock",
+                        actionIcon: "fa-solid fa-edit",
+                        actionColor: "!bg-orange-500 !text-white",
                     },
                     {
                         noMesA: 3,
@@ -327,6 +352,9 @@
                         inMesesFaltantes: 6,
                         statusText: "Rechazado",
                         statusColor: "!bg-red-500 !text-white",
+                        statusIcon: "fa-solid fa-times",
+                        actionIcon: "fa-solid fa-trash",
+                        actionColor: "!bg-red-500 !text-white",
                     },
                     {
                         noMesA: 4,
@@ -346,6 +374,9 @@
                         inMesesFaltantes: 7,
                         statusText: "En Revisión",
                         statusColor: "!bg-blue-500 !text-white",
+                        statusIcon: "fa-solid fa-eye",
+                        actionIcon: "fa-solid fa-search",
+                        actionColor: "!bg-blue-500 !text-white",
                     },
                     {
                         noMesA: 5,
@@ -365,6 +396,9 @@
                         inMesesFaltantes: 8,
                         statusText: "Aprobado",
                         statusColor: "!bg-green-500 !text-white",
+                        statusIcon: "fa-solid fa-check",
+                        actionIcon: "fa-solid fa-share",
+                        actionColor: "!bg-teal-500 !text-white",
                     },
                 ],
                 total: 5,

@@ -41,6 +41,17 @@ export interface TableHeader {
      */
     colorField?: string;
     /**
+     * Field name that contains the icon class (e.g., Font Awesome class).
+     * Used for DynamicButton type.
+     */
+    iconField?: string;
+    /**
+     * Position of the icon relative to the text.
+     * Used for DynamicButton type.
+     * Defaults to 'left' when not provided.
+     */
+    iconPosition?: 'left' | 'right';
+    /**
      * Callback function that is called when a dynamic button is clicked.
      * Used for DynamicButton type.
      * @param id - The ID of the row

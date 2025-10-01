@@ -613,7 +613,19 @@
                                                 }
                                             }}
                                         >
-                                            {item[tableBodyItem.textField ?? ''] ?? ''}
+                                            {#if tableBodyItem.iconField && item[tableBodyItem.iconField]}
+                                                {#if (!tableBodyItem.iconPosition || tableBodyItem.iconPosition === 'left')}
+                                                    <i class="{item[tableBodyItem.iconField]} dynamic-button-icon-left"></i>
+                                                {/if}
+                                            {/if}
+                                            {#if tableBodyItem.textField && item[tableBodyItem.textField]}
+                                                <span>{item[tableBodyItem.textField]}</span>
+                                            {/if}
+                                            {#if tableBodyItem.iconField && item[tableBodyItem.iconField]}
+                                                {#if tableBodyItem.iconPosition === 'right'}
+                                                    <i class="{item[tableBodyItem.iconField]} dynamic-button-icon-right"></i>
+                                                {/if}
+                                            {/if}
                                         </button>
                                     </td>
                                 {/if}
@@ -981,6 +993,10 @@
 
     /* Dynamic Button Styles */
     .dynamic-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
         padding: 0.5rem 1rem;
         border-radius: 0.375rem;
         font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
@@ -1001,5 +1017,11 @@
 
     .dynamic-button:active {
         transform: translateY(0);
+    }
+
+    .dynamic-button-icon-left {
+    }
+
+    .dynamic-button-icon-right {
     }
 </style>
