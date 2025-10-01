@@ -173,6 +173,21 @@
             buttonsConfig: [],
         },
         {
+            titulo: "Estado",
+            biSort: false,
+            tipo: "DynamicButton",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            textField: "statusText",
+            colorField: "statusColor",
+            buttonsConfig: [],
+            onButtonClick: (id, row) => {
+                alert(`Estado cambiado para: ${row.nvMesTxt} (ID: ${id})`);
+                console.log("Row data:", row);
+            },
+        },
+        {
             titulo: "Imagen",
             biSort: false,
             tipo: "Image",
@@ -230,6 +245,8 @@
             inOrden: number;
             fecha: string;
             inMesesFaltantes: number;
+            statusText: string;
+            statusColor: string;
         }[];
         total: number;
         page: number;
@@ -270,6 +287,8 @@
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275e1.jpg",
                         inOrden: 1,
                         inMesesFaltantes: 4,
+                        statusText: "Aprobado",
+                        statusColor: "!bg-green-500 !text-white",
                     },
                     {
                         noMesA: 2,
@@ -287,6 +306,8 @@
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
                         inOrden: 2,
                         inMesesFaltantes: 5,
+                        statusText: "Pendiente",
+                        statusColor: "!bg-yellow-500 !text-white",
                     },
                     {
                         noMesA: 3,
@@ -304,6 +325,8 @@
                         image: "https://catalogowebapi.kibi.com.mx/img/subformProductosImagenes/227_x2.png",
                         inOrden: 3,
                         inMesesFaltantes: 6,
+                        statusText: "Rechazado",
+                        statusColor: "!bg-red-500 !text-white",
                     },
                     {
                         noMesA: 4,
@@ -321,6 +344,8 @@
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275e1.jpg",
                         inOrden: 4,
                         inMesesFaltantes: 7,
+                        statusText: "En Revisión",
+                        statusColor: "!bg-blue-500 !text-white",
                     },
                     {
                         noMesA: 5,
@@ -338,6 +363,8 @@
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
                         inOrden: 5,
                         inMesesFaltantes: 8,
+                        statusText: "Aprobado",
+                        statusColor: "!bg-green-500 !text-white",
                     },
                 ],
                 total: 5,

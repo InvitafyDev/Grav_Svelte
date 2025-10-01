@@ -590,6 +590,32 @@
                                             []}
                                         align={tableBodyItem.align ?? "center"}
                                     />
+                                {:else if tableBodyItem.tipo == "DynamicButton"}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                        style="text-align: {tableBodyItem.align ??
+                                            'center'}"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="dynamic-button {item[
+                                                tableBodyItem.colorField ?? ''
+                                            ] ?? ''}"
+                                            on:click={() => {
+                                                if (tableBodyItem.onButtonClick) {
+                                                    tableBodyItem.onButtonClick(
+                                                        item[idField],
+                                                        item
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            {item[tableBodyItem.textField ?? ''] ?? ''}
+                                        </button>
+                                    </td>
                                 {/if}
                             {/each}
                         </tr>
@@ -951,5 +977,29 @@
 
     .editable-input[type="number"] {
         -moz-appearance: textfield;
+    }
+
+    /* Dynamic Button Styles */
+    .dynamic-button {
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
+        font-size: var(--grav-crud-cell-font-size, 0.875rem);
+        font-weight: 500;
+        border: 1.5px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        background-color: var(--grav-crud-color-neutral);
+        color: var(--grav-crud-color-button);
+    }
+
+    .dynamic-button:hover {
+        opacity: 0.8;
+        transform: translateY(-1px);
+    }
+
+    .dynamic-button:active {
+        transform: translateY(0);
     }
 </style>

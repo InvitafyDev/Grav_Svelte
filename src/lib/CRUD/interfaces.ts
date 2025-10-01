@@ -12,7 +12,7 @@ export interface ButtonConfig {
 export interface TableHeader {
     titulo: string;
     biSort: boolean;
-    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber';
+    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton';
     biBold: boolean;
     /**
      * Alignment for the content of the cells belonging to this header.
@@ -30,6 +30,23 @@ export interface TableHeader {
      * @param newValue - The new value
      */
     onUpdate?: (id: number | string, campo: string, newValue: any) => Promise<void> | void;
+    /**
+     * Field name that contains the dynamic button text.
+     * Used for DynamicButton type.
+     */
+    textField?: string;
+    /**
+     * Field name that contains the CSS classes for the dynamic button color/style.
+     * Used for DynamicButton type.
+     */
+    colorField?: string;
+    /**
+     * Callback function that is called when a dynamic button is clicked.
+     * Used for DynamicButton type.
+     * @param id - The ID of the row
+     * @param row - The complete row data object
+     */
+    onButtonClick?: (id: number | string, row: any) => Promise<void> | void;
 }
 
 export interface FiltrosI {
