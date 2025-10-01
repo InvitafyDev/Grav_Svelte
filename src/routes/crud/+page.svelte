@@ -166,7 +166,7 @@
         {
             titulo: "Activo",
             biSort: false,
-            tipo: "Bool",
+            tipo: "EditableBool",
             biBold: false,
             align: "center",
             campo: "biActivo",
@@ -366,6 +366,13 @@
         console.log("Reordered items:", reorderedItems);
     }
 
+    async function handleCellUpdate(id: number | string, campo: string, newValue: any) {
+        console.log("Cell updated:", { id, campo, newValue });
+        // Simular llamada a API
+        await new Promise(resolve => setTimeout(resolve, 300));
+        console.log("Guardado exitoso!");
+    }
+
     // Initial data load
     onMount(async () => {
         await enlistar();
@@ -386,17 +393,28 @@
     showImportButton={true}
     dragEnabled={true}
     orderField="inOrden"
+    idField="noMesA"
     onFilter={enlistar}
     onAdd={handleAdd}
     onImport={handleImport}
     onReorder={handleReorder}
+    onCellUpdate={handleCellUpdate}
 />
 
 // Handler for drag and drop reordering
 function handleReorder(reorderedItems: any[]) {
     console.log("Reordered items:", reorderedItems);
     // Here you would typically send the reordered items to your API
-    // For this demo, we'll just log them
+}
+
+// Handler for editable cell updates
+async function handleCellUpdate(id: number | string, campo: string, newValue: any) {
+    console.log("Cell updated:", { id, campo, newValue });
+    // Simular llamada a API
+    await fetch('/api/update', {
+        method: 'POST',
+        body: JSON.stringify({ id, [campo]: newValue })
+    });
 }`;
 </script>
 
@@ -420,10 +438,12 @@ function handleReorder(reorderedItems: any[]) {
         showImportButton={true}
         dragEnabled={true}
         orderField="inOrden"
+        idField="noMesA"
         onFilter={enlistar}
         onAdd={handleAdd}
         onImport={handleImport}
         onReorder={handleReorder}
+        onCellUpdate={handleCellUpdate}
     />
 
     <div class="bg-white p-6 rounded-lg mt-6">

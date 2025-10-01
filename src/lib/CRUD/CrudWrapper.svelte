@@ -23,12 +23,14 @@
     export let dragEnabled: boolean = false;
     export let orderField: string = "inOrden";
     export let minHeightScreen: boolean = false;
+    export let idField: string = "id";
 
     // Event handlers from parent
     export let onFilter: (filters: FiltrosI[]) => void;
     export let onAdd: () => void;
     export let onImport: (() => void) | undefined = undefined;
     export let onReorder: (reorderedItems: any[]) => void = () => {};
+    export let onCellUpdate: ((id: number | string, campo: string, newValue: any) => Promise<void> | void) | undefined = undefined;
 
     function handleFiltroAplicado() {
         onFilter(Filtros);
@@ -97,6 +99,14 @@
     function handleReorder(event: ReorderEvent) {
         onReorder(event.detail.reorderedItems);
     }
+
+    // Apply global onCellUpdate to headers that don't have their own onUpdate
+    $: processedTableHeaders = tableH.map(header => {
+        if ((header.tipo === 'EditableBool' || header.tipo === 'EditableText' || header.tipo === 'EditableNumber') && !header.onUpdate && onCellUpdate) {
+            return { ...header, onUpdate: onCellUpdate };
+        }
+        return header;
+    });
 </script>
 
 <div class="crud-wrapper" class:min-height-screen={minHeightScreen}>
@@ -112,13 +122,14 @@
     />
     <div class="crud-table-container">
         <CrudTable
-            tableHeaders={tableH}
+            tableHeaders={processedTableHeaders}
             todosLosRegistros={todosLosObjetos}
             on:selectedSort={handleSort}
             on:reorderChange={handleReorder}
             {loading}
             {dragEnabled}
             {orderField}
+            {idField}
         />
         <PaginationCrud
             perPage={PageSize}

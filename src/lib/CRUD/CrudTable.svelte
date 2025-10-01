@@ -19,6 +19,7 @@
     export let loading: boolean = false;
     export let dragEnabled: boolean = false;
     export let orderField: string = "inOrden";
+    export let idField: string = "id";
 
     let selectedAscOrDesc = "asc";
     let selectedSort = "";
@@ -162,9 +163,7 @@
             <thead class="table-header">
                 <tr>
                     {#if dragEnabled}
-                        <th
-                            class="table-header-cell drag-header  non-sortable"
-                        >
+                        <th class="table-header-cell drag-header non-sortable">
                             <div class="drag-handle-header">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -345,8 +344,9 @@
                                             : ''}"
                                     >
                                         <p
-                                            class="cell-content {item[tableBodyItem.colorCampo ?? ''] ??
-                                                ''} {tableBodyItem.biBold
+                                            class="cell-content {item[
+                                                tableBodyItem.colorCampo ?? ''
+                                            ] ?? ''} {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
                                             style="text-align: {tableBodyItem.align ??
@@ -363,8 +363,9 @@
                                             : ''}"
                                     >
                                         <p
-                                            class="cell-content {item[tableBodyItem.colorCampo ?? ''] ??
-                                                ''} {tableBodyItem.biBold
+                                            class="cell-content {item[
+                                                tableBodyItem.colorCampo ?? ''
+                                            ] ?? ''} {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
                                             style="text-align: {tableBodyItem.align ??
@@ -384,8 +385,9 @@
                                             : ''}"
                                     >
                                         <p
-                                            class="cell-content {item[tableBodyItem.colorCampo ?? ''] ??
-                                                ''} {tableBodyItem.biBold
+                                            class="cell-content {item[
+                                                tableBodyItem.colorCampo ?? ''
+                                            ] ?? ''} {tableBodyItem.biBold
                                                 ? 'bold'
                                                 : ''}"
                                             style="text-align: {tableBodyItem.align ??
@@ -403,20 +405,165 @@
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
-                                        <p
-                                            class="cell-content {item[tableBodyItem.colorCampo ?? ''] ??
-                                                ''} {tableBodyItem.biBold
-                                                ? 'bold'
-                                                : ''}"
+                                        {#if item[tableBodyItem.campo] === true}
+                                            <p
+                                                class="cell-content {item[
+                                                    tableBodyItem.colorCampo ??
+                                                        ''
+                                                ] ?? ''} {tableBodyItem.biBold
+                                                    ? 'bold'
+                                                    : ''}"
+                                                style="text-align: {tableBodyItem.align ??
+                                                    'left'}"
+                                            >
+                                                <i class="fas fa-check"></i>
+                                            </p>
+                                        {:else}
+                                            <p
+                                                class="cell-content {item[
+                                                    tableBodyItem.colorCampo ??
+                                                        ''
+                                                ] ?? ''} {tableBodyItem.biBold
+                                                    ? 'bold'
+                                                    : ''}"
+                                                style="text-align: {tableBodyItem.align ??
+                                                    'left'}"
+                                            >
+                                                <i class="fas fa-minus"></i>
+                                            </p>
+                                        {/if}
+                                    </td>
+                                {:else if tableBodyItem.tipo == "EditableBool"}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                        style="text-align: {tableBodyItem.align ??
+                                            'center'}"
+                                    >
+                                        {#if item[tableBodyItem.campo]}
+                                            <button
+                                                class="editable-checkbox {item[
+                                                    tableBodyItem.campo
+                                                ]
+                                                    ? 'checked'
+                                                    : ''}"
+                                                on:click={async () => {
+                                                    const newValue =
+                                                        !item[
+                                                            tableBodyItem.campo
+                                                        ];
+                                                    item[tableBodyItem.campo] =
+                                                        newValue;
+                                                    if (
+                                                        tableBodyItem.onUpdate
+                                                    ) {
+                                                        await tableBodyItem.onUpdate(
+                                                            item[idField],
+                                                            tableBodyItem.campo,
+                                                            newValue
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        {:else}
+                                            <button
+                                                class="editable-checkbox {item[
+                                                    tableBodyItem.campo
+                                                ]
+                                                    ? 'checked'
+                                                    : ''}"
+                                                on:click={async () => {
+                                                    const newValue =
+                                                        !item[
+                                                            tableBodyItem.campo
+                                                        ];
+                                                    item[tableBodyItem.campo] =
+                                                        newValue;
+                                                    if (
+                                                        tableBodyItem.onUpdate
+                                                    ) {
+                                                        await tableBodyItem.onUpdate(
+                                                            item[idField],
+                                                            tableBodyItem.campo,
+                                                            newValue
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        {/if}
+                                    </td>
+                                {:else if tableBodyItem.tipo == "EditableText"}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                    >
+                                        <input
+                                            type="text"
+                                            class="editable-input"
+                                            bind:value={
+                                                item[tableBodyItem.campo]
+                                            }
+                                            on:blur={async (e) => {
+                                                if (tableBodyItem.onUpdate) {
+                                                    await tableBodyItem.onUpdate(
+                                                        item[idField],
+                                                        tableBodyItem.campo,
+                                                        e.currentTarget.value
+                                                    );
+                                                }
+                                            }}
+                                            on:keydown={async (e) => {
+                                                if (e.key === "Enter") {
+                                                    e.currentTarget.blur();
+                                                }
+                                            }}
                                             style="text-align: {tableBodyItem.align ??
                                                 'left'}"
-                                        >
-                                            {#if item[tableBodyItem.campo] === true}
-                                                <i class="fas fa-check"></i>
-                                            {:else}
-                                            <i class="fas fa-minus"></i>
-                                            {/if}
-                                        </p>
+                                        />
+                                    </td>
+                                {:else if tableBodyItem.tipo == "EditableNumber"}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                    >
+                                        <input
+                                            type="number"
+                                            class="editable-input"
+                                            bind:value={
+                                                item[tableBodyItem.campo]
+                                            }
+                                            on:blur={async (e) => {
+                                                if (tableBodyItem.onUpdate) {
+                                                    const numValue = parseFloat(
+                                                        e.currentTarget.value
+                                                    );
+                                                    await tableBodyItem.onUpdate(
+                                                        item[idField],
+                                                        tableBodyItem.campo,
+                                                        isNaN(numValue)
+                                                            ? null
+                                                            : numValue
+                                                    );
+                                                }
+                                            }}
+                                            on:keydown={async (e) => {
+                                                if (e.key === "Enter") {
+                                                    e.currentTarget.blur();
+                                                }
+                                            }}
+                                            style="text-align: {tableBodyItem.align ??
+                                                'right'}"
+                                        />
                                     </td>
                                 {:else if tableBodyItem.tipo == "Image"}
                                     <td
@@ -528,7 +675,8 @@
     /* Scrollbar Styles for Firefox */
     .table-scroll {
         scrollbar-width: thin;
-        scrollbar-color: var(--grav-crud-scrollbar-thumb) var(--grav-crud-scrollbar-track);
+        scrollbar-color: var(--grav-crud-scrollbar-thumb)
+            var(--grav-crud-scrollbar-track);
     }
 
     .data-table {
@@ -551,7 +699,7 @@
         text-align: center;
         padding-top: 0.25rem;
         padding-bottom: 0.25rem;
-        font-family: var(--grav-crud-header-font-family, 'mundial', sans-serif);
+        font-family: var(--grav-crud-header-font-family, "mundial", sans-serif);
         font-size: var(--grav-crud-header-font-size, 0.75rem);
         font-weight: var(--grav-crud-header-font-weight, 400);
         line-height: var(--grav-crud-header-line-height, 1.5);
@@ -599,11 +747,9 @@
         background-color: var(--grav-crud-color-light);
     }
 
-
     .table-row.selected {
         background-color: var(--grav-crud-color-drag);
     }
-
 
     .table-cell {
         border-top: 0;
@@ -612,7 +758,6 @@
         white-space: nowrap;
         vertical-align: middle;
         z-index: 10;
-        
     }
 
     .sticky-cell {
@@ -624,7 +769,7 @@
         padding-left: 0.25rem;
         white-space: normal;
         word-break: break-word;
-        font-family: var(--grav-crud-cell-font-family, 'mundial', sans-serif);
+        font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
         font-size: var(--grav-crud-cell-font-size, 0.875rem);
         font-weight: var(--grav-crud-cell-font-weight, 400);
         line-height: var(--grav-crud-cell-line-height, 1.5);
@@ -642,8 +787,8 @@
 
     .no-data {
         text-align: center;
-        padding: 1rem 0;    
-        font-family: var(--grav-crud-cell-font-family, 'mundial', sans-serif);
+        padding: 1rem 0;
+        font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
         font-size: var(--grav-crud-cell-font-size, 0.875rem);
         font-weight: var(--grav-crud-cell-font-weight, 400);
         line-height: var(--grav-crud-cell-line-height, 1.5);
@@ -731,7 +876,6 @@
         transition: all 0.3s ease;
     }
 
-
     .draggable-row.dragging {
         opacity: 0.5;
         transform: scale(0.98);
@@ -749,4 +893,63 @@
         border-bottom: 2px solid var(--grav-crud-color-drag);
     }
 
+    /* Editable cell styles */
+    .editable-checkbox {
+        width: 2rem;
+        height: 2rem;
+        background: transparent;
+        border: 1.5px solid var(--grav-crud-color-neutral);
+        color: var(--grav-crud-color-neutral);
+        cursor: pointer;
+        border-radius: 0.375rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        padding: 0;
+    }
+
+    .editable-checkbox:hover {
+        background-color: var(--grav-crud-color-light);
+    }
+
+    .editable-checkbox.checked {
+        background-color: var(--grav-crud-color-primary);
+        color: var(--grav-crud-color-icon);
+        border-color: var(--grav-crud-color-primary);
+    }
+
+    .editable-input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1.5px solid transparent;
+        background: transparent;
+        border-radius: 0.375rem;
+        font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
+        font-size: var(--grav-crud-cell-font-size, 0.875rem);
+        color: var(--grav-crud-color-neutral);
+        transition: all 0.2s ease;
+    }
+
+    .editable-input:hover {
+        border-color: var(--grav-crud-color-border);
+        background-color: var(--grav-crud-color-light);
+    }
+
+    .editable-input:focus {
+        outline: none;
+        border-color: var(--grav-crud-color-primary);
+        background-color: var(--grav-crud-color-bg);
+    }
+
+    /* Remove number input arrows */
+    .editable-input[type="number"]::-webkit-outer-spin-button,
+    .editable-input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .editable-input[type="number"] {
+        -moz-appearance: textfield;
+    }
 </style>

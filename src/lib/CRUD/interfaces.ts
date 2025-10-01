@@ -12,7 +12,7 @@ export interface ButtonConfig {
 export interface TableHeader {
     titulo: string;
     biSort: boolean;
-    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date';
+    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber';
     biBold: boolean;
     /**
      * Alignment for the content of the cells belonging to this header.
@@ -22,6 +22,14 @@ export interface TableHeader {
     campo: string;
     colorCampo?: string;
     buttonsConfig: ButtonConfig[] | null;
+    /**
+     * Callback function that is called when an editable cell value changes.
+     * Used for EditableBool, EditableText, and EditableNumber types.
+     * @param id - The ID of the row being edited
+     * @param campo - The field name being edited
+     * @param newValue - The new value
+     */
+    onUpdate?: (id: number | string, campo: string, newValue: any) => Promise<void> | void;
 }
 
 export interface FiltrosI {
@@ -44,6 +52,11 @@ export interface CrudWrapperProps {
     loading?: boolean;
     showAddButton?: boolean;
     showImportButton?: boolean;
+    /**
+     * Field name that contains the unique ID for each row.
+     * Defaults to 'id' if not specified.
+     */
+    idField?: string;
     onFilter: (filters: FiltrosI[]) => void;
     onAdd: () => void;
     onImport?: () => void;
