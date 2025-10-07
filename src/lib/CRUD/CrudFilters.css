@@ -51,16 +51,15 @@
 
 .filters-actions {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    gap: 0.75rem;
-    width: 100%;
+    gap: 0.5rem;
 }
 
 .filters-controls {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    
     margin-top: 0.5rem;
 }
 
@@ -68,6 +67,10 @@
     .filters-controls {
         margin-top: 0;
     }
+    .filters-actions {
+        margin-right: 0.5rem;
+    }
+    
 }
 
 .tooltip-container {
@@ -111,6 +114,7 @@
     .filter-group {
         padding: 0;
         gap: 0.2rem;
+        margin-right: 0.5rem;
     }
 }
 
@@ -147,7 +151,13 @@
 }
 
 .page-size-input {
-    width: 4rem;
+    width: 8rem;
+}
+
+@media (min-width: 640px) {
+    .page-size-input {
+        width: 4rem;
+    }
 }
 
 .apply-filter-button {

@@ -112,6 +112,8 @@
     <div class="filters-core">
         <div class="filters-header">
             <h1 class="filters-title">{Titulo_Crud}</h1>
+        </div>
+        <div class="filters-controls">
             <div class="filters-actions">
                 {#if showAddButton}
                     <Tooltip text="Agregar">
@@ -167,8 +169,6 @@
                     </Tooltip>
                 {/if}
             </div>
-        </div>
-        <div class="filters-controls">
             <!-- Show Filters Button -->
             <div class="filter-group" role="group">
                 {#if Filtros && Filtros.length > 0}

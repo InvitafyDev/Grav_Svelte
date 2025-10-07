@@ -74,7 +74,7 @@
 
     let todosLosObjetos: any[] = [];
     let totalRows = 0;
-    let PageSize = 2;
+    let PageSize = 10;
     let currentPage = 1;
     let selectedSort = "noMesA";
     let selectedAscOrDesc: "asc" | "desc" = "desc";
