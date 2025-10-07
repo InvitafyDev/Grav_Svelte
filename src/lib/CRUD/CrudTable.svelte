@@ -163,7 +163,7 @@
             <thead class="table-header">
                 <tr>
                     {#if dragEnabled}
-                        <th class="table-header-cell drag-header non-sortable">
+                        <th class="table-header-cell drag-header non-sortable header-sticky-intersection">
                             <div class="drag-handle-header">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +191,7 @@
                             <th
                                 class="table-header-cell {index == 0 &&
                                 !dragEnabled
-                                    ? 'borderleft'
+                                    ? 'borderleft header-sticky-intersection'
                                     : ''} non-sortable"
                                 style="text-align: {tableHeader.align ??
                                     'center'}"
@@ -203,7 +203,7 @@
                                 on:click={() => dispatchSort(tableHeader.campo)}
                                 class="table-header-cell {index == 0 &&
                                 !dragEnabled
-                                    ? 'borderleft'
+                                    ? 'borderleft header-sticky-intersection'
                                     : ''} sortable"
                                 style="text-align: {tableHeader.align ??
                                     'left'}"
@@ -730,6 +730,16 @@
         border-bottom-style: solid;
         border-bottom-color: var(--grav-crud-color-border);
         border-bottom-width: var(--grav-crud-cell-border-width, 1.5px);
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
+        .table-header {
+            background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+        }
     }
 
     .table-header-cell {
@@ -743,7 +753,7 @@
         line-height: var(--grav-crud-header-line-height, 1.5);
         text-transform: uppercase;
         white-space: nowrap;
-        background-color: transparent;
+        background-color: inherit;
         color: var(--grav-crud-color-neutral);
         border-left: 0;
     }
@@ -761,6 +771,25 @@
         border-left-width: var(--grav-crud-table-border-width, 1.5px);
         border-left-style: solid;
         border-left-color: var(--grav-crud-color-border);
+    }
+
+    /* Special class for header cells that are sticky on both axes (top + left) */
+    .header-sticky-intersection {
+        background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.95)) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    /* When header-sticky-intersection is applied to first column header (not drag-header) */
+    .borderleft.header-sticky-intersection {
+        position: sticky;
+        left: 0;
+        z-index: 25;
+        padding-right: 1rem;
+        margin-right: 0.5rem;
+        box-shadow:
+            inset -1.5px 0 0 var(--grav-crud-color-border),
+            2px 0 6px rgba(0, 0, 0, 0.08);
     }
 
     .sort-icon {
@@ -801,6 +830,20 @@
     .sticky-cell {
         position: sticky;
         left: 0;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 15;
+        border-bottom: inherit;
+        box-shadow:
+            inset -1.5px 0 0 var(--grav-crud-color-border),
+            2px 0 6px rgba(0, 0, 0, 0.08);
+    }
+
+    @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
+        .sticky-cell {
+            background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+        }
     }
 
     .cell-content {
@@ -885,6 +928,13 @@
         width: 40px;
         text-align: center;
         cursor: default;
+        position: sticky;
+        left: 0;
+        z-index: 25;
+        padding-right: 0.75rem;
+        box-shadow:
+            inset -1.5px 0 0 var(--grav-crud-color-border),
+            2px 0 6px rgba(0, 0, 0, 0.08);
     }
 
     .drag-handle-header {
@@ -898,7 +948,22 @@
         width: 40px;
         text-align: center;
         padding: 0.5rem;
+        padding-right: 0.75rem;
         cursor: grab;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 15;
+        border-bottom: inherit;
+        box-shadow:
+            inset -1.5px 0 0 var(--grav-crud-color-border),
+            2px 0 6px rgba(0, 0, 0, 0.08);
+    }
+
+    @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
+        .drag-handle-cell {
+            background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+        }
     }
 
     .drag-handle {
