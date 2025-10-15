@@ -64,11 +64,6 @@ export interface TableHeader {
      */
     imageField?: string;
     /**
-     * Field name that contains the border color class for the image button.
-     * Used for ImageButton type.
-     */
-    imageBorderColor?: string;
-    /**
      * Size of the circular image button.
      * Used for ImageButton type.
      * Defaults to 'md' when not provided.
@@ -107,6 +102,22 @@ export interface CrudWrapperProps {
      * Defaults to 'id' if not specified.
      */
     idField?: string;
+    /**
+     * Enables expand/collapse functionality for rows with subrows.
+     * Defaults to false if not specified.
+     */
+    expandEnabled?: boolean;
+    /**
+     * Field name that contains the array of subrows for each row.
+     * Defaults to 'subRows' if not specified.
+     */
+    subRowsField?: string;
+    /**
+     * Custom headers for subrows when expandEnabled is true.
+     * If not specified, subrows will use the same headers as parent rows (showing only Text and Number types).
+     * Used when you need different column structure for subrows.
+     */
+    subRowHeaders?: TableHeader[];
     onFilter: (filters: FiltrosI[]) => void;
     onAdd: () => void;
     onImport?: () => void;

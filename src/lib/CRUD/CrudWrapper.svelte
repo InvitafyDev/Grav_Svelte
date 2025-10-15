@@ -24,6 +24,9 @@
     export let orderField: string = "inOrden";
     export let minHeightScreen: boolean = false;
     export let idField: string = "id";
+    export let expandEnabled: boolean = false;
+    export let subRowsField: string = "subRows";
+    export let subRowHeaders: TableHeader[] | undefined = undefined;
 
     // Event handlers from parent
     export let onFilter: (filters: FiltrosI[]) => void;
@@ -130,6 +133,9 @@
             {dragEnabled}
             {orderField}
             {idField}
+            {expandEnabled}
+            {subRowsField}
+            {subRowHeaders}
         /> 
         <PaginationCrud
             perPage={PageSize}

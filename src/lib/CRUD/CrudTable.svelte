@@ -20,10 +20,17 @@
     export let dragEnabled: boolean = false;
     export let orderField: string = "inOrden";
     export let idField: string = "id";
+    export let expandEnabled: boolean = false;
+    export let subRowsField: string = "subRows";
+    export let subRowHeaders: TableHeader[] | undefined = undefined;
 
     let selectedAscOrDesc = "asc";
     let selectedSort = "";
     let selectedRowId: string | number | null = null;
+    let expandedRows = new Set<string | number>();
+
+    // Use custom subRowHeaders if provided, otherwise use parent headers
+    $: effectiveSubRowHeaders = subRowHeaders || tableHeaders;
 
     // Drag and drop variables
     let draggedIndex: number | null = null;
@@ -52,6 +59,16 @@
     function openImageModal(src: string) {
         closeModal("crud-image-modal");
         openModal("crud-image-modal", ImageModal, { src });
+    }
+
+    function toggleExpand(id: string | number) {
+        const newExpandedRows = new Set(expandedRows);
+        if (newExpandedRows.has(id)) {
+            newExpandedRows.delete(id);
+        } else {
+            newExpandedRows.add(id);
+        }
+        expandedRows = newExpandedRows;
     }
 
     // Drag and drop functions
@@ -186,11 +203,16 @@
                             </div>
                         </th>
                     {/if}
+                    {#if expandEnabled}
+                        <th class="table-header-cell expand-header non-sortable {!dragEnabled ? 'header-sticky-intersection borderleft' : ''}">
+                        </th>
+                    {/if}
                     {#each tableHeaders as tableHeader, index}
                         {#if tableHeader.biSort == false}
                             <th
                                 class="table-header-cell {index == 0 &&
-                                !dragEnabled
+                                !dragEnabled &&
+                                !expandEnabled
                                     ? 'borderleft header-sticky-intersection'
                                     : ''} non-sortable"
                                 style="text-align: {tableHeader.align ??
@@ -202,7 +224,8 @@
                             <th
                                 on:click={() => dispatchSort(tableHeader.campo)}
                                 class="table-header-cell {index == 0 &&
-                                !dragEnabled
+                                !dragEnabled &&
+                                !expandEnabled
                                     ? 'borderleft header-sticky-intersection'
                                     : ''} sortable"
                                 style="text-align: {tableHeader.align ??
@@ -316,11 +339,40 @@
                                     </div>
                                 </td>
                             {/if}
+                            {#if expandEnabled}
+                                <td
+                                    class="table-cell expand-cell {!dragEnabled ? 'sticky-cell' : ''}"
+                                >
+                                    {#if item[subRowsField] && item[subRowsField].length > 0}
+                                        <button
+                                            type="button"
+                                            class="expand-button"
+                                            on:click|stopPropagation={() => toggleExpand(item[idField])}
+                                        >
+                                            <svg
+                                                class="chevron-icon {expandedRows.has(item[idField]) ? 'expanded' : ''}"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            >
+                                                <polyline points="9 18 15 12 9 6"></polyline>
+                                            </svg>
+                                        </button>
+                                    {/if}
+                                </td>
+                            {/if}
                             {#each tableHeaders as tableBodyItem, i}
                                 {#if tableBodyItem.tipo == "Text"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -339,7 +391,8 @@
                                 {:else if tableBodyItem.tipo == "Number"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -358,7 +411,8 @@
                                 {:else if tableBodyItem.tipo == "Datetime"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -380,7 +434,8 @@
                                 {:else if tableBodyItem.tipo == "Date"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -401,7 +456,8 @@
                                 {:else if tableBodyItem.tipo == "Bool"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -436,7 +492,8 @@
                                 {:else if tableBodyItem.tipo == "EditableBool"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                         style="text-align: {tableBodyItem.align ??
@@ -501,7 +558,8 @@
                                 {:else if tableBodyItem.tipo == "EditableText"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -532,7 +590,8 @@
                                 {:else if tableBodyItem.tipo == "EditableNumber"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -568,7 +627,8 @@
                                 {:else if tableBodyItem.tipo == "Image"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                     >
@@ -593,7 +653,8 @@
                                 {:else if tableBodyItem.tipo == "DynamicButton"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                         style="text-align: {tableBodyItem.align ??
@@ -631,7 +692,8 @@
                                 {:else if tableBodyItem.tipo == "ImageButton"}
                                     <td
                                         class="table-cell {i == 0 &&
-                                        !dragEnabled
+                                        !dragEnabled &&
+                                        !expandEnabled
                                             ? 'sticky-cell'
                                             : ''}"
                                         style="text-align: {tableBodyItem.align ??
@@ -651,13 +713,145 @@
                                             <img
                                                 src={item[tableBodyItem.imageField ?? ''] ?? ''}
                                                 alt="button"
-                                                class="image-button image-button-{tableBodyItem.imageSize ?? 'md'} {item[tableBodyItem.imageBorderColor ?? ''] ?? ''}"
+                                                class="image-button image-button-{tableBodyItem.imageSize ?? 'md'}"
                                             />
                                         </button>
                                     </td>
                                 {/if}
                             {/each}
                         </tr>
+
+                        <!-- Subrows -->
+                        {#if expandEnabled && expandedRows.has(item[idField]) && item[subRowsField] && item[subRowsField].length > 0}
+                            {#each item[subRowsField] as subItem, subIndex}
+                                <tr class="sub-row">
+                                    {#if dragEnabled}
+                                        <td class="table-cell sub-row-indent"></td>
+                                    {/if}
+                                    {#if expandEnabled}
+                                        <td class="table-cell sub-row-indent"></td>
+                                    {/if}
+                                    {#each effectiveSubRowHeaders as subHeader, i}
+                                        {#if subHeader.tipo == "Text"}
+                                            <td class="table-cell">
+                                                <p
+                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                >
+                                                    {subItem[subHeader.campo] ?? ""}
+                                                </p>
+                                            </td>
+                                        {:else if subHeader.tipo == "Number"}
+                                            <td class="table-cell">
+                                                <p
+                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                >
+                                                    {subItem[subHeader.campo] ?? ""}
+                                                </p>
+                                            </td>
+                                        {:else if subHeader.tipo == "Date"}
+                                            <td class="table-cell">
+                                                <p
+                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                >
+                                                    {subItem[subHeader.campo]?.split("T")[0] ?? ":"}
+                                                </p>
+                                            </td>
+                                        {:else if subHeader.tipo == "Datetime"}
+                                            <td class="table-cell">
+                                                <p
+                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                >
+                                                    {subItem[subHeader.campo]?.replace("T", ":") ?? ":"}
+                                                </p>
+                                            </td>
+                                        {:else if subHeader.tipo == "Bool"}
+                                            <td class="table-cell">
+                                                {#if subItem[subHeader.campo] === true}
+                                                    <p
+                                                        class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                        style="text-align: {subHeader.align ?? 'left'}"
+                                                    >
+                                                        <i class="fas fa-check"></i>
+                                                    </p>
+                                                {:else}
+                                                    <p
+                                                        class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                        style="text-align: {subHeader.align ?? 'left'}"
+                                                    >
+                                                        <i class="fas fa-minus"></i>
+                                                    </p>
+                                                {/if}
+                                            </td>
+                                        {:else if subHeader.tipo == "Image"}
+                                            <td class="table-cell">
+                                                <img
+                                                    class="crud-image cursor-pointer"
+                                                    src={subItem[subHeader.campo] ?? ""}
+                                                    alt="image"
+                                                    on:click={() => openImageModal(subItem[subHeader.campo])}
+                                                />
+                                            </td>
+                                        {:else if subHeader.tipo == "Buttons"}
+                                            <CrudTableButtons
+                                                id={subItem[subHeader.campo]}
+                                                buttonsConfig={subHeader.buttonsConfig ?? []}
+                                                align={subHeader.align ?? "center"}
+                                            />
+                                        {:else if subHeader.tipo == "DynamicButton"}
+                                            <td class="table-cell" style="text-align: {subHeader.align ?? 'center'}">
+                                                <button
+                                                    type="button"
+                                                    class="dynamic-button {subItem[subHeader.colorField ?? ''] ?? ''}"
+                                                    on:click={() => {
+                                                        if (subHeader.onButtonClick) {
+                                                            subHeader.onButtonClick(subItem[idField], subItem);
+                                                        }
+                                                    }}
+                                                >
+                                                    {#if subHeader.iconField && subItem[subHeader.iconField]}
+                                                        {#if (!subHeader.iconPosition || subHeader.iconPosition === 'left')}
+                                                            <i class="{subItem[subHeader.iconField]} dynamic-button-icon-left"></i>
+                                                        {/if}
+                                                    {/if}
+                                                    {#if subHeader.textField && subItem[subHeader.textField]}
+                                                        <span>{subItem[subHeader.textField]}</span>
+                                                    {/if}
+                                                    {#if subHeader.iconField && subItem[subHeader.iconField]}
+                                                        {#if subHeader.iconPosition === 'right'}
+                                                            <i class="{subItem[subHeader.iconField]} dynamic-button-icon-right"></i>
+                                                        {/if}
+                                                    {/if}
+                                                </button>
+                                            </td>
+                                        {:else if subHeader.tipo == "ImageButton"}
+                                            <td class="table-cell" style="text-align: {subHeader.align ?? 'center'}">
+                                                <button
+                                                    type="button"
+                                                    class="image-button-wrapper"
+                                                    on:click={() => {
+                                                        if (subHeader.action) {
+                                                            subHeader.action(subItem[idField]);
+                                                        }
+                                                    }}
+                                                >
+                                                    <img
+                                                        src={subItem[subHeader.imageField ?? ''] ?? ''}
+                                                        alt="button"
+                                                        class="image-button image-button-{subHeader.imageSize ?? 'md'}"
+                                                    />
+                                                </button>
+                                            </td>
+                                        {:else}
+                                            <td class="table-cell"></td>
+                                        {/if}
+                                    {/each}
+                                </tr>
+                            {/each}
+                        {/if}
                     {/each}
                 </tbody>
             {:else if !loading}
@@ -665,7 +859,8 @@
                     <tr>
                         <td
                             colspan={tableHeaders.length +
-                                (dragEnabled ? 1 : 0)}
+                                (dragEnabled ? 1 : 0) +
+                                (expandEnabled ? 1 : 0)}
                             class="no-data"
                         >
                             No hay datos disponibles
@@ -1157,5 +1352,70 @@
     .image-button-lg {
         width: 64px;
         height: 64px;
+    }
+
+    /* Expand/Collapse Styles */
+    .expand-header {
+        width: 50px;
+        text-align: center;
+    }
+
+    .expand-cell {
+        width: 50px;
+        text-align: center;
+        padding: 0.5rem;
+        vertical-align: middle;
+    }
+
+    .expand-button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.25rem;
+        transition: all 0.2s ease;
+    }
+
+    .expand-button:hover {
+        background-color: var(--grav-crud-color-light);
+    }
+
+    .chevron-icon {
+        color: var(--grav-crud-color-neutral);
+        transition: transform 0.3s ease;
+        transform: rotate(0deg);
+    }
+
+    .chevron-icon.expanded {
+        transform: rotate(90deg);
+    }
+
+    .expand-button:hover .chevron-icon {
+        color: var(--grav-crud-color-primary, var(--grav-crud-color-neutral));
+        transform: scale(1.15) rotate(0deg);
+    }
+
+    .expand-button:hover .chevron-icon.expanded {
+        transform: scale(1.15) rotate(90deg);
+    }
+
+    /* Subrow Styles */
+    .sub-row {
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    .sub-row:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    .sub-row-indent {
+        background-color: inherit;
+    }
+
+    .sub-row .cell-content {
+        padding-left: 1rem;
     }
 </style>

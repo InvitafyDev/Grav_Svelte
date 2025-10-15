@@ -79,6 +79,113 @@
     let selectedSort = "noMesA";
     let selectedAscOrDesc: "asc" | "desc" = "desc";
 
+    // Custom headers for subrows (semanas) - Completamente diferentes a los headers padre
+    let subRowH: TableHeader[] = [
+        {
+            titulo: "Foto",
+            biSort: false,
+            tipo: "Image",
+            biBold: false,
+            align: "center",
+            campo: "imagen",
+            buttonsConfig: [],
+        },
+        {
+            titulo: "Semana",
+            biSort: false,
+            tipo: "Text",
+            biBold: true,
+            align: "left",
+            campo: "nvMesTxt",
+            colorCampo: "colorSemana",
+            buttonsConfig: [],
+        },
+        {
+            titulo: "Código",
+            biSort: false,
+            tipo: "Text",
+            biBold: false,
+            align: "center",
+            campo: "nvMesNumeros",
+            buttonsConfig: [],
+        },
+        {
+            titulo: "Días",
+            biSort: false,
+            tipo: "Number",
+            biBold: false,
+            align: "right",
+            campo: "inCantidadDias",
+            buttonsConfig: [],
+        },
+        {
+            titulo: "Activa",
+            biSort: false,
+            tipo: "Bool",
+            biBold: false,
+            align: "center",
+            campo: "activa",
+            buttonsConfig: [],
+        },
+        {
+            titulo: "Estado",
+            biSort: false,
+            tipo: "DynamicButton",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            textField: "estadoText",
+            colorField: "estadoColor",
+            iconField: "estadoIcon",
+            buttonsConfig: [],
+            onButtonClick: (id, row) => {
+                alert(`Estado de semana: ${row.estadoText}`);
+            },
+        },
+        {
+            titulo: "País",
+            biSort: false,
+            tipo: "ImageButton",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            imageField: "paisBandera",
+            imageSize: "sm",
+            buttonsConfig: [],
+            action: (id) => {
+                alert(`País seleccionado en semana con ID: ${id}`);
+            },
+        },
+        {
+            titulo: "Acciones",
+            biSort: false,
+            tipo: "Buttons",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            buttonsConfig: [
+                {
+                    icon: "fa-solid fa-eye",
+                    tooltip: "Ver detalles",
+                    color: "text-blue-500 border-blue-500 bg-white hover:bg-blue-500 hover:text-white",
+                    show: true,
+                    action: (id: number) => {
+                        alert(`Ver detalles de semana ${id}`);
+                    },
+                },
+                {
+                    icon: "fa-solid fa-edit",
+                    tooltip: "Editar semana",
+                    color: "text-green-500 border-green-500 bg-white hover:bg-green-500 hover:text-white",
+                    show: true,
+                    action: (id: number) => {
+                        alert(`Editar semana ${id}`);
+                    },
+                },
+            ],
+        },
+    ];
+
     let tableH: TableHeader[] = [
         {
             titulo: "Nombre",
@@ -219,7 +326,6 @@
             align: "center",
             campo: "noMesA",
             imageField: "flagUrl",
-            imageBorderColor: "flagBorderColor",
             imageSize: "md",
             buttonsConfig: [],
             action: (id) => {
@@ -282,6 +388,7 @@
             actionIcon: string;
             actionColor: string;
             flagUrl: string;
+            subRows?: any[];
         }[];
         total: number;
         page: number;
@@ -328,7 +435,53 @@
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/mx.png",
-                        
+                        subRows: [
+                            {
+                                noMesA: 11,
+                                nvMesTxt: "Semana 1",
+                                colorSemana: "!text-white bg-purple-500",
+                                nvMesNumeros: "01-W1",
+                                nvMes: "Ene-S1",
+                                inAnio: 2024,
+                                inCantidadDias: 7,
+                                activa: true,
+                                imagen: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275.jpg",
+                                estadoText: "Completada",
+                                estadoColor: "!bg-green-600 !text-white",
+                                estadoIcon: "fa-solid fa-check-circle",
+                                paisBandera: "https://flagcdn.com/w80/br.png",
+                            },
+                            {
+                                noMesA:12,
+                                nvMesTxt: "Semana 2",
+                                colorSemana: "!text-white bg-orange-500",
+                                nvMesNumeros: "01-W2",
+                                nvMes: "Ene-S2",
+                                inAnio: 2024,
+                                inCantidadDias: 7,
+                                activa: false,
+                                imagen: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
+                                estadoText: "En Progreso",
+                                estadoColor: "!bg-yellow-500 !text-white",
+                                estadoIcon: "fa-solid fa-spinner",
+                                paisBandera: "https://flagcdn.com/w80/ar.png",
+                            },
+                            {
+                                noMesA: 13,
+                                nvMesTxt: "Semana 3",
+                                colorSemana: "!text-white bg-teal-500",
+                                nvMesNumeros: "01-W3",
+                                nvMes: "Ene-S3",
+                                inAnio: 2024,
+                                inCantidadDias: 7,
+                                activa: true,
+                                imagen: "https://catalogowebapi.kibi.com.mx/img/subformProductosImagenes/227_x2.png",
+                                estadoText: "Pendiente",
+                                estadoColor: "!bg-red-500 !text-white",
+                                estadoIcon: "fa-solid fa-clock",
+                                paisBandera: "https://flagcdn.com/w80/cl.png",
+                            },
+                        ],
                     },
                     {
                         noMesA: 2,
@@ -764,6 +917,9 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
         showAddButton={true}
         showImportButton={true}
         dragEnabled={true}
+        expandEnabled={true}
+        subRowsField="subRows"
+        subRowHeaders={subRowH}
         orderField="inOrden"
         idField="noMesA"
         onFilter={enlistar}
