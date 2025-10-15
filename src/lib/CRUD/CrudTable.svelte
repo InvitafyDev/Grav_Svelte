@@ -721,91 +721,92 @@
                             {/each}
                         </tr>
 
-                        <!-- Subrows -->
+                        <!-- Subrows as nested table -->
                         {#if expandEnabled && expandedRows.has(item[idField]) && item[subRowsField] && item[subRowsField].length > 0}
-                            {#each item[subRowsField] as subItem, subIndex}
-                                <tr class="sub-row">
-                                    {#if dragEnabled}
-                                        <td class="table-cell sub-row-indent"></td>
-                                    {/if}
-                                    {#if expandEnabled}
-                                        <td class="table-cell sub-row-indent"></td>
-                                    {/if}
-                                    {#each effectiveSubRowHeaders as subHeader, i}
-                                        {#if subHeader.tipo == "Text"}
-                                            <td class="table-cell">
-                                                <p
-                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                    style="text-align: {subHeader.align ?? 'left'}"
-                                                >
-                                                    {subItem[subHeader.campo] ?? ""}
+                            <tr class="sub-row-container">
+                                <td
+                                    colspan={tableHeaders.length + (dragEnabled ? 1 : 0) + (expandEnabled ? 1 : 0)}
+                                    class="sub-row-cell"
+                                >
+                                    <table class="sub-table">
+                                        <tbody>
+                                            {#each item[subRowsField] as subItem, subIndex}
+                                                <tr class="sub-row">
+                                                    {#each effectiveSubRowHeaders as subHeader, i}
+                                                                        {#if subHeader.tipo == "Text"}
+                                                            <td class="table-cell">
+                                                                <p
+                                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                                >
+                                                                    {subItem[subHeader.campo] ?? ""}
                                                 </p>
-                                            </td>
-                                        {:else if subHeader.tipo == "Number"}
-                                            <td class="table-cell">
-                                                <p
-                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                    style="text-align: {subHeader.align ?? 'left'}"
-                                                >
-                                                    {subItem[subHeader.campo] ?? ""}
+                                                            </td>
+                                                                        {:else if subHeader.tipo == "Number"}
+                                                            <td class="table-cell">
+                                                                <p
+                                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                                >
+                                                                    {subItem[subHeader.campo] ?? ""}
                                                 </p>
-                                            </td>
-                                        {:else if subHeader.tipo == "Date"}
+                                                            </td>
+                                                        {:else if subHeader.tipo == "Date"}
                                             <td class="table-cell">
-                                                <p
-                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                    style="text-align: {subHeader.align ?? 'left'}"
-                                                >
-                                                    {subItem[subHeader.campo]?.split("T")[0] ?? ":"}
+                                                                <p
+                                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                                >
+                                                                    {subItem[subHeader.campo]?.split("T")[0] ?? ":"}
                                                 </p>
-                                            </td>
-                                        {:else if subHeader.tipo == "Datetime"}
+                                                            </td>
+                                                        {:else if subHeader.tipo == "Datetime"}
                                             <td class="table-cell">
-                                                <p
-                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                    style="text-align: {subHeader.align ?? 'left'}"
-                                                >
-                                                    {subItem[subHeader.campo]?.replace("T", ":") ?? ":"}
+                                                                <p
+                                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
+                                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                                >
+                                                                    {subItem[subHeader.campo]?.replace("T", ":") ?? ":"}
                                                 </p>
-                                            </td>
-                                        {:else if subHeader.tipo == "Bool"}
+                                                            </td>
+                                                        {:else if subHeader.tipo == "Bool"}
                                             <td class="table-cell">
-                                                {#if subItem[subHeader.campo] === true}
-                                                    <p
+                                                                {#if subItem[subHeader.campo] === true}
+                                                                    <p
                                                         class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
                                                         style="text-align: {subHeader.align ?? 'left'}"
                                                     >
                                                         <i class="fas fa-check"></i>
                                                     </p>
-                                                {:else}
-                                                    <p
+                                                                {:else}
+                                                                    <p
                                                         class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
                                                         style="text-align: {subHeader.align ?? 'left'}"
                                                     >
                                                         <i class="fas fa-minus"></i>
                                                     </p>
                                                 {/if}
-                                            </td>
-                                        {:else if subHeader.tipo == "Image"}
-                                            <td class="table-cell">
-                                                <img
-                                                    class="crud-image cursor-pointer"
-                                                    src={subItem[subHeader.campo] ?? ""}
-                                                    alt="image"
-                                                    on:click={() => openImageModal(subItem[subHeader.campo])}
-                                                />
-                                            </td>
-                                        {:else if subHeader.tipo == "Buttons"}
-                                            <CrudTableButtons
-                                                id={subItem[subHeader.campo]}
-                                                buttonsConfig={subHeader.buttonsConfig ?? []}
-                                                align={subHeader.align ?? "center"}
-                                            />
-                                        {:else if subHeader.tipo == "DynamicButton"}
-                                            <td class="table-cell" style="text-align: {subHeader.align ?? 'center'}">
-                                                <button
-                                                    type="button"
-                                                    class="dynamic-button {subItem[subHeader.colorField ?? ''] ?? ''}"
+                                                            </td>
+                                                        {:else if subHeader.tipo == "Image"}
+                                                            <td class="table-cell">
+                                                                <img
+                                                                    class="crud-image cursor-pointer"
+                                                                    src={subItem[subHeader.campo] ?? ""}
+                                                                    alt="image"
+                                                                    on:click={() => openImageModal(subItem[subHeader.campo])}
+                                                                />
+                                                            </td>
+                                                        {:else if subHeader.tipo == "Buttons"}
+                                                            <CrudTableButtons
+                                                                id={subItem[subHeader.campo]}
+                                                                buttonsConfig={subHeader.buttonsConfig ?? []}
+                                                                align={subHeader.align ?? "center"}
+                                                            />
+                                                        {:else if subHeader.tipo == "DynamicButton"}
+                                                            <td class="table-cell" style="text-align: {subHeader.align ?? 'center'}">
+                                                                <button
+                                                                    type="button"
+                                                                    class="dynamic-button {subItem[subHeader.colorField ?? ''] ?? ''}"
                                                     on:click={() => {
                                                         if (subHeader.onButtonClick) {
                                                             subHeader.onButtonClick(subItem[idField], subItem);
@@ -826,8 +827,8 @@
                                                         {/if}
                                                     {/if}
                                                 </button>
-                                            </td>
-                                        {:else if subHeader.tipo == "ImageButton"}
+                                                            </td>
+                                                        {:else if subHeader.tipo == "ImageButton"}
                                             <td class="table-cell" style="text-align: {subHeader.align ?? 'center'}">
                                                 <button
                                                     type="button"
@@ -845,12 +846,16 @@
                                                     />
                                                 </button>
                                             </td>
-                                        {:else}
-                                            <td class="table-cell"></td>
-                                        {/if}
-                                    {/each}
-                                </tr>
-                            {/each}
+                                                        {:else}
+                                                            <td class="table-cell"></td>
+                                                        {/if}
+                                                    {/each}
+                                                </tr>
+                                            {/each}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
                         {/if}
                     {/each}
                 </tbody>
@@ -1403,19 +1408,36 @@
     }
 
     /* Subrow Styles */
-    .sub-row {
+    .sub-row-container {
         background-color: rgba(0, 0, 0, 0.02);
     }
 
-    .sub-row:hover {
+    .sub-row-cell {
+        padding: 0 !important;
+    }
+
+    .sub-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    .sub-table .sub-row {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .sub-table .sub-row:hover {
         background-color: rgba(0, 0, 0, 0.04);
     }
 
-    .sub-row-indent {
-        background-color: inherit;
+    .sub-table .table-cell {
+        padding: 0.5rem;
+        vertical-align: middle;
+        border: none;
     }
 
-    .sub-row .cell-content {
-        padding-left: 1rem;
+    .sub-table .cell-content {
+        padding-left: 0.5rem;
     }
 </style>
