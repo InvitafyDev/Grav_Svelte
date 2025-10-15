@@ -212,6 +212,21 @@
             buttonsConfig: [],
         },
         {
+            titulo: "País",
+            biSort: false,
+            tipo: "ImageButton",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            imageField: "flagUrl",
+            imageBorderColor: "flagBorderColor",
+            imageSize: "md",
+            buttonsConfig: [],
+            action: (id) => {
+                alert(`País seleccionado con ID: ${id}`);
+            },
+        },
+        {
             titulo: "Acciones",
             biSort: false,
             tipo: "Buttons",
@@ -266,6 +281,7 @@
             statusIcon: string;
             actionIcon: string;
             actionColor: string;
+            flagUrl: string;
         }[];
         total: number;
         page: number;
@@ -311,6 +327,8 @@
                         statusIcon: "fa-solid fa-check",
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/mx.png",
+                        
                     },
                     {
                         noMesA: 2,
@@ -333,6 +351,8 @@
                         statusIcon: "fa-solid fa-clock",
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/us.png",
+                        
                     },
                     {
                         noMesA: 1,
@@ -355,6 +375,8 @@
                         statusIcon: "fa-solid fa-check",
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/mx.png",
+                        
                     },
                     {
                         noMesA: 2,
@@ -377,6 +399,8 @@
                         statusIcon: "fa-solid fa-clock",
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/us.png",
+                        
                     },
                     {
                         noMesA: 1,
@@ -399,6 +423,8 @@
                         statusIcon: "fa-solid fa-check",
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/mx.png",
+                        
                     },
                     {
                         noMesA: 2,
@@ -421,6 +447,8 @@
                         statusIcon: "fa-solid fa-clock",
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/us.png",
+                        
                     },
                     {
                         noMesA: 1,
@@ -443,6 +471,8 @@
                         statusIcon: "fa-solid fa-check",
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/mx.png",
+                        
                     },
                     {
                         noMesA: 2,
@@ -465,6 +495,8 @@
                         statusIcon: "fa-solid fa-clock",
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/us.png",
+                        
                     },
                     {
                         noMesA: 1,
@@ -487,6 +519,8 @@
                         statusIcon: "fa-solid fa-check",
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/mx.png",
+                        
                     },
                     {
                         noMesA: 2,
@@ -509,6 +543,8 @@
                         statusIcon: "fa-solid fa-clock",
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/us.png",
+                        
                     },
                     {
                         noMesA: 1,
@@ -531,6 +567,8 @@
                         statusIcon: "fa-solid fa-check",
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/mx.png",
+                        
                     },
                     {
                         noMesA: 2,
@@ -553,6 +591,8 @@
                         statusIcon: "fa-solid fa-clock",
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/us.png",
+                        
                     },
                     {
                         noMesA: 3,
@@ -575,6 +615,8 @@
                         statusIcon: "fa-solid fa-times",
                         actionIcon: "fa-solid fa-trash",
                         actionColor: "!bg-red-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/es.png",
+                        
                     },
                     {
                         noMesA: 4,
@@ -597,6 +639,8 @@
                         statusIcon: "fa-solid fa-eye",
                         actionIcon: "fa-solid fa-search",
                         actionColor: "!bg-blue-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/ca.png",
+                        
                     },
                     {
                         noMesA: 5,
@@ -619,6 +663,8 @@
                         statusIcon: "fa-solid fa-check",
                         actionIcon: "fa-solid fa-share",
                         actionColor: "!bg-teal-500 !text-white",
+                        flagUrl: "https://flagcdn.com/w80/fr.png",
+                        
                     },
                 ],
                 total: 5,
@@ -717,7 +763,7 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
         {loading}
         showAddButton={true}
         showImportButton={true}
-        dragEnabled={false}
+        dragEnabled={true}
         orderField="inOrden"
         idField="noMesA"
         onFilter={enlistar}

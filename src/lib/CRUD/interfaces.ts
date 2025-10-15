@@ -12,7 +12,7 @@ export interface ButtonConfig {
 export interface TableHeader {
     titulo: string;
     biSort: boolean;
-    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton';
+    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton' | 'ImageButton';
     biBold: boolean;
     /**
      * Alignment for the content of the cells belonging to this header.
@@ -58,6 +58,28 @@ export interface TableHeader {
      * @param row - The complete row data object
      */
     onButtonClick?: (id: number | string, row: any) => Promise<void> | void;
+    /**
+     * Field name that contains the image URL for circular image buttons.
+     * Used for ImageButton type.
+     */
+    imageField?: string;
+    /**
+     * Field name that contains the border color class for the image button.
+     * Used for ImageButton type.
+     */
+    imageBorderColor?: string;
+    /**
+     * Size of the circular image button.
+     * Used for ImageButton type.
+     * Defaults to 'md' when not provided.
+     */
+    imageSize?: 'sm' | 'md' | 'lg';
+    /**
+     * Callback function that is called when an image button is clicked.
+     * Used for ImageButton type.
+     * @param id - The ID of the row
+     */
+    action?: (id: number | string) => Promise<void> | void;
 }
 
 export interface FiltrosI {

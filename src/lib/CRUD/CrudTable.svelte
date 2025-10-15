@@ -628,6 +628,33 @@
                                             {/if}
                                         </button>
                                     </td>
+                                {:else if tableBodyItem.tipo == "ImageButton"}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                        style="text-align: {tableBodyItem.align ??
+                                            'center'}"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="image-button-wrapper"
+                                            on:click={() => {
+                                                if (tableBodyItem.action) {
+                                                    tableBodyItem.action(
+                                                        item[idField]
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            <img
+                                                src={item[tableBodyItem.imageField ?? ''] ?? ''}
+                                                alt="button"
+                                                class="image-button image-button-{tableBodyItem.imageSize ?? 'md'} {item[tableBodyItem.imageBorderColor ?? ''] ?? ''}"
+                                            />
+                                        </button>
+                                    </td>
                                 {/if}
                             {/each}
                         </tr>
@@ -1088,5 +1115,47 @@
     }
 
     .dynamic-button-icon-right {
+    }
+
+    /* Image Button Styles */
+    .image-button-wrapper {
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .image-button {
+        border-radius: 50%;
+        object-fit: cover;
+        transition: all 0.2s ease;
+        border: none;
+    }
+
+    .image-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .image-button:active {
+        transform: scale(1.05);
+    }
+
+    .image-button-sm {
+        width: 32px;
+        height: 32px;
+    }
+
+    .image-button-md {
+        width: 48px;
+        height: 48px;
+    }
+
+    .image-button-lg {
+        width: 64px;
+        height: 64px;
     }
 </style>
