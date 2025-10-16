@@ -180,7 +180,9 @@
             <thead class="table-header">
                 <tr>
                     {#if dragEnabled}
-                        <th class="table-header-cell drag-header non-sortable header-sticky-intersection">
+                        <th
+                            class="table-header-cell drag-header non-sortable header-sticky-intersection"
+                        >
                             <div class="drag-handle-header">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -204,7 +206,11 @@
                         </th>
                     {/if}
                     {#if expandEnabled}
-                        <th class="table-header-cell expand-header non-sortable {!dragEnabled ? 'header-sticky-intersection borderleft' : ''}">
+                        <th
+                            class="table-header-cell expand-header non-sortable {!dragEnabled
+                                ? 'header-sticky-intersection borderleft'
+                                : ''}"
+                        >
                         </th>
                     {/if}
                     {#each tableHeaders as tableHeader, index}
@@ -341,16 +347,23 @@
                             {/if}
                             {#if expandEnabled}
                                 <td
-                                    class="table-cell expand-cell {!dragEnabled ? 'sticky-cell' : ''}"
+                                    class="table-cell expand-cell {!dragEnabled
+                                        ? 'sticky-cell'
+                                        : ''}"
                                 >
                                     {#if item[subRowsField] && item[subRowsField].length > 0}
                                         <button
                                             type="button"
                                             class="expand-button"
-                                            on:click|stopPropagation={() => toggleExpand(item[idField])}
+                                            on:click|stopPropagation={() =>
+                                                toggleExpand(item[idField])}
                                         >
                                             <svg
-                                                class="chevron-icon {expandedRows.has(item[idField]) ? 'expanded' : ''}"
+                                                class="chevron-icon {expandedRows.has(
+                                                    item[idField]
+                                                )
+                                                    ? 'expanded'
+                                                    : ''}"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="24"
                                                 height="24"
@@ -361,7 +374,9 @@
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
                                             >
-                                                <polyline points="9 18 15 12 9 6"></polyline>
+                                                <polyline
+                                                    points="9 18 15 12 9 6"
+                                                ></polyline>
                                             </svg>
                                         </button>
                                     {/if}
@@ -666,7 +681,9 @@
                                                 tableBodyItem.colorField ?? ''
                                             ] ?? ''}"
                                             on:click={() => {
-                                                if (tableBodyItem.onButtonClick) {
+                                                if (
+                                                    tableBodyItem.onButtonClick
+                                                ) {
                                                     tableBodyItem.onButtonClick(
                                                         item[idField],
                                                         item
@@ -675,16 +692,30 @@
                                             }}
                                         >
                                             {#if tableBodyItem.iconField && item[tableBodyItem.iconField]}
-                                                {#if (!tableBodyItem.iconPosition || tableBodyItem.iconPosition === 'left')}
-                                                    <i class="{item[tableBodyItem.iconField]} dynamic-button-icon-left"></i>
+                                                {#if !tableBodyItem.iconPosition || tableBodyItem.iconPosition === "left"}
+                                                    <i
+                                                        class="{item[
+                                                            tableBodyItem
+                                                                .iconField
+                                                        ]} dynamic-button-icon-left"
+                                                    ></i>
                                                 {/if}
                                             {/if}
                                             {#if tableBodyItem.textField && item[tableBodyItem.textField]}
-                                                <span>{item[tableBodyItem.textField]}</span>
+                                                <span
+                                                    >{item[
+                                                        tableBodyItem.textField
+                                                    ]}</span
+                                                >
                                             {/if}
                                             {#if tableBodyItem.iconField && item[tableBodyItem.iconField]}
-                                                {#if tableBodyItem.iconPosition === 'right'}
-                                                    <i class="{item[tableBodyItem.iconField]} dynamic-button-icon-right"></i>
+                                                {#if tableBodyItem.iconPosition === "right"}
+                                                    <i
+                                                        class="{item[
+                                                            tableBodyItem
+                                                                .iconField
+                                                        ]} dynamic-button-icon-right"
+                                                    ></i>
                                                 {/if}
                                             {/if}
                                         </button>
@@ -711,10 +742,64 @@
                                             }}
                                         >
                                             <img
-                                                src={item[tableBodyItem.imageField ?? ''] ?? ''}
+                                                src={item[
+                                                    tableBodyItem.imageField ??
+                                                        ""
+                                                ] ?? ""}
                                                 alt="button"
-                                                class="image-button image-button-{tableBodyItem.imageSize ?? 'md'}"
+                                                class="image-button image-button-{tableBodyItem.imageSize ??
+                                                    'md'}"
                                             />
+                                        </button>
+                                    </td>
+                                {:else if tableBodyItem.tipo == "DualTextButton"}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled &&
+                                        !expandEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                        style="text-align: {tableBodyItem.align ??
+                                            'center'}"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="dual-text-button"
+                                            on:click={() => {
+                                                if (
+                                                    tableBodyItem.onButtonClick
+                                                ) {
+                                                    tableBodyItem.onButtonClick(
+                                                        item[idField],
+                                                        item
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            {#if tableBodyItem.textField1 && item[tableBodyItem.textField1]}
+                                                <div
+                                                    class="dual-text-1 {item[
+                                                        tableBodyItem.colorField1 ??
+                                                            ''
+                                                    ] ?? ''}"
+                                                >
+                                                    {item[
+                                                        tableBodyItem.textField1
+                                                    ]}
+                                                </div>
+                                            {/if}
+                                            {#if tableBodyItem.textField2 && item[tableBodyItem.textField2]}
+                                                <div
+                                                    class="dual-text-2 {item[
+                                                        tableBodyItem.colorField2 ??
+                                                            ''
+                                                    ] ?? ''}"
+                                                >
+                                                    {item[
+                                                        tableBodyItem.textField2
+                                                    ]}
+                                                </div>
+                                            {/if}
                                         </button>
                                     </td>
                                 {/if}
@@ -725,7 +810,9 @@
                         {#if expandEnabled && expandedRows.has(item[idField]) && item[subRowsField] && item[subRowsField].length > 0}
                             <tr class="sub-row-container">
                                 <td
-                                    colspan={tableHeaders.length + (dragEnabled ? 1 : 0) + (expandEnabled ? 1 : 0)}
+                                    colspan={tableHeaders.length +
+                                        (dragEnabled ? 1 : 0) +
+                                        (expandEnabled ? 1 : 0)}
                                     class="sub-row-cell"
                                 >
                                     <table class="sub-table">
@@ -733,121 +820,309 @@
                                             {#each item[subRowsField] as subItem, subIndex}
                                                 <tr class="sub-row">
                                                     {#each effectiveSubRowHeaders as subHeader, i}
-                                                                        {#if subHeader.tipo == "Text"}
-                                                            <td class="table-cell">
+                                                        {#if subHeader.tipo == "Text"}
+                                                            <td
+                                                                class="table-cell"
+                                                            >
                                                                 <p
-                                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                                    class="cell-content {subItem[
+                                                                        subHeader.colorCampo ??
+                                                                            ''
+                                                                    ] ??
+                                                                        ''} {subHeader.biBold
+                                                                        ? 'bold'
+                                                                        : ''}"
+                                                                    style="text-align: {subHeader.align ??
+                                                                        'left'}"
                                                                 >
-                                                                    {subItem[subHeader.campo] ?? ""}
-                                                </p>
+                                                                    {subItem[
+                                                                        subHeader
+                                                                            .campo
+                                                                    ] ?? ""}
+                                                                </p>
                                                             </td>
-                                                                        {:else if subHeader.tipo == "Number"}
-                                                            <td class="table-cell">
+                                                        {:else if subHeader.tipo == "Number"}
+                                                            <td
+                                                                class="table-cell"
+                                                            >
                                                                 <p
-                                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                                    class="cell-content {subItem[
+                                                                        subHeader.colorCampo ??
+                                                                            ''
+                                                                    ] ??
+                                                                        ''} {subHeader.biBold
+                                                                        ? 'bold'
+                                                                        : ''}"
+                                                                    style="text-align: {subHeader.align ??
+                                                                        'left'}"
                                                                 >
-                                                                    {subItem[subHeader.campo] ?? ""}
-                                                </p>
+                                                                    {subItem[
+                                                                        subHeader
+                                                                            .campo
+                                                                    ] ?? ""}
+                                                                </p>
                                                             </td>
                                                         {:else if subHeader.tipo == "Date"}
-                                            <td class="table-cell">
+                                                            <td
+                                                                class="table-cell"
+                                                            >
                                                                 <p
-                                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                                    class="cell-content {subItem[
+                                                                        subHeader.colorCampo ??
+                                                                            ''
+                                                                    ] ??
+                                                                        ''} {subHeader.biBold
+                                                                        ? 'bold'
+                                                                        : ''}"
+                                                                    style="text-align: {subHeader.align ??
+                                                                        'left'}"
                                                                 >
-                                                                    {subItem[subHeader.campo]?.split("T")[0] ?? ":"}
-                                                </p>
+                                                                    {subItem[
+                                                                        subHeader
+                                                                            .campo
+                                                                    ]?.split(
+                                                                        "T"
+                                                                    )[0] ?? ":"}
+                                                                </p>
                                                             </td>
                                                         {:else if subHeader.tipo == "Datetime"}
-                                            <td class="table-cell">
+                                                            <td
+                                                                class="table-cell"
+                                                            >
                                                                 <p
-                                                                    class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                                    style="text-align: {subHeader.align ?? 'left'}"
+                                                                    class="cell-content {subItem[
+                                                                        subHeader.colorCampo ??
+                                                                            ''
+                                                                    ] ??
+                                                                        ''} {subHeader.biBold
+                                                                        ? 'bold'
+                                                                        : ''}"
+                                                                    style="text-align: {subHeader.align ??
+                                                                        'left'}"
                                                                 >
-                                                                    {subItem[subHeader.campo]?.replace("T", ":") ?? ":"}
-                                                </p>
+                                                                    {subItem[
+                                                                        subHeader
+                                                                            .campo
+                                                                    ]?.replace(
+                                                                        "T",
+                                                                        ":"
+                                                                    ) ?? ":"}
+                                                                </p>
                                                             </td>
                                                         {:else if subHeader.tipo == "Bool"}
-                                            <td class="table-cell">
+                                                            <td
+                                                                class="table-cell"
+                                                            >
                                                                 {#if subItem[subHeader.campo] === true}
                                                                     <p
-                                                        class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                        style="text-align: {subHeader.align ?? 'left'}"
-                                                    >
-                                                        <i class="fas fa-check"></i>
-                                                    </p>
+                                                                        class="cell-content {subItem[
+                                                                            subHeader.colorCampo ??
+                                                                                ''
+                                                                        ] ??
+                                                                            ''} {subHeader.biBold
+                                                                            ? 'bold'
+                                                                            : ''}"
+                                                                        style="text-align: {subHeader.align ??
+                                                                            'left'}"
+                                                                    >
+                                                                        <i
+                                                                            class="fas fa-check"
+                                                                        ></i>
+                                                                    </p>
                                                                 {:else}
                                                                     <p
-                                                        class="cell-content {subItem[subHeader.colorCampo ?? ''] ?? ''} {subHeader.biBold ? 'bold' : ''}"
-                                                        style="text-align: {subHeader.align ?? 'left'}"
-                                                    >
-                                                        <i class="fas fa-minus"></i>
-                                                    </p>
-                                                {/if}
+                                                                        class="cell-content {subItem[
+                                                                            subHeader.colorCampo ??
+                                                                                ''
+                                                                        ] ??
+                                                                            ''} {subHeader.biBold
+                                                                            ? 'bold'
+                                                                            : ''}"
+                                                                        style="text-align: {subHeader.align ??
+                                                                            'left'}"
+                                                                    >
+                                                                        <i
+                                                                            class="fas fa-minus"
+                                                                        ></i>
+                                                                    </p>
+                                                                {/if}
                                                             </td>
                                                         {:else if subHeader.tipo == "Image"}
-                                                            <td class="table-cell">
+                                                            <td
+                                                                class="table-cell"
+                                                            >
                                                                 <img
                                                                     class="crud-image cursor-pointer"
-                                                                    src={subItem[subHeader.campo] ?? ""}
+                                                                    src={subItem[
+                                                                        subHeader
+                                                                            .campo
+                                                                    ] ?? ""}
                                                                     alt="image"
-                                                                    on:click={() => openImageModal(subItem[subHeader.campo])}
+                                                                    on:click={() =>
+                                                                        openImageModal(
+                                                                            subItem[
+                                                                                subHeader
+                                                                                    .campo
+                                                                            ]
+                                                                        )}
                                                                 />
                                                             </td>
                                                         {:else if subHeader.tipo == "Buttons"}
                                                             <CrudTableButtons
-                                                                id={subItem[subHeader.campo]}
-                                                                buttonsConfig={subHeader.buttonsConfig ?? []}
-                                                                align={subHeader.align ?? "center"}
+                                                                id={subItem[
+                                                                    subHeader
+                                                                        .campo
+                                                                ]}
+                                                                buttonsConfig={subHeader.buttonsConfig ??
+                                                                    []}
+                                                                align={subHeader.align ??
+                                                                    "center"}
                                                             />
                                                         {:else if subHeader.tipo == "DynamicButton"}
-                                                            <td class="table-cell" style="text-align: {subHeader.align ?? 'center'}">
+                                                            <td
+                                                                class="table-cell"
+                                                                style="text-align: {subHeader.align ??
+                                                                    'center'}"
+                                                            >
                                                                 <button
                                                                     type="button"
-                                                                    class="dynamic-button {subItem[subHeader.colorField ?? ''] ?? ''}"
-                                                    on:click={() => {
-                                                        if (subHeader.onButtonClick) {
-                                                            subHeader.onButtonClick(subItem[idField], subItem);
-                                                        }
-                                                    }}
-                                                >
-                                                    {#if subHeader.iconField && subItem[subHeader.iconField]}
-                                                        {#if (!subHeader.iconPosition || subHeader.iconPosition === 'left')}
-                                                            <i class="{subItem[subHeader.iconField]} dynamic-button-icon-left"></i>
-                                                        {/if}
-                                                    {/if}
-                                                    {#if subHeader.textField && subItem[subHeader.textField]}
-                                                        <span>{subItem[subHeader.textField]}</span>
-                                                    {/if}
-                                                    {#if subHeader.iconField && subItem[subHeader.iconField]}
-                                                        {#if subHeader.iconPosition === 'right'}
-                                                            <i class="{subItem[subHeader.iconField]} dynamic-button-icon-right"></i>
-                                                        {/if}
-                                                    {/if}
-                                                </button>
+                                                                    class="dynamic-button {subItem[
+                                                                        subHeader.colorField ??
+                                                                            ''
+                                                                    ] ?? ''}"
+                                                                    on:click={() => {
+                                                                        if (
+                                                                            subHeader.onButtonClick
+                                                                        ) {
+                                                                            subHeader.onButtonClick(
+                                                                                subItem[
+                                                                                    idField
+                                                                                ],
+                                                                                subItem
+                                                                            );
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    {#if subHeader.iconField && subItem[subHeader.iconField]}
+                                                                        {#if !subHeader.iconPosition || subHeader.iconPosition === "left"}
+                                                                            <i
+                                                                                class="{subItem[
+                                                                                    subHeader
+                                                                                        .iconField
+                                                                                ]} dynamic-button-icon-left"
+
+                                                                            ></i>
+                                                                        {/if}
+                                                                    {/if}
+                                                                    {#if subHeader.textField && subItem[subHeader.textField]}
+                                                                        <span
+                                                                            >{subItem[
+                                                                                subHeader
+                                                                                    .textField
+                                                                            ]}</span
+                                                                        >
+                                                                    {/if}
+                                                                    {#if subHeader.iconField && subItem[subHeader.iconField]}
+                                                                        {#if subHeader.iconPosition === "right"}
+                                                                            <i
+                                                                                class="{subItem[
+                                                                                    subHeader
+                                                                                        .iconField
+                                                                                ]} dynamic-button-icon-right"
+
+                                                                            ></i>
+                                                                        {/if}
+                                                                    {/if}
+                                                                </button>
                                                             </td>
                                                         {:else if subHeader.tipo == "ImageButton"}
-                                            <td class="table-cell" style="text-align: {subHeader.align ?? 'center'}">
-                                                <button
-                                                    type="button"
-                                                    class="image-button-wrapper"
-                                                    on:click={() => {
-                                                        if (subHeader.action) {
-                                                            subHeader.action(subItem[idField]);
-                                                        }
-                                                    }}
-                                                >
-                                                    <img
-                                                        src={subItem[subHeader.imageField ?? ''] ?? ''}
-                                                        alt="button"
-                                                        class="image-button image-button-{subHeader.imageSize ?? 'md'}"
-                                                    />
-                                                </button>
-                                            </td>
+                                                            <td
+                                                                class="table-cell"
+                                                                style="text-align: {subHeader.align ??
+                                                                    'center'}"
+                                                            >
+                                                                <button
+                                                                    type="button"
+                                                                    class="image-button-wrapper"
+                                                                    on:click={() => {
+                                                                        if (
+                                                                            subHeader.action
+                                                                        ) {
+                                                                            subHeader.action(
+                                                                                subItem[
+                                                                                    idField
+                                                                                ]
+                                                                            );
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    <img
+                                                                        src={subItem[
+                                                                            subHeader.imageField ??
+                                                                                ""
+                                                                        ] ?? ""}
+                                                                        alt="button"
+                                                                        class="image-button image-button-{subHeader.imageSize ??
+                                                                            'md'}"
+                                                                    />
+                                                                </button>
+                                                            </td>
+                                                        {:else if subHeader.tipo == "DualTextButton"}
+                                                            <td
+                                                                class="table-cell"
+                                                                style="text-align: {subHeader.align ??
+                                                                    'center'}"
+                                                            >
+                                                                <button
+                                                                    type="button"
+                                                                    class="dual-text-button"
+                                                                    on:click={() => {
+                                                                        if (
+                                                                            subHeader.onButtonClick
+                                                                        ) {
+                                                                            subHeader.onButtonClick(
+                                                                                subItem[
+                                                                                    idField
+                                                                                ],
+                                                                                subItem
+                                                                            );
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    {#if subHeader.textField1 && subItem[subHeader.textField1]}
+                                                                        <span
+                                                                            class="dual-text-1 {subItem[
+                                                                                subHeader.colorField1 ??
+                                                                                    ''
+                                                                            ] ??
+                                                                                ''}"
+                                                                        >
+                                                                            {subItem[
+                                                                                subHeader
+                                                                                    .textField1
+                                                                            ]}
+                                                                        </span>
+                                                                    {/if}
+                                                                    {#if subHeader.textField2 && subItem[subHeader.textField2]}
+                                                                        <span
+                                                                            class="dual-text-2 {subItem[
+                                                                                subHeader.colorField2 ??
+                                                                                    ''
+                                                                            ] ??
+                                                                                ''}"
+                                                                        >
+                                                                            {subItem[
+                                                                                subHeader
+                                                                                    .textField2
+                                                                            ]}
+                                                                        </span>
+                                                                    {/if}
+                                                                </button>
+                                                            </td>
                                                         {:else}
-                                                            <td class="table-cell"></td>
+                                                            <td
+                                                                class="table-cell"
+                                                            ></td>
                                                         {/if}
                                                     {/each}
                                                 </tr>
@@ -963,9 +1238,13 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     }
 
-    @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
+    @supports (backdrop-filter: blur(8px)) or
+        (-webkit-backdrop-filter: blur(8px)) {
         .table-header {
-            background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+            background-color: var(
+                --grav-crud-color-bg,
+                rgba(255, 255, 255, 0.85)
+            );
         }
     }
 
@@ -1002,7 +1281,10 @@
 
     /* Special class for header cells that are sticky on both axes (top + left) */
     .header-sticky-intersection {
-        background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.95)) !important;
+        background-color: var(
+            --grav-crud-color-bg,
+            rgba(255, 255, 255, 0.95)
+        ) !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
     }
@@ -1067,9 +1349,13 @@
             2px 0 6px rgba(0, 0, 0, 0.08);
     }
 
-    @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
+    @supports (backdrop-filter: blur(8px)) or
+        (-webkit-backdrop-filter: blur(8px)) {
         .sticky-cell {
-            background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+            background-color: var(
+                --grav-crud-color-bg,
+                rgba(255, 255, 255, 0.85)
+            );
         }
     }
 
@@ -1187,9 +1473,13 @@
             2px 0 6px rgba(0, 0, 0, 0.08);
     }
 
-    @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
+    @supports (backdrop-filter: blur(8px)) or
+        (-webkit-backdrop-filter: blur(8px)) {
         .drag-handle-cell {
-            background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+            background-color: var(
+                --grav-crud-color-bg,
+                rgba(255, 255, 255, 0.85)
+            );
         }
     }
 
@@ -1439,5 +1729,46 @@
 
     .sub-table .cell-content {
         padding-left: 0.5rem;
+    }
+
+    /* Dual Text Button Styles */
+    .dual-text-button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .dual-text-button:hover {
+        border-color: var(--grav-crud-color-primary);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .dual-text-button:active {
+        transform: translateY(0);
+    }
+
+    .dual-text-1 {
+        font-weight: 600;
+        width: 100%;
+        padding: 0.25rem 0.5rem;
+        border-top-left-radius: var(--grav-border-radius-md);
+        border-top-right-radius: var(--grav-border-radius-md);
+    }
+
+    .dual-text-2 {
+        font-weight: 600;
+        width: 100%;
+        padding: 0.25rem 0.5rem;
+        border-bottom-left-radius: var(--grav-border-radius-md);
+        border-bottom-right-radius: var(--grav-border-radius-md);
+    }
+
+    .dual-text-separator {
+        color: var(--grav-crud-color-neutral);
+        opacity: 0.5;
+        font-weight: 400;
     }
 </style>

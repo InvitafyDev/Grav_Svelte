@@ -311,6 +311,23 @@
             },
         },
         {
+            titulo: "Dual Estado",
+            biSort: false,
+            tipo: "DualTextButton",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            textField1: "dualText1",
+            textField2: "dualText2",
+            colorField1: "dualColor1",
+            colorField2: "dualColor2",
+            separator: " / ",
+            buttonsConfig: [],
+            onButtonClick: (id, row) => {
+                alert(`Dual button clicked para: ${row.nvMesTxt} (ID: ${id})\nTexto 1: ${row.dualText1}\nTexto 2: ${row.dualText2}`);
+            },
+        },
+        {
             titulo: "Imagen",
             biSort: false,
             tipo: "Image",
@@ -387,8 +404,12 @@
             statusIcon: string;
             actionIcon: string;
             actionColor: string;
-            flagUrl: string;
-            subRows?: any[];
+            flagUrl: string ;
+            dualText1?: string | null;
+            dualText2?: string | null;
+            dualColor1?: string | null;
+            dualColor2?: string | null;
+            subRows?: any[] | null;
         }[];
         total: number;
         page: number;
@@ -435,6 +456,10 @@
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/mx.png",
+                        dualText1: "Activo",
+                        dualText2: "Verificado",
+                        dualColor1: "bg-green-600 text-white",
+                        dualColor2: "bg-blue-600 text-white",
                         subRows: [
                             {
                                 noMesA: 11,
@@ -505,7 +530,11 @@
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/us.png",
-                        
+                        dualText1: "Inactivo",
+                        dualText2: "Bloqueado",
+                        dualColor1: "!text-red-600",
+                        dualColor2: "!text-gray-500",
+
                     },
                     {
                         noMesA: 1,
@@ -529,6 +558,10 @@
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/mx.png",
+                        dualText1: "Activo",
+                        dualText2: "Verificado",
+                        dualColor1: "bg-green-600 text-white",
+                        dualColor2: "bg-blue-600 text-white",
                         
                     },
                     {
@@ -553,7 +586,11 @@
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/us.png",
-                        
+                        dualText1: "Inactivo",
+                        dualText2: "Bloqueado",
+                        dualColor1: "bg-red-600 text-white",
+                        dualColor2: "bg-gray-600 text-white",
+
                     },
                     {
                         noMesA: 1,
@@ -577,6 +614,10 @@
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/mx.png",
+                        dualText1: "Activo",
+                        dualText2: "Verificado",
+                        dualColor1: "bg-green-600 text-white",
+                        dualColor2: "bg-blue-600 text-white",
                         
                     },
                     {
@@ -601,7 +642,11 @@
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/us.png",
-                        
+                        dualText1: "Inactivo",
+                        dualText2: "Bloqueado",
+                        dualColor1: "bg-red-600 text-white",
+                        dualColor2: "bg-gray-600 text-white",
+
                     },
                     {
                         noMesA: 1,
@@ -625,6 +670,10 @@
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/mx.png",
+                        dualText1: "Activo",
+                        dualText2: "Verificado",
+                        dualColor1: "bg-green-600 text-white",
+                        dualColor2: "bg-blue-600 text-white",
                         
                     },
                     {
@@ -649,7 +698,11 @@
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/us.png",
-                        
+                        dualText1: "Inactivo",
+                        dualText2: "Bloqueado",
+                        dualColor1: "bg-red-600 text-white",
+                        dualColor2: "bg-gray-600 text-white",
+
                     },
                     {
                         noMesA: 1,
@@ -673,6 +726,10 @@
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/mx.png",
+                        dualText1: "Activo",
+                        dualText2: "Verificado",
+                        dualColor1: "bg-green-600 text-white",
+                        dualColor2: "bg-blue-600 text-white",
                         
                     },
                     {
@@ -697,7 +754,11 @@
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/us.png",
-                        
+                        dualText1: "Inactivo",
+                        dualText2: "Bloqueado",
+                        dualColor1: "bg-red-600 text-white",
+                        dualColor2: "bg-gray-600 text-white",
+
                     },
                     {
                         noMesA: 1,
@@ -721,6 +782,10 @@
                         actionIcon: "fa-solid fa-download",
                         actionColor: "!bg-purple-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/mx.png",
+                        dualText1: "Activo",
+                        dualText2: "Verificado",
+                        dualColor1: "bg-green-600 text-white",
+                        dualColor2: "bg-blue-600 text-white",
                         
                     },
                     {
@@ -745,7 +810,10 @@
                         actionIcon: "fa-solid fa-edit",
                         actionColor: "!bg-orange-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/us.png",
-                        
+                        dualText1: "Inactivo",
+                        dualText2: "Bloqueado",
+                        dualColor1: "bg-red-600 text-white",
+                        dualColor2: "bg-gray-600 text-white",
                     },
                     {
                         noMesA: 3,
@@ -769,11 +837,14 @@
                         actionIcon: "fa-solid fa-trash",
                         actionColor: "!bg-red-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/es.png",
-                        
+                        dualText1: "",
+                        dualText2: "",
+                        dualColor1: "bg-green-600 text-white",
+                        dualColor2: "bg-blue-600 text-white",
                     },
                     {
                         noMesA: 4,
-                        nvMesTxt: "Abril",
+                        nvMesTxt: "Abril", 
                         colorMesTxt: "!text-white bg-blue-500",
                         nvMesNumeros: "04",
                         nvMes: "Abr",
@@ -787,13 +858,12 @@
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275e1.jpg",
                         inOrden: 4,
                         inMesesFaltantes: 7,
-                        statusText: "En Revisión",
+                        statusText: "En Revisión", 
                         statusColor: "!bg-blue-500 !text-white",
                         statusIcon: "fa-solid fa-eye",
                         actionIcon: "fa-solid fa-search",
                         actionColor: "!bg-blue-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/ca.png",
-                        
                     },
                     {
                         noMesA: 5,

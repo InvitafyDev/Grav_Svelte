@@ -12,7 +12,7 @@ export interface ButtonConfig {
 export interface TableHeader {
     titulo: string;
     biSort: boolean;
-    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton' | 'ImageButton';
+    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton' | 'ImageButton' | 'DualTextButton';
     biBold: boolean;
     /**
      * Alignment for the content of the cells belonging to this header.
@@ -75,6 +75,32 @@ export interface TableHeader {
      * @param id - The ID of the row
      */
     action?: (id: number | string) => Promise<void> | void;
+    /**
+     * Field name that contains the first text for dual text buttons.
+     * Used for DualTextButton type.
+     */
+    textField1?: string;
+    /**
+     * Field name that contains the second text for dual text buttons.
+     * Used for DualTextButton type.
+     */
+    textField2?: string;
+    /**
+     * Field name that contains the CSS classes for the first text.
+     * Used for DualTextButton type.
+     */
+    colorField1?: string;
+    /**
+     * Field name that contains the CSS classes for the second text.
+     * Used for DualTextButton type.
+     */
+    colorField2?: string;
+    /**
+     * Separator between the two texts in dual text buttons.
+     * Used for DualTextButton type.
+     * Defaults to ' / ' when not provided.
+     */
+    separator?: string;
 }
 
 export interface FiltrosI {
