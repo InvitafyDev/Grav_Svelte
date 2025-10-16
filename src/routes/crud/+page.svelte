@@ -328,6 +328,48 @@
             },
         },
         {
+            titulo: "Estado Condicional",
+            biSort: false,
+            tipo: "ConditionalCell",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            conditionField: "biActivo",
+            whenTrue: {
+                tipo: "DualTextButton",
+                textField1: "dualText1",
+                textField2: "dualText2",
+                colorField1: "dualColor1",
+                colorField2: "dualColor2",
+                separator: " | ",
+            },
+            whenFalse: {
+                tipo: "Text",
+                textField: "nvStatus",
+                colorField: "colorMesTxt",
+            },
+            buttonsConfig: [],
+            onButtonClick: (id, row) => {
+                alert(`Condicional clicked: ${row.nvMesTxt} - Activo: ${row.biActivo}`);
+            },
+        },
+        {
+            titulo: "Estados Múltiples",
+            biSort: false,
+            tipo: "MultiTextButton",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            itemsField: "statusList",
+            multiLayout: "horizontal",
+            multiSeparator: "•",
+            buttonsConfig: [],
+            onButtonClick: (id, row) => {
+                const statuses = row.statusList?.map((s: any) => s.text).join(", ") || "ninguno";
+                alert(`Multi estados para ${row.nvMesTxt}:\n${statuses}`);
+            },
+        },
+        {
             titulo: "Imagen",
             biSort: false,
             tipo: "Image",
@@ -409,6 +451,7 @@
             dualText2?: string | null;
             dualColor1?: string | null;
             dualColor2?: string | null;
+            statusList?: Array<{text: string; color: string}>;
             subRows?: any[] | null;
         }[];
         total: number;
@@ -460,6 +503,11 @@
                         dualText2: "Verificado",
                         dualColor1: "bg-green-600 text-white",
                         dualColor2: "bg-blue-600 text-white",
+                        statusList: [
+                            { text: "1", color: "bg-purple-600 text-white" },
+                            { text: "3", color: "bg-green-600 text-white" },
+                            { text: "2", color: "bg-blue-600 text-white" }
+                        ],
                         subRows: [
                             {
                                 noMesA: 11,
@@ -534,6 +582,10 @@
                         dualText2: "Bloqueado",
                         dualColor1: "!text-red-600",
                         dualColor2: "!text-gray-500",
+                        statusList: [
+                            { text: "Pendiente", color: "bg-yellow-500 text-white" },
+                            { text: "Bloqueado", color: "bg-red-600 text-white" }
+                        ],
 
                     },
                     {

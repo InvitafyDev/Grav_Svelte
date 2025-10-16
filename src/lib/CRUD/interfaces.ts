@@ -12,7 +12,7 @@ export interface ButtonConfig {
 export interface TableHeader {
     titulo: string;
     biSort: boolean;
-    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton' | 'ImageButton' | 'DualTextButton';
+    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton' | 'ImageButton' | 'DualTextButton' | 'ConditionalCell' | 'MultiTextButton';
     biBold: boolean;
     /**
      * Alignment for the content of the cells belonging to this header.
@@ -101,6 +101,57 @@ export interface TableHeader {
      * Defaults to ' / ' when not provided.
      */
     separator?: string;
+    /**
+     * Field name that contains the boolean condition for ConditionalCell.
+     * Used for ConditionalCell type.
+     */
+    conditionField?: string;
+    /**
+     * Configuration for rendering when the condition is true.
+     * Used for ConditionalCell type.
+     */
+    whenTrue?: {
+        tipo: 'Text' | 'DualTextButton';
+        textField?: string;
+        colorField?: string;
+        textField1?: string;
+        textField2?: string;
+        colorField1?: string;
+        colorField2?: string;
+        separator?: string;
+    };
+    /**
+     * Configuration for rendering when the condition is false.
+     * Used for ConditionalCell type.
+     */
+    whenFalse?: {
+        tipo: 'Text' | 'DualTextButton';
+        textField?: string;
+        colorField?: string;
+        textField1?: string;
+        textField2?: string;
+        colorField1?: string;
+        colorField2?: string;
+        separator?: string;
+    };
+    /**
+     * Field name that contains an array of items to display.
+     * Each item should be an object with: { text: string, color?: string }
+     * Used for MultiTextButton type.
+     */
+    itemsField?: string;
+    /**
+     * Layout direction for multiple items.
+     * Used for MultiTextButton type.
+     * Defaults to 'vertical' when not provided.
+     */
+    multiLayout?: 'vertical' | 'horizontal';
+    /**
+     * Optional separator between items when layout is horizontal.
+     * Used for MultiTextButton type.
+     * Defaults to no separator (items are just stacked/aligned).
+     */
+    multiSeparator?: string;
 }
 
 export interface FiltrosI {

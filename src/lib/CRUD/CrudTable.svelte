@@ -802,6 +802,82 @@
                                             {/if}
                                         </button>
                                     </td>
+                                {:else if tableBodyItem.tipo == "ConditionalCell"}
+                                    {@const condition = tableBodyItem.conditionField ? item[tableBodyItem.conditionField] : false}
+                                    {@const config = condition ? tableBodyItem.whenTrue : tableBodyItem.whenFalse}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled &&
+                                        !expandEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                        style="text-align: {tableBodyItem.align ??
+                                            'center'}"
+                                    >
+                                        {#if config?.tipo === "Text"}
+                                            <p
+                                                class="cell-content {config.colorField ? (item[config.colorField] ?? '') : ''} {tableBodyItem.biBold ? 'bold' : ''}"
+                                                style="text-align: {tableBodyItem.align ?? 'left'}"
+                                            >
+                                                {config.textField ? (item[config.textField] ?? '') : ''}
+                                            </p>
+                                        {:else if config?.tipo === "DualTextButton"}
+                                            <button
+                                                type="button"
+                                                class="dual-text-button"
+                                                on:click={() => {
+                                                    if (tableBodyItem.onButtonClick) {
+                                                        tableBodyItem.onButtonClick(
+                                                            item[idField],
+                                                            item
+                                                        );
+                                                    }
+                                                }}
+                                            >
+                                                {#if config.textField1 && item[config.textField1]}
+                                                    <div class="dual-text-1 {config.colorField1 ? (item[config.colorField1] ?? '') : ''}">
+                                                        {item[config.textField1]}
+                                                    </div>
+                                                {/if}
+                                                {#if config.textField2 && item[config.textField2]}
+                                                    <div class="dual-text-2 {config.colorField2 ? (item[config.colorField2] ?? '') : ''}">
+                                                        {item[config.textField2]}
+                                                    </div>
+                                                {/if}
+                                            </button>
+                                        {/if}
+                                    </td>
+                                {:else if tableBodyItem.tipo == "MultiTextButton"}
+                                    {@const items = tableBodyItem.itemsField ? (item[tableBodyItem.itemsField] ?? []) : []}
+                                    {@const layout = tableBodyItem.multiLayout ?? 'horizontal'}
+                                    <td
+                                        class="table-cell {i == 0 &&
+                                        !dragEnabled &&
+                                        !expandEnabled
+                                            ? 'sticky-cell'
+                                            : ''}"
+                                        style="text-align: {tableBodyItem.align ??
+                                            'center'}"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="multi-text-button multi-text-{layout}"
+                                            on:click={() => {
+                                                if (tableBodyItem.onButtonClick) {
+                                                    tableBodyItem.onButtonClick(
+                                                        item[idField],
+                                                        item
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            {#each items as multiItem, idx}
+                                                <div class="multi-text-item {multiItem.color ?? ''}">
+                                                    {multiItem.text ?? ''}
+                                                </div>
+                                            {/each}
+                                        </button>
+                                    </td>
                                 {/if}
                             {/each}
                         </tr>
@@ -1117,6 +1193,72 @@
                                                                             ]}
                                                                         </span>
                                                                     {/if}
+                                                                </button>
+                                                            </td>
+                                                        {:else if subHeader.tipo == "ConditionalCell"}
+                                                            {@const condition = subHeader.conditionField ? subItem[subHeader.conditionField] : false}
+                                                            {@const config = condition ? subHeader.whenTrue : subHeader.whenFalse}
+                                                            <td
+                                                                class="table-cell"
+                                                                style="text-align: {subHeader.align ?? 'center'}"
+                                                            >
+                                                                {#if config?.tipo === "Text"}
+                                                                    <p
+                                                                        class="cell-content {config.colorField ? (subItem[config.colorField] ?? '') : ''} {subHeader.biBold ? 'bold' : ''}"
+                                                                        style="text-align: {subHeader.align ?? 'left'}"
+                                                                    >
+                                                                        {config.textField ? (subItem[config.textField] ?? '') : ''}
+                                                                    </p>
+                                                                {:else if config?.tipo === "DualTextButton"}
+                                                                    <button
+                                                                        type="button"
+                                                                        class="dual-text-button"
+                                                                        on:click={() => {
+                                                                            if (subHeader.onButtonClick) {
+                                                                                subHeader.onButtonClick(
+                                                                                    subItem[idField],
+                                                                                    subItem
+                                                                                );
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        {#if config.textField1 && subItem[config.textField1]}
+                                                                            <span class="dual-text-1 {config.colorField1 ? (subItem[config.colorField1] ?? '') : ''}">
+                                                                                {subItem[config.textField1]}
+                                                                            </span>
+                                                                        {/if}
+                                                                        {#if config.textField2 && subItem[config.textField2]}
+                                                                            <span class="dual-text-2 {config.colorField2 ? (subItem[config.colorField2] ?? '') : ''}">
+                                                                                {subItem[config.textField2]}
+                                                                            </span>
+                                                                        {/if}
+                                                                    </button>
+                                                                {/if}
+                                                            </td>
+                                                        {:else if subHeader.tipo == "MultiTextButton"}
+                                                            {@const items = subHeader.itemsField ? (subItem[subHeader.itemsField] ?? []) : []}
+                                                            {@const layout = subHeader.multiLayout ?? 'horizontal'}
+                                                            <td
+                                                                class="table-cell"
+                                                                style="text-align: {subHeader.align ?? 'center'}"
+                                                            >
+                                                                <button
+                                                                    type="button"
+                                                                    class="multi-text-button multi-text-{layout}"
+                                                                    on:click={() => {
+                                                                        if (subHeader.onButtonClick) {
+                                                                            subHeader.onButtonClick(
+                                                                                subItem[idField],
+                                                                                subItem
+                                                                            );
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    {#each items as multiItem, idx}
+                                                                        <div class="multi-text-item {multiItem.color ?? ''}">
+                                                                            {multiItem.text ?? ''}
+                                                                        </div>
+                                                                    {/each}
                                                                 </button>
                                                             </td>
                                                         {:else}
@@ -1767,6 +1909,70 @@
     }
 
     .dual-text-separator {
+        color: var(--grav-crud-color-neutral);
+        opacity: 0.5;
+        font-weight: 400;
+    }
+
+    /* Multi Text Button Styles */
+    .multi-text-button {
+        display: flex;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        background: transparent;
+        padding: 0.25rem;
+        width: 100%;
+    }
+
+    .multi-text-button:hover {
+        transform: translateY(-1px);
+    }
+
+    .multi-text-button:active {
+        transform: translateY(0);
+    }
+
+    .multi-text-vertical {
+        flex-direction: column;
+        gap: 0.25rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .multi-text-horizontal {
+        flex-direction: row;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .multi-text-item {
+        font-weight: 600;
+        padding: 0.25rem 0.5rem;
+        border-radius: var(--grav-border-radius-md);
+        font-size: 0.875rem;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+        text-align: center;
+    }
+
+    .multi-text-vertical .multi-text-item {
+        min-width: 120px;
+    }
+
+    .multi-text-vertical .multi-text-item:first-child {
+        border-top-left-radius: var(--grav-border-radius-md);
+        border-top-right-radius: var(--grav-border-radius-md);
+    }
+
+    .multi-text-vertical .multi-text-item:last-child {
+        border-bottom-left-radius: var(--grav-border-radius-md);
+        border-bottom-right-radius: var(--grav-border-radius-md);
+    }
+
+    .multi-text-separator {
         color: var(--grav-crud-color-neutral);
         opacity: 0.5;
         font-weight: 400;
