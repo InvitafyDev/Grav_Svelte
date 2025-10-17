@@ -1,6 +1,7 @@
 export { default as InputFormBool } from './InputFormBool.svelte';
 export { default as InputFormCascade } from './InputFormCascade.svelte';
 export { default as InputFormColor } from './InputFormColor.svelte';
+export { default as InputFormColorPicker } from './InputFormColorPicker.svelte';
 export { default as InputFormDate } from './InputFormDate.svelte';
 export { default as InputFormDateAndHours } from './InputFormDateAndHours.svelte';
 export { default as InputFormImage } from './InputFormImage.svelte';

@@ -34,9 +34,9 @@
     .input-container {
         display: flex;
         align-items: center;
-       
+
         height: fit-content;
-       
+
         margin-top: 1.95rem;
     }
 

@@ -4,6 +4,7 @@
         InputFormNumber,
         InputFormBool,
         InputFormColor,
+        InputFormColorPicker,
         InputFormDate,
         InputFormDateAndHours,
         InputFormImage,
@@ -23,6 +24,7 @@
     let numberInput: number | null = null;
     let boolInput = false;
     let colorInput = "#000000";
+    let colorPickerInput = "#3B82F6";
     let dateInput: string | null = null;
     let dateTimeInput: string | null = null;
     let imageInput: HTMLInputElement;
@@ -112,6 +114,7 @@
         dateTime:
             'let dateTimeInput: string | null = null;\n\n<InputFormDateAndHours\n    label="Date and Time Input"\n    bind:valueVar={dateTimeInput}\n/>',
         color: 'let colorInput = "#000000";\n\n<InputFormColor \n    label="Color Input" \n    bind:valueVar={colorInput} \n/>',
+        colorPicker: 'let colorPickerInput = "#3B82F6";\n\n<InputFormColorPicker \n    label="Color Picker with Presets" \n    bind:valueVar={colorPickerInput} \n/>',
         bool: 'let boolInput = false;\n\n<InputFormBool \n    label="Boolean Input" \n    bind:valueVar={boolInput} \n/>',
         select: 'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\n<InputFormSelect\n    label="Select Input"\n    bind:value={selectInput}\n    res={selectOptions}\n/>',
         selectWithPlus: 'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectWithPlusInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\nfunction handleAddOption() {\n    // Open modal or add new option logic\n    console.log("Add new option");\n}\n\n<InputFormSelect\n    label="Select with Plus Button"\n    bind:value={selectWithPlusInput}\n    res={selectOptions}\n    showPlusIcon={true}\n    onPlusClick={handleAddOption}\n/>',
@@ -239,7 +242,7 @@
         <h2 class="text-xl font-semibold text-gray-700 mb-4">Special Inputs</h2>
 
         <div class="mb-6">
-            <InputFormColor label="Color Input" bind:valueVar={colorInput} />
+            <InputFormColor label="Color Input (Simple)" bind:valueVar={colorInput} />
             <span class="block mt-1 text-sm text-gray-600"
                 >Value: {colorInput}</span
             >
@@ -248,6 +251,20 @@
                 <pre
                     class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
                         >{codeExamples.color}</code
+                    ></pre>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <InputFormColorPicker label="Color Picker with Presets" bind:valueVar={colorPickerInput} />
+            <span class="block mt-1 text-sm text-gray-600"
+                >Value: {colorPickerInput}</span
+            >
+            <div class="mt-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.colorPicker}</code
                     ></pre>
             </div>
         </div>
