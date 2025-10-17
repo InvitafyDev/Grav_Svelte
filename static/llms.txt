@@ -1,0 +1,1928 @@
+GUÍA COMPLETA: GRAV SVELTE - LIBRERÍA DE COMPONENTES SVELTE
+📦 INSTALACIÓN Y CONFIGURACIÓN INICIAL
+Instalación
+npm install grav-svelte
+Peer Dependencies
+npm install svelte-select  # Requerido para componentes select
+Importaciones por Módulo
+La librería está organizada en 5 módulos principales con rutas de importación específicas:
+// Módulo Inputs
+import { 
+  InputFormText, 
+  InputFormNumber, 
+  InputFormBool, 
+  InputFormColor, 
+  InputFormDate, 
+  InputFormDateAndHours, 
+  InputFormImage, 
+  InputFormSelect, 
+  InputFormTextArea, 
+  InputFormCascade,
+  InputFormPassword 
+} from 'grav-svelte/Inputs';
+
+// Módulo CRUD
+import { CrudWrapper } from 'grav-svelte/CRUD';
+import type { TableHeader, ButtonConfig, FiltrosI } from 'grav-svelte/CRUD';
+
+// Módulo Modals
+import { openModal, closeModal, closeAllModals } from 'grav-svelte/Modals';
+import { ModalContainer, Grav_Modal } from 'grav-svelte/Modals';
+
+// Módulo Sidebar
+import { SidebarWrapper } from 'grav-svelte/Sidebar';
+import type { SidebarSection, SidebarModule } from 'grav-svelte/Sidebar';
+
+// Módulo Alerts
+import { Exito_Alert, Error_Alert, Confirmacion_Alert } from 'grav-svelte/Alerts';
+
+// Estilos CSS
+import 'grav-svelte/typography.css';
+📝 MÓDULO INPUTS - COMPONENTES DE FORMULARIO
+1. InputFormText - Campo de Texto
+Propiedades:
+label: string - Etiqueta del input
+valueVar: string (bind) - Valor del input
+icon?: string - Clase de icono (ej: "fas fa-user")
+placeholder?: string - Placeholder del input
+disabled?: boolean - Deshabilitar input
+required?: boolean - Campo requerido
+Ejemplo:
+<script lang="ts">
+  import { InputFormText } from 'grav-svelte/Inputs';
+  let nombreUsuario = "";
+</script>
+
+<InputFormText 
+  label="Nombre de Usuario" 
+  bind:valueVar={nombreUsuario}
+  icon="fas fa-user"
+  placeholder="Ingrese su nombre"
+/>
+2. InputFormPassword - Campo de Contraseña
+Propiedades:
+label: string - Etiqueta del input
+valueVar: string (bind) - Valor del input
+icon?: string - Clase de icono
+validation?: boolean - Habilitar validación (default: true)
+Ejemplo:
+<script lang="ts">
+  import { InputFormPassword } from 'grav-svelte/Inputs';
+  let password = "";
+</script>
+
+<InputFormPassword 
+  label="Contraseña" 
+  bind:valueVar={password}
+  icon="fas fa-lock"
+  validation={true}
+/>
+3. InputFormNumber - Campo Numérico
+Propiedades:
+label: string - Etiqueta del input
+valueVar: number | null (bind) - Valor del input
+min?: number - Valor mínimo
+max?: number - Valor máximo
+step?: number - Incremento
+Ejemplo:
+<script lang="ts">
+  import { InputFormNumber } from 'grav-svelte/Inputs';
+  let edad: number | null = null;
+</script>
+
+<InputFormNumber 
+  label="Edad" 
+  bind:valueVar={edad}
+  min={0}
+  max={120}
+/>
+4. InputFormTextArea - Área de Texto
+Propiedades:
+label: string - Etiqueta del textarea
+valueVar: string (bind) - Valor del textarea
+rows?: number - Número de filas (default: 4)
+placeholder?: string - Placeholder
+Ejemplo:
+<script lang="ts">
+  import { InputFormTextArea } from 'grav-svelte/Inputs';
+  let descripcion = "";
+</script>
+
+<InputFormTextArea
+  label="Descripción"
+  bind:valueVar={descripcion}
+  rows={6}
+  placeholder="Escriba una descripción detallada"
+/>
+5. InputFormBool - Checkbox/Toggle
+Propiedades:
+label: string - Etiqueta del checkbox
+valueVar: boolean (bind) - Valor booleano
+Ejemplo:
+<script lang="ts">
+  import { InputFormBool } from 'grav-svelte/Inputs';
+  let activo = false;
+</script>
+
+<InputFormBool 
+  label="Usuario Activo" 
+  bind:valueVar={activo} 
+/>
+6. InputFormColor - Selector de Color
+Propiedades:
+label: string - Etiqueta del selector
+valueVar: string (bind) - Valor en formato hexadecimal (ej: "#FF0000")
+Ejemplo:
+<script lang="ts">
+  import { InputFormColor } from 'grav-svelte/Inputs';
+  let colorPrincipal = "#3B82F6";
+</script>
+
+<InputFormColor 
+  label="Color Principal" 
+  bind:valueVar={colorPrincipal} 
+/>
+7. InputFormDate - Selector de Fecha
+Propiedades:
+label: string - Etiqueta del selector
+valueVar: string | null (bind) - Valor en formato ISO string
+Ejemplo:
+<script lang="ts">
+  import { InputFormDate } from 'grav-svelte/Inputs';
+  let fechaNacimiento: string | null = null;
+</script>
+
+<InputFormDate 
+  label="Fecha de Nacimiento" 
+  bind:valueVar={fechaNacimiento} 
+/>
+8. InputFormDateAndHours - Selector de Fecha y Hora
+Propiedades:
+label: string - Etiqueta del selector
+valueVar: string | null (bind) - Valor en formato ISO string con hora
+Ejemplo:
+<script lang="ts">
+  import { InputFormDateAndHours } from 'grav-svelte/Inputs';
+  let fechaReunion: string | null = null;
+</script>
+
+<InputFormDateAndHours
+  label="Fecha y Hora de Reunión"
+  bind:valueVar={fechaReunion}
+/>
+9. InputFormSelect - Selector Desplegable
+Propiedades:
+label: string - Etiqueta del select
+value: SelectValue | null (bind) - Valor seleccionado
+res: SelectValue[] - Array de opciones
+placeholder?: string - Placeholder
+showPlusIcon?: boolean - Mostrar botón de plus (default: false)
+onPlusClick?: () => void - Función al hacer clic en el botón plus
+changeFunction?: (e: CustomEvent<SelectValue | null>) => void - Función al cambiar selección
+onClear?: () => void - Función al limpiar selección
+disabledVar?: boolean - Deshabilitar el select
+Interfaz SelectValue:
+interface SelectValue {
+  value: string;
+  label: string;
+}
+Ejemplo básico:
+<script lang="ts">
+  import { InputFormSelect } from 'grav-svelte/Inputs';
+
+  interface SelectValue {
+    value: string;
+    label: string;
+  }
+
+  let paisSeleccionado: SelectValue | null = null;
+
+  const paises = [
+    { value: "1", label: "México" },
+    { value: "2", label: "Estados Unidos" },
+    { value: "3", label: "Canadá" }
+  ];
+</script>
+
+<InputFormSelect
+  label="País"
+  bind:value={paisSeleccionado}
+  res={paises}
+  placeholder="Seleccione un país"
+/>
+
+Ejemplo con botón Plus (para agregar nuevas opciones):
+<script lang="ts">
+  import { InputFormSelect } from 'grav-svelte/Inputs';
+  import { openModal } from 'grav-svelte/Modals';
+
+  interface SelectValue {
+    value: string;
+    label: string;
+  }
+
+  let categoriaSeleccionada: SelectValue | null = null;
+  let categorias = [
+    { value: "1", label: "Categoría A" },
+    { value: "2", label: "Categoría B" }
+  ];
+
+  function handleAgregarCategoria() {
+    // Abrir modal para agregar nueva categoría
+    openModal('modal-nueva-categoria', ModalNuevaCategoria, {
+      onGuardar: (nuevaCategoria) => {
+        categorias = [...categorias, nuevaCategoria];
+        categoriaSeleccionada = nuevaCategoria;
+      }
+    });
+  }
+</script>
+
+<InputFormSelect
+  label="Categoría"
+  bind:value={categoriaSeleccionada}
+  res={categorias}
+  showPlusIcon={true}
+  onPlusClick={handleAgregarCategoria}
+/>
+10. InputFormCascade - Selectores en Cascada
+Propiedades:
+levels: CascadeLevel[] - Array de niveles en cascada
+selectedValues: Record<string, string | null> (bind) - Valores seleccionados
+Interfaz CascadeLevel:
+interface CascadeLevel {
+  label: string;          // Etiqueta del select
+  field: string;          // Nombre del campo
+  fetchFn: (parentValue?: string) => Promise<SelectValue[]>;  // Función para obtener opciones
+}
+Ejemplo:
+<script lang="ts">
+  import { InputFormCascade } from 'grav-svelte/Inputs';
+  
+  let ubicacion: Record<string, string | null> = {};
+  
+  const niveles = [
+    {
+      label: "País",
+      field: "pais",
+      fetchFn: async () => [
+        { value: "1", label: "México" },
+        { value: "2", label: "Estados Unidos" }
+      ]
+    },
+    {
+      label: "Estado",
+      field: "estado",
+      fetchFn: async (paisId?: string) => {
+        if (paisId === "1") {
+          return [
+            { value: "1", label: "Ciudad de México" },
+            { value: "2", label: "Jalisco" }
+          ];
+        } else if (paisId === "2") {
+          return [
+            { value: "1", label: "California" },
+            { value: "2", label: "Texas" }
+          ];
+        }
+        return [];
+      }
+    }
+  ];
+</script>
+
+<InputFormCascade
+  levels={niveles}
+  bind:selectedValues={ubicacion}
+/>
+
+<!-- Acceder a valores seleccionados -->
+<p>País seleccionado: {ubicacion.pais}</p>
+<p>Estado seleccionado: {ubicacion.estado}</p>
+11. InputFormImage - Selector de Imagen
+Propiedades:
+inputFile: HTMLInputElement (bind) - Referencia al input file
+base64Preview: string (bind) - Preview de la imagen en base64
+Ejemplo:
+<script lang="ts">
+  import { InputFormImage } from 'grav-svelte/Inputs';
+  
+  let archivoImagen: HTMLInputElement;
+  let imagenBase64 = "";
+</script>
+
+<InputFormImage 
+  bind:inputFile={archivoImagen} 
+  bind:base64Preview={imagenBase64} 
+/>
+
+{#if imagenBase64}
+  <img src={imagenBase64} alt="Preview" class="w-32 h-32 object-cover" />
+{/if}
+📊 MÓDULO CRUD - SISTEMA DE TABLAS AVANZADO
+Componente Principal: CrudWrapper
+Propiedades Principales:
+interface CrudWrapperProps {
+  // Datos
+  todosLosObjetos: any[];           // Array de objetos a mostrar
+  tableH: TableHeader[];             // Configuración de columnas
+  totalRows: number;                 // Total de registros
+  Filtros: FiltrosI[];               // Configuración de filtros
+  
+  // Paginación
+  PageSize: number;                  // Registros por página
+  currentPage: number;               // Página actual
+  
+  // Ordenamiento
+  selectedSort: string;              // Campo de ordenamiento
+  selectedAscOrDesc: 'asc' | 'desc'; // Dirección de ordenamiento
+  
+  // Configuración UI
+  Titulo_Crud?: string;              // Título de la tabla
+  loading?: boolean;                 // Estado de carga
+  showAddButton?: boolean;           // Mostrar botón agregar
+  showImportButton?: boolean;        // Mostrar botón importar
+  
+  // Drag & Drop
+  dragEnabled?: boolean;             // Habilitar reordenamiento
+  orderField?: string;               // Campo para ordenar (ej: "inOrden")
+  
+  // IDs y Subrows
+  idField?: string;                  // Campo ID (default: 'id')
+  expandEnabled?: boolean;           // Habilitar expansión de filas
+  subRowsField?: string;             // Campo con subrows (default: 'subRows')
+  subRowHeaders?: TableHeader[];     // Headers personalizados para subrows
+  
+  // Callbacks
+  onFilter: (filters: FiltrosI[]) => void;
+  onAdd: () => void;
+  onImport?: () => void;
+  onReorder?: (items: any[]) => void;
+  onCellUpdate?: (id: number | string, campo: string, newValue: any) => Promise<void>;
+}
+Interfaz TableHeader - Configuración de Columnas
+interface TableHeader {
+  titulo: string;           // Título de la columna
+  biSort: boolean;          // Habilitar ordenamiento
+  tipo: CellType;           // Tipo de celda (ver tipos abajo)
+  biBold: boolean;          // Texto en negrita
+  align?: 'left' | 'right' | 'center';  // Alineación (default: 'left')
+  campo: string;            // Campo del objeto a mostrar
+  colorCampo?: string;      // Campo que contiene clases CSS de color
+  buttonsConfig: ButtonConfig[] | null;  // Configuración de botones
+  
+  // Propiedades para celdas editables
+  onUpdate?: (id: number | string, campo: string, newValue: any) => Promise<void> | void;
+  
+  // Propiedades para DynamicButton
+  textField?: string;       // Campo con el texto del botón
+  colorField?: string;      // Campo con clases CSS del botón
+  iconField?: string;       // Campo con clase de icono
+  iconPosition?: 'left' | 'right';  // Posición del icono
+  onButtonClick?: (id: number | string, row: any) => Promise<void> | void;
+  
+  // Propiedades para ImageButton
+  imageField?: string;      // Campo con URL de imagen
+  imageSize?: 'sm' | 'md' | 'lg';  // Tamaño de imagen
+  action?: (id: number | string) => Promise<void> | void;
+  
+  // Propiedades para DualTextButton
+  textField1?: string;      // Campo con primer texto
+  textField2?: string;      // Campo con segundo texto
+  colorField1?: string;     // Campo con clases CSS del primer texto
+  colorField2?: string;     // Campo con clases CSS del segundo texto
+  separator?: string;       // Separador entre textos (default: ' / ')
+  
+  // Propiedades para ConditionalCell
+  conditionField?: string;  // Campo booleano para condición
+  whenTrue?: {              // Renderizado cuando es true
+    tipo: 'Text' | 'DualTextButton';
+    textField?: string;
+    colorField?: string;
+    textField1?: string;
+    textField2?: string;
+    colorField1?: string;
+    colorField2?: string;
+    separator?: string;
+  };
+  whenFalse?: {             // Renderizado cuando es false
+    tipo: 'Text' | 'DualTextButton';
+    textField?: string;
+    colorField?: string;
+    textField1?: string;
+    textField2?: string;
+    colorField1?: string;
+    colorField2?: string;
+    separator?: string;
+  };
+  
+  // Propiedades para MultiTextButton
+  itemsField?: string;      // Campo con array de items
+  multiLayout?: 'vertical' | 'horizontal';  // Dirección de layout
+  multiSeparator?: string;  // Separador entre items
+}
+Tipos de Celdas Disponibles
+type CellType = 
+  | 'Text'              // Texto simple
+  | 'Number'            // Número
+  | 'Bool'              // Booleano (check/x)
+  | 'Image'             // Imagen
+  | 'Date'              // Fecha formateada
+  | 'Datetime'          // Fecha y hora
+  | 'EditableBool'      // Checkbox editable
+  | 'EditableText'      // Texto editable inline
+  | 'EditableNumber'    // Número editable inline
+  | 'Buttons'           // Botones de acción
+  | 'DynamicButton'     // Botón con texto/icono dinámico
+  | 'ImageButton'       // Botón con imagen circular
+  | 'DualTextButton'    // Botón con dos textos
+  | 'ConditionalCell'   // Celda condicional
+  | 'MultiTextButton';  // Múltiples textos/botones
+Interfaz ButtonConfig
+interface ButtonConfig {
+  icon: string;         // Clase de icono (ej: "fa-solid fa-edit")
+  color: string;        // Clases CSS de color
+  action: (id: number) => void;  // Función al hacer click
+  tooltip: string;      // Texto del tooltip
+  show?: boolean;       // Mostrar/ocultar (default: true)
+}
+Interfaz FiltrosI - Configuración de Filtros
+interface FiltrosI {
+  tipo: 'number' | 'text' | 'date' | 'datetime' | 'select' | 'bool';
+  label: string;        // Etiqueta del filtro
+  value: any;           // Valor actual del filtro
+  options?: { value: any; label: string }[];  // Opciones para select
+  service?: () => Promise<{ value: any; label: string }[]>;  // Servicio async para select
+}
+Ejemplo Completo de CRUD
+<script lang="ts">
+  import { CrudWrapper } from 'grav-svelte/CRUD';
+  import type { TableHeader, FiltrosI, ButtonConfig } from 'grav-svelte/CRUD';
+  import { onMount } from 'svelte';
+  
+  // Estado de la tabla
+  let todosLosObjetos: any[] = [];
+  let totalRows = 0;
+  let PageSize = 10;
+  let currentPage = 1;
+  let selectedSort = "id";
+  let selectedAscOrDesc: "asc" | "desc" = "desc";
+  let loading = false;
+  
+  // Configuración de filtros
+  let Filtros: FiltrosI[] = [
+    {
+      label: "Nombre",
+      value: "",
+      tipo: "text"
+    },
+    {
+      label: "Activo",
+      value: "",
+      tipo: "bool"
+    },
+    {
+      label: "Categoría",
+      value: "",
+      tipo: "select",
+      options: [
+        { value: "1", label: "Categoría A" },
+        { value: "2", label: "Categoría B" }
+      ]
+    },
+    {
+      label: "Estado",
+      value: "",
+      tipo: "select",
+      service: async () => {
+        // Llamada a API
+        const response = await fetch('/api/estados');
+        return await response.json();
+      }
+    }
+  ];
+  
+  // Configuración de columnas
+  let tableH: TableHeader[] = [
+    {
+      titulo: "ID",
+      biSort: true,
+      tipo: "Number",
+      biBold: false,
+      align: "center",
+      campo: "id",
+      buttonsConfig: null
+    },
+    {
+      titulo: "Nombre",
+      biSort: true,
+      tipo: "Text",
+      biBold: true,
+      align: "left",
+      campo: "nombre",
+      colorCampo: "colorNombre",  // Campo con clases CSS
+      buttonsConfig: null
+    },
+    {
+      titulo: "Email",
+      biSort: true,
+      tipo: "EditableText",
+      biBold: false,
+      align: "left",
+      campo: "email",
+      buttonsConfig: null,
+      onUpdate: async (id, campo, newValue) => {
+        console.log(`Actualizar ID ${id}: ${campo} = ${newValue}`);
+        await fetch(`/api/usuarios/${id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ [campo]: newValue })
+        });
+      }
+    },
+    {
+      titulo: "Edad",
+      biSort: true,
+      tipo: "EditableNumber",
+      biBold: false,
+      align: "right",
+      campo: "edad",
+      buttonsConfig: null,
+      onUpdate: handleCellUpdate
+    },
+    {
+      titulo: "Activo",
+      biSort: false,
+      tipo: "EditableBool",
+      biBold: false,
+      align: "center",
+      campo: "activo",
+      buttonsConfig: null,
+      onUpdate: handleCellUpdate
+    },
+    {
+      titulo: "Estado",
+      biSort: false,
+      tipo: "DynamicButton",
+      biBold: false,
+      align: "center",
+      campo: "id",
+      textField: "estadoTexto",      // Campo: "Aprobado", "Pendiente"
+      colorField: "estadoColor",      // Campo: "bg-green-500 text-white"
+      iconField: "estadoIcono",       // Campo: "fa-solid fa-check"
+      iconPosition: "left",
+      buttonsConfig: null,
+      onButtonClick: (id, row) => {
+        console.log(`Estado clicked: ${row.estadoTexto}`);
+      }
+    },
+    {
+      titulo: "Avatar",
+      biSort: false,
+      tipo: "ImageButton",
+      biBold: false,
+      align: "center",
+      campo: "id",
+      imageField: "avatarUrl",        // URL de la imagen
+      imageSize: "md",
+      buttonsConfig: null,
+      action: (id) => {
+        console.log(`Avatar clicked: ${id}`);
+      }
+    },
+    {
+      titulo: "Info Dual",
+      biSort: false,
+      tipo: "DualTextButton",
+      biBold: false,
+      align: "center",
+      campo: "id",
+      textField1: "texto1",           // Campo con primer texto
+      textField2: "texto2",           // Campo con segundo texto
+      colorField1: "color1",          // Clases CSS primer texto
+      colorField2: "color2",          // Clases CSS segundo texto
+      separator: " | ",
+      buttonsConfig: null,
+      onButtonClick: (id, row) => {
+        console.log(`Dual clicked: ${row.texto1} / ${row.texto2}`);
+      }
+    },
+    {
+      titulo: "Estado Condicional",
+      biSort: false,
+      tipo: "ConditionalCell",
+      biBold: false,
+      align: "center",
+      campo: "id",
+      conditionField: "activo",       // Campo booleano
+      whenTrue: {
+        tipo: "DualTextButton",
+        textField1: "texto1",
+        textField2: "texto2",
+        colorField1: "color1",
+        colorField2: "color2",
+        separator: " / "
+      },
+      whenFalse: {
+        tipo: "Text",
+        textField: "estadoInactivo",
+        colorField: "colorInactivo"
+      },
+      buttonsConfig: null
+    },
+    {
+      titulo: "Tags",
+      biSort: false,
+      tipo: "MultiTextButton",
+      biBold: false,
+      align: "center",
+      campo: "id",
+      itemsField: "tags",             // Array de { text: string, color: string }
+      multiLayout: "horizontal",
+      multiSeparator: "•",
+      buttonsConfig: null,
+      onButtonClick: (id, row) => {
+        console.log(`Tags:`, row.tags);
+      }
+    },
+    {
+      titulo: "Acciones",
+      biSort: false,
+      tipo: "Buttons",
+      biBold: false,
+      align: "right",
+      campo: "id",
+      buttonsConfig: [
+        {
+          icon: "fa-solid fa-edit",
+          tooltip: "Editar",
+          color: "text-blue-500 border-blue-500 bg-white hover:bg-blue-500 hover:text-white",
+          show: true,
+          action: (id) => {
+            console.log(`Editar ID: ${id}`);
+          }
+        },
+        {
+          icon: "fa-solid fa-trash",
+          tooltip: "Eliminar",
+          color: "text-red-500 border-red-500 bg-white hover:bg-red-500 hover:text-white",
+          show: true,
+          action: async (id) => {
+            if (confirm('¿Está seguro?')) {
+              await fetch(`/api/usuarios/${id}`, { method: 'DELETE' });
+              await cargarDatos();
+            }
+          }
+        }
+      ]
+    }
+  ];
+  
+  // Función para cargar datos
+  async function cargarDatos() {
+    loading = true;
+    try {
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        pageSize: PageSize.toString(),
+        sort: selectedSort,
+        order: selectedAscOrDesc,
+        ...Object.fromEntries(
+          Filtros.filter(f => f.value).map(f => [f.label, f.value])
+        )
+      });
+      
+      const response = await fetch(`/api/usuarios?${params}`);
+      const data = await response.json();
+      
+      todosLosObjetos = data.items;
+      totalRows = data.total;
+    } catch (error) {
+      console.error('Error al cargar datos:', error);
+    } finally {
+      loading = false;
+    }
+  }
+  
+  // Handlers
+  function handleAdd() {
+    // Abrir modal de creación
+    console.log('Agregar nuevo registro');
+  }
+  
+  function handleImport() {
+    console.log('Importar datos');
+  }
+  
+  function handleReorder(reorderedItems: any[]) {
+    console.log('Items reordenados:', reorderedItems);
+    // Enviar nuevo orden al servidor
+  }
+  
+  async function handleCellUpdate(id: number | string, campo: string, newValue: any) {
+    console.log(`Actualizar celda: ID=${id}, campo=${campo}, valor=${newValue}`);
+    await fetch(`/api/usuarios/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ [campo]: newValue })
+    });
+  }
+  
+  onMount(() => {
+    cargarDatos();
+  });
+</script>
+
+<CrudWrapper
+  Titulo_Crud="Gestión de Usuarios"
+  {todosLosObjetos}
+  {tableH}
+  {totalRows}
+  bind:Filtros
+  bind:PageSize
+  bind:currentPage
+  bind:selectedAscOrDesc
+  bind:selectedSort
+  {loading}
+  showAddButton={true}
+  showImportButton={true}
+  dragEnabled={true}
+  orderField="orden"
+  idField="id"
+  onFilter={cargarDatos}
+  onAdd={handleAdd}
+  onImport={handleImport}
+  onReorder={handleReorder}
+  onCellUpdate={handleCellUpdate}
+/>
+Ejemplo con SubRows (Filas Expandibles)
+<script lang="ts">
+  import { CrudWrapper } from 'grav-svelte/CRUD';
+  import type { TableHeader } from 'grav-svelte/CRUD';
+  
+  // Headers para filas principales
+  let tableH: TableHeader[] = [
+    {
+      titulo: "Mes",
+      biSort: true,
+      tipo: "Text",
+      biBold: true,
+      campo: "nombreMes",
+      buttonsConfig: null
+    },
+    {
+      titulo: "Días",
+      biSort: true,
+      tipo: "Number",
+      biBold: false,
+      campo: "totalDias",
+      buttonsConfig: null
+    }
+  ];
+  
+  // Headers PERSONALIZADOS para subrows (diferentes a los padres)
+  let subRowH: TableHeader[] = [
+    {
+      titulo: "Semana",
+      biSort: false,
+      tipo: "Text",
+      biBold: true,
+      campo: "nombreSemana",
+      colorCampo: "colorSemana",
+      buttonsConfig: null
+    },
+    {
+      titulo: "Imagen",
+      biSort: false,
+      tipo: "Image",
+      biBold: false,
+      campo: "imagenUrl",
+      buttonsConfig: null
+    },
+    {
+      titulo: "Días",
+      biSort: false,
+      tipo: "Number",
+      biBold: false,
+      campo: "diasSemana",
+      buttonsConfig: null
+    },
+    {
+      titulo: "Activa",
+      biSort: false,
+      tipo: "Bool",
+      biBold: false,
+      campo: "activa",
+      buttonsConfig: null
+    }
+  ];
+  
+  // Datos con subRows
+  let todosLosObjetos = [
+    {
+      id: 1,
+      nombreMes: "Enero",
+      totalDias: 31,
+      subRows: [
+        {
+          id: 11,
+          nombreSemana: "Semana 1",
+          colorSemana: "bg-purple-500 text-white",
+          imagenUrl: "https://example.com/week1.jpg",
+          diasSemana: 7,
+          activa: true
+        },
+        {
+          id: 12,
+          nombreSemana: "Semana 2",
+          colorSemana: "bg-blue-500 text-white",
+          imagenUrl: "https://example.com/week2.jpg",
+          diasSemana: 7,
+          activa: false
+        }
+      ]
+    },
+    {
+      id: 2,
+      nombreMes: "Febrero",
+      totalDias: 28,
+      subRows: null  // Sin subrows
+    }
+  ];
+</script>
+
+<CrudWrapper
+  Titulo_Crud="Meses y Semanas"
+  {todosLosObjetos}
+  {tableH}
+  totalRows={todosLosObjetos.length}
+  bind:Filtros
+  bind:PageSize
+  bind:currentPage
+  bind:selectedAscOrDesc
+  bind:selectedSort
+  expandEnabled={true}
+  subRowsField="subRows"
+  subRowHeaders={subRowH}
+  idField="id"
+  onFilter={() => {}}
+  onAdd={() => {}}
+/>
+Estructura de Datos para Diferentes Tipos de Celdas
+// Ejemplo de objeto con todos los tipos de datos
+interface DataRow {
+  // Datos básicos
+  id: number;
+  nombre: string;
+  edad: number;
+  activo: boolean;
+  email: string;
+  
+  // Para celdas con color
+  colorNombre: string;  // Ej: "bg-blue-500 text-white", "text-red-600"
+  
+  // Para DynamicButton
+  estadoTexto: string;   // Ej: "Aprobado", "Pendiente"
+  estadoColor: string;   // Ej: "bg-green-500 text-white"
+  estadoIcono: string;   // Ej: "fa-solid fa-check"
+  
+  // Para ImageButton
+  avatarUrl: string;     // URL de la imagen
+  
+  // Para DualTextButton
+  texto1: string;
+  texto2: string;
+  color1: string;        // Clases CSS
+  color2: string;        // Clases CSS
+  
+  // Para MultiTextButton
+  tags: Array<{
+    text: string;
+    color: string;       // Clases CSS
+  }>;
+  
+  // Para SubRows
+  subRows?: DataRow[] | null;
+  
+  // Para drag & drop
+  orden?: number;
+}
+
+// Ejemplo de datos reales
+const ejemploDatos: DataRow[] = [
+  {
+    id: 1,
+    nombre: "Juan Pérez",
+    colorNombre: "bg-blue-500 text-white font-bold px-2 py-1 rounded",
+    edad: 30,
+    activo: true,
+    email: "juan@example.com",
+    estadoTexto: "Aprobado",
+    estadoColor: "bg-green-500 text-white px-3 py-1 rounded",
+    estadoIcono: "fa-solid fa-check",
+    avatarUrl: "https://i.pravatar.cc/150?img=1",
+    texto1: "Activo",
+    texto2: "Verificado",
+    color1: "bg-green-600 text-white px-2 py-1 rounded",
+    color2: "bg-blue-600 text-white px-2 py-1 rounded",
+    tags: [
+      { text: "Admin", color: "bg-purple-600 text-white px-2 py-1 rounded" },
+      { text: "Premium", color: "bg-yellow-500 text-white px-2 py-1 rounded" }
+    ],
+    orden: 1
+  }
+];
+🪟 MÓDULO MODALS - SISTEMA DE MODALES
+Sistema de Store-Based Modals
+El módulo de modales usa Svelte stores para gestión centralizada del estado.
+Configuración Inicial
+<!-- En tu layout raíz o +layout.svelte -->
+<script lang="ts">
+  import { ModalContainer } from 'grav-svelte/Modals';
+</script>
+
+<!-- Contenido de tu app -->
+<slot />
+
+<!-- Container de modales (siempre al final) -->
+<ModalContainer />
+Funciones de Control
+import { openModal, closeModal, closeAllModals } from 'grav-svelte/Modals';
+
+// Abrir un modal
+openModal(
+  id: string,              // ID único del modal
+  component: any,          // Componente Svelte a mostrar
+  props?: Record<string, any>  // Props para el componente
+);
+
+// Cerrar un modal específico
+closeModal(id: string);
+
+// Cerrar todos los modales
+closeAllModals();
+Crear un Componente Modal
+<!-- MiModal.svelte -->
+<script lang="ts">
+  import { Grav_Modal } from 'grav-svelte/Modals';
+  import { closeModal } from 'grav-svelte/Modals';
+  
+  export let modalId: string;
+  export let titulo: string;
+  export let onGuardar: (datos: any) => void;
+  
+  let nombre = "";
+  let email = "";
+  
+  function handleGuardar() {
+    onGuardar({ nombre, email });
+    closeModal(modalId);
+  }
+</script>
+
+<Grav_Modal 
+  {modalId} 
+  {titulo}
+  maxWidth="max-w-2xl"
+>
+  <div class="p-6">
+    <div class="mb-4">
+      <label class="block mb-2">Nombre</label>
+      <input 
+        type="text" 
+        bind:value={nombre} 
+        class="w-full border px-3 py-2 rounded"
+      />
+    </div>
+    
+    <div class="mb-4">
+      <label class="block mb-2">Email</label>
+      <input 
+        type="email" 
+        bind:value={email} 
+        class="w-full border px-3 py-2 rounded"
+      />
+    </div>
+    
+    <div class="flex justify-end gap-2">
+      <button 
+        on:click={() => closeModal(modalId)}
+        class="px-4 py-2 bg-gray-200 rounded"
+      >
+        Cancelar
+      </button>
+      <button 
+        on:click={handleGuardar}
+        class="px-4 py-2 bg-blue-500 text-white rounded"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</Grav_Modal>
+Usar el Modal
+<script lang="ts">
+  import { openModal } from 'grav-svelte/Modals';
+  import MiModal from './MiModal.svelte';
+  
+  function abrirModalCrear() {
+    openModal(
+      'modal-crear-usuario',  // ID único
+      MiModal,                 // Componente
+      {                        // Props
+        titulo: "Crear Usuario",
+        onGuardar: (datos) => {
+          console.log('Datos guardados:', datos);
+          // Llamar a API, actualizar lista, etc.
+        }
+      }
+    );
+  }
+  
+  function abrirModalEditar(usuario: any) {
+    openModal(
+      'modal-editar-usuario',
+      MiModal,
+      {
+        titulo: "Editar Usuario",
+        nombre: usuario.nombre,
+        email: usuario.email,
+        onGuardar: async (datos) => {
+          await fetch(`/api/usuarios/${usuario.id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(datos)
+          });
+        }
+      }
+    );
+  }
+</script>
+
+<button on:click={abrirModalCrear}>
+  Crear Nuevo Usuario
+</button>
+Propiedades de Grav_Modal
+interface GravModalProps {
+  modalId: string;          // ID del modal (requerido)
+  titulo?: string;          // Título del modal
+  maxWidth?: string;        // Clase de ancho máximo (ej: "max-w-4xl")
+  showCloseButton?: boolean;  // Mostrar botón X (default: true)
+}
+Ejemplo Avanzado: Modal de Confirmación
+<!-- ModalConfirmacion.svelte -->
+<script lang="ts">
+  import { Grav_Modal } from 'grav-svelte/Modals';
+  import { closeModal } from 'grav-svelte/Modals';
+  
+  export let modalId: string;
+  export let titulo = "Confirmar Acción";
+  export let mensaje: string;
+  export let onConfirmar: () => void;
+  export let onCancelar?: () => void;
+</script>
+
+<Grav_Modal {modalId} {titulo} maxWidth="max-w-md">
+  <div class="p-6">
+    <p class="mb-6 text-gray-700">{mensaje}</p>
+    
+    <div class="flex justify-end gap-3">
+      <button 
+        on:click={() => {
+          onCancelar?.();
+          closeModal(modalId);
+        }}
+        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+      >
+        Cancelar
+      </button>
+      <button 
+        on:click={() => {
+          onConfirmar();
+          closeModal(modalId);
+        }}
+        class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+      >
+        Confirmar
+      </button>
+    </div>
+  </div>
+</Grav_Modal>
+
+<!-- Uso -->
+<script lang="ts">
+  import { openModal } from 'grav-svelte/Modals';
+  import ModalConfirmacion from './ModalConfirmacion.svelte';
+  
+  function confirmarEliminacion(id: number) {
+    openModal('modal-confirmar-eliminar', ModalConfirmacion, {
+      titulo: "Eliminar Usuario",
+      mensaje: "¿Está seguro que desea eliminar este usuario? Esta acción no se puede deshacer.",
+      onConfirmar: async () => {
+        await fetch(`/api/usuarios/${id}`, { method: 'DELETE' });
+        // Recargar lista
+      }
+    });
+  }
+</script>
+🎨 MÓDULO ALERTS - NOTIFICACIONES CON SWEETALERT2
+Funciones Disponibles
+import { Exito_Alert, Error_Alert, Confirmacion_Alert } from 'grav-svelte/Alerts';
+
+// Alert de éxito
+Exito_Alert(titulo?: string);  // Default: "Se guardo correctamente"
+
+// Alert de error
+Error_Alert(titulo?: string);  // Default: "Algo salió mal"
+
+// Alert de confirmación
+Confirmacion_Alert(
+  titulo?: string,             // Default: "Confirmación"
+  texto?: string,              // Default: "Desea guardar los cambios?"
+  callback: () => void         // Función a ejecutar si confirma
+);
+Ejemplos de Uso
+<script lang="ts">
+  import { Exito_Alert, Error_Alert, Confirmacion_Alert } from 'grav-svelte/Alerts';
+  
+  async function guardarDatos(datos: any) {
+    try {
+      const response = await fetch('/api/guardar', {
+        method: 'POST',
+        body: JSON.stringify(datos)
+      });
+      
+      if (response.ok) {
+        Exito_Alert("Datos guardados exitosamente");
+      } else {
+        Error_Alert("Error al guardar los datos");
+      }
+    } catch (error) {
+      Error_Alert("Error de conexión");
+    }
+  }
+  
+  function eliminarUsuario(id: number) {
+    Confirmacion_Alert(
+      "Eliminar Usuario",
+      "¿Está seguro que desea eliminar este usuario?",
+      async () => {
+        try {
+          await fetch(`/api/usuarios/${id}`, { method: 'DELETE' });
+          Exito_Alert("Usuario eliminado");
+          // Recargar lista
+        } catch (error) {
+          Error_Alert("No se pudo eliminar el usuario");
+        }
+      }
+    );
+  }
+  
+  function confirmarCambios() {
+    Confirmacion_Alert(
+      "Confirmar Cambios",
+      "Los cambios realizados se guardarán permanentemente",
+      () => {
+        console.log("Usuario confirmó");
+        // Ejecutar acción
+      }
+    );
+  }
+</script>
+
+<button on:click={() => guardarDatos({ nombre: "Juan" })}>
+  Guardar
+</button>
+
+<button on:click={() => eliminarUsuario(1)}>
+  Eliminar
+</button>
+
+<button on:click={confirmarCambios}>
+  Aplicar Cambios
+</button>
+Personalización de Estilos
+Los alerts ya vienen con estilos predefinidos pero puedes personalizarlos:
+// Exito_Alert - Auto-cierre en 1.5 segundos
+// Error_Alert - Botón "OK" verde
+// Confirmacion_Alert - Botones "Sí" (verde) y "No" (rojo)
+📂 MÓDULO SIDEBAR - NAVEGACIÓN LATERAL
+Interfaces
+interface SidebarModule {
+  nombre: string;           // Nombre del módulo
+  ruta: string;            // Ruta de navegación
+  icono: string;           // Clase de icono (ej: "fas fa-home")
+  notifiacion?: number | null;  // Número de notificaciones
+  permiso?: boolean;       // Mostrar/ocultar por permisos (default: true)
+}
+
+interface SidebarSection {
+  nombre: string;          // Nombre de la sección
+  biActivado: boolean;     // Sección expandida/colapsada por defecto
+  modules: SidebarModule[];  // Array de módulos
+}
+Ejemplo Completo
+<script lang="ts">
+  import { SidebarWrapper } from 'grav-svelte/Sidebar';
+  import type { SidebarSection } from 'grav-svelte/Sidebar';
+  
+  // Estado del sidebar (oculto/visible)
+  let storefullScreen = false;
+  
+  // Configuración de secciones
+  const sections: SidebarSection[] = [
+    {
+      nombre: "Dashboard",
+      biActivado: true,  // Expandida por defecto
+      modules: [
+        {
+          nombre: "Inicio",
+          ruta: "/dashboard",
+          icono: "fas fa-home",
+          notifiacion: null
+        },
+        {
+          nombre: "Análisis",
+          ruta: "/dashboard/analytics",
+          icono: "fas fa-chart-line",
+          notifiacion: 5  // Badge con número 5
+        }
+      ]
+    },
+    {
+      nombre: "Gestión",
+      biActivado: false,  // Colapsada por defecto
+      modules: [
+        {
+          nombre: "Usuarios",
+          ruta: "/gestion/usuarios",
+          icono: "fas fa-users",
+          notifiacion: 12
+        },
+        {
+          nombre: "Configuración",
+          ruta: "/gestion/configuracion",
+          icono: "fas fa-cog",
+          notifiacion: null
+        },
+        {
+          nombre: "Admin Oculto",
+          ruta: "/admin/secreto",
+          icono: "fas fa-lock",
+          permiso: false  // No se mostrará
+        }
+      ]
+    },
+    {
+      nombre: "Reportes",
+      biActivado: false,
+      modules: [
+        {
+          nombre: "Ventas",
+          ruta: "/reportes/ventas",
+          icono: "fas fa-dollar-sign",
+          notifiacion: null
+        },
+        {
+          nombre: "Inventario",
+          ruta: "/reportes/inventario",
+          icono: "fas fa-box",
+          notifiacion: 3
+        }
+      ]
+    }
+  ];
+</script>
+
+<div class="h-screen">
+  <!-- Sidebar -->
+  {#if !storefullScreen}
+    <SidebarWrapper
+      {sections}
+      brandName="Mi Aplicación"
+      brandLink="/"
+      bind:storefullScreen
+      customClass="bg-gradient-to-b from-gray-900 to-gray-800 text-white"
+    />
+  {:else}
+    <!-- Botón para mostrar sidebar cuando está oculto -->
+    <button
+      aria-label="Mostrar menú"
+      on:click={() => (storefullScreen = false)}
+      class="text-xl border-2 h-10 w-10 rounded-full absolute top-4 left-4 z-50 
+             flex justify-center items-center bg-white border-gray-300 shadow-lg
+             hover:bg-gray-100 transition"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+  {/if}
+
+  <!-- Contenido principal -->
+  <div class="relative {!storefullScreen ? 'md:ml-64' : ''} bg-gray-100 min-h-screen">
+    <div class="md:px-10 mx-auto w-full sm:px-5">
+      <main class="p-8">
+        <!-- Tu contenido aquí -->
+        <slot />
+      </main>
+    </div>
+  </div>
+</div>
+Propiedades de SidebarWrapper
+interface SidebarWrapperProps {
+  sections: SidebarSection[];   // Configuración de secciones (requerido)
+  brandName?: string;           // Nombre de la marca/app
+  brandLink?: string;           // URL del logo (default: "/")
+  storefullScreen: boolean;     // Estado oculto/visible (bind requerido)
+  customClass?: string;         // Clases CSS personalizadas
+}
+Navegación Programática
+<script lang="ts">
+  import { goto } from '$app/navigation';
+  
+  // El sidebar usa enlaces nativos, pero puedes navegar programáticamente
+  function irASeccion(ruta: string) {
+    goto(ruta);
+  }
+</script>
+Sidebar Responsive
+<!-- El sidebar incluye comportamiento responsive automático -->
+<!-- En pantallas < md (768px), el sidebar se oculta automáticamente -->
+<!-- Usa el botón de toggle para mostrar/ocultar en móviles -->
+
+<style>
+  /* Ajustes adicionales si necesitas */
+  @media (max-width: 768px) {
+    .sidebar-mobile {
+      /* Estilos para móvil */
+    }
+  }
+</style>
+🎯 MEJORES PRÁCTICAS Y PATRONES
+1. Gestión de Estado en CRUD
+<script lang="ts">
+  import { writable } from 'svelte/store';
+  
+  // Store para datos de CRUD
+  const datosStore = writable<any[]>([]);
+  const loadingStore = writable(false);
+  const errorStore = writable<string | null>(null);
+  
+  async function cargarDatos() {
+    loadingStore.set(true);
+    errorStore.set(null);
+    
+    try {
+      const response = await fetch('/api/datos');
+      const data = await response.json();
+      datosStore.set(data);
+    } catch (error) {
+      errorStore.set(error.message);
+    } finally {
+      loadingStore.set(false);
+    }
+  }
+</script>
+
+<CrudWrapper
+  todosLosObjetos={$datosStore}
+  loading={$loadingStore}
+  onFilter={cargarDatos}
+  {/* ... otras props */}
+/>
+
+{#if $errorStore}
+  <div class="text-red-500">{$errorStore}</div>
+{/if}
+2. Reutilización de Configuraciones
+// lib/configs/tableConfigs.ts
+import type { TableHeader, ButtonConfig } from 'grav-svelte/CRUD';
+
+export const botonesAccionesStandard = (
+  onEditar: (id: number) => void,
+  onEliminar: (id: number) => void
+): ButtonConfig[] => [
+  {
+    icon: "fa-solid fa-edit",
+    tooltip: "Editar",
+    color: "text-blue-500 border-blue-500 bg-white hover:bg-blue-500 hover:text-white",
+    show: true,
+    action: onEditar
+  },
+  {
+    icon: "fa-solid fa-trash",
+    tooltip: "Eliminar",
+    color: "text-red-500 border-red-500 bg-white hover:bg-red-500 hover:text-white",
+    show: true,
+    action: onEliminar
+  }
+];
+
+export const columnaAcciones = (
+  onEditar: (id: number) => void,
+  onEliminar: (id: number) => void
+): TableHeader => ({
+  titulo: "Acciones",
+  biSort: false,
+  tipo: "Buttons",
+  biBold: false,
+  align: "right",
+  campo: "id",
+  buttonsConfig: botonesAccionesStandard(onEditar, onEliminar)
+});
+3. Manejo de Errores Consistente
+// lib/utils/errorHandler.ts
+import { Error_Alert } from 'grav-svelte/Alerts';
+
+export async function handleApiCall<T>(
+  apiCall: () => Promise<T>,
+  mensajeExito?: string,
+  mensajeError?: string
+): Promise<T | null> {
+  try {
+    const result = await apiCall();
+    if (mensajeExito) {
+      Exito_Alert(mensajeExito);
+    }
+    return result;
+  } catch (error) {
+    Error_Alert(mensajeError || "Ocurrió un error inesperado");
+    console.error(error);
+    return null;
+  }
+}
+
+// Uso
+import { handleApiCall } from '$lib/utils/errorHandler';
+
+async function guardarUsuario(datos: any) {
+  const result = await handleApiCall(
+    () => fetch('/api/usuarios', {
+      method: 'POST',
+      body: JSON.stringify(datos)
+    }).then(r => r.json()),
+    "Usuario guardado exitosamente",
+    "Error al guardar el usuario"
+  );
+  
+  if (result) {
+    // Continuar con la lógica
+  }
+}
+4. Validación de Formularios
+<script lang="ts">
+  import { InputFormText, InputFormNumber, InputFormBool } from 'grav-svelte/Inputs';
+  import { Error_Alert, Exito_Alert } from 'grav-svelte/Alerts';
+  
+  let nombre = "";
+  let edad: number | null = null;
+  let activo = false;
+  
+  interface ValidationError {
+    campo: string;
+    mensaje: string;
+  }
+  
+  function validarFormulario(): ValidationError[] {
+    const errores: ValidationError[] = [];
+    
+    if (!nombre.trim()) {
+      errores.push({ campo: 'nombre', mensaje: 'El nombre es requerido' });
+    }
+    
+    if (edad === null || edad < 18) {
+      errores.push({ campo: 'edad', mensaje: 'Debe ser mayor de 18 años' });
+    }
+    
+    return errores;
+  }
+  
+  async function handleSubmit() {
+    const errores = validarFormulario();
+    
+    if (errores.length > 0) {
+      Error_Alert(errores.map(e => e.mensaje).join('\n'));
+      return;
+    }
+    
+    // Procesar formulario
+    const response = await fetch('/api/guardar', {
+      method: 'POST',
+      body: JSON.stringify({ nombre, edad, activo })
+    });
+    
+    if (response.ok) {
+      Exito_Alert("Datos guardados correctamente");
+    } else {
+      Error_Alert("Error al guardar");
+    }
+  }
+</script>
+
+<form on:submit|preventDefault={handleSubmit}>
+  <InputFormText label="Nombre" bind:valueVar={nombre} />
+  <InputFormNumber label="Edad" bind:valueVar={edad} />
+  <InputFormBool label="Activo" bind:valueVar={activo} />
+  
+  <button type="submit">Guardar</button>
+</form>
+5. Composición de Modales Complejos
+<!-- ModalUsuario.svelte -->
+<script lang="ts">
+  import { Grav_Modal } from 'grav-svelte/Modals';
+  import { closeModal } from 'grav-svelte/Modals';
+  import { InputFormText, InputFormNumber, InputFormSelect, InputFormBool } from 'grav-svelte/Inputs';
+  import { Exito_Alert, Error_Alert } from 'grav-svelte/Alerts';
+  
+  export let modalId: string;
+  export let usuario: any = null;  // null = crear, objeto = editar
+  export let onGuardar: () => void;
+  
+  const esEdicion = usuario !== null;
+  
+  let nombre = usuario?.nombre || "";
+  let email = usuario?.email || "";
+  let edad: number | null = usuario?.edad || null;
+  let rolSeleccionado = usuario?.rol || null;
+  let activo = usuario?.activo ?? true;
+  
+  const roles = [
+    { value: "1", label: "Administrador" },
+    { value: "2", label: "Usuario" },
+    { value: "3", label: "Invitado" }
+  ];
+  
+  async function handleGuardar() {
+    if (!nombre || !email || !rolSeleccionado) {
+      Error_Alert("Complete todos los campos requeridos");
+      return;
+    }
+    
+    const datos = {
+      nombre,
+      email,
+      edad,
+      rol: rolSeleccionado.value,
+      activo
+    };
+    
+    try {
+      const url = esEdicion ? `/api/usuarios/${usuario.id}` : '/api/usuarios';
+      const method = esEdicion ? 'PATCH' : 'POST';
+      
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
+      });
+      
+      if (response.ok) {
+        Exito_Alert(esEdicion ? "Usuario actualizado" : "Usuario creado");
+        onGuardar();
+        closeModal(modalId);
+      } else {
+        Error_Alert("Error al guardar");
+      }
+    } catch (error) {
+      Error_Alert("Error de conexión");
+    }
+  }
+</script>
+
+<Grav_Modal 
+  {modalId} 
+  titulo={esEdicion ? "Editar Usuario" : "Crear Usuario"}
+  maxWidth="max-w-3xl"
+>
+  <div class="p-6 space-y-4">
+    <InputFormText label="Nombre *" bind:valueVar={nombre} />
+    <InputFormText label="Email *" bind:valueVar={email} />
+    <InputFormNumber label="Edad" bind:valueVar={edad} />
+    <InputFormSelect label="Rol *" bind:value={rolSeleccionado} res={roles} />
+    <InputFormBool label="Activo" bind:valueVar={activo} />
+    
+    <div class="flex justify-end gap-3 pt-4">
+      <button 
+        type="button"
+        on:click={() => closeModal(modalId)}
+        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+      >
+        Cancelar
+      </button>
+      <button 
+        type="button"
+        on:click={handleGuardar}
+        class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+      >
+        {esEdicion ? 'Actualizar' : 'Crear'}
+      </button>
+    </div>
+  </div>
+</Grav_Modal>
+6. Integración Completa: CRUD + Modales + Alerts
+<script lang="ts">
+  import { CrudWrapper } from 'grav-svelte/CRUD';
+  import type { TableHeader, FiltrosI } from 'grav-svelte/CRUD';
+  import { openModal } from 'grav-svelte/Modals';
+  import { Confirmacion_Alert, Exito_Alert, Error_Alert } from 'grav-svelte/Alerts';
+  import ModalUsuario from './ModalUsuario.svelte';
+  import { onMount } from 'svelte';
+  
+  // Estado
+  let usuarios: any[] = [];
+  let totalRows = 0;
+  let PageSize = 10;
+  let currentPage = 1;
+  let selectedSort = "id";
+  let selectedAscOrDesc: "asc" | "desc" = "desc";
+  let loading = false;
+  
+  // Filtros
+  let Filtros: FiltrosI[] = [
+    { label: "Nombre", value: "", tipo: "text" },
+    { label: "Activo", value: "", tipo: "bool" }
+  ];
+  
+  // Configuración de tabla
+  let tableH: TableHeader[] = [
+    {
+      titulo: "ID",
+      biSort: true,
+      tipo: "Number",
+      biBold: false,
+      align: "center",
+      campo: "id",
+      buttonsConfig: null
+    },
+    {
+      titulo: "Nombre",
+      biSort: true,
+      tipo: "Text",
+      biBold: true,
+      align: "left",
+      campo: "nombre",
+      buttonsConfig: null
+    },
+    {
+      titulo: "Email",
+      biSort: true,
+      tipo: "Text",
+      biBold: false,
+      align: "left",
+      campo: "email",
+      buttonsConfig: null
+    },
+    {
+      titulo: "Activo",
+      biSort: false,
+      tipo: "Bool",
+      biBold: false,
+      align: "center",
+      campo: "activo",
+      buttonsConfig: null
+    },
+    {
+      titulo: "Acciones",
+      biSort: false,
+      tipo: "Buttons",
+      biBold: false,
+      align: "right",
+      campo: "id",
+      buttonsConfig: [
+        {
+          icon: "fa-solid fa-edit",
+          tooltip: "Editar",
+          color: "text-blue-500 border-blue-500 bg-white hover:bg-blue-500 hover:text-white",
+          show: true,
+          action: handleEditar
+        },
+        {
+          icon: "fa-solid fa-trash",
+          tooltip: "Eliminar",
+          color: "text-red-500 border-red-500 bg-white hover:bg-red-500 hover:text-white",
+          show: true,
+          action: handleEliminar
+        }
+      ]
+    }
+  ];
+  
+  // Funciones
+  async function cargarUsuarios() {
+    loading = true;
+    try {
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        pageSize: PageSize.toString(),
+        sort: selectedSort,
+        order: selectedAscOrDesc,
+        ...Object.fromEntries(
+          Filtros.filter(f => f.value !== "").map(f => [f.label.toLowerCase(), f.value])
+        )
+      });
+      
+      const response = await fetch(`/api/usuarios?${params}`);
+      const data = await response.json();
+      
+      usuarios = data.items;
+      totalRows = data.total;
+    } catch (error) {
+      Error_Alert("Error al cargar usuarios");
+    } finally {
+      loading = false;
+    }
+  }
+  
+  function handleCrear() {
+    openModal('modal-crear-usuario', ModalUsuario, {
+      usuario: null,
+      onGuardar: cargarUsuarios
+    });
+  }
+  
+  function handleEditar(id: number) {
+    const usuario = usuarios.find(u => u.id === id);
+    openModal('modal-editar-usuario', ModalUsuario, {
+      usuario,
+      onGuardar: cargarUsuarios
+    });
+  }
+  
+  function handleEliminar(id: number) {
+    Confirmacion_Alert(
+      "Eliminar Usuario",
+      "¿Está seguro que desea eliminar este usuario?",
+      async () => {
+        try {
+          const response = await fetch(`/api/usuarios/${id}`, {
+            method: 'DELETE'
+          });
+          
+          if (response.ok) {
+            Exito_Alert("Usuario eliminado");
+            await cargarUsuarios();
+          } else {
+            Error_Alert("Error al eliminar");
+          }
+        } catch (error) {
+          Error_Alert("Error de conexión");
+        }
+      }
+    );
+  }
+  
+  onMount(() => {
+    cargarUsuarios();
+  });
+</script>
+
+<div class="p-4">
+  <CrudWrapper
+    Titulo_Crud="Gestión de Usuarios"
+    todosLosObjetos={usuarios}
+    {tableH}
+    {totalRows}
+    bind:Filtros
+    bind:PageSize
+    bind:currentPage
+    bind:selectedAscOrDesc
+    bind:selectedSort
+    {loading}
+    showAddButton={true}
+    onFilter={cargarUsuarios}
+    onAdd={handleCrear}
+  />
+</div>
+7. Variables CSS Personalizables
+Grav Svelte usa variables CSS para personalización. Puedes sobrescribirlas:
+/* En tu archivo de estilos global o componente */
+:root {
+  --grav-crud-color-neutral: #1f2937;      /* Color de texto principal */
+  --grav-crud-bg-primary: #3b82f6;         /* Color primario */
+  --grav-crud-bg-secondary: #6b7280;       /* Color secundario */
+  --grav-crud-border-color: #e5e7eb;       /* Color de bordes */
+}
+
+/* O aplicar en un componente específico */
+.mi-tabla-custom {
+  --grav-crud-color-neutral: #000;
+  --grav-crud-bg-primary: #10b981;
+}
+📋 RESUMEN DE IMPORTS
+// ==================== INPUTS ====================
+import {
+  InputFormText,
+  InputFormPassword,
+  InputFormNumber,
+  InputFormTextArea,
+  InputFormBool,
+  InputFormColor,
+  InputFormDate,
+  InputFormDateAndHours,
+  InputFormSelect,
+  InputFormCascade,
+  InputFormImage
+} from 'grav-svelte/Inputs';
+
+// ==================== CRUD ====================
+import { CrudWrapper } from 'grav-svelte/CRUD';
+import type { 
+  TableHeader, 
+  ButtonConfig, 
+  FiltrosI, 
+  CrudWrapperProps 
+} from 'grav-svelte/CRUD';
+
+// ==================== MODALS ====================
+import { 
+  openModal, 
+  closeModal, 
+  closeAllModals,
+  ModalContainer,
+  Grav_Modal
+} from 'grav-svelte/Modals';
+
+// ==================== SIDEBAR ====================
+import { SidebarWrapper } from 'grav-svelte/Sidebar';
+import type { 
+  SidebarSection, 
+  SidebarModule 
+} from 'grav-svelte/Sidebar';
+
+// ==================== ALERTS ====================
+import { 
+  Exito_Alert, 
+  Error_Alert, 
+  Confirmacion_Alert 
+} from 'grav-svelte/Alerts';
+
+// ==================== ESTILOS ====================
+import 'grav-svelte/typography.css';
+🚀 EJEMPLO DE APLICACIÓN COMPLETA
+<!-- +layout.svelte -->
+<script lang="ts">
+  import { ModalContainer } from 'grav-svelte/Modals';
+  import { SidebarWrapper } from 'grav-svelte/Sidebar';
+  import type { SidebarSection } from 'grav-svelte/Sidebar';
+  import 'grav-svelte/typography.css';
+  
+  let storefullScreen = false;
+  
+  const sections: SidebarSection[] = [
+    {
+      nombre: "Principal",
+      biActivado: true,
+      modules: [
+        { nombre: "Dashboard", ruta: "/", icono: "fas fa-home" },
+        { nombre: "Usuarios", ruta: "/usuarios", icono: "fas fa-users" }
+      ]
+    }
+  ];
+</script>
+
+<div class="h-screen">
+  {#if !storefullScreen}
+    <SidebarWrapper
+      {sections}
+      brandName="Mi App"
+      bind:storefullScreen
+    />
+  {/if}
+  
+  <div class="relative {!storefullScreen ? 'md:ml-64' : ''}">
+    <slot />
+  </div>
+  
+  <ModalContainer />
+</div>
+
+<!-- +page.svelte (Usuarios) -->
+<script lang="ts">
+  import { CrudWrapper } from 'grav-svelte/CRUD';
+  import type { TableHeader, FiltrosI } from 'grav-svelte/CRUD';
+  import { openModal } from 'grav-svelte/Modals';
+  import { Confirmacion_Alert, Exito_Alert } from 'grav-svelte/Alerts';
+  import ModalUsuario from './ModalUsuario.svelte';
+  
+  // ... (código del ejemplo anterior)
+</script>
+
+<div class="p-8">
+  <h1 class="text-3xl font-bold mb-6">Usuarios</h1>
+  
+  <CrudWrapper
+    Titulo_Crud="Listado de Usuarios"
+    {/* ... props */}
+  />
+</div>
+✅ CHECKLIST DE IMPLEMENTACIÓN
+Cuando uses Grav Svelte, asegúrate de:
+✅ Instalar svelte-select como peer dependency
+✅ Importar typography.css en tu layout principal
+✅ Incluir <ModalContainer /> en el layout raíz
+✅ Usar Font Awesome para iconos (o tu librería de iconos preferida)
+✅ Configurar Tailwind CSS si personalizas estilos
+✅ Usar bind: para propiedades reactivas (PageSize, currentPage, etc.)
+✅ Implementar manejo de errores con try/catch
+✅ Validar datos antes de enviar a la API
+✅ Usar TypeScript para type safety
+✅ Seguir patrones de código del proyecto
+FIN DEL DOCUMENTO DE REFERENCIA GRAV SVELTE
+Este prompt es extremadamente detallado y cubre todos los aspectos de la librería. Una IA que reciba este documento podrá implementar cualquier funcionalidad de Grav Svelte correctamente. ¿Te gustaría que agregue alguna sección adicional o profundice en algún aspecto en particular?

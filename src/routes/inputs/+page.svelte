@@ -28,6 +28,7 @@
     let imageInput: HTMLInputElement;
     let base64Preview = "";
     let selectInput: SelectValue | null = null;
+    let selectWithPlusInput: SelectValue | null = null;
     let textAreaInput = "";
     let cascadeInput: Record<string, string | null> = {};
 
@@ -113,10 +114,15 @@
         color: 'let colorInput = "#000000";\n\n<InputFormColor \n    label="Color Input" \n    bind:valueVar={colorInput} \n/>',
         bool: 'let boolInput = false;\n\n<InputFormBool \n    label="Boolean Input" \n    bind:valueVar={boolInput} \n/>',
         select: 'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\n<InputFormSelect\n    label="Select Input"\n    bind:value={selectInput}\n    res={selectOptions}\n/>',
+        selectWithPlus: 'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectWithPlusInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\nfunction handleAddOption() {\n    // Open modal or add new option logic\n    console.log("Add new option");\n}\n\n<InputFormSelect\n    label="Select with Plus Button"\n    bind:value={selectWithPlusInput}\n    res={selectOptions}\n    showPlusIcon={true}\n    onPlusClick={handleAddOption}\n/>',
         cascade:
             'let cascadeInput: Record<string, string | null> = {};\nconst cascadeLevels = [\n    {\n        label: "Country",\n        field: "country",\n        fetchFn: async () => [\n            { value: "1", label: "USA" },\n            { value: "2", label: "Canada" },\n        ],\n    },\n    {\n        label: "State",\n        field: "state",\n        fetchFn: async (countryId?: string) => {\n            if (countryId === "1") {\n                return [\n                    { value: "1", label: "California" },\n                    { value: "2", label: "New York" },\n                ];\n            }\n            return [];\n        },\n    },\n];\n\n<InputFormCascade\n    levels={cascadeLevels}\n    bind:selectedValues={cascadeInput}\n/>',
         image: 'let imageInput: HTMLInputElement;\nlet base64Preview = "";\n\n<InputFormImage \n    bind:inputFile={imageInput} \n    bind:base64Preview \n/>',
     };
+
+    function handleAddNewOption() {
+        alert("Aquí puedes abrir un modal para agregar una nueva opción");
+    }
 </script>
 
 <div class="max-w-4xl mx-auto p-8 colorTodo">
@@ -278,6 +284,26 @@
                 <pre
                     class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
                         >{codeExamples.select}</code
+                    ></pre>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <InputFormSelect
+                label="Select with Plus Button"
+                bind:value={selectWithPlusInput}
+                res={selectOptions}
+                showPlusIcon={true}
+                onPlusClick={handleAddNewOption}
+            />
+            <span class="block mt-1 text-sm text-gray-600"
+                >Selected: {selectWithPlusInput?.label}</span
+            >
+            <div class="mt-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.selectWithPlus}</code
                     ></pre>
             </div>
         </div>
