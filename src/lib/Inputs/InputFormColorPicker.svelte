@@ -5,20 +5,16 @@
     export let obligatory = false;
     export let icon: string | null = null;
 
-    // Preset colors matching the image design
+    // Preset colors - 8 distinct colors
     const presetColors = [
         "#3B82F6", // Blue
         "#10B981", // Green
         "#8B5CF6", // Purple
-        "#F59E0B", // Orange
+        "#F59E0B", // Amber
         "#EF4444", // Red
         "#EC4899", // Pink
         "#06B6D4", // Cyan
         "#84CC16", // Lime
-        "#F97316", // Orange 2
-        "#6366F1", // Indigo
-        "#14B8A6", // Teal
-        "#A855F7", // Purple 2
     ];
 
     function selectColor(color: string) {
@@ -162,9 +158,9 @@
 
     .preset-colors-grid {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 0.5rem;
-        max-width: 280px;
+        max-width: 140px;
     }
 
     .color-swatch {
@@ -178,7 +174,7 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        min-height: 30px;
+        min-height: 20px;
     }
 
     .color-swatch:hover:not(:disabled) {
@@ -197,8 +193,8 @@
     }
 
     .checkmark {
-        width: 16px;
-        height: 16px;
+        width: 12px;
+        height: 12px;
         filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
     }
 
@@ -275,7 +271,7 @@
         }
 
         .color-swatch {
-            min-height: 28px;
+            min-height: 18px;
         }
 
         .color-preview {

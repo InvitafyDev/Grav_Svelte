@@ -7,18 +7,19 @@ npm install svelte-select  # Requerido para componentes select
 Importaciones por Módulo
 La librería está organizada en 5 módulos principales con rutas de importación específicas:
 // Módulo Inputs
-import { 
-  InputFormText, 
-  InputFormNumber, 
-  InputFormBool, 
-  InputFormColor, 
-  InputFormDate, 
-  InputFormDateAndHours, 
-  InputFormImage, 
-  InputFormSelect, 
-  InputFormTextArea, 
+import {
+  InputFormText,
+  InputFormNumber,
+  InputFormBool,
+  InputFormColor,
+  InputFormColorPicker,
+  InputFormDate,
+  InputFormDateAndHours,
+  InputFormImage,
+  InputFormSelect,
+  InputFormTextArea,
   InputFormCascade,
-  InputFormPassword 
+  InputFormPassword
 } from 'grav-svelte/Inputs';
 
 // Módulo CRUD
@@ -128,20 +129,131 @@ Ejemplo:
   label="Usuario Activo" 
   bind:valueVar={activo} 
 />
-6. InputFormColor - Selector de Color
+6. InputFormColor - Selector de Color (Básico)
 Propiedades:
 label: string - Etiqueta del selector
 valueVar: string (bind) - Valor en formato hexadecimal (ej: "#FF0000")
+disabled?: boolean - Deshabilitar el selector
+obligatory?: boolean - Marca el campo como obligatorio con *
+icon?: string - Clase de icono (ej: "fas fa-palette")
 Ejemplo:
 <script lang="ts">
   import { InputFormColor } from 'grav-svelte/Inputs';
   let colorPrincipal = "#3B82F6";
 </script>
 
-<InputFormColor 
-  label="Color Principal" 
-  bind:valueVar={colorPrincipal} 
+<InputFormColor
+  label="Color Principal"
+  bind:valueVar={colorPrincipal}
+  icon="fas fa-palette"
+  obligatory={true}
 />
+6.1. InputFormColorPicker - Selector de Color con Presets
+Propiedades:
+label: string - Etiqueta del selector
+valueVar: string (bind) - Valor en formato hexadecimal (ej: "#FF0000")
+disabled?: boolean - Deshabilitar el selector
+obligatory?: boolean - Marca el campo como obligatorio con *
+icon?: string - Clase de icono (ej: "fas fa-palette")
+Características:
+- Grid de 12 colores predefinidos con selección visual
+- Selector de color personalizado con preview circular
+- Input de texto para código hexadecimal con validación automática
+- Indicador visual (checkmark) en el color seleccionado
+- Auto-completado del símbolo # en códigos hex
+- Responsive: 6 columnas en desktop, 4 en móvil
+Colores Predefinidos:
+#3B82F6 (Blue), #10B981 (Green), #8B5CF6 (Purple), #F59E0B (Orange)
+#EF4444 (Red), #EC4899 (Pink), #06B6D4 (Cyan), #84CC16 (Lime)
+#F97316 (Orange 2), #6366F1 (Indigo), #14B8A6 (Teal), #A855F7 (Purple 2)
+Ejemplo básico:
+<script lang="ts">
+  import { InputFormColorPicker } from 'grav-svelte/Inputs';
+  let colorTema = "#3B82F6";
+</script>
+
+<InputFormColorPicker
+  label="Color del Tema"
+  bind:valueVar={colorTema}
+  icon="fas fa-palette"
+/>
+
+Ejemplo en formulario completo:
+<script lang="ts">
+  import { InputFormColorPicker } from 'grav-svelte/Inputs';
+  import { Exito_Alert } from 'grav-svelte/Alerts';
+
+  let configuracion = {
+    colorPrimario: "#3B82F6",
+    colorSecundario: "#10B981",
+    colorAccent: "#F59E0B"
+  };
+
+  function guardarConfiguracion() {
+    console.log("Configuración de colores:", configuracion);
+    Exito_Alert("Colores guardados correctamente");
+  }
+</script>
+
+<div class="space-y-6">
+  <InputFormColorPicker
+    label="Color Primario"
+    bind:valueVar={configuracion.colorPrimario}
+    icon="fas fa-palette"
+    obligatory={true}
+  />
+
+  <InputFormColorPicker
+    label="Color Secundario"
+    bind:valueVar={configuracion.colorSecundario}
+    icon="fas fa-palette"
+  />
+
+  <InputFormColorPicker
+    label="Color de Acento"
+    bind:valueVar={configuracion.colorAccent}
+    icon="fas fa-star"
+  />
+
+  <button
+    on:click={guardarConfiguracion}
+    class="px-4 py-2 bg-blue-500 text-white rounded"
+  >
+    Guardar Configuración
+  </button>
+</div>
+
+Ejemplo con validación:
+<script lang="ts">
+  import { InputFormColorPicker } from 'grav-svelte/Inputs';
+  import { Error_Alert, Exito_Alert } from 'grav-svelte/Alerts';
+
+  let colorMarca = "#3B82F6";
+
+  function validarYGuardar() {
+    // Validar formato hexadecimal
+    if (!colorMarca.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)) {
+      Error_Alert("Formato de color inválido");
+      return;
+    }
+
+    // Guardar
+    fetch('/api/configuracion/color', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ color: colorMarca })
+    }).then(() => {
+      Exito_Alert("Color guardado correctamente");
+    });
+  }
+</script>
+
+<InputFormColorPicker
+  label="Color de Marca"
+  bind:valueVar={colorMarca}
+  obligatory={true}
+/>
+<button on:click={validarYGuardar}>Guardar</button>
 7. InputFormDate - Selector de Fecha
 Propiedades:
 label: string - Etiqueta del selector
@@ -1814,6 +1926,7 @@ import {
   InputFormTextArea,
   InputFormBool,
   InputFormColor,
+  InputFormColorPicker,
   InputFormDate,
   InputFormDateAndHours,
   InputFormSelect,
