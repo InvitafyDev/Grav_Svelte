@@ -870,7 +870,7 @@
                     {
                         noMesA: 3,
                         nvMesTxt: "Marzo",
-                        colorMesTxt: "!text-white bg-blue-500",
+                        colorMesTxt: "!text-white bg-green-500",
                         nvMesNumeros: "03",
                         nvMes: "Mar",
                         fecha: "2024-03-01T00:00:00",
