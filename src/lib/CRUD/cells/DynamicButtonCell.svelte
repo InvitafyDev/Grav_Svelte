@@ -12,7 +12,7 @@
 <div style="display: inline-flex; {alignStyle}">
     <button
         type="button"
-        class="dynamic-button {item[header.colorField ?? ''] ?? ''}"
+        class="{item[header.colorField ?? ''] ?? ''} dynamic-button "
         on:click={() => {
             if (header.onButtonClick) {
                 header.onButtonClick(item[idField], item);
