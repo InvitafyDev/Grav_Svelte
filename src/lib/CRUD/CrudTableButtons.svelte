@@ -5,6 +5,7 @@
     export let id = 1;
     export let buttonsConfig: ButtonConfig[];
     export let align: "left" | "right" | "center" = "center";
+    export let row: any = undefined;
 
     $: visibleButtons = buttonsConfig.filter((btn) => btn.show ?? true);
 </script>
@@ -15,7 +16,7 @@
             <Tooltip text={button.tooltip}>
                 <button
                     aria-label={button.tooltip}
-                    on:click={() => button.action(id)}
+                    on:click={() => button.action(id, row)}
                     type="button"
                     class="action-buttons-group {visibleButtons.length === 1
                         ? 'rounded-left rounded-right'

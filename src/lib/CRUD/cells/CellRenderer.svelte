@@ -50,6 +50,7 @@
             id={item[header.campo]}
             buttonsConfig={header.buttonsConfig ?? []}
             align={header.align ?? "center"}
+            row={item}
         />
     {:else if header.tipo == "DynamicButton"}
         <DynamicButtonCell {item} {header} {idField} />

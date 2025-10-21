@@ -1,7 +1,7 @@
 export interface ButtonConfig {
     icon: string;
     color: string;
-    action: (id: number) => void;
+    action: (id: number, row?: any) => void;
     tooltip: string;
     /**
      * When set to false the button will not be rendered. Defaults to true.
