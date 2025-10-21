@@ -2,17 +2,49 @@
 	import { onMount } from 'svelte';
     import InputFormSelect from './InputFormSelect.svelte';
 
-	export let levels = []; // [{ label, fetchFn, default, field }]
+	export let levels = []; // [{ label, fetchFn, default, field, showPlusIcon?, onPlusClick? }]
 	// Cargar datos iniciales para el primer nivel
 	let varS = false;
 	let fetchFnCloned = [];
 	export let selectedValues = {};
-	onMount(() => {
+
+	onMount(async () => {
 		varS = false;
+
+		// Clonar las funciones fetch
 		levels.forEach((item) => {
 			fetchFnCloned.push({ fetchFn: item.fetchFn });
-			selectedValues[item.field] = item.default?.value;
 		});
+
+		// Si hay valores iniciales, cargar y establecer los objetos Select completos
+		for (let i = 0; i < levels.length; i++) {
+			const level = levels[i];
+			const initialValue = selectedValues[level.field];
+
+			if (initialValue) {
+				// Cargar las opciones para este nivel
+				let options = [];
+				if (i === 0) {
+					options = await fetchFnCloned[i].fetchFn();
+				} else {
+					// Para niveles subsecuentes, necesitamos el valor del nivel anterior
+					const parentValue = selectedValues[levels[i - 1].field];
+					if (parentValue) {
+						options = await fetchFnCloned[i].fetchFn(parentValue);
+					}
+				}
+
+				// Buscar el objeto Select que coincida con el valor inicial
+				const selectedOption = options.find(opt => opt.value == initialValue);
+				if (selectedOption) {
+					levels[i].default = selectedOption;
+					cacheResults[i] = options; // Cachear los resultados
+				}
+			} else {
+				selectedValues[level.field] = level.default?.value;
+			}
+		}
+
 		varS = true;
 	});
 
@@ -44,6 +76,8 @@
 					{res}
 					changeFunction={(e) => handleChange(0, e.detail, level.field)}
 					onClear={() => handleChange(0, null, level.field)}
+					showPlusIcon={level.showPlusIcon ?? false}
+					onPlusClick={level.onPlusClick ?? (() => {})}
 				/>
 			{/await}
 		{/if}
@@ -62,6 +96,8 @@
 						{res}
 						changeFunction={(e) => handleChange(i, e.detail, level.field)}
 						onClear={() => handleChange(i, null, level.field)}
+						showPlusIcon={level.showPlusIcon ?? false}
+						onPlusClick={level.onPlusClick ?? (() => {})}
 					/>
 				{/await}
 			{:else}

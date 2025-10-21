@@ -33,6 +33,10 @@
     let selectWithPlusInput: SelectValue | null = null;
     let textAreaInput = "";
     let cascadeInput: Record<string, string | null> = {};
+    let cascadeInputWithDefaults: Record<string, string | null> = {
+        country: "1",
+        state: "2"
+    };
 
     // Example data for cascade select
     const cascadeLevels = [
@@ -46,6 +50,10 @@
                 { value: "4", label: "Brazil" },
                 { value: "5", label: "Australia" },
             ],
+            showPlusIcon: true,
+            onPlusClick: () => {
+                alert("Add new Country clicked!");
+            }
         },
         {
             label: "State",
@@ -94,6 +102,10 @@
                 }
                 return [];
             },
+            showPlusIcon: true,
+            onPlusClick: () => {
+                alert("Add new State clicked!");
+            }
         },
     ];
 
@@ -120,6 +132,8 @@
         selectWithPlus: 'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectWithPlusInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\nfunction handleAddOption() {\n    // Open modal or add new option logic\n    console.log("Add new option");\n}\n\n<InputFormSelect\n    label="Select with Plus Button"\n    bind:value={selectWithPlusInput}\n    res={selectOptions}\n    showPlusIcon={true}\n    onPlusClick={handleAddOption}\n/>',
         cascade:
             'let cascadeInput: Record<string, string | null> = {};\nconst cascadeLevels = [\n    {\n        label: "Country",\n        field: "country",\n        fetchFn: async () => [\n            { value: "1", label: "USA" },\n            { value: "2", label: "Canada" },\n        ],\n    },\n    {\n        label: "State",\n        field: "state",\n        fetchFn: async (countryId?: string) => {\n            if (countryId === "1") {\n                return [\n                    { value: "1", label: "California" },\n                    { value: "2", label: "New York" },\n                ];\n            }\n            return [];\n        },\n    },\n];\n\n<InputFormCascade\n    levels={cascadeLevels}\n    bind:selectedValues={cascadeInput}\n/>',
+        cascadeWithDefaults:
+            'let cascadeInputWithDefaults: Record<string, string | null> = {\n    country: "1",\n    state: "2"\n};\n\nconst cascadeLevels = [\n    {\n        label: "Country",\n        field: "country",\n        fetchFn: async () => [\n            { value: "1", label: "USA" },\n            { value: "2", label: "Canada" },\n        ],\n        showPlusIcon: true,\n        onPlusClick: () => {\n            alert("Add new Country clicked!");\n        }\n    },\n    {\n        label: "State",\n        field: "state",\n        fetchFn: async (countryId?: string) => {\n            if (countryId === "1") {\n                return [\n                    { value: "1", label: "California" },\n                    { value: "2", label: "New York" },\n                ];\n            }\n            return [];\n        },\n        showPlusIcon: true,\n        onPlusClick: () => {\n            alert("Add new State clicked!");\n        }\n    },\n];\n\n<InputFormCascade\n    levels={cascadeLevels}\n    bind:selectedValues={cascadeInputWithDefaults}\n/>',
         image: 'let imageInput: HTMLInputElement;\nlet base64Preview = "";\n\n<InputFormImage \n    bind:inputFile={imageInput} \n    bind:base64Preview \n/>',
     };
 
@@ -341,6 +355,29 @@
                 <pre
                     class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
                         >{codeExamples.cascade}</code
+                    ></pre>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <h3 class="text-lg font-medium text-gray-700 mb-2">
+                Cascade Select with Default Values & Plus Buttons
+            </h3>
+            <p class="text-sm text-gray-600 mb-2">
+                This example shows the cascade select with pre-selected values (USA → New York) and plus buttons for adding new options at each level.
+            </p>
+            <InputFormCascade
+                levels={cascadeLevels}
+                bind:selectedValues={cascadeInputWithDefaults}
+            />
+            <span class="block mt-1 text-sm text-gray-600"
+                >Selected Values: {JSON.stringify(cascadeInputWithDefaults)}</span
+            >
+            <div class="mt-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.cascadeWithDefaults}</code
                     ></pre>
             </div>
         </div>
