@@ -562,6 +562,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-family: var(--grav-crud-header-font-family, "mundial", sans-serif);   
 }
 
 .dual-text-button:hover {
