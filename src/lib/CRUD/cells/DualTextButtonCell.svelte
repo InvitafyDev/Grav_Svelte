@@ -7,6 +7,10 @@
 
     $: alignStyle = header.align === 'left' ? 'margin-right: auto;' :
                     header.align === 'right' ? 'margin-left: auto;' : '';
+
+    $: hasText1 = header.textField1 && item[header.textField1];
+    $: hasText2 = header.textField2 && item[header.textField2];
+    $: isSingleState = (hasText1 && !hasText2) || (!hasText1 && hasText2);
 </script>
 
 <div style="display: inline-flex; {alignStyle}">
@@ -19,13 +23,13 @@
             }
         }}
     >
-        {#if header.textField1 && item[header.textField1]}
-            <div class="dual-text-1 {item[header.colorField1 ?? ''] ?? ''}">
+        {#if hasText1}
+            <div class="dual-text-1 {item[header.colorField1 ?? ''] ?? ''} {isSingleState ? 'rounded-bottom' : ''}">
                 {item[header.textField1]}
             </div>
         {/if}
-        {#if header.textField2 && item[header.textField2]}
-            <div class="dual-text-2 {item[header.colorField2 ?? ''] ?? ''}">
+        {#if hasText2}
+            <div class="dual-text-2 {item[header.colorField2 ?? ''] ?? ''} {isSingleState ? 'rounded-bottom' : ''}">
                 {item[header.textField2]}
             </div>
         {/if}

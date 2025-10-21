@@ -590,6 +590,11 @@
     border-bottom-right-radius: var(--grav-border-radius-md);
 }
 
+.rounded-bottom {
+    border-bottom-left-radius: var(--grav-border-radius-md);
+    border-bottom-right-radius: var(--grav-border-radius-md);
+}
+
 .dual-text-separator {
     color: var(--grav-crud-color-neutral);
     opacity: 0.5;
