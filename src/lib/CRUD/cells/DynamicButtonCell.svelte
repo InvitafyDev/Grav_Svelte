@@ -13,6 +13,7 @@
     <button
         type="button"
         class="{item[header.colorField ?? ''] ?? ''} dynamic-button "
+        style="{header.styleField ? (item[header.styleField] ?? '') : ''}"
         on:click={() => {
             if (header.onButtonClick) {
                 header.onButtonClick(item[idField], item);

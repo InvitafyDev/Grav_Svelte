@@ -41,6 +41,12 @@ export interface TableHeader {
      */
     colorField?: string;
     /**
+     * Field name that contains inline CSS styles for the dynamic button.
+     * Used for DynamicButton type.
+     * Has higher specificity than colorField classes, useful for avoiding CSS hierarchy conflicts.
+     */
+    styleField?: string;
+    /**
      * Field name that contains the icon class (e.g., Font Awesome class).
      * Used for DynamicButton type.
      */
