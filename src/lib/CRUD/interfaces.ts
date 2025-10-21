@@ -174,6 +174,8 @@ export interface CrudWrapperProps {
     loading?: boolean;
     showAddButton?: boolean;
     showImportButton?: boolean;
+    showExcelButton?: boolean;
+    showPdfButton?: boolean;
     /**
      * Field name that contains the unique ID for each row.
      * Defaults to 'id' if not specified.

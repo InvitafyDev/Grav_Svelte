@@ -19,6 +19,8 @@
     export let loading: boolean = false;
     export let showAddButton: boolean = true;
     export let showImportButton: boolean = true;
+    export let showExcelButton: boolean = true;
+    export let showPdfButton: boolean = true;
     export let Titulo_Crud: string;
     export let dragEnabled: boolean = false;
     export let orderField: string = "inOrden";
@@ -145,22 +147,28 @@
         />
     </div>
 
-    <div class="export-buttons">
-        <button
-            type="button"
-            on:click={() => handleExport("excel")}
-            class="export-button excel-button"
-        >
-            <i class="fas fa-file-excel"></i> EXCEL
-        </button>
-        <button
-            type="button"
-            on:click={() => handleExport("pdf")}
-            class="export-button pdf-button"
-        >
-            <i class="far fa-file-pdf"></i> PDF
-        </button>
-    </div>
+    {#if showExcelButton || showPdfButton}
+        <div class="export-buttons">
+            {#if showExcelButton}
+                <button
+                    type="button"
+                    on:click={() => handleExport("excel")}
+                    class="export-button excel-button"
+                >
+                    <i class="fas fa-file-excel"></i> EXCEL
+                </button>
+            {/if}
+            {#if showPdfButton}
+                <button
+                    type="button"
+                    on:click={() => handleExport("pdf")}
+                    class="export-button pdf-button"
+                >
+                    <i class="far fa-file-pdf"></i> PDF
+                </button>
+            {/if}
+        </div>
+    {/if}
 </div>
 
 <style>
