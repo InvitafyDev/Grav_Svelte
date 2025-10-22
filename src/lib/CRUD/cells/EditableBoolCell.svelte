@@ -9,7 +9,7 @@
         const newValue = !item[header.campo];
         item[header.campo] = newValue;
         if (header.onUpdate) {
-            await header.onUpdate(item[idField], header.campo, newValue);
+            await header.onUpdate(item, header.campo, newValue);
         }
     }
 </script>
