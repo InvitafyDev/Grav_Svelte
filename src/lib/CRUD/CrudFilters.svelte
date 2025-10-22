@@ -24,10 +24,18 @@
     export let Filtros: FiltrosI[];
     export let showAddButton: boolean = true;
     export let showImportButton: boolean = true;
+    export let showMostrandoInput: boolean = true;
     export let Titulo_Crud: string;
 
     // Dynamic grid columns calculation
     $: gridColumns = Math.min(Filtros.length, 6);
+
+    // Force PageSize to 50 if showMostrandoInput is false
+    $: if (!showMostrandoInput) {
+        PageSize = 50;
+        localPageSize = 50;
+        localPageSizeStr = "50";
+    }
 
     // Convert string to number and ensure it's never 0
     $: {
@@ -265,13 +273,15 @@
             </div>
 
             <!-- Filtro 2 -->
-            <div class="page-size-input">
-                <InputFormText
-                    label="Mostrando:"
-                    bind:valueVar={localPageSizeStr}
-                    noMarginTop={true}
-                />
-            </div>
+            {#if showMostrandoInput}
+                <div class="page-size-input">
+                    <InputFormText
+                        label="Mostrando:"
+                        bind:valueVar={localPageSizeStr}
+                        noMarginTop={true}
+                    />
+                </div>
+            {/if}
             <!-- /Filtro 2 -->
         </div>
     </div>

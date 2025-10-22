@@ -21,6 +21,7 @@
     export let showImportButton: boolean = true;
     export let showExcelButton: boolean = true;
     export let showPdfButton: boolean = true;
+    export let showMostrandoInput: boolean = true;
     export let Titulo_Crud: string;
     export let dragEnabled: boolean = false;
     export let orderField: string = "inOrden";
@@ -123,6 +124,7 @@
         on:import={handleImport}
         {showAddButton}
         {showImportButton}
+        {showMostrandoInput}
         {Titulo_Crud}
     />
     <div class="crud-table-container">
