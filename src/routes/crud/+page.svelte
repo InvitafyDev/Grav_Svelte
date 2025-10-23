@@ -324,7 +324,9 @@
             separator: " / ",
             buttonsConfig: [],
             onButtonClick: (id, row) => {
-                alert(`Dual button clicked para: ${row.nvMesTxt} (ID: ${id})\nTexto 1: ${row.dualText1}\nTexto 2: ${row.dualText2}`);
+                alert(
+                    `Dual button clicked para: ${row.nvMesTxt} (ID: ${id})\nTexto 1: ${row.dualText1}\nTexto 2: ${row.dualText2}`
+                );
             },
         },
         {
@@ -350,7 +352,9 @@
             },
             buttonsConfig: [],
             onButtonClick: (id, row) => {
-                alert(`Condicional clicked: ${row.nvMesTxt} - Activo: ${row.biActivo}`);
+                alert(
+                    `Condicional clicked: ${row.nvMesTxt} - Activo: ${row.biActivo}`
+                );
             },
         },
         {
@@ -365,7 +369,9 @@
             multiSeparator: "•",
             buttonsConfig: [],
             onButtonClick: (id, row) => {
-                const statuses = row.statusList?.map((s: any) => s.text).join(", ") || "ninguno";
+                const statuses =
+                    row.statusList?.map((s: any) => s.text).join(", ") ||
+                    "ninguno";
                 alert(`Multi estados para ${row.nvMesTxt}:\n${statuses}`);
             },
         },
@@ -446,12 +452,12 @@
             statusIcon: string;
             actionIcon: string;
             actionColor: string;
-            flagUrl: string ;
+            flagUrl: string;
             dualText1?: string | null;
             dualText2?: string | null;
             dualColor1?: string | null;
             dualColor2?: string | null;
-            statusList?: Array<{text: string; color: string}>;
+            statusList?: Array<{ text: string; color: string }>;
             subRows?: any[] | null;
         }[];
         total: number;
@@ -468,7 +474,6 @@
         error = null;
 
         console.log(PageSize);
-        
 
         try {
             // Simulate API delay
@@ -506,7 +511,7 @@
                         statusList: [
                             { text: "1", color: "bg-purple-600 text-white" },
                             { text: "3", color: "bg-green-600 text-white" },
-                            { text: "2", color: "bg-blue-600 text-white" }
+                            { text: "2", color: "bg-blue-600 text-white" },
                         ],
                         subRows: [
                             {
@@ -525,7 +530,7 @@
                                 paisBandera: "https://flagcdn.com/w80/br.png",
                             },
                             {
-                                noMesA:12,
+                                noMesA: 12,
                                 nvMesTxt: "Semana 2",
                                 colorSemana: "!text-white bg-orange-500",
                                 nvMesNumeros: "01-W2",
@@ -583,10 +588,15 @@
                         dualColor1: "!text-red-600",
                         dualColor2: "!text-gray-500",
                         statusList: [
-                            { text: "Pendiente", color: "bg-yellow-500 text-white" },
-                            { text: "Bloqueado", color: "bg-red-600 text-white" }
+                            {
+                                text: "Pendiente",
+                                color: "bg-yellow-500 text-white",
+                            },
+                            {
+                                text: "Bloqueado",
+                                color: "bg-red-600 text-white",
+                            },
                         ],
-
                     },
                     {
                         noMesA: 1,
@@ -614,7 +624,6 @@
                         dualText2: "Verificado",
                         dualColor1: "bg-green-600 text-white",
                         dualColor2: "bg-blue-600 text-white",
-                        
                     },
                     {
                         noMesA: 2,
@@ -642,7 +651,53 @@
                         dualText2: "Bloqueado",
                         dualColor1: "bg-red-600 text-white",
                         dualColor2: "bg-gray-600 text-white",
-
+                        subRows: [
+                            {
+                                noMesA: 11,
+                                nvMesTxt: "Semana 1",
+                                colorSemana: "!text-white bg-purple-500",
+                                nvMesNumeros: "01-W1",
+                                nvMes: "Ene-S1",
+                                inAnio: 2024,
+                                inCantidadDias: 7,
+                                activa: true,
+                                imagen: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275.jpg",
+                                estadoText: "Completada",
+                                estadoColor: "!bg-green-600 !text-white",
+                                estadoIcon: "fa-solid fa-check-circle",
+                                paisBandera: "https://flagcdn.com/w80/br.png",
+                            },
+                            {
+                                noMesA: 12,
+                                nvMesTxt: "Semana 2",
+                                colorSemana: "!text-white bg-orange-500",
+                                nvMesNumeros: "01-W2",
+                                nvMes: "Ene-S2",
+                                inAnio: 2024,
+                                inCantidadDias: 7,
+                                activa: false,
+                                imagen: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/iglesia-85dad591.jpg",
+                                estadoText: "En Progreso",
+                                estadoColor: "!bg-yellow-500 !text-white",
+                                estadoIcon: "fa-solid fa-spinner",
+                                paisBandera: "https://flagcdn.com/w80/ar.png",
+                            },
+                            {
+                                noMesA: 13,
+                                nvMesTxt: "Semana 3",
+                                colorSemana: "!text-white bg-teal-500",
+                                nvMesNumeros: "01-W3",
+                                nvMes: "Ene-S3",
+                                inAnio: 2024,
+                                inCantidadDias: 7,
+                                activa: true,
+                                imagen: "https://catalogowebapi.kibi.com.mx/img/subformProductosImagenes/227_x2.png",
+                                estadoText: "Pendiente",
+                                estadoColor: "!bg-red-500 !text-white",
+                                estadoIcon: "fa-solid fa-clock",
+                                paisBandera: "https://flagcdn.com/w80/cl.png",
+                            },
+                        ],
                     },
                     {
                         noMesA: 1,
@@ -670,7 +725,6 @@
                         dualText2: "Verificado",
                         dualColor1: "bg-green-600 text-white",
                         dualColor2: "bg-blue-600 text-white",
-                        
                     },
                     {
                         noMesA: 2,
@@ -698,7 +752,6 @@
                         dualText2: "Bloqueado",
                         dualColor1: "bg-red-600 text-white",
                         dualColor2: "bg-gray-600 text-white",
-
                     },
                     {
                         noMesA: 1,
@@ -726,7 +779,6 @@
                         dualText2: "Verificado",
                         dualColor1: "bg-green-600 text-white",
                         dualColor2: "bg-blue-600 text-white",
-                        
                     },
                     {
                         noMesA: 2,
@@ -754,7 +806,6 @@
                         dualText2: "Bloqueado",
                         dualColor1: "bg-red-600 text-white",
                         dualColor2: "bg-gray-600 text-white",
-
                     },
                     {
                         noMesA: 1,
@@ -782,7 +833,6 @@
                         dualText2: "Verificado",
                         dualColor1: "bg-green-600 text-white",
                         dualColor2: "bg-blue-600 text-white",
-                        
                     },
                     {
                         noMesA: 2,
@@ -810,7 +860,6 @@
                         dualText2: "Bloqueado",
                         dualColor1: "bg-red-600 text-white",
                         dualColor2: "bg-gray-600 text-white",
-
                     },
                     {
                         noMesA: 1,
@@ -838,7 +887,6 @@
                         dualText2: "Verificado",
                         dualColor1: "bg-green-600 text-white",
                         dualColor2: "bg-blue-600 text-white",
-                        
                     },
                     {
                         noMesA: 2,
@@ -896,7 +944,7 @@
                     },
                     {
                         noMesA: 4,
-                        nvMesTxt: "Abril", 
+                        nvMesTxt: "Abril",
                         colorMesTxt: "!text-white bg-blue-500",
                         nvMesNumeros: "04",
                         nvMes: "Abr",
@@ -910,7 +958,7 @@
                         image: "https://invitafy.com.mx/portafolio/Boda/PremiumBodaDestino/XimenaYAlberto/_app/immutable/assets/hotel1-10e275e1.jpg",
                         inOrden: 4,
                         inMesesFaltantes: 7,
-                        statusText: "En Revisión", 
+                        statusText: "En Revisión",
                         statusColor: "!bg-blue-500 !text-white",
                         statusIcon: "fa-solid fa-eye",
                         actionIcon: "fa-solid fa-search",
@@ -939,7 +987,6 @@
                         actionIcon: "fa-solid fa-share",
                         actionColor: "!bg-teal-500 !text-white",
                         flagUrl: "https://flagcdn.com/w80/fr.png",
-                        
                     },
                 ],
                 total: 5,
@@ -968,10 +1015,14 @@
         console.log("Reordered items:", reorderedItems);
     }
 
-    async function handleCellUpdate(id: number | string, campo: string, newValue: any) {
+    async function handleCellUpdate(
+        id: number | string,
+        campo: string,
+        newValue: any
+    ) {
         console.log("Cell updated:", { id, campo, newValue });
         // Simular llamada a API
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await new Promise((resolve) => setTimeout(resolve, 300));
         console.log("Guardado exitoso!");
     }
 

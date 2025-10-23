@@ -531,7 +531,7 @@
 }
 
 .sub-table {
-    width: 100%;
+    width: auto;
     border-collapse: collapse;
     margin: 0;
     background-color: rgba(0, 0, 0, 0.02);
