@@ -10,36 +10,28 @@
     $: visibleButtons = buttonsConfig.filter((btn) => btn.show ?? true);
 </script>
 
-<td class="table-cell" style="text-align: {align}">
-    <div class="button-group" role="group">
-        {#each visibleButtons as button, i}
-            <Tooltip text={button.tooltip}>
-                <button
-                    aria-label={button.tooltip}
-                    on:click={() => button.action(id, row)}
-                    type="button"
-                    class="action-buttons-group {visibleButtons.length === 1
-                        ? 'rounded-left rounded-right'
-                        : i == 0
-                          ? 'rounded-left'
-                          : i == visibleButtons.length - 1
-                            ? 'rounded-right'
-                            : ''} {button.color}"
-                >
-                    <i class={button.icon}> </i>
-                </button>
-            </Tooltip>
-        {/each}
-    </div>
-</td>
+<div class="button-group" role="group">
+    {#each visibleButtons as button, i}
+        <Tooltip text={button.tooltip}>
+            <button
+                aria-label={button.tooltip}
+                on:click={() => button.action(id, row)}
+                type="button"
+                class="action-buttons-group {visibleButtons.length === 1
+                    ? 'rounded-left rounded-right'
+                    : i == 0
+                      ? 'rounded-left'
+                      : i == visibleButtons.length - 1
+                        ? 'rounded-right'
+                        : ''} {button.color}"
+            >
+                <i class={button.icon}> </i>
+            </button>
+        </Tooltip>
+    {/each}
+</div>
 
 <style>
-    .table-cell {
-        font-size: 0.75rem;
-        text-align: center;
-        padding-right: 0.3rem;
-    }
-
     .button-group {
         display: inline-flex;
         border-radius: var(--grav-crud-button-border-radius, 0.5rem);

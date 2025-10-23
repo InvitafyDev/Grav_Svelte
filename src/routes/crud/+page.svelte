@@ -396,7 +396,7 @@
             biSort: false,
             tipo: "Buttons",
             biBold: false,
-            align: "right",
+            align: "center",
             campo: "noMesA",
             buttonsConfig: [
                 {
