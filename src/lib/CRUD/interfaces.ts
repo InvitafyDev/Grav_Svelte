@@ -12,7 +12,7 @@ export interface ButtonConfig {
 export interface TableHeader {
     titulo: string;
     biSort: boolean;
-    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton' | 'ImageButton' | 'DualTextButton' | 'ConditionalCell' | 'MultiTextButton';
+    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton' | 'ImageButton' | 'DualTextButton' | 'ConditionalCell' | 'MultiTextButton' | 'Component';
     biBold: boolean;
     /**
      * Alignment for the content of the cells belonging to this header.
@@ -158,6 +158,12 @@ export interface TableHeader {
      * Defaults to no separator (items are just stacked/aligned).
      */
     multiSeparator?: string;
+    /**
+     * Svelte component to render in the cell.
+     * Used for Component type.
+     * The component will receive the entire row object as a 'row' prop.
+     */
+    component?: any;
 }
 
 export interface FiltrosI {

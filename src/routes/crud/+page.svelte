@@ -4,6 +4,7 @@
     import { openModal } from "$lib/index.js";
     import { onMount } from "svelte";
     import ModalCrud from "./ModalCrud.svelte";
+    import fakeComponent from "./fakeComponent.svelte";
 
     let Filtros: FiltrosI[] = [
         {
@@ -396,6 +397,16 @@
             action: (id) => {
                 alert(`País seleccionado con ID: ${id}`);
             },
+        },
+        {
+            titulo: "Componente Custom",
+            biSort: false,
+            tipo: "Component",
+            biBold: false,
+            align: "center",
+            campo: "noMesA",
+            component: fakeComponent,
+            buttonsConfig: [],
         },
         {
             titulo: "Acciones",

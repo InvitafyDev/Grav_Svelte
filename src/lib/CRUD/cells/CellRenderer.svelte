@@ -13,6 +13,7 @@
     import DualTextButtonCell from "./DualTextButtonCell.svelte";
     import ConditionalCell from "./ConditionalCell.svelte";
     import MultiTextButtonCell from "./MultiTextButtonCell.svelte";
+    import ComponentCell from "./ComponentCell.svelte";
 
     export let item: any;
     export let header: TableHeader;
@@ -62,5 +63,7 @@
         <ConditionalCell {item} {header} {idField} />
     {:else if header.tipo == "MultiTextButton"}
         <MultiTextButtonCell {item} {header} {idField} />
+    {:else if header.tipo == "Component"}
+        <ComponentCell {item} {header} />
     {/if}
 </td>
