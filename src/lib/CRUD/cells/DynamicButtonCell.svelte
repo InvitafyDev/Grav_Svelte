@@ -12,8 +12,8 @@
 <div style="display: inline-flex; {alignStyle}">
     <button
         type="button"
-        class="{item[header.colorField ?? ''] ?? ''} dynamic-button "
-        style="{header.styleField ? (item[header.styleField] ?? '') : ''}"
+        class="dynamic-button"
+        style="{header.colorField && item[header.colorField] ? `background-color: ${item[header.colorField]}; color: white;` : ''} {header.styleField ? (item[header.styleField] ?? '') : ''}"
         on:click={() => {
             if (header.onButtonClick) {
                 header.onButtonClick(item[idField], item);

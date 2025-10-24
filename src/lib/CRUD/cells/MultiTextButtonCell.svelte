@@ -19,7 +19,10 @@
     }}
 >
     {#each items as multiItem}
-        <div class="multi-text-item {multiItem.color ?? ''}">
+        <div
+            class="multi-text-item"
+            style="{multiItem.color ? `background-color: ${multiItem.color}; color: white;` : ''}"
+        >
             {multiItem.text ?? ""}
         </div>
     {/each}

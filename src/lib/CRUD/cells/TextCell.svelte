@@ -6,10 +6,8 @@
 </script>
 
 <p
-    class="cell-content {item[header.colorCampo ?? ''] ?? ''} {header.biBold
-        ? 'bold'
-        : ''}"
-    style="text-align: {header.align ?? 'left'}"
+    class="cell-content {header.biBold ? 'bold' : ''}"
+    style="text-align: {header.align ?? 'left'}; {header.colorCampo && item[header.colorCampo] ? `background-color: ${item[header.colorCampo]}; color: white;` : ''}"
 >
     {item[header.campo] ?? ""}
 </p>

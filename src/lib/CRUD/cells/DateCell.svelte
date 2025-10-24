@@ -7,10 +7,10 @@
 </script>
 
 <p
-    class="cell-content {item[header.colorCampo ?? ''] ?? ''} {header.biBold
+    class="cell-content {header.biBold
         ? 'bold'
         : ''}"
-    style="text-align: {header.align ?? 'left'}"
+    style="text-align: {header.align ?? 'left'}; {header.colorCampo && item[header.colorCampo] ? `background-color: ${item[header.colorCampo]}; color: white;` : ''}"
 >
     {#if isDatetime}
         {item[header.campo]?.replace("T", ":") ?? ":"}

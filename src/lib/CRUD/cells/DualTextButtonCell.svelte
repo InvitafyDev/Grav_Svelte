@@ -24,12 +24,18 @@
         }}
     >
         {#if hasText1}
-            <div class="dual-text-1 {item[header.colorField1 ?? ''] ?? ''} {isSingleState ? 'rounded-bottom' : ''}">
+            <div
+                class="dual-text-1 {isSingleState ? 'rounded-bottom' : ''}"
+                style="{header.colorField1 && item[header.colorField1] ? `background-color: ${item[header.colorField1]}; color: white;` : ''}"
+            >
                 {item[header.textField1]}
             </div>
         {/if}
         {#if hasText2}
-            <div class="dual-text-2 {item[header.colorField2 ?? ''] ?? ''} {isSingleState ? 'rounded-bottom' : ''}">
+            <div
+                class="dual-text-2 {isSingleState ? 'rounded-bottom' : ''}"
+                style="{header.colorField2 && item[header.colorField2] ? `background-color: ${item[header.colorField2]}; color: white;` : ''}"
+            >
                 {item[header.textField2]}
             </div>
         {/if}
