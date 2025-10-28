@@ -158,6 +158,8 @@
     white-space: nowrap;
     vertical-align: middle;
     z-index: 10;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 
 .sticky-cell {
