@@ -1106,6 +1106,7 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
         subRowHeaders={subRowH}
         orderField="inOrden"
         idField="noMesA"
+        showSettingsButton={true}
         onFilter={enlistar}
         onAdd={handleAdd}
         onImport={handleImport}
