@@ -21,6 +21,7 @@
     export let showImportButton: boolean = true;
     export let showExcelButton: boolean = true;
     export let showPdfButton: boolean = true;
+    export let showSettingsButton: boolean = false;
     export let showMostrandoInput: boolean = true;
     export let Titulo_Crud: string;
     export let dragEnabled: boolean = false;
@@ -35,6 +36,7 @@
     export let onFilter: (filters: FiltrosI[]) => void;
     export let onAdd: () => void;
     export let onImport: (() => void) | undefined = undefined;
+    export let onSettings: (() => void) | undefined = undefined;
     export let onReorder: (reorderedItems: any[]) => void = () => {};
     export let onCellUpdate: ((id: number | string, campo: string, newValue: any) => Promise<void> | void) | undefined = undefined;
 
@@ -49,6 +51,12 @@
     function handleImport() {
         if (onImport) {
             onImport();
+        }
+    }
+
+    function handleSettings() {
+        if (onSettings) {
+            onSettings();
         }
     }
 
@@ -149,26 +157,39 @@
         />
     </div>
 
-    {#if showExcelButton || showPdfButton}
+    {#if showSettingsButton || showExcelButton || showPdfButton}
         <div class="export-buttons">
-            {#if showExcelButton}
-                <button
-                    type="button"
-                    on:click={() => handleExport("excel")}
-                    class="export-button excel-button"
-                >
-                    <i class="fas fa-file-excel"></i> EXCEL
-                </button>
-            {/if}
-            {#if showPdfButton}
-                <button
-                    type="button"
-                    on:click={() => handleExport("pdf")}
-                    class="export-button pdf-button"
-                >
-                    <i class="far fa-file-pdf"></i> PDF
-                </button>
-            {/if}
+            <div class="buttons-left">
+                {#if showSettingsButton}
+                    <button
+                        type="button"
+                        on:click={handleSettings}
+                        class="export-button settings-button"
+                    >
+                        <i class="fas fa-cog"></i>
+                    </button>
+                {/if}
+            </div>
+            <div class="buttons-right">
+                {#if showExcelButton}
+                    <button
+                        type="button"
+                        on:click={() => handleExport("excel")}
+                        class="export-button excel-button"
+                    >
+                        <i class="fas fa-file-excel"></i> EXCEL
+                    </button>
+                {/if}
+                {#if showPdfButton}
+                    <button
+                        type="button"
+                        on:click={() => handleExport("pdf")}
+                        class="export-button pdf-button"
+                    >
+                        <i class="far fa-file-pdf"></i> PDF
+                    </button>
+                {/if}
+            </div>
         </div>
     {/if}
 </div>
@@ -193,7 +214,13 @@
         display: flex;
         gap: 1rem;
         margin-top: 1rem;
-        justify-content: flex-end;
+        justify-content: space-between;
+    }
+
+    .buttons-left,
+    .buttons-right {
+        display: flex;
+        gap: 1rem;
     }
 
     .export-button {
