@@ -1,5 +1,6 @@
 @import "tailwindcss";
+@import "./lib/typography.css";
 
 body {
-    font-family: 'mundial', sans-serif;
-  }
+  font-family: "mundial", sans-serif;
+}
