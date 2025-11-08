@@ -12,7 +12,7 @@ export interface ButtonConfig {
 export interface TableHeader {
     titulo: string;
     biSort: boolean;
-    tipo: 'Text' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton' | 'ImageButton' | 'DualTextButton' | 'ConditionalCell' | 'MultiTextButton' | 'Component';
+    tipo: 'Text' | 'TextArea' | 'Number' | 'Buttons' | 'Bool' | 'Image' | 'Datetime' | 'Date' | 'EditableBool' | 'EditableText' | 'EditableNumber' | 'DynamicButton' | 'ImageButton' | 'DualTextButton' | 'ConditionalCell' | 'MultiTextButton' | 'Component';
     biBold: boolean;
     /**
      * Alignment for the content of the cells belonging to this header.
