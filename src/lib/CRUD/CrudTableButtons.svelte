@@ -69,10 +69,6 @@
         transition: all 0.2s ease;
     }
 
-    .action-buttons-group:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-    }
-
     @media (min-width: 640px) {
         .action-button {
             padding: 0.25rem 0.5rem;

@@ -418,7 +418,7 @@
         {
           icon: "fa-solid fa-pencil",
           tooltip: "Editar",
-          color: " text-[#fe6b91] border-white bg-white hover:text-white",
+          color: " text-white border-white bg-yellow-500 hover:bg-yellow-700",
           show: true,
           action: (id: number) => {
             alert("Editar");
@@ -427,7 +427,7 @@
         {
           icon: "fa-solid fa-trash",
           tooltip: "Eliminar",
-          color: " text-[#fe6b91] border-white bg-white hover:text-white",
+          color: " text-white border-white bg-red-500 hover:bg-red-700",
           show: true,
           action: (id: number) => {
             alert("Eliminar");
