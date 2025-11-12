@@ -229,15 +229,15 @@
         color: white;
         padding: 1rem;
         border-radius: 0.25rem;
-        background-color: var(--grav-crud-color-neutral);
+        background-color: var(--grav-crud-color-bg);
         color: var(--grav-crud-color-button);
-        border: 1px solid var(--grav-crud-color-neutral);
+        border: 1px solid var(--grav-crud-color-bg);
     }
 
     .export-button:hover {
         transition: all 0.2s ease;
         background-color: transparent;
-        color: var(--grav-crud-color-neutral);
+        color: var(--grav-crud-color-bg);
     }
 
     .export-button i {

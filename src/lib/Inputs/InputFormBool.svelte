@@ -57,7 +57,7 @@
 
   .checkbox-button.checked {
     background-color: var(--grav-crud-color-neutral);
-    color: var(--grav-crud-color-border);
+    color: var(--grav-crud-color-bg);
   }
 
   .label {

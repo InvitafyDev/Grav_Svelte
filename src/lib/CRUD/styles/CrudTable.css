@@ -75,7 +75,7 @@
   text-align: center;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  font-family: var(--grav-crud-header-font-family, "mundial", sans-serif);
+  font-family: var(--grav-crud-header-font-family, var(--grav-font-family));
   font-size: var(--grav-crud-header-font-size, 0.75rem);
   font-weight: var(--grav-crud-header-font-weight, 400);
   line-height: var(--grav-crud-header-line-height, 1.5);
@@ -198,7 +198,7 @@
   padding-left: 0.25rem;
   white-space: normal;
   word-break: break-word;
-  font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
+  font-family: var(--grav-crud-cell-font-family, var(--grav-font-family));
   font-size: var(--grav-crud-cell-font-size, 0.875rem);
   font-weight: var(--grav-crud-cell-font-weight, 400);
   line-height: var(--grav-crud-cell-line-height, 1.5);
@@ -222,7 +222,7 @@
   padding-bottom: 0.3rem;
   white-space: normal;
   word-break: break-word;
-  font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
+  font-family: var(--grav-crud-cell-font-family, var(--grav-font-family));
   font-size: var(--grav-crud-cell-font-size, 0.875rem);
   font-weight: var(--grav-crud-cell-font-weight, 400);
   line-height: var(--grav-crud-cell-line-height, 1.5);
@@ -267,7 +267,7 @@
 .no-data {
   text-align: center;
   padding: 1rem 0;
-  font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
+  font-family: var(--grav-crud-cell-font-family, var(--grav-font-family));
   font-size: var(--grav-crud-cell-font-size, 0.875rem);
   font-weight: var(--grav-crud-cell-font-weight, 400);
   line-height: var(--grav-crud-cell-line-height, 1.5);
@@ -424,7 +424,7 @@
   border: 1.5px solid transparent;
   background: transparent;
   border-radius: 0.375rem;
-  font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
+  font-family: var(--grav-crud-cell-font-family, var(--grav-font-family));
   font-size: var(--grav-crud-cell-font-size, 0.875rem);
   color: var(--grav-crud-color-neutral);
   transition: all 0.2s ease;
@@ -460,7 +460,7 @@
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
-  font-family: var(--grav-crud-cell-font-family, "mundial", sans-serif);
+  font-family: var(--grav-crud-cell-font-family, var(--grav-font-family));
   font-size: var(--grav-crud-cell-font-size, 0.875rem);
   font-weight: 500;
   border: 1.5px solid transparent;
@@ -617,7 +617,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-family: var(--grav-crud-header-font-family, "mundial", sans-serif);
+  font-family: var(--grav-crud-header-font-family, var(--grav-font-family));
 }
 
 .dual-text-button:hover {
