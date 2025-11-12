@@ -177,9 +177,6 @@
                         </button>
                     </Tooltip>
                 {/if}
-            </div>
-            <!-- Show Filters Button -->
-            <div class="filter-group" role="group">
                 {#if Filtros && Filtros.length > 0}
                     {#if showFilters}
                         <Tooltip text="Ver filtros">
@@ -214,6 +211,9 @@
                         </button>
                     </Tooltip>
                 {/if}
+            </div>
+            <!-- Show Filters Button -->
+            <div class="filter-group" role="group">
             </div>
 
 

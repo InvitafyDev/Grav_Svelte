@@ -40,7 +40,7 @@
         {#if expandEnabled}
             <th
                 class="table-header-cell expand-header non-sortable {!dragEnabled
-                    ? 'header-sticky-intersection borderleft'
+                    ? 'header-sticky-intersection '
                     : ''}"
             >
             </th>
