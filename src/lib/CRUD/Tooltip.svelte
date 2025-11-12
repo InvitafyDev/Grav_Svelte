@@ -31,7 +31,7 @@
         padding: 0.25rem;
         color: white;
         font-size: 0.75rem;
-        background-color: var(--grav-crud-color-icon-hover);
+        background-color: var(--grav-crud-color-tooltip);
         border-radius: var(--grav-crud-tooltip-border-radius, 0.25rem);
         top: -1.25rem;
         left: -1.5rem;

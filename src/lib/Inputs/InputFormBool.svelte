@@ -56,8 +56,8 @@
   }
 
   .checkbox-button.checked {
-    background-color: var(--grav-crud-color-primary);
-    color: var(--grav-crud-color-icon);
+    background-color: var(--grav-crud-color-neutral);
+    color: var(--grav-crud-color-border);
   }
 
   .label {

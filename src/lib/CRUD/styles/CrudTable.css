@@ -145,7 +145,7 @@
 }
 
 .table-row.selected {
-  background-color: var(--grav-crud-color-drag);
+  background-color: var(--grav-crud-color-light);
 }
 
 .table-cell {
@@ -338,7 +338,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--grav-crud-color-icon);
+  color: var(--grav-crud-color-border);
 }
 
 .drag-handle-cell {
@@ -366,7 +366,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--grav-crud-color-icon);
+  color: var(--grav-crud-color-border);
   transition: color 0.2s;
   padding: 0.25rem;
 }
@@ -378,7 +378,7 @@
 .draggable-row.dragging {
   opacity: 0.5;
   transform: scale(0.98);
-  background-color: var(--grav-crud-color-drag);
+  background-color: var(--grav-crud-color-light);
   cursor: grabbing;
 }
 
@@ -387,9 +387,9 @@
 }
 
 .draggable-row.drag-over {
-  background-color: var(--grav-crud-color-drag);
-  border-top: 2px solid var(--grav-crud-color-drag);
-  border-bottom: 2px solid var(--grav-crud-color-drag);
+  background-color: var(--grav-crud-color-light);
+  border-top: 2px solid var(--grav-crud-color-light);
+  border-bottom: 2px solid var(--grav-crud-color-light);
 }
 
 /* Editable cell styles */
@@ -413,9 +413,9 @@
 }
 
 .editable-checkbox.checked {
-  background-color: var(--grav-crud-color-primary);
-  color: var(--grav-crud-color-icon);
-  border-color: var(--grav-crud-color-primary);
+  background-color: var(--grav-crud-color-neutral);
+  color: var(--grav-crud-color-border);
+  border-color: var(--grav-crud-color-neutral);
 }
 
 .editable-input {
@@ -437,7 +437,7 @@
 
 .editable-input:focus {
   outline: none;
-  border-color: var(--grav-crud-color-primary);
+  border-color: var(--grav-crud-color-neutral);
   background-color: var(--grav-crud-color-bg);
 }
 
@@ -621,7 +621,7 @@
 }
 
 .dual-text-button:hover {
-  border-color: var(--grav-crud-color-primary);
+  border-color: var(--grav-crud-color-neutral);
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
