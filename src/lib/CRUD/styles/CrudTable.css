@@ -583,6 +583,11 @@
 
 .sub-row-cell {
   padding: 0 !important;
+  background: linear-gradient(
+    to right,
+    var(--grav-crud-color-bg, #ffffff) var(--sub-table-offset, 0),
+    rgba(0, 0, 0, 0.02) var(--sub-table-offset, 0)
+  );
 }
 
 .sub-table {
@@ -590,6 +595,8 @@
   border-collapse: collapse;
   margin: 0;
   background-color: rgba(0, 0, 0, 0.02);
+  /* Align sub-table content with first data column */
+  margin-left: var(--sub-table-offset, 0);
 }
 
 .sub-table .sub-row {

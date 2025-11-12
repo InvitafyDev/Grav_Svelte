@@ -194,6 +194,7 @@
                                         (dragEnabled ? 1 : 0) +
                                         (expandEnabled ? 1 : 0)}
                                     class="sub-row-cell"
+                                    style="--sub-table-offset: {(dragEnabled ? 40 : 0) + (expandEnabled ? 50 : 0)}px"
                                 >
                                     <SubRowsTable
                                         subRows={item[subRowsField]}
