@@ -130,8 +130,10 @@
         on:filtrar={handleFiltroAplicado}
         on:add={handleAdd}
         on:import={handleImport}
+        on:settings={handleSettings}
         {showAddButton}
         {showImportButton}
+        {showSettingsButton}
         {showMostrandoInput}
         {Titulo_Crud}
     />
@@ -157,19 +159,8 @@
         />
     </div>
 
-    {#if showSettingsButton || showExcelButton || showPdfButton}
+    {#if showExcelButton || showPdfButton}
         <div class="export-buttons">
-            <div class="buttons-left">
-                {#if showSettingsButton}
-                    <button
-                        type="button"
-                        on:click={handleSettings}
-                        class="export-button settings-button"
-                    >
-                        <i class="fas fa-cog"></i>
-                    </button>
-                {/if}
-            </div>
             <div class="buttons-right">
                 {#if showExcelButton}
                     <button
@@ -214,10 +205,9 @@
         display: flex;
         gap: 1rem;
         margin-top: 1rem;
-        justify-content: space-between;
+        justify-content: flex-end;
     }
 
-    .buttons-left,
     .buttons-right {
         display: flex;
         gap: 1rem;

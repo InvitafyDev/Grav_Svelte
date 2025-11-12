@@ -24,6 +24,7 @@
     export let Filtros: FiltrosI[];
     export let showAddButton: boolean = true;
     export let showImportButton: boolean = true;
+    export let showSettingsButton: boolean = false;
     export let showMostrandoInput: boolean = true;
     export let Titulo_Crud: string;
 
@@ -202,7 +203,20 @@
                         </Tooltip>
                     {/if}
                 {/if}
+                {#if showSettingsButton}
+                    <Tooltip text="Configuración">
+                        <button
+                            type="button"
+                            on:click={() => dispatch("settings")}
+                            class="filter-button"
+                        >
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </Tooltip>
+                {/if}
             </div>
+
+
         </div>
     </div>
     <!-- Filtros Dynamic -->

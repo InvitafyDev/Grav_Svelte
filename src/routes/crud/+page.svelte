@@ -1042,6 +1042,9 @@
   function handleImport() {
     alert("Importar");
   }
+  function handleSettings() {
+    alert("Configuración");
+  }
 
   function handleReorder(reorderedItems: any[]) {
     console.log("Reordered items:", reorderedItems);
@@ -1129,8 +1132,9 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     idField="noMesA"
     showSettingsButton={true}
     onFilter={enlistar}
-    onAdd={handleAdd}
+    onAdd={handleAdd} 
     onImport={handleImport}
+    onSettings={handleSettings}
     onReorder={handleReorder}
     onCellUpdate={handleCellUpdate}
   />
