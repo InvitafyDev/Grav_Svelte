@@ -181,108 +181,28 @@
             <div class="filter-group" role="group">
                 {#if Filtros && Filtros.length > 0}
                     {#if showFilters}
-                        <button
-                            type="button"
-                            on:click={() => (showFilters = !showFilters)}
-                            class="filter-button"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="mr-1"
+                        <Tooltip text="Ver filtros">
+                            <button
+                                type="button"
+                                on:click={() => (showFilters = !showFilters)}
+                                class="filter-button filter-button-active"
                             >
-                                <polygon
-                                    points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
-                                ></polygon>
-                            </svg>
-                            {showFilters ? "▲" : "▼"}
-                        </button>
+                                <i class="fa-solid fa-sliders"></i>
+                            </button>
+                        </Tooltip>
                     {:else}
-                        <button
-                            type="button"
-                            on:click={() => (showFilters = !showFilters)}
-                            class="filter-button"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="mr-1"
+                        <Tooltip text="Ver filtros">
+                            <button
+                                type="button"
+                                on:click={() => (showFilters = !showFilters)}
+                                class="filter-button"
                             >
-                                <polygon
-                                    points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
-                                ></polygon>
-                            </svg>
-                            {showFilters ? "▲" : "▼"}
-                        </button>
+                                <i class="fa-solid fa-sliders"></i>
+                            </button>
+                        </Tooltip>
                     {/if}
-
-                    <!-- Btn de aplicar filtro -->
-                    <Tooltip text="Aplicar filtro">
-                        <!-- svelte-ignore a11y_consider_explicit_label -->
-                        <button
-                            type="button"
-                            on:click={() => actualizarFiltro()}
-                            class="filter-button filter-button-middle"
-                            aria-label="Aplicar filtros"
-                        >
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </Tooltip>
-
-                    <!-- Btn de limpiar filtros -->
-                    <Tooltip text="Borrar filtro">
-                        <!-- svelte-ignore a11y_consider_explicit_label -->
-                        <button
-                            type="button"
-                            on:click={() => clearFilters()}
-                            class="filter-button filter-button-right"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                                ></path>
-                            </svg>
-                        </button>
-                    </Tooltip>
                 {/if}
             </div>
-
-            <!-- Filtro 2 -->
-            {#if showMostrandoInput}
-                <div class="page-size-input">
-                    <InputFormText
-                        label="Mostrando:"
-                        bind:valueVar={localPageSizeStr}
-                        noMarginTop={true}
-                    />
-                </div>
-            {/if}
-            <!-- /Filtro 2 -->
         </div>
     </div>
     <!-- Filtros Dynamic -->
@@ -352,6 +272,42 @@
                     </div>
                 {/if}
             {/each}
+            <!-- Filtro 2 -->
+            {#if showMostrandoInput}
+            
+                <div class="filter-item ">
+                    <InputFormText
+                        label="Mostrando:"
+                        bind:valueVar={localPageSizeStr}
+                    />
+                </div>
+            {/if}
+            <!-- /Filtro 2 -->
+        </div>
+        <!-- Btn de aplicar filtro -->
+        <div class="filters-actions">
+            <!-- Btn de limpiar filtros -->
+            <Tooltip text="Borrar filtro">
+                <!-- svelte-ignore a11y_consider_explicit_label -->
+                <button
+                    type="button"
+                    on:click={() => clearFilters()}
+                    class="filter-button"
+                >
+                    Limpiar
+                </button>
+            </Tooltip>
+            <Tooltip text="Aplicar filtro">
+                <!-- svelte-ignore a11y_consider_explicit_label -->
+                <button
+                    type="button"
+                    on:click={() => actualizarFiltro()}
+                    class="filter-button"
+                    aria-label="Aplicar filtros"
+                >
+                    Filtrar
+                </button>
+            </Tooltip>
         </div>
     {/if}
 </div>
