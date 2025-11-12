@@ -128,7 +128,7 @@
   .image-container {
     width: 100%;
     padding: 1rem;
-    border: 2px solid var(--grav-crud-color-neutral);
+    border: 1px solid var(--grav-crud-color-neutral);
     border-radius: 0.5rem;
     background-color: #f9fafb;
     margin: 0.5rem 0;

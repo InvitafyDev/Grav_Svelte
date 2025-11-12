@@ -59,6 +59,7 @@
     position: absolute;
     top: -0.4rem;
     left: 0.25rem;
+    color: var(--grav-crud-color-neutral);
   }
 
   .input-wrapper {
@@ -79,7 +80,6 @@
 
   .input-field:focus {
     outline: none;
-    border-color: black;
   }
 
   .input-label {

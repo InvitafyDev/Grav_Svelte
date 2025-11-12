@@ -142,6 +142,15 @@
             {#if !isVista}
                 <!-- Pie Modal -->
                 <div class="modal-footer">
+                    <!-- Cerrar Modal -->
+                    <button
+                        class="modal-cancel-button"
+                        type="button"
+                        on:click={onClose}
+                    >
+                        {cancelButtonText}
+                    </button>
+                    <!-- /Cerrar Modal -->
                     <!-- Btn Guardar -->
                     <button
                         class="modal-save-button"
@@ -152,15 +161,6 @@
                         {saveButtonText}
                     </button>
                     <!-- /Btn Guardar -->
-                    <!-- Cerrar Modal -->
-                    <button
-                        class="modal-cancel-button"
-                        type="button"
-                        on:click={onClose}
-                    >
-                        {cancelButtonText}
-                    </button>
-                    <!-- /Cerrar Modal -->
                 </div>
                 <!-- /Pie Modal -->
             {/if}

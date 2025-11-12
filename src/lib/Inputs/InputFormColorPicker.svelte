@@ -143,6 +143,7 @@
     position: absolute;
     top: 0;
     left: 0.25rem;
+    color: var(--grav-crud-color-neutral);
   }
 
   .color-picker-wrapper {
@@ -154,14 +155,14 @@
     display: block;
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--grav-crud-color-neutral, #374151);
+    color: var(--grav-crud-color-neutral);
     margin-bottom: 1rem;
   }
 
   .section-label {
     font-size: 0.95rem;
     font-weight: 500;
-    color: var(--grav-crud-color-neutral, #4b5563);
+    color: var(--grav-crud-color-neutral);
     margin-bottom: 0.75rem;
     margin-top: 1.25rem;
   }
@@ -199,7 +200,7 @@
   }
 
   .color-swatch.selected {
-    border-color: #1f2937;
+    border-color: var(--grav-crud-color-neutral);
     box-shadow:
       0 10px 15px -3px rgba(0, 0, 0, 0.2),
       0 4px 6px -2px rgba(0, 0, 0, 0.1);
@@ -227,7 +228,7 @@
     width: 50px;
     height: 50px;
     border-radius: 0.75rem;
-    border: 2px solid #e5e7eb;
+    border: 2px solid var(--grav-crud-color-border);
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -261,10 +262,10 @@
     flex: 1;
     padding: 0.625rem 0.875rem;
     font-size: 0.95rem;
-    border: 2px solid #e5e7eb;
+    border: 2px solid var(--grav-crud-color-border);
     border-radius: 0.75rem;
-    background: #f9fafb;
-    color: var(--grav-crud-color-neutral, #1f2937);
+    background: var(--grav-crud-color-light);
+    color: var(--grav-crud-color-neutral);
     font-weight: 500;
     transition: all 0.2s ease;
     text-transform: uppercase;
@@ -272,7 +273,7 @@
 
   .hex-input:focus {
     outline: none;
-    border-color: #000000;
+    border-color: var(--grav-crud-color-neutral);
   }
 
   .hex-input:disabled {

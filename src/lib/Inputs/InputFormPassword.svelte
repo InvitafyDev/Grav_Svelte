@@ -107,6 +107,7 @@
     position: absolute;
     top: -0.4rem;
     left: 0.25rem;
+    color: var(--grav-crud-color-neutral);
   }
 
   .input-wrapper {
@@ -127,7 +128,6 @@
 
   .input-field:focus {
     outline: none;
-    border-color: black;
   }
 
   .input-label {
@@ -167,5 +167,19 @@
   .no-margin .input-field:not(:placeholder-shown) + .input-label {
     translate: -0.6rem -1.4rem;
     font-size: 0.7rem;
+  }
+
+  .validation-message {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    color: var(--grav-crud-color-neutral);
+  }
+
+  .validation-message.valid {
+    color: #10b981;
+  }
+
+  .validation-message.invalid {
+    color: #dc2626;
   }
 </style>

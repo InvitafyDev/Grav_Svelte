@@ -69,7 +69,7 @@
   {#each levels as level, i}
     {#if i == 0}
       {#await fetchFnCloned[0].fetchFn()}
-        cargando {level.label}...
+        <p class="loading-message">Cargando {level.label}...</p>
       {:then res}
         <InputFormSelect
           value={level?.default}
@@ -86,7 +86,7 @@
     {#if i > 0}
       {#if levels[i - 1]?.default?.value}
         {#await ultimoIndexActualizado >= i ? cacheResults[i] : fetchFnCloned[i].fetchFn(levels[i - 1]?.default?.value)}
-          cargando {level.label}...
+          <p class="loading-message">Cargando {level.label}...</p>
         {:then res}
           <div class=" hidden">
             {(cacheResults[i] = res)}
@@ -102,8 +102,17 @@
           />
         {/await}
       {:else}
-        <h1>Selecciona {level.label}</h1>
+        <p class="select-message">Selecciona {level.label}</p>
       {/if}
     {/if}
   {/each}
 {/if}
+
+<style>
+  .loading-message,
+  .select-message {
+    color: var(--grav-crud-color-neutral);
+    font-size: 0.875rem;
+    margin: 0.5rem 0;
+  }
+</style>
