@@ -178,8 +178,8 @@
                     </Tooltip>
                 {/if}
                 {#if Filtros && Filtros.length > 0}
-                    {#if showFilters}
-                        <Tooltip text="Ver filtros">
+                    <Tooltip text="Ver filtros">
+                        {#if showFilters}
                             <button
                                 type="button"
                                 on:click={() => (showFilters = !showFilters)}
@@ -187,9 +187,7 @@
                             >
                                 <i class="fa-solid fa-sliders"></i>
                             </button>
-                        </Tooltip>
-                    {:else}
-                        <Tooltip text="Ver filtros">
+                        {:else}
                             <button
                                 type="button"
                                 on:click={() => (showFilters = !showFilters)}
@@ -197,8 +195,8 @@
                             >
                                 <i class="fa-solid fa-sliders"></i>
                             </button>
-                        </Tooltip>
-                    {/if}
+                        {/if}
+                    </Tooltip>
                 {/if}
                 {#if showSettingsButton}
                     <Tooltip text="Configuración">
@@ -213,10 +211,7 @@
                 {/if}
             </div>
             <!-- Show Filters Button -->
-            <div class="filter-group" role="group">
-            </div>
-
-
+            <div class="filter-group" role="group"></div>
         </div>
     </div>
     <!-- Filtros Dynamic -->
@@ -288,8 +283,7 @@
             {/each}
             <!-- Filtro 2 -->
             {#if showMostrandoInput}
-            
-                <div class="filter-item ">
+                <div class="filter-item">
                     <InputFormText
                         label="Mostrando:"
                         bind:valueVar={localPageSizeStr}
