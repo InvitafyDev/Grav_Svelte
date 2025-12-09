@@ -310,7 +310,7 @@
                 <button
                     type="button"
                     on:click={() => actualizarFiltro()}
-                    class="filter-button"
+                    class="filter-button filter-apply-button"
                     aria-label="Aplicar filtros"
                 >
                     Filtrar

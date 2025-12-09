@@ -154,6 +154,17 @@
     color: var(--grav-crud-color-bg);
 }
 
+.filter-apply-button {
+    background-color: #6b7280;
+    color: white;
+    border-color: #6b7280;
+}
+
+.filter-apply-button:hover {
+    background-color: #4b5563;
+    border-color: #4b5563;
+}
+
 .filters-actions {
     display: flex;
     justify-content: right;
