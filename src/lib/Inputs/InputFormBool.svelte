@@ -40,6 +40,9 @@
   }
 
   .checkbox-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin-right: 0.5rem;
     height: 2.7rem;
     width: 2.7rem;
