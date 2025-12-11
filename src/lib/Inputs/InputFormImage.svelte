@@ -152,6 +152,9 @@
   }
 
   .load-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 0.5rem 1rem;
     border: var(--grav-crud-input-border-width) solid
       var(--grav-crud-color-neutral);
@@ -179,6 +182,9 @@
   }
 
   .remove-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 0.5rem;
     padding: 0.5rem 1rem;
     border: var(--grav-crud-input-border-width) solid #dc2626;

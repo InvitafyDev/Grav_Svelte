@@ -1,10 +1,14 @@
 .alert-confirm-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: #10b981;
     color: white;
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.875rem;
     padding: 0.75rem 1.5rem;
+    border: none;
     border-radius: 0.25rem;
     cursor: pointer;
     transition: all 150ms ease-in-out;
@@ -18,12 +22,16 @@
 }
 
 .alert-cancel-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: #EF4444;
     background: transparent;
     font-weight: bold;
     text-transform: uppercase;
     padding: 0.5rem 1.5rem;
     font-size: 0.875rem;
+    border: none;
     cursor: pointer;
     transition: all 150ms ease-in-out;
 }
@@ -33,6 +41,9 @@
 }
 
 .alert-error-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: #EF4444;
     background: transparent;
     font-weight: bold;
@@ -40,6 +51,7 @@
     cursor: pointer;
     padding: 0.5rem 1.5rem;
     font-size: 1rem;
+    border: none;
     transition: all 150ms ease-in-out;
 }
 
