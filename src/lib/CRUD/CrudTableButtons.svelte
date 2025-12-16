@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { ButtonConfig } from "./interfaces.js";
     import Tooltip from "./Tooltip.svelte";
+    import { onMount, afterUpdate } from "svelte";
 
     export let id = 1;
     export let buttonsConfig: ButtonConfig[];
@@ -8,14 +9,61 @@
     export let row: any = undefined;
 
     $: visibleButtons = buttonsConfig.filter((btn) => btn.show ?? true);
+
+    function handleClick(event: MouseEvent, button: ButtonConfig) {
+        event.stopPropagation();
+        button.action(id, row);
+    }
+
+    // Prevenir que Font Awesome procese iconos múltiples veces
+    function preventIconDuplication(element: HTMLElement) {
+        if (!element) return;
+        
+        const buttons = element.querySelectorAll('button');
+        buttons.forEach((button) => {
+            const icons = button.querySelectorAll('i[class*="fa-"]');
+            // Si hay más de un icono, eliminar los duplicados (mantener solo el primero)
+            if (icons.length > 1) {
+                for (let i = 1; i < icons.length; i++) {
+                    icons[i].remove();
+                }
+            }
+            // Marcar como procesado para evitar que Font Awesome lo procese de nuevo
+            icons.forEach((icon) => {
+                if (!icon.hasAttribute('data-fa-processed')) {
+                    icon.setAttribute('data-fa-processed', 'true');
+                }
+                // Prevenir que Font Awesome convierta a SVG si ya es SVG
+                const svg = icon.querySelector('svg');
+                if (svg && icon.parentElement) {
+                    // Si ya hay un SVG, eliminar el icono original
+                    icon.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    let buttonGroupElement: HTMLDivElement;
+    
+    onMount(() => {
+        if (buttonGroupElement) {
+            preventIconDuplication(buttonGroupElement);
+        }
+    });
+
+    afterUpdate(() => {
+        if (buttonGroupElement) {
+            preventIconDuplication(buttonGroupElement);
+        }
+    });
 </script>
 
-<div class="button-group" role="group">
-    {#each visibleButtons as button, i}
+<div class="button-group" role="group" bind:this={buttonGroupElement}>
+    {#each visibleButtons as button, i (button.icon + id + i)}
         <Tooltip text={button.tooltip}>
             <button
                 aria-label={button.tooltip}
-                on:click={() => button.action(id, row)}
+                on:click={(e) => handleClick(e, button)}
                 type="button"
                 class="action-buttons-group {visibleButtons.length === 1
                     ? 'rounded-left rounded-right'
@@ -25,7 +73,7 @@
                         ? 'rounded-right'
                         : ''} {button.color}"
             >
-                <i class={button.icon}> </i>
+                <i class={button.icon} data-fa-processed="true" data-fa-i2svg-processed="true"> </i>
             </button>
         </Tooltip>
     {/each}

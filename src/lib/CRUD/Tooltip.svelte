@@ -3,6 +3,16 @@
 
     let showTooltip = false;
     export let text: string;
+
+    function handleMouseEnter(event: MouseEvent) {
+        event.stopPropagation();
+        showTooltip = true;
+    }
+
+    function handleMouseLeave(event: MouseEvent) {
+        event.stopPropagation();
+        showTooltip = false;
+    }
 </script>
 
 <div class="tooltip-container">
@@ -12,8 +22,8 @@
         </div>
     {/if}
     <div
-        on:mouseenter={() => (showTooltip = true)}
-        on:mouseleave={() => (showTooltip = false)}
+        on:mouseenter={handleMouseEnter}
+        on:mouseleave={handleMouseLeave}
         role="button"
         tabindex="0"
     >
