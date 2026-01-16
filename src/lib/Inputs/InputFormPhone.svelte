@@ -118,6 +118,7 @@
         bind:value={selectedDialCode}
         {disabled}
         class="country-select"
+        aria-label="Country code"
       >
         {#each countries as country}
           <option value={country.value}>{country.label}</option>
@@ -133,6 +134,9 @@
         {disabled}
         placeholder="Phone number"
         class="phone-input"
+        autocomplete="tel"
+        inputmode="tel"
+        aria-label="Phone number"
       />
     </div>
   </div>
