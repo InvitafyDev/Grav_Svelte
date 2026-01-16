@@ -25,8 +25,17 @@
     let textInputWithIcon = "";
     let mailInput = "";
     let passwordInput = "";
+
+    // Phone Mexico - all 3 values
     let phoneInputMexico = "";
+    let dialCodeMexico = "";
+    let phoneNumberMexico = "";
+
+    // Phone USA - all 3 values
     let phoneInputUSA = "";
+    let dialCodeUSA = "";
+    let phoneNumberUSA = "";
+
     let numberInput: number | null = null;
     let boolInput = false;
     let colorInput = "#000000";
@@ -129,9 +138,9 @@
         password:
             'let passwordInput = "";\n\n<InputFormPassword\n    label="Password Input"\n    bind:valueVar={passwordInput}\n    validation={true}\n    icon="fas fa-lock"\n/>',
         phoneMexico:
-            'let phoneInputMexico = "";\n\n<InputFormPhone\n    label="Phone Number (Mexico)"\n    bind:valueVar={phoneInputMexico}\n    defaultDialCode="+52"\n    validation={true}\n/>',
+            '// Component exports 3 values automatically\nlet phoneInputMexico = "";  // "+528444612811"\nlet dialCodeMexico = "";     // "+52"\nlet phoneNumberMexico = "";  // "8444612811"\n\n<InputFormPhone\n    label="Phone Number (Mexico)"\n    bind:valueVar={phoneInputMexico}\n    bind:dialCode={dialCodeMexico}\n    bind:phoneNumber={phoneNumberMexico}\n    defaultDialCode="+52"\n    validation={true}\n/>\n\n// Use whichever value you need:\n// - Concatenated for APIs: {phoneInputMexico}\n// - Separate for DB: {dialCodeMexico} + {phoneNumberMexico}',
         phoneUSA:
-            'let phoneInputUSA = "";\n\n<InputFormPhone\n    label="Phone Number (USA)"\n    bind:valueVar={phoneInputUSA}\n    defaultDialCode="+1"\n    validation={true}\n/>',
+            '// All 3 values available\nlet phoneInputUSA = "";   // Concatenated\nlet dialCodeUSA = "";     // Dial code only\nlet phoneNumberUSA = "";  // Number only\n\n<InputFormPhone\n    label="Phone Number (USA)"\n    bind:valueVar={phoneInputUSA}\n    bind:dialCode={dialCodeUSA}\n    bind:phoneNumber={phoneNumberUSA}\n    defaultDialCode="+1"\n    validation={true}\n/>',
         number: 'let numberInput: number | null = null;\n\n<InputFormNumber \n    label="Number Input" \n    bind:valueVar={numberInput} \n/>',
         textArea:
             'let textAreaInput = "";\n\n<InputFormTextArea\n    label="Text Area"\n    bind:valueVar={textAreaInput}\n    rows={4}\n/>',
@@ -220,12 +229,22 @@
             <InputFormPhone
                 label="Phone Number (Mexico Default)"
                 bind:valueVar={phoneInputMexico}
+                bind:dialCode={dialCodeMexico}
+                bind:phoneNumber={phoneNumberMexico}
                 defaultDialCode="+52"
                 validation={true}
             />
-            <span class="block mt-1 text-sm text-gray-600"
-                >Value: {phoneInputMexico}</span
-            >
+            <div class="mt-2 space-y-1">
+                <span class="block text-sm text-gray-600"
+                    ><strong>Concatenated:</strong> {phoneInputMexico}</span
+                >
+                <span class="block text-sm text-gray-600"
+                    ><strong>Dial Code:</strong> {dialCodeMexico}</span
+                >
+                <span class="block text-sm text-gray-600"
+                    ><strong>Phone Number:</strong> {phoneNumberMexico}</span
+                >
+            </div>
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
                 <pre
@@ -239,12 +258,22 @@
             <InputFormPhone
                 label="Phone Number (USA Default)"
                 bind:valueVar={phoneInputUSA}
+                bind:dialCode={dialCodeUSA}
+                bind:phoneNumber={phoneNumberUSA}
                 defaultDialCode="+1"
                 validation={true}
             />
-            <span class="block mt-1 text-sm text-gray-600"
-                >Value: {phoneInputUSA}</span
-            >
+            <div class="mt-2 space-y-1">
+                <span class="block text-sm text-gray-600"
+                    ><strong>Concatenated:</strong> {phoneInputUSA}</span
+                >
+                <span class="block text-sm text-gray-600"
+                    ><strong>Dial Code:</strong> {dialCodeUSA}</span
+                >
+                <span class="block text-sm text-gray-600"
+                    ><strong>Phone Number:</strong> {phoneNumberUSA}</span
+                >
+            </div>
             <div class="mt-4">
                 <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
                 <pre

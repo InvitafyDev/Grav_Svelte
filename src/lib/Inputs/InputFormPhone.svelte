@@ -6,7 +6,12 @@
     label: string;
   }
 
-  export let valueVar: string = "";
+  // Exported values - component always provides all 3
+  export let valueVar: string = "";        // Concatenated: "+528444612811"
+  export let dialCode: string = "";        // Dial code only: "+52"
+  export let phoneNumber: string = "";     // Phone number only: "8444612811"
+
+  // Common props
   export let label: string;
   export let disabled = false;
   export let obligatory = false;
@@ -15,7 +20,7 @@
 
   // Internal state
   let selectedDialCode: string = defaultDialCode;
-  let phoneNumber: string = "";
+  let internalPhoneNumber: string = "";
   let validationMessage = "";
   let isValid = true;
 
@@ -53,10 +58,17 @@
     { value: "+32", label: "🇧🇪 +32" },
   ];
 
-  // Concatenate dial code and phone number
+  // Update all exported values reactively
   $: {
-    if (selectedDialCode && phoneNumber) {
-      valueVar = selectedDialCode + phoneNumber.replace(/\D/g, "");
+    const cleanNumber = internalPhoneNumber.replace(/\D/g, "");
+
+    // Update separate values
+    dialCode = selectedDialCode;
+    phoneNumber = cleanNumber;
+
+    // Update concatenated value
+    if (selectedDialCode && cleanNumber) {
+      valueVar = selectedDialCode + cleanNumber;
     } else if (selectedDialCode) {
       valueVar = selectedDialCode;
     } else {
@@ -65,9 +77,7 @@
 
     // Validation logic
     if (validation) {
-      const cleanNumber = phoneNumber.replace(/\D/g, "");
-
-      if (phoneNumber && !/^\d+$/.test(cleanNumber)) {
+      if (internalPhoneNumber && !/^\d+$/.test(cleanNumber)) {
         validationMessage = "Phone number must contain only digits";
         isValid = false;
       } else if (cleanNumber && cleanNumber.length < 7) {
@@ -90,7 +100,7 @@
   function handlePhoneInput(event: Event) {
     const input = event.target as HTMLInputElement;
     const cleaned = input.value.replace(/\D/g, "");
-    phoneNumber = cleaned;
+    internalPhoneNumber = cleaned;
   }
 </script>
 
@@ -118,7 +128,7 @@
     <div class="phone-number-wrapper">
       <input
         type="tel"
-        bind:value={phoneNumber}
+        bind:value={internalPhoneNumber}
         on:input={handlePhoneInput}
         {disabled}
         placeholder="Phone number"
