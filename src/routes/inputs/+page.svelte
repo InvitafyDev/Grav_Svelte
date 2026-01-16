@@ -13,6 +13,7 @@
         InputFormCascade,
         InputFormPassword,
         InputFormMail,
+        InputFormPhone,
     } from "$lib/Inputs/index.js";
 
     interface SelectValue {
@@ -24,6 +25,8 @@
     let textInputWithIcon = "";
     let mailInput = "";
     let passwordInput = "";
+    let phoneInputMexico = "";
+    let phoneInputUSA = "";
     let numberInput: number | null = null;
     let boolInput = false;
     let colorInput = "#000000";
@@ -125,6 +128,10 @@
         mail: 'let mailInput = "";\n\n<InputFormMail\n    label="Email Input"\n    bind:valueVar={mailInput}\n    validation={true}\n    icon="fas fa-envelope"\n/>',
         password:
             'let passwordInput = "";\n\n<InputFormPassword\n    label="Password Input"\n    bind:valueVar={passwordInput}\n    validation={true}\n    icon="fas fa-lock"\n/>',
+        phoneMexico:
+            'let phoneInputMexico = "";\n\n<InputFormPhone\n    label="Phone Number (Mexico)"\n    bind:valueVar={phoneInputMexico}\n    defaultDialCode="+52"\n    validation={true}\n/>',
+        phoneUSA:
+            'let phoneInputUSA = "";\n\n<InputFormPhone\n    label="Phone Number (USA)"\n    bind:valueVar={phoneInputUSA}\n    defaultDialCode="+1"\n    validation={true}\n/>',
         number: 'let numberInput: number | null = null;\n\n<InputFormNumber \n    label="Number Input" \n    bind:valueVar={numberInput} \n/>',
         textArea:
             'let textAreaInput = "";\n\n<InputFormTextArea\n    label="Text Area"\n    bind:valueVar={textAreaInput}\n    rows={4}\n/>',
@@ -205,6 +212,44 @@
                 <pre
                     class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
                         >{codeExamples.password}</code
+                    ></pre>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <InputFormPhone
+                label="Phone Number (Mexico Default)"
+                bind:valueVar={phoneInputMexico}
+                defaultDialCode="+52"
+                validation={true}
+            />
+            <span class="block mt-1 text-sm text-gray-600"
+                >Value: {phoneInputMexico}</span
+            >
+            <div class="mt-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.phoneMexico}</code
+                    ></pre>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <InputFormPhone
+                label="Phone Number (USA Default)"
+                bind:valueVar={phoneInputUSA}
+                defaultDialCode="+1"
+                validation={true}
+            />
+            <span class="block mt-1 text-sm text-gray-600"
+                >Value: {phoneInputUSA}</span
+            >
+            <div class="mt-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.phoneUSA}</code
                     ></pre>
             </div>
         </div>
