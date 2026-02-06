@@ -24,11 +24,15 @@
   }
 
   function handleFocus() {
-    // Cuando se enfoca, asegurar que el valor se actualice
-    if (inputElement && !valueVar) {
+    // Cuando se enfoca en iOS y está vacío, asegurar que no haya valor
+    if (inputElement && isIOS && !valueVar) {
       inputElement.value = "";
+      inputElement.setAttribute("value", "");
     }
   }
+
+  // Asegurar que el valor esté vacío cuando valueVar es null/undefined/vacío
+  $: inputValue = valueVar || "";
 </script>
 
 <div class="input-container">
@@ -42,12 +46,12 @@
       bind:this={inputElement}
       {disabled}
       type="datetime-local"
-      value={valueVar}
+      value={inputValue}
       on:input={handleInput}
       on:focus={handleFocus}
       placeholder=" "
       class="input-field"
-      class:empty-field={!valueVar}
+      class:empty-field={!valueVar || valueVar === ""}
     />
 
     {#if isIOS && !valueVar}
@@ -128,7 +132,14 @@
   /* Estilo para campo vacío - hacer transparente el texto en iOS para mostrar placeholder */
   @supports (-webkit-touch-callout: none) {
     .input-field.empty-field {
-      color: transparent;
+      color: transparent !important;
+      text-shadow: 0 0 0 transparent;
+    }
+
+    /* Asegurar que no se muestre ningún valor por defecto */
+    .input-field.empty-field::before,
+    .input-field.empty-field::after {
+      content: none;
     }
   }
 
