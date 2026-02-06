@@ -86,6 +86,13 @@
     mask-type: match-source;
   }
 
+  /* Solo mejorar visibilidad del indicador en iOS */
+  @supports (-webkit-touch-callout: none) {
+    .input-field::-webkit-calendar-picker-indicator {
+      opacity: 0.8;
+    }
+  }
+
   .input-field:focus {
     outline: none;
   }
