@@ -1,5 +1,6 @@
 <script lang="ts">
   import "../typography.css";
+  import { onMount } from "svelte";
 
   export let valueVar: string = "";
   export let label: string;
@@ -7,12 +8,26 @@
   export let obligatory = false;
   export let icon: string | null = null;
 
-  // Valor por defecto para mostrar cuando está vacío (solo visual)
-  $: displayValue = valueVar || "0000-00-00T00:00";
-  
+  let isIOS = false;
+  let inputElement: HTMLInputElement;
+
+  onMount(() => {
+    // Detectar iOS
+    isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  });
+
   function handleInput(event: Event) {
     const target = event.target as HTMLInputElement;
-    valueVar = target.value;
+    valueVar = target.value || "";
+  }
+
+  function handleFocus() {
+    // Cuando se enfoca, asegurar que el valor se actualice
+    if (inputElement && !valueVar) {
+      inputElement.value = "";
+    }
   }
 </script>
 
@@ -24,14 +39,22 @@
   {/if}
   <div class="input-wrapper">
     <input
+      bind:this={inputElement}
       {disabled}
       type="datetime-local"
-      value={displayValue}
+      value={valueVar}
       on:input={handleInput}
+      on:focus={handleFocus}
       placeholder=" "
       class="input-field"
       class:empty-field={!valueVar}
     />
+
+    {#if isIOS && !valueVar}
+      <span class="ios-placeholder-text"
+        >Toca para seleccionar fecha y hora</span
+      >
+    {/if}
 
     <label for={valueVar} class="input-label"
       >{label}
@@ -74,6 +97,7 @@
     position: relative;
     z-index: 0;
     width: 100%;
+    min-height: 2rem;
   }
 
   .input-field {
@@ -84,11 +108,28 @@
     color: var(--grav-crud-color-neutral);
     background: transparent;
     appearance: none;
+    position: relative;
+    z-index: 2;
   }
 
-  /* Estilo para campo vacío - mostrar valor por defecto con opacidad */
-  .input-field.empty-field {
-    color: rgba(0, 0, 0, 0.3);
+  /* Placeholder visual para iOS cuando está vacío */
+  .ios-placeholder-text {
+    position: absolute;
+    left: 0.3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    font-size: 1rem;
+    z-index: 1;
+    white-space: nowrap;
+  }
+
+  /* Estilo para campo vacío - hacer transparente el texto en iOS para mostrar placeholder */
+  @supports (-webkit-touch-callout: none) {
+    .input-field.empty-field {
+      color: transparent;
+    }
   }
 
   .input-field::-webkit-calendar-picker-indicator {
