@@ -6,6 +6,14 @@
   export let disabled = false;
   export let obligatory = false;
   export let icon: string | null = null;
+
+  // Valor por defecto para mostrar cuando está vacío (solo visual)
+  $: displayValue = valueVar || "0000-00-00";
+  
+  function handleInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    valueVar = target.value;
+  }
 </script>
 
 <div class="input-container">
@@ -18,9 +26,11 @@
     <input
       {disabled}
       type="date"
-      bind:value={valueVar}
+      value={displayValue}
+      on:input={handleInput}
       placeholder=" "
       class="input-field"
+      class:empty-field={!valueVar}
     />
 
     <label for={valueVar} class="input-label"
@@ -74,6 +84,11 @@
     color: var(--grav-crud-color-neutral);
     background: transparent;
     appearance: none;
+  }
+
+  /* Estilo para campo vacío - mostrar valor por defecto con opacidad */
+  .input-field.empty-field {
+    color: rgba(0, 0, 0, 0.3);
   }
 
   .input-field::-webkit-calendar-picker-indicator {
