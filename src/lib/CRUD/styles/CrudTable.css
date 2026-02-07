@@ -122,14 +122,6 @@
     2px 0 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Desactivar sticky en headers en móviles */
-@media (max-width: 640px) {
-  .borderleft.header-sticky-intersection {
-    position: static;
-    box-shadow: none;
-  }
-}
-
 .sort-icon {
   display: flex;
   align-items: center;
@@ -199,17 +191,6 @@
 @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
   .sticky-cell {
     background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
-  }
-}
-
-/* Desactivar sticky en móviles */
-@media (max-width: 640px) {
-  .sticky-cell {
-    position: static;
-    box-shadow: none;
-    background-color: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
 }
 
@@ -353,14 +334,6 @@
     2px 0 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Desactivar sticky en drag-header en móviles */
-@media (max-width: 640px) {
-  .drag-header {
-    position: static;
-    box-shadow: none;
-  }
-}
-
 .drag-handle-header {
   display: flex;
   align-items: center;
@@ -386,17 +359,6 @@
 @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
   .drag-handle-cell {
     background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
-  }
-}
-
-/* Desactivar sticky en drag-handle-cell en móviles */
-@media (max-width: 640px) {
-  .drag-handle-cell {
-    position: static;
-    box-shadow: none;
-    background-color: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
 }
 

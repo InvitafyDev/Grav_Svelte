@@ -1,6 +1,6 @@
 {
   "name": "grav-svelte",
-  "version": "0.1.11",
+  "version": "0.1.10",
   "description": "A collection of Svelte components",
   "license": "MIT",
   "scripts": {
