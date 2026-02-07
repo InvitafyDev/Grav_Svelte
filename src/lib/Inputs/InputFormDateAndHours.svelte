@@ -1,38 +1,11 @@
 <script lang="ts">
   import "../typography.css";
-  import { onMount } from "svelte";
 
   export let valueVar: string = "";
   export let label: string;
   export let disabled = false;
   export let obligatory = false;
   export let icon: string | null = null;
-
-  let isIOS = false;
-  let inputElement: HTMLInputElement;
-
-  onMount(() => {
-    // Detectar iOS
-    isIOS =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  });
-
-  function handleInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    valueVar = target.value || "";
-  }
-
-  function handleFocus() {
-    // Cuando se enfoca en iOS y está vacío, asegurar que no haya valor
-    if (inputElement && isIOS && !valueVar) {
-      inputElement.value = "";
-      inputElement.setAttribute("value", "");
-    }
-  }
-
-  // Asegurar que el valor esté vacío cuando valueVar es null/undefined/vacío
-  $: inputValue = valueVar || "";
 </script>
 
 <div class="input-container">
@@ -43,22 +16,12 @@
   {/if}
   <div class="input-wrapper">
     <input
-      bind:this={inputElement}
       {disabled}
       type="datetime-local"
-      value={inputValue}
-      on:input={handleInput}
-      on:focus={handleFocus}
+      bind:value={valueVar}
       placeholder=" "
       class="input-field"
-      class:empty-field={!valueVar || valueVar === ""}
     />
-
-    {#if isIOS && !valueVar}
-      <span class="ios-placeholder-text"
-        >Toca para seleccionar fecha y hora</span
-      >
-    {/if}
 
     <label for={valueVar} class="input-label"
       >{label}
@@ -101,7 +64,6 @@
     position: relative;
     z-index: 0;
     width: 100%;
-    min-height: 2rem;
   }
 
   .input-field {
@@ -112,35 +74,6 @@
     color: var(--grav-crud-color-neutral);
     background: transparent;
     appearance: none;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Placeholder visual para iOS cuando está vacío */
-  .ios-placeholder-text {
-    position: absolute;
-    left: 0.3rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgba(0, 0, 0, 0.5);
-    pointer-events: none;
-    font-size: 1rem;
-    z-index: 1;
-    white-space: nowrap;
-  }
-
-  /* Estilo para campo vacío - hacer transparente el texto en iOS para mostrar placeholder */
-  @supports (-webkit-touch-callout: none) {
-    .input-field.empty-field {
-      color: transparent !important;
-      text-shadow: 0 0 0 transparent;
-    }
-
-    /* Asegurar que no se muestre ningún valor por defecto */
-    .input-field.empty-field::before,
-    .input-field.empty-field::after {
-      content: none;
-    }
   }
 
   .input-field::-webkit-calendar-picker-indicator {
@@ -151,13 +84,6 @@
     background-image: none;
     background-color: var(--grav-crud-color-neutral);
     mask-type: match-source;
-  }
-
-  /* Solo mejorar visibilidad del indicador en iOS */
-  @supports (-webkit-touch-callout: none) {
-    .input-field::-webkit-calendar-picker-indicator {
-      opacity: 0.8;
-    }
   }
 
   .input-field:focus {
