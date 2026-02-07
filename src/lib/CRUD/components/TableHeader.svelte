@@ -49,7 +49,7 @@
       {#if tableHeader.biSort == false}
         <th
           class="table-header-cell {index == 0 && !dragEnabled && !expandEnabled
-            ? 'borderleft header-sticky-intersection'
+            ? 'first-column-limited'
             : ''} non-sortable"
           style="text-align: {tableHeader.align ?? 'center'}"
         >
@@ -59,7 +59,7 @@
         <th
           on:click={() => onSort(tableHeader.campo)}
           class="table-header-cell {index == 0 && !dragEnabled && !expandEnabled
-            ? 'borderleft header-sticky-intersection'
+            ? 'first-column-limited'
             : ''} sortable"
           style="text-align: {tableHeader.align ?? 'left'}"
         >

@@ -27,10 +27,10 @@
 
 <td
   class="table-cell {index == 0 && !dragEnabled && !expandEnabled
-    ? 'sticky-cell'
+    ? 'first-column-limited'
     : ''} {header.tipo === 'TextArea' ? 'cell-textarea' : ''}"
   style="text-align: {header.align ?? 'center'}; {header.tipo === 'TextArea'
-    ? `max-height: calc(${header.cellMaxHeight ?? '150px'} + 14px + 0.6rem);`
+    ? `max-height: calc(${(header as any).cellMaxHeight ?? '150px'} + 14px + 0.6rem);`
     : ''}"
 >
   {#if header.tipo == "Text" || header.tipo == "Number"}
