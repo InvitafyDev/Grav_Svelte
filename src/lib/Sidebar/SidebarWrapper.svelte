@@ -77,6 +77,7 @@
         </button>
     </div>
 {:else}
+<div class="sidebar-outer" style="{themeStyle || ''}">
 <nav class="sidebar grav-sidebar-entrance {customClass}" style="{themeStyle || ''}">
     <div class="sidebar-fullscreen-wrap">
         <button
@@ -175,4 +176,5 @@
         </div>
     </div>
 </nav>
+</div>
 {/if}
