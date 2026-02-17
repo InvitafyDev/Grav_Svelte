@@ -52,6 +52,7 @@
         z-index: 50;
         padding-top: 0.75rem;
         background-color: var(--grav-sidebar-bg);
+        margin-bottom: -0.25rem;
     }
 }
 
