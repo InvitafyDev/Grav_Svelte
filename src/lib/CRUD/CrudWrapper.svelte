@@ -199,14 +199,6 @@
         padding: 0.5rem;
         border-radius: 0.5rem;
         box-shadow: var(--grav-crud-box-shadow);
-        position: relative;
-        z-index: 1;
-    }
-
-    @media (max-width: 640px) {
-        .crud-table-container {
-            margin-top: 0.5rem;
-        }
     }
 
     .export-buttons {

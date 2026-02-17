@@ -328,7 +328,7 @@
       buttonsConfig: [],
       onButtonClick: (id, row) => {
         alert(
-          `Dual button clicked para: ${row.nvMesTxt} (ID: ${id})\nTexto 1: ${row.dualText1}\nTexto 2: ${row.dualText2}`
+          `Dual button clicked para: ${row.nvMesTxt} (ID: ${id})\nTexto 1: ${row.dualText1}\nTexto 2: ${row.dualText2}`,
         );
       },
     },
@@ -1053,7 +1053,7 @@
   async function handleCellUpdate(
     id: number | string,
     campo: string,
-    newValue: any
+    newValue: any,
   ) {
     console.log("Cell updated:", { id, campo, newValue });
     // Simular llamada a API
@@ -1132,7 +1132,7 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     idField="noMesA"
     showSettingsButton={true}
     onFilter={enlistar}
-    onAdd={handleAdd} 
+    onAdd={handleAdd}
     onImport={handleImport}
     onSettings={handleSettings}
     onReorder={handleReorder}

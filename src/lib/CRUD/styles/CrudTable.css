@@ -122,14 +122,6 @@
     2px 0 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Desactivar sticky en headers en móviles */
-@media (max-width: 640px) {
-  .borderleft.header-sticky-intersection {
-    position: static;
-    box-shadow: none;
-  }
-}
-
 .sort-icon {
   display: flex;
   align-items: center;
@@ -202,14 +194,76 @@
   }
 }
 
-/* Desactivar sticky en móviles */
+/* Estilos para la primera columna cuando dragEnabled y expandEnabled son false */
+.first-column-limited {
+  max-width: 15vw;
+  width: 15%;
+  box-shadow: none;
+}
+
+/* En desktop, hacer sticky para que se mueva con el scroll horizontal */
+@media (min-width: 641px) {
+  .first-column-limited {
+    position: sticky;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 15;
+    border-bottom: inherit;
+    box-shadow: inset -1.5px 0 0 var(--grav-crud-color-border),
+      2px 0 6px rgba(0, 0, 0, 0.08);
+  }
+
+  @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
+    .first-column-limited {
+      background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+    }
+  }
+}
+
+/* En móviles, no sticky para que no bloquee */
 @media (max-width: 640px) {
-  .sticky-cell {
+  .first-column-limited {
     position: static;
+    max-width: 15vw;
+    width: 15%;
     box-shadow: none;
     background-color: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+}
+
+/* Permitir wrap del texto en la primera columna */
+.first-column-limited .cell-content {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+.first-column-limited h1 {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+/* En móviles, reducir tamaño de fuente */
+@media (max-width: 640px) {
+  .first-column-limited .cell-content {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .first-column-limited h1 {
+    font-size: 0.75rem;
+    line-height: 1.3;
   }
 }
 
@@ -353,14 +407,6 @@
     2px 0 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Desactivar sticky en drag-header en móviles */
-@media (max-width: 640px) {
-  .drag-header {
-    position: static;
-    box-shadow: none;
-  }
-}
-
 .drag-handle-header {
   display: flex;
   align-items: center;
@@ -386,17 +432,6 @@
 @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
   .drag-handle-cell {
     background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
-  }
-}
-
-/* Desactivar sticky en drag-handle-cell en móviles */
-@media (max-width: 640px) {
-  .drag-handle-cell {
-    position: static;
-    box-shadow: none;
-    background-color: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
 }
 
