@@ -39,6 +39,28 @@
     scrollbar-color: var(--grav-sidebar-scrollbar-thumb) var(--grav-sidebar-scrollbar-track);
 }
 
+/* Envoltorio para padding fuera del recuadro (móvil): flotante (sticky) con el espacio arriba del mismo color */
+.sidebar-outer {
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 1023px) {
+    .sidebar-outer {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        padding-top: 0.75rem;
+        background-color: var(--grav-sidebar-bg);
+    }
+}
+
+@media (min-width: 1024px) {
+    .sidebar-outer {
+        padding-top: 0;
+    }
+}
+
 /* Contenedor principal - igual que plataforma: barra centrada 11/12, contenido abajo a pantalla completa */
 .sidebar {
     background-color: var(--grav-sidebar-bg);
@@ -60,16 +82,19 @@
     -webkit-overflow-scrolling: touch;
 }
 
-@media (min-width: 640px) and (max-width: 1023px) {
+/* Móvil y tablet: el flotante es .sidebar-outer; la barra solo tiene margen 0 */
+@media (max-width: 1023px) {
     .sidebar {
-        margin: 1rem auto 0.25rem;
-        padding: 1rem 1.5rem;
+        position: relative;
+        top: auto;
+        margin-top: 0;
     }
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 640px) and (max-width: 1023px) {
     .sidebar {
-        top: 0.5rem;
+        margin: 0 auto 0.25rem;
+        padding: 1rem 1.5rem;
     }
 }
 
