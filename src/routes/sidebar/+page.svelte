@@ -91,6 +91,8 @@
         themeBg={theme.bg}
         themeText={theme.text}
         themeBorder={theme.border}
+        themeScrollbarThumb="#2563eb"
+        themeScrollbarTrack="#fff"
     />
 
     <div
@@ -213,6 +215,8 @@ $: theme = themes[themeId];`}</code
             themeBg={theme.bg}
             themeText={theme.text}
             themeBorder={theme.border}
+            themeScrollbarThumb="#2563eb"
+            themeScrollbarTrack="#fff"
         />
     {:else}
         <div class="fixed left-0 bottom-4 z-[60]">

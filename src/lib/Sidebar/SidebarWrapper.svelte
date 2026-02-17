@@ -21,6 +21,9 @@
     export let themeBg: string | undefined = undefined;
     export let themeText: string | undefined = undefined;
     export let themeBorder: string | undefined = undefined;
+    /** Color del scrollbar (barra) y de la pista (fondo) */
+    export let themeScrollbarThumb: string | undefined = undefined;
+    export let themeScrollbarTrack: string | undefined = undefined;
 
     $: themeStyle = [
         themePrimary != null ? `--grav-sidebar-primary: ${themePrimary}` : "",
@@ -28,6 +31,8 @@
         themeBg != null ? `--grav-sidebar-bg: ${themeBg}` : "",
         themeText != null ? `--grav-sidebar-text: ${themeText}` : "",
         themeBorder != null ? `--grav-sidebar-border: ${themeBorder}` : "",
+        themeScrollbarThumb != null ? `--grav-sidebar-scrollbar-thumb: ${themeScrollbarThumb}` : "",
+        themeScrollbarTrack != null ? `--grav-sidebar-scrollbar-track: ${themeScrollbarTrack}` : "",
     ]
         .filter(Boolean)
         .join("; ");

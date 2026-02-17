@@ -5,6 +5,38 @@
     --grav-sidebar-bg: #ffffff;
     --grav-sidebar-text: #334155;
     --grav-sidebar-border: #e2e8f0;
+    --grav-sidebar-scrollbar-thumb: #cbd5e1;
+    --grav-sidebar-scrollbar-track: #f1f5f9;
+}
+
+/* Estilo del scrollbar (sidebar y menú desplegable) */
+.sidebar::-webkit-scrollbar,
+.sidebar-menu::-webkit-scrollbar {
+    width: 60px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.sidebar-menu::-webkit-scrollbar-track {
+    background: var(--grav-sidebar-scrollbar-track);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.sidebar-menu::-webkit-scrollbar-thumb {
+    background: var(--grav-sidebar-scrollbar-thumb);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.sidebar-menu::-webkit-scrollbar-thumb:hover {
+    background: var(--grav-sidebar-primary);
+}
+
+/* Firefox */
+.sidebar,
+.sidebar-menu {
+    scrollbar-width: thin;
+    scrollbar-color: var(--grav-sidebar-scrollbar-thumb) var(--grav-sidebar-scrollbar-track);
 }
 
 /* Contenedor principal - igual que plataforma: barra centrada 11/12, contenido abajo a pantalla completa */
@@ -111,12 +143,19 @@
     width: 2.25rem;
 }
 
-/* Botón flotante para volver a mostrar el sidebar (cuando storefullScreen = true) */
+/* Botón flotante para volver a mostrar el sidebar (solo en desktop, cuando storefullScreen = true) */
 .sidebar-reopen-wrap {
-    position: fixed;
-    left: 0;
-    bottom: 1rem;
-    z-index: 60;
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .sidebar-reopen-wrap {
+        display: block;
+        position: fixed;
+        left: 0;
+        bottom: 1rem;
+        z-index: 60;
+    }
 }
 
 .sidebar-reopen-btn {
