@@ -11,8 +11,7 @@
 .sidebar {
     background-color: var(--grav-sidebar-bg);
     color: var(--grav-sidebar-text);
-    z-index: 40;
-    padding: 0.5rem 0.75rem;
+    z-index: 50;
     margin-bottom: 0.25rem;
     border-radius: 0.5rem;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
@@ -21,7 +20,6 @@
     align-items: center;
     justify-content: space-between;
     position: sticky;
-    top: 0.75rem;
     width: 91.666667%;
     max-width: 100%;
     margin-left: auto;

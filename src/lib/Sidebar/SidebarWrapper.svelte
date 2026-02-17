@@ -40,7 +40,7 @@
     }
 </script>
 
-<nav class="sidebar grav-sidebar-entrance {customClass}">
+<nav class="sidebar grav-sidebar-entrance {customClass}" style="left: 0.75rem; top: 0.75rem; bottom: 0.75rem;">
     <div class="sidebar-fullscreen-wrap">
         <button
             type="button"
