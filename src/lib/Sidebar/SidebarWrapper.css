@@ -22,8 +22,12 @@
     position: sticky;
     width: 91.666667%;
     max-width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     margin-left: auto;
     margin-right: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 @media (min-width: 640px) {
@@ -39,13 +43,15 @@
         left: -0.5rem;
         top: 0;
         bottom: 0;
+        max-height: none;
         overflow-y: auto;
-        flex-direction: row;
-        flex-wrap: nowrap;
         overflow-x: hidden;
+        flex-direction: column;
+        flex-wrap: nowrap;
         width: 15rem;
         margin: 0;
         padding: 1.5rem;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
@@ -114,8 +120,10 @@
     .sidebar-inner {
         flex-direction: column;
         align-items: stretch;
-        min-height: 100%;
+        min-height: 0;
+        flex: 1;
         flex-wrap: nowrap;
+        overflow: hidden;
     }
 }
 
@@ -173,10 +181,11 @@
         z-index: 50;
         overflow-y: auto;
         overflow-x: hidden;
-        height: auto;
+        max-height: 85vh;
         border-radius: 0.5rem;
         box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
         background: var(--grav-sidebar-bg);
+        -webkit-overflow-scrolling: touch;
     }
 
     .sidebar-menu.hidden {
@@ -206,6 +215,10 @@
         margin-top: 1rem;
         box-shadow: none;
         flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
     }
 
     .sidebar-menu.hidden {
