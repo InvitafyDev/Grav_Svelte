@@ -80,31 +80,18 @@
 </script>
 
 <div class="min-h-screen">
-    {#if storefullScreen == false}
-        <SidebarWrapper
-            {sections}
-            brandName="Grav Svelte"
-            brandLink="/"
-            baseRoute="sidebar"
-            bind:storefullScreen
-            themePrimary={theme.primary}
-            themePrimary600={theme.primary600}
-            themeBg={theme.bg}
-            themeText={theme.text}
-            themeBorder={theme.border}
-        />
-    {:else}
-        <div class="fixed left-0 bottom-4 z-[60]">
-            <button
-                type="button"
-                aria-label="Mostrar menú"
-                on:click={() => (storefullScreen = false)}
-                class="h-16 w-8 rounded-r-lg flex justify-center items-center bg-blue-600 text-white shadow-lg hover:w-9 transition-all duration-200 border-0"
-            >
-                <i class="fas fa-chevron-right" aria-hidden="true"></i>
-            </button>
-        </div>
-    {/if}
+    <SidebarWrapper
+        {sections}
+        brandName="Grav Svelte"
+        brandLink="/"
+        baseRoute="sidebar"
+        bind:storefullScreen
+        themePrimary={theme.primary}
+        themePrimary600={theme.primary600}
+        themeBg={theme.bg}
+        themeText={theme.text}
+        themeBorder={theme.border}
+    />
 
     <div
         class="relative {storefullScreen == false

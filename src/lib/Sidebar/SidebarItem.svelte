@@ -7,6 +7,8 @@
     export let notifiacion: number | null;
     export let permiso: boolean;
     export let baseRoute: string;
+    /** En móvil, cerrar el menú al tocar el enlace */
+    export let onLinkClick: (() => void) | undefined = undefined;
 </script>
 
 {#if permiso == true}
@@ -14,6 +16,7 @@
         <a
             href="{base}/{baseRoute}/{nombreRuta}"
             class="sidebar-link"
+            on:click={() => onLinkClick?.()}
         >
             <i class="sidebar-icon {nombreIcono}"></i>
             {nombreModulo}

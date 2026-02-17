@@ -7,50 +7,56 @@
     --grav-sidebar-border: #e2e8f0;
 }
 
-/* Contenedor principal del nav - estilo Invitafy */
+/* Contenedor principal - igual que plataforma: barra centrada 11/12, contenido abajo a pantalla completa */
 .sidebar {
     background-color: var(--grav-sidebar-bg);
     color: var(--grav-sidebar-text);
     z-index: 50;
-    margin-bottom: 0.25rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     position: sticky;
+    top: 0.75rem;
     width: 91.666667%;
     max-width: 100%;
-    max-height: 85vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 0.25rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.15);
+    overflow: visible;
     -webkit-overflow-scrolling: touch;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 640px) and (max-width: 1023px) {
     .sidebar {
-        margin: 1rem;
+        margin: 1rem auto 0.25rem;
         padding: 1rem 1.5rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .sidebar {
+        top: 0.5rem;
     }
 }
 
 @media (min-width: 1024px) {
     .sidebar {
         position: fixed;
-        left: -0.5rem;
-        top: 0;
-        bottom: 0;
+        left: 0.75rem;
+        top: 0.75rem;
+        bottom: 0.75rem;
+        width: 15rem;
+        margin: 0;
+        padding: 1.5rem;
         max-height: none;
         overflow-y: auto;
         overflow-x: hidden;
         flex-direction: column;
         flex-wrap: nowrap;
-        width: 15rem;
-        margin: 0;
-        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
         -webkit-overflow-scrolling: touch;
     }
 }
@@ -102,6 +108,33 @@
 }
 
 .sidebar-fullscreen-btn:hover {
+    width: 2.25rem;
+}
+
+/* Botón flotante para volver a mostrar el sidebar (cuando storefullScreen = true) */
+.sidebar-reopen-wrap {
+    position: fixed;
+    left: 0;
+    bottom: 1rem;
+    z-index: 60;
+}
+
+.sidebar-reopen-btn {
+    height: 4rem;
+    width: 2rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--grav-sidebar-primary);
+    color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    transition: width 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.sidebar-reopen-btn:hover {
     width: 2.25rem;
 }
 
@@ -169,6 +202,7 @@
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
+/* Móvil/tablet: menú desplegable bajo la barra (como plataforma), no drawer */
 @media (max-width: 1023px) {
     .sidebar-menu {
         display: flex;
@@ -179,9 +213,9 @@
         left: 0;
         right: 0;
         z-index: 50;
+        max-height: 85vh;
         overflow-y: auto;
         overflow-x: hidden;
-        max-height: 85vh;
         border-radius: 0.5rem;
         box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
         background: var(--grav-sidebar-bg);
