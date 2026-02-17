@@ -23,15 +23,18 @@
   export let dragEnabled: boolean;
   export let expandEnabled: boolean;
   export let onImageClick: (src: string) => void;
+
+  const cellMaxHeightStyle =
+    header.tipo === 'TextArea'
+      ? `max-height: calc(${header.cellMaxHeight ?? '150px'} + 14px + 0.6rem);`
+      : '';
 </script>
 
 <td
   class="table-cell {index == 0 && !dragEnabled && !expandEnabled
     ? 'first-column-limited'
     : ''} {header.tipo === 'TextArea' ? 'cell-textarea' : ''}"
-  style="text-align: {header.align ?? 'center'}; {header.tipo === 'TextArea'
-    ? `max-height: calc(${(header as any).cellMaxHeight ?? '150px'} + 14px + 0.6rem);`
-    : ''}"
+  style="text-align: {header.align ?? 'center'}; {cellMaxHeightStyle}"
 >
   {#if header.tipo == "Text" || header.tipo == "Number"}
     <TextCell {item} {header} />

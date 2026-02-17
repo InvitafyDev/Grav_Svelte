@@ -19,6 +19,10 @@ export interface TableHeader {
      * Defaults to 'left' when not provided.
      */
     align?: 'left' | 'right' | 'center';
+    /**
+     * Max height for TextArea cells (e.g. '150px'). Used for TextArea type.
+     */
+    cellMaxHeight?: string;
     campo: string;
     colorCampo?: string;
     buttonsConfig: ButtonConfig[] | null;
