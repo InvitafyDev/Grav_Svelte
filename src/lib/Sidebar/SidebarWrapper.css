@@ -78,7 +78,6 @@
     margin: 0 auto 0.25rem;
     padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
-    box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.15);
     overflow: visible;
     -webkit-overflow-scrolling: touch;
 }
