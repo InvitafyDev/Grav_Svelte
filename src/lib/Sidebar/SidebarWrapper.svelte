@@ -15,6 +15,23 @@
     export let customClass: string = "";
     export let storefullScreen: boolean;
 
+    /** Colores opcionales: si se pasan, sobrescriben las variables CSS del sidebar */
+    export let themePrimary: string | undefined = undefined;
+    export let themePrimary600: string | undefined = undefined;
+    export let themeBg: string | undefined = undefined;
+    export let themeText: string | undefined = undefined;
+    export let themeBorder: string | undefined = undefined;
+
+    $: themeStyle = [
+        themePrimary != null ? `--grav-sidebar-primary: ${themePrimary}` : "",
+        themePrimary600 != null ? `--grav-sidebar-primary-600: ${themePrimary600}` : "",
+        themeBg != null ? `--grav-sidebar-bg: ${themeBg}` : "",
+        themeText != null ? `--grav-sidebar-text: ${themeText}` : "",
+        themeBorder != null ? `--grav-sidebar-border: ${themeBorder}` : "",
+    ]
+        .filter(Boolean)
+        .join("; ");
+
     // State: same pattern as Invitafy - string class for collapse (hidden vs overlay)
     let collapseShow = 'hidden';
 
@@ -40,7 +57,7 @@
     }
 </script>
 
-<nav class="sidebar grav-sidebar-entrance {customClass}" style="left: 0.75rem; top: 0.75rem; bottom: 0.75rem;">
+<nav class="sidebar grav-sidebar-entrance {customClass}" style="left: 0.75rem; top: 0.75rem; bottom: 0.75rem;{themeStyle ? ' ' + themeStyle : ''}">
     <div class="sidebar-fullscreen-wrap">
         <button
             type="button"
@@ -113,7 +130,6 @@
                                         notifiacion={_module.notifiacion ?? null}
                                         permiso={_module.permiso ?? true}
                                         baseRoute={baseRoute}
-                                        onLinkClick={() => toggleCollapseShow('hidden')}
                                     />
                                     </li>
                                 {/each}

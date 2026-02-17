@@ -51,6 +51,32 @@
 
     // Store for full screen state
     let storefullScreen = false;
+
+    type ThemeId = "default" | "dark" | "green";
+    let themeId: ThemeId = "default";
+
+    const themes: Record<
+        ThemeId,
+        { primary?: string; primary600?: string; bg?: string; text?: string; border?: string }
+    > = {
+        default: {},
+        dark: {
+            primary: "#818cf8",
+            primary600: "#6366f1",
+            bg: "#1e293b",
+            text: "#e2e8f0",
+            border: "#334155",
+        },
+        green: {
+            primary: "#22c55e",
+            primary600: "#16a34a",
+            bg: "#f0fdf4",
+            text: "#166534",
+            border: "#bbf7d0",
+        },
+    };
+
+    $: theme = themes[themeId];
 </script>
 
 <div class="min-h-screen">
@@ -61,6 +87,11 @@
             brandLink="/"
             baseRoute="sidebar"
             bind:storefullScreen
+            themePrimary={theme.primary}
+            themePrimary600={theme.primary600}
+            themeBg={theme.bg}
+            themeText={theme.text}
+            themeBorder={theme.border}
         />
     {:else}
         <div class="fixed left-0 bottom-4 z-[60]">
@@ -83,6 +114,30 @@
         <div class="md:px-10 mx-auto w-full sm:px-5">
             <main class="flex-1 p-8 bg-slate-100">
                     <h1 class="text-2xl font-bold mb-4">Ejemplo de Sidebar</h1>
+                    <div class="mb-6 flex flex-wrap items-center gap-3">
+                        <span class="text-sm font-medium text-gray-700">Tema / colores:</span>
+                        <button
+                            type="button"
+                            class="px-3 py-1.5 rounded text-sm font-medium {themeId === 'default'
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                            on:click={() => (themeId = 'default')}
+                        >Default</button>
+                        <button
+                            type="button"
+                            class="px-3 py-1.5 rounded text-sm font-medium {themeId === 'dark'
+                                ? 'bg-indigo-600 text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                            on:click={() => (themeId = 'dark')}
+                        >Oscuro</button>
+                        <button
+                            type="button"
+                            class="px-3 py-1.5 rounded text-sm font-medium {themeId === 'green'
+                                ? 'bg-green-600 text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                            on:click={() => (themeId = 'green')}
+                        >Verde</button>
+                    </div>
                     <p class="text-gray-600">
                         This is an example of how to use the Sidebar component
                         in your application. The sidebar includes collapsible
@@ -140,8 +195,17 @@ const sections: SidebarSection[] = [
     },
 ];
 
-// Store for full screen state
-let storefullScreen = false;`}</code
+let storefullScreen = false;
+
+// Optional: themes to change sidebar colors
+type ThemeId = "default" | "dark" | "green";
+let themeId: ThemeId = "default";
+const themes: Record<ThemeId, { primary?: string; primary600?: string; bg?: string; text?: string; border?: string }> = {
+    default: {},
+    dark: { primary: "#818cf8", primary600: "#6366f1", bg: "#1e293b", text: "#e2e8f0", border: "#334155" },
+    green: { primary: "#22c55e", primary600: "#16a34a", bg: "#f0fdf4", text: "#166534", border: "#bbf7d0" },
+};
+$: theme = themes[themeId];`}</code
                             ></pre>
                     </div>
 
@@ -157,6 +221,11 @@ let storefullScreen = false;`}</code
             brandLink="/"
             baseRoute="sidebar"
             bind:storefullScreen
+            themePrimary={theme.primary}
+            themePrimary600={theme.primary600}
+            themeBg={theme.bg}
+            themeText={theme.text}
+            themeBorder={theme.border}
         />
     {:else}
         <div class="fixed left-0 bottom-4 z-[60]">
@@ -171,9 +240,7 @@ let storefullScreen = false;`}</code
         </div>
     {/if}
 
-    <div
-        class="relative {storefullScreen == false ? 'lg:ml-60' : ''} bg-slate-100 min-h-screen"
-    >
+    <div class="relative {storefullScreen == false ? 'lg:ml-60' : ''} bg-slate-100 min-h-screen">
         <div class="md:px-10 mx-auto w-full sm:px-5">
             <main class="flex-1 p-8">
                 <!-- Contenido principal -->
