@@ -1,6 +1,6 @@
 {
   "name": "grav-svelte",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "A collection of Svelte components",
   "license": "MIT",
   "scripts": {
@@ -51,7 +51,7 @@
     "./typography.css": "./dist/typography.css"
   },
   "dependencies": {
-    "grav-svelte": "^0.1.6",
+    "grav-svelte": "^0.1.11",
     "sweetalert2": "^11.22.0",
     "xlsx": "^0.18.5"
   },

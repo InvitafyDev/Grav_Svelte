@@ -53,33 +53,35 @@
     let storefullScreen = false;
 </script>
 
-<div class="h-screen">
+<div class="min-h-screen">
     {#if storefullScreen == false}
         <SidebarWrapper
             {sections}
-            brandName="My App"
+            brandName="Grav Svelte"
             brandLink="/"
+            baseRoute="sidebar"
             bind:storefullScreen
-            customClass="bg-black text-white"
         />
     {:else}
-        <button
-            aria-label="Toggle full screen"
-            on:click={() => (storefullScreen = false)}
-            class="text-xl border-2 h-8 w-8 rounded-full absolute top-3 left-3 z-[70] flex justify-center items-center border-black"
-        >
-            <i class="fas fa-caret-right"></i>
-        </button>
+        <div class="fixed left-0 bottom-4 z-[60]">
+            <button
+                type="button"
+                aria-label="Mostrar menú"
+                on:click={() => (storefullScreen = false)}
+                class="h-16 w-8 rounded-r-lg flex justify-center items-center bg-blue-600 text-white shadow-lg hover:w-9 transition-all duration-200 border-0"
+            >
+                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+            </button>
+        </div>
     {/if}
 
     <div
         class="relative {storefullScreen == false
-            ? 'md:ml-64'
-            : ''}  bg-blueGray-100"
+            ? 'lg:ml-60'
+            : ''} bg-slate-100 min-h-screen"
     >
-        <div class=" md:px-10 mx-auto w-full sm:px-5">
-            <main>
-                <main class="flex-1 p-8 bg-gray-100">
+        <div class="md:px-10 mx-auto w-full sm:px-5">
+            <main class="flex-1 p-8 bg-slate-100">
                     <h1 class="text-2xl font-bold mb-4">Ejemplo de Sidebar</h1>
                     <p class="text-gray-600">
                         This is an example of how to use the Sidebar component
@@ -147,38 +149,40 @@ let storefullScreen = false;`}</code
                         <h2 class="text-xl font-semibold mb-4">Content</h2>
                         <pre
                             class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
-                                >{`<div class="h-screen">
+                                >{`<div class="min-h-screen">
     {#if storefullScreen == false}
         <SidebarWrapper
             {sections}
-            brandName="My App"
+            brandName="Grav Svelte"
             brandLink="/"
+            baseRoute="sidebar"
             bind:storefullScreen
-            customClass="bg-black text-white"
         />
     {:else}
-        <button
-            on:click={() => (storefullScreen = false)}
-            class="text-xl border-2 h-8 w-8 rounded-full absolute top-3 left-3 z-[70] flex justify-center items-center border-black"
-        >
-            <i class="fas fa-caret-right" />
-        </button>
+        <div class="fixed left-0 bottom-4 z-[60]">
+            <button
+                type="button"
+                aria-label="Mostrar menú"
+                on:click={() => (storefullScreen = false)}
+                class="h-16 w-8 rounded-r-lg flex justify-center items-center bg-blue-600 text-white shadow-lg hover:w-9 transition-all duration-200"
+            >
+                <i class="fas fa-chevron-right" />
+            </button>
+        </div>
     {/if}
 
     <div
-        class="relative {storefullScreen == false
-            ? 'md:ml-64'
-            : ''}  bg-blueGray-100"
+        class="relative {storefullScreen == false ? 'lg:ml-60' : ''} bg-slate-100 min-h-screen"
     >
-        <div class=" md:px-10 mx-auto w-full sm:px-5">
-            <main>
+        <div class="md:px-10 mx-auto w-full sm:px-5">
+            <main class="flex-1 p-8">
+                <!-- Contenido principal -->
             </main>
         </div>
     </div>
 </div>`}</code
                             ></pre>
                     </div>
-                </main>
             </main>
         </div>
     </div>

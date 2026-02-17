@@ -4,6 +4,7 @@
     import "./SidebarWrapper.css";
     import { Confirmacion_Alert } from "$lib/index.js";
     import { onMount } from 'svelte';
+
     // Props
     export let sections: SidebarSection[];
     export let brandName: string;
@@ -14,18 +15,17 @@
     export let customClass: string = "";
     export let storefullScreen: boolean;
 
-    // State Management
-    let collapseShow = true;
+    // State: same pattern as Invitafy - string class for collapse (hidden vs overlay)
+    let collapseShow = 'hidden';
 
     onMount(() => {
-        // Check if screen width is mobile size (less than 640px)
-        collapseShow = window.innerWidth >= 640;
+        if (window.innerWidth >= 1024) {
+            collapseShow = '';
+        }
     });
 
-    // Functions
-    function toggleCollapseShow() {
-        console.log("toggleCollapseShow");
-        collapseShow = !collapseShow;
+    function toggleCollapseShow(classes: string) {
+        collapseShow = classes;
     }
 
     function handleLogout(event: MouseEvent) {
@@ -40,97 +40,101 @@
     }
 </script>
 
-<nav class="sidebar {customClass}">
-    <div class="fullscreen-toggle">
+<nav class="sidebar grav-sidebar-entrance {customClass}">
+    <div class="sidebar-fullscreen-wrap">
         <button
-            aria-label="Toggle full screen"
+            type="button"
+            aria-label="Ocultar sidebar"
+            class="sidebar-fullscreen-btn"
             on:click={() => (storefullScreen = true)}
-            class="fullscreen-button"
         >
-            <i class="fas fa-caret-left"></i>
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
         </button>
     </div>
-    <div class="sidebar-container">
-        <div class="sidebar-header">
-            <button
-                aria-label="Toggle sidebar"
-                on:click={toggleCollapseShow}
-                class="sidebar-toggler"
-                type="button"
-            >
-                <i class="fa-solid fa-bars"></i>
-            </button>
-    
-            <!-- Brand -->
-            <a class="brand-link" href={brandLink}>
-                {brandName}
-            </a>
-        </div>
-        <!-- Toggler -->
+    <div class="sidebar-inner">
+        <button
+            type="button"
+            aria-label="Abrir menú"
+            class="sidebar-toggler"
+            on:click={() => toggleCollapseShow('sidebar-collapse-visible')}
+        >
+            <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
 
-        <!-- Collapse -->
-        {#if collapseShow}
-            <div class="collapse-container">
-                <!-- Collapse header -->
+        <a class="sidebar-brand" href={brandLink}>
+            {brandName}
+        </a>
 
-                <ul class="sidebar-list">
-                    {#each sections as section, index}
-                        <li
-                            class="sidebar-section"
-                            class:border-t={index === 0}
-                        >
-                            {#if section.biActivado}
-                                <button
-                                    on:click={() =>
-                                        (section.biActivado =
-                                            !section.biActivado)}
-                                    class="section-button"
-                                >
-                                    <i class="fas fa-caret-down mr-2 text-sm"
-                                    ></i>
-                                    {section.nombre}
-                                </button>
-                            {:else}
-                                <button
-                                    on:click={() =>
-                                        (section.biActivado =
-                                            !section.biActivado)}
-                                    class="section-button"
-                                >
-                                    <i class="fas fa-caret-right mr-2 text-sm"
-                                    ></i>
-                                    {section.nombre}
-                                </button>
-                            {/if}
-                            {#if section.biActivado}
-                                {#each section.modules as module}
-                                    <SidebarItem
-                                        nombreModulo={module.nombre}
-                                        nombreRuta={module.ruta}
-                                        nombreIcono={module.icono}
-                                        notifiacion={module.notifiacion ?? null}
-                                        permiso={module.permiso ?? true}
-                                        baseRoute={baseRoute}
-                                    />
-                                {/each}
-                            {/if}
-                        </li>
-                    {/each}
-
-                    {#if showLogout}
-                        <li class="logout-item">
-                            <a
-                                class="logout-link"
-                                href={logoutLink}
-                                on:click|preventDefault={handleLogout}
-                            >
-                                Log Out
-                                <i class="fas fa-sign-out-alt ml-2"></i>
-                            </a>
-                        </li>
-                    {/if}
-                </ul>
+        <div class="sidebar-menu {collapseShow}">
+            <div class="sidebar-collapse-header">
+                <a class="sidebar-collapse-brand" href={brandLink}>
+                    {brandName}
+                </a>
+                <button
+                    type="button"
+                    aria-label="Cerrar menú"
+                    class="sidebar-close-btn"
+                    on:click={() => toggleCollapseShow('hidden')}
+                >
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
             </div>
-        {/if}
+
+            <ul class="sidebar-list">
+                {#each sections as section}
+                    <li class="sidebar-section-item">
+                        {#if section.biActivado}
+                            <button
+                                type="button"
+                                class="sidebar-section-btn"
+                                on:click={() => (section.biActivado = !section.biActivado)}
+                            >
+                                <i class="fas fa-caret-down sidebar-section-icon" aria-hidden="true"></i>
+                                {section.nombre}
+                            </button>
+                        {:else}
+                            <button
+                                type="button"
+                                class="sidebar-section-btn"
+                                on:click={() => (section.biActivado = !section.biActivado)}
+                            >
+                                <i class="fas fa-caret-right sidebar-section-icon" aria-hidden="true"></i>
+                                {section.nombre}
+                            </button>
+                        {/if}
+                        {#if section.biActivado}
+                            <ul class="sidebar-sublist">
+                                {#each section.modules as _module}
+                                    <li class="sidebar-menu-item">
+                                    <SidebarItem
+                                        nombreModulo={_module.nombre}
+                                        nombreRuta={_module.ruta}
+                                        nombreIcono={_module.icono}
+                                        notifiacion={_module.notifiacion ?? null}
+                                        permiso={_module.permiso ?? true}
+                                        baseRoute={baseRoute}
+                                        onLinkClick={() => toggleCollapseShow('hidden')}
+                                    />
+                                    </li>
+                                {/each}
+                            </ul>
+                        {/if}
+                    </li>
+                {/each}
+
+                {#if showLogout}
+                    <li class="sidebar-menu-item sidebar-logout-item">
+                        <a
+                            class="sidebar-logout-link"
+                            href={logoutLink}
+                            on:click|preventDefault={handleLogout}
+                        >
+                            Salir
+                            <i class="fas fa-sign-out-alt sidebar-logout-icon" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                {/if}
+            </ul>
+        </div>
     </div>
 </nav>
