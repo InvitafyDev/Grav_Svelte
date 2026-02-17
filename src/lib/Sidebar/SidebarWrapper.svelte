@@ -36,9 +36,12 @@
     let collapseShow = 'hidden';
 
     onMount(() => {
-        if (window.innerWidth >= 1024) {
-            collapseShow = '';
-        }
+        if (window.innerWidth >= 1024) collapseShow = '';
+        const onResize = () => {
+            if (window.innerWidth >= 1024) collapseShow = '';
+        };
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
     });
 
     function toggleCollapseShow(classes: string) {
@@ -57,7 +60,19 @@
     }
 </script>
 
-<nav class="sidebar grav-sidebar-entrance {customClass}" style="left: 0.75rem; top: 0.75rem; bottom: 0.75rem;{themeStyle ? ' ' + themeStyle : ''}">
+{#if storefullScreen}
+    <div class="sidebar-reopen-wrap" style="{themeStyle || ''}">
+        <button
+            type="button"
+            class="sidebar-reopen-btn"
+            aria-label="Mostrar menú"
+            on:click={() => (storefullScreen = false)}
+        >
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </button>
+    </div>
+{:else}
+<nav class="sidebar grav-sidebar-entrance {customClass}" style="{themeStyle || ''}">
     <div class="sidebar-fullscreen-wrap">
         <button
             type="button"
@@ -130,6 +145,7 @@
                                         notifiacion={_module.notifiacion ?? null}
                                         permiso={_module.permiso ?? true}
                                         baseRoute={baseRoute}
+                                        onLinkClick={() => toggleCollapseShow('hidden')}
                                     />
                                     </li>
                                 {/each}
@@ -154,3 +170,4 @@
         </div>
     </div>
 </nav>
+{/if}
