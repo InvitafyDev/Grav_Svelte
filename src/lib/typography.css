@@ -84,7 +84,7 @@
 
     /* CRUD Color Variables */
     --grav-crud-color-bg: #ffffff;        /* Texto principal en headers y celdas */
-    --grav-crud-color-button: #fe6b91;        /* Texto principal en headers y celdas */
+    --grav-crud-color-button: #6b7280;        /* Texto principal en headers y celdas */
     --grav-crud-color-neutral: #6b7280;        /* Texto principal en headers y celdas */
     --grav-crud-color-light: #f5f5f549;          /* Fondos hover y estados */
     --grav-crud-color-border: color-mix(in srgb, var(--grav-crud-color-neutral) 43%, transparent);         /* Bordes, separadores y loading */
