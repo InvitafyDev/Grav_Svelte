@@ -8,6 +8,7 @@ export { default as InputFormImage } from './InputFormImage.svelte';
 export { default as InputFormNumber } from './InputFormNumber.svelte';
 export { default as InputFormSelect } from './InputFormSelect.svelte';
 export { default as InputFormText } from './InputFormText.svelte';
+export { default as InputFormTime } from './InputFormTime.svelte';
 export { default as InputFormPassword } from './InputFormPassword.svelte';
 export { default as InputFormMail } from './InputFormMail.svelte';
 export { default as InputFormPhone } from './InputFormPhone.svelte';

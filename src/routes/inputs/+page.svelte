@@ -14,6 +14,7 @@
         InputFormPassword,
         InputFormMail,
         InputFormPhone,
+        InputFormTime,
     } from "$lib/Inputs/index.js";
 
     interface SelectValue {
@@ -42,6 +43,7 @@
     let colorPickerInput = "#3B82F6";
     let dateInput: string | null = null;
     let dateTimeInput: string | null = null;
+    let timeInput: string = "";
     let imageInput: HTMLInputElement;
     let base64Preview = "";
     let selectInput: SelectValue | null = null;
@@ -147,6 +149,7 @@
         date: 'let dateInput: string | null = null;\n\n<InputFormDate \n    label="Date Input" \n    bind:valueVar={dateInput} \n/>',
         dateTime:
             'let dateTimeInput: string | null = null;\n\n<InputFormDateAndHours\n    label="Date and Time Input"\n    bind:valueVar={dateTimeInput}\n/>',
+        time: 'let timeInput = "";\n\n<InputFormTime\n    label="Time Input"\n    bind:valueVar={timeInput}\n/>',
         color: 'let colorInput = "#000000";\n\n<InputFormColor \n    label="Color Input" \n    bind:valueVar={colorInput} \n/>',
         colorPicker:
             'let colorPickerInput = "#3B82F6";\n\n<InputFormColorPicker \n    label="Color Picker with Presets" \n    bind:valueVar={colorPickerInput} \n/>',
@@ -348,6 +351,23 @@
                 <pre
                     class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
                         >{codeExamples.dateTime}</code
+                    ></pre>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <InputFormTime
+                label="Time Input"
+                bind:valueVar={timeInput}
+            />
+            <span class="block mt-1 text-sm text-gray-600"
+                >Value: {timeInput}</span
+            >
+            <div class="mt-4">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
+                <pre
+                    class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+                        >{codeExamples.time}</code
                     ></pre>
             </div>
         </div>
