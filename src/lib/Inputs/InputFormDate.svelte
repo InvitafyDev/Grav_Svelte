@@ -44,6 +44,7 @@
     padding-bottom: 0.2rem;
     margin-top: 1.95rem;
     height: fit-content;
+    overflow: visible;
   }
 
   .icon-wrapper {
@@ -112,6 +113,7 @@
     transform-origin: left;
   }
 
+  /* z-index positivo cuando flota: evita recorte en móviles (ej. iPhone) */
   .input-field:focus + .input-label,
   .input-wrapper.has-value .input-label {
     left: 0;
@@ -119,6 +121,7 @@
     color: var(--grav-crud-color-neutral);
     translate: -0.6rem -2.05rem;
     scale: 1;
+    z-index: 1;
   }
 
   .input-wrapper:not(.has-value) .input-label {
