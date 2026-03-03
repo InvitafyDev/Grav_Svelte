@@ -14,16 +14,15 @@
       <i class="{icon} icon"></i>
     </div>
   {/if}
-  <div class="input-wrapper">
+  <div class="input-wrapper" class:has-value={!!valueVar}>
     <input
       {disabled}
       type="date"
       bind:value={valueVar}
-      placeholder=" "
       class="input-field"
     />
 
-    <label for={valueVar} class="input-label"
+    <label class="input-label"
       >{label}
       {#if obligatory}
         <span class="required-mark"> *</span>
@@ -76,6 +75,17 @@
     appearance: none;
   }
 
+  /* Ocultar placeholder nativo (dd/mm/aaaa) cuando está vacío en WebKit/iOS */
+  .input-field::-webkit-datetime-edit {
+    color: transparent;
+  }
+
+  /* Mostrar el texto cuando hay valor o está en foco */
+  .input-field:focus::-webkit-datetime-edit,
+  .input-wrapper.has-value .input-field::-webkit-datetime-edit {
+    color: var(--grav-crud-color-neutral);
+  }
+
   .input-field::-webkit-calendar-picker-indicator {
     color: var(--grav-crud-color-neutral);
     cursor: pointer;
@@ -103,7 +113,7 @@
   }
 
   .input-field:focus + .input-label,
-  .input-field:not(:placeholder-shown) + .input-label {
+  .input-wrapper.has-value .input-label {
     left: 0;
     top: 0;
     color: var(--grav-crud-color-neutral);
@@ -111,7 +121,7 @@
     scale: 1;
   }
 
-  .input-field:placeholder-shown + .input-label {
+  .input-wrapper:not(.has-value) .input-label {
     transform: translateY(0) scale(1);
   }
 
@@ -124,7 +134,7 @@
   }
 
   .no-margin .input-field:focus + .input-label,
-  .no-margin .input-field:not(:placeholder-shown) + .input-label {
+  .no-margin.has-value .input-label {
     translate: -0.6rem -1.4rem;
     font-size: 0.7rem;
   }
