@@ -14,12 +14,17 @@
 {#if permiso == true}
     <div class="sidebar-item">
         <a
-            href="{base}/{baseRoute}/{nombreRuta}"
+            href={nombreRuta.startsWith('http') ? nombreRuta : `${base}/${baseRoute}/${nombreRuta}`}
             class="sidebar-link"
+            target={nombreRuta.startsWith('http') ? '_blank' : undefined}
+            rel={nombreRuta.startsWith('http') ? 'noopener' : undefined}
             on:click={() => onLinkClick?.()}
         >
             <i class="sidebar-icon {nombreIcono}"></i>
             {nombreModulo}
+            {#if nombreRuta.startsWith('http')}
+                <i class="fas fa-external-link-alt external-icon"></i>
+            {/if}
         </a>
         {#if notifiacion != null}
             <span class="notification-badge">{notifiacion}</span>
@@ -44,6 +49,11 @@
     .sidebar-icon {
         margin-right: 0.5rem;
         font-size: 0.875rem;
+    }
+
+    .external-icon {
+        font-size: 0.6rem;
+        margin-left: 0.25rem;
     }
 
     .notification-badge {
