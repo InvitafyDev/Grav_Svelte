@@ -14,6 +14,8 @@
     export let logoutLink: string = "/";
     export let customClass: string = "";
     export let storefullScreen: boolean;
+    /** Callback opcional para logout. Si se pasa, se ejecuta en vez de navegar a logoutLink. */
+    export let onLogout: (() => void) | undefined = undefined;
 
     /** Colores opcionales: si se pasan, sobrescriben las variables CSS del sidebar */
     export let themePrimary: string | undefined = undefined;
@@ -59,7 +61,11 @@
             "Confirmar cierre de sesión",
             "¿Desea cerrar sesión?",
             () => {
-                window.location.href = logoutLink;
+                if (onLogout) {
+                    onLogout();
+                } else {
+                    window.location.href = logoutLink;
+                }
             }
         );
     }
