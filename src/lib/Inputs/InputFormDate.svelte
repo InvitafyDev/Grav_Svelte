@@ -6,6 +6,11 @@
   export let disabled = false;
   export let obligatory = false;
   export let icon: string | null = null;
+
+  const inputId =
+    typeof crypto !== "undefined" && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `grav-date-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 </script>
 
 <div class="input-container">
@@ -16,18 +21,18 @@
   {/if}
   <div class="input-wrapper" class:has-value={!!valueVar}>
     <input
+      id={inputId}
       {disabled}
       type="date"
       bind:value={valueVar}
       class="input-field"
     />
-
-    <label class="input-label"
-      >{label}
+    <label for={inputId} class="input-label">
+      {label}
       {#if obligatory}
         <span class="required-mark"> *</span>
-      {/if}</label
-    >
+      {/if}
+    </label>
   </div>
 </div>
 
@@ -74,14 +79,15 @@
     color: var(--grav-crud-color-neutral);
     background: transparent;
     appearance: none;
+    position: relative;
+    z-index: 1;
   }
 
-  /* Ocultar placeholder nativo (dd/mm/aaaa) cuando está vacío en WebKit/iOS */
+  /* Ocultar placeholder nativo cuando está vacío en WebKit/iOS */
   .input-field::-webkit-datetime-edit {
     color: transparent;
   }
 
-  /* Mostrar el texto cuando hay valor o está en foco */
   .input-field:focus::-webkit-datetime-edit,
   .input-wrapper.has-value .input-field::-webkit-datetime-edit {
     color: var(--grav-crud-color-neutral);
@@ -101,6 +107,7 @@
     outline: none;
   }
 
+  /* Mismo estilo que InputFormText/InputFormNumber; z-index: 0 evita recorte en Safari/iPhone */
   .input-label {
     position: absolute;
     font-size: 1rem;
@@ -109,11 +116,11 @@
     transition: all 0.3s;
     top: 0.25rem;
     left: 0.25rem;
-    z-index: -10;
+    z-index: 0;
     transform-origin: left;
+    pointer-events: none;
   }
 
-  /* z-index positivo cuando flota: evita recorte en móviles (ej. iPhone) */
   .input-field:focus + .input-label,
   .input-wrapper.has-value .input-label {
     left: 0;
@@ -122,6 +129,7 @@
     translate: -0.6rem -2.05rem;
     scale: 1;
     z-index: 1;
+    pointer-events: auto;
   }
 
   .input-wrapper:not(.has-value) .input-label {
