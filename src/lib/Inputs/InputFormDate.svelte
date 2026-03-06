@@ -35,7 +35,14 @@
   }
 </script>
 
-<div class="input-container">
+<div
+  class="input-container"
+  class:disabled
+  role="button"
+  tabindex="-1"
+  onclick={(e) => openPicker(e)}
+  onkeydown={(e) => e.key === "Enter" && openPicker(e)}
+>
   {#if icon}
     <div class="icon-wrapper">
       <i class="{icon} icon"></i>
@@ -44,11 +51,6 @@
   <div
     class="input-wrapper"
     class:has-value={!!valueVar}
-    class:disabled
-    role="button"
-    tabindex="-1"
-    onclick={(e) => openPicker(e)}
-    onkeydown={(e) => e.key === "Enter" && openPicker(e)}
   >
     <!-- Texto visible -->
     <span class="display-text" aria-hidden="true">{displayValue || "\u00A0"}</span>
@@ -86,6 +88,11 @@
     margin-top: 1.95rem;
     height: fit-content;
     overflow: visible;
+    cursor: pointer;
+  }
+
+  .input-container.disabled {
+    cursor: not-allowed;
   }
 
   .icon-wrapper {
@@ -104,12 +111,7 @@
   .input-wrapper {
     position: relative;
     width: 100%;
-    min-height: 2rem; /* ≥44px área táctil para móviles */
-    cursor: pointer;
-  }
-
-  .input-wrapper.disabled {
-    cursor: not-allowed;
+    min-height: 2rem;
   }
 
   /* Texto visible de la fecha: sin pseudo-elementos WebKit */
@@ -128,7 +130,7 @@
     color: var(--grav-crud-color-neutral);
   }
 
-  /* Input encima e invisible: recibe el toque/click directo → abre picker en todos los móviles */
+  /* Input invisible: no recibe click; el wrapper sí y llama openPicker() → funciona en PC y móviles */
   .native-date-input {
     position: absolute;
     top: 0;
@@ -138,8 +140,8 @@
     margin: 0;
     padding: 0;
     opacity: 0;
-    pointer-events: auto; /* que reciba toques directamente en móviles */
-    z-index: 2;
+    pointer-events: none; /* todo el click lo recibe el wrapper */
+    z-index: 0;
     font-size: 16px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
