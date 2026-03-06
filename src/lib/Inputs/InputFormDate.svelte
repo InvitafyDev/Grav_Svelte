@@ -1,21 +1,11 @@
 <script lang="ts">
   import "../typography.css";
 
-  interface Props {
-    valueVar?: string;
-    label: string;
-    disabled?: boolean;
-    obligatory?: boolean;
-    icon?: string | null;
-  }
-
-  let {
-    valueVar = $bindable(""),
-    label,
-    disabled = false,
-    obligatory = false,
-    icon = null,
-  }: Props = $props();
+  export let valueVar: string = "";
+  export let label: string;
+  export let disabled = false;
+  export let obligatory = false;
+  export let icon: string | null = null;
 
   const inputId =
     typeof crypto !== "undefined" && crypto.randomUUID
@@ -30,7 +20,7 @@
     return `${d}/${m}/${y}`;
   }
 
-  const displayValue = $derived(formatDisplayDate(valueVar));
+  $: displayValue = formatDisplayDate(valueVar);
 
   let nativeDateInputRef: HTMLInputElement;
 
