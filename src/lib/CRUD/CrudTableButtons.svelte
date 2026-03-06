@@ -108,6 +108,7 @@
         display: inline-flex;
         align-items: center;
         cursor: pointer;
+        color: white;
         padding: 0.5rem 0.75rem;
         min-height: 1.5rem;
         min-width: 1.25rem;

@@ -48,5 +48,15 @@ Components follow consistent patterns:
 - **TableHeader interface** - For CRUD table column definitions with sorting and alignment
 - **Modal store pattern** - Centralized modal state management using Svelte stores
 
+### InputFormSelect — Props (svelte-select wrapper)
+- `res`: `{ value: any, label: string }[]` — items del dropdown (NO usar `options`)
+- `value`: `{ value, label } | null` — binding objeto completo
+- `justValue`: `any | null` — binding solo del valor (para IDs)
+- `label`: string — etiqueta del campo
+- `disabledVar`: boolean
+- `changeFunction`: `(e: CustomEvent) => void`
+- `onClear`: `() => void`
+- `showPlusIcon` / `onPlusClick`: botón "+" al lado del select
+
 ### Development Workflow
 This is both a component library AND a documentation site. The `src/routes/` contains demo pages for each component group, while `src/lib/` contains the actual exportable components.
