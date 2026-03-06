@@ -66,7 +66,7 @@
       {disabled}
       type={showPassword ? "text" : "password"}
       value={valueVar}
-      oninput={(e) => valueVar = e.currentTarget.value}
+      on:input={(e) => valueVar = e.currentTarget.value}
       placeholder=" "
       class="input-field"
       style={showToggle ? "padding-right: 2.5rem;" : ""}
@@ -83,7 +83,7 @@
       <button
         type="button"
         class="toggle-button"
-        onclick={togglePasswordVisibility}
+        on:click={togglePasswordVisibility}
         disabled={disabled}
         aria-label={showPassword ? "Hide password" : "Show password"}
       >
