@@ -25,12 +25,20 @@
   let nativeDateInputRef: HTMLInputElement;
 
   function openPicker(e?: MouseEvent | KeyboardEvent) {
-    if (disabled || !nativeDateInputRef) return;
+    if (disabled) return;
     e?.preventDefault?.();
-    if (typeof nativeDateInputRef.showPicker === "function") {
-      nativeDateInputRef.showPicker();
-    } else {
-      nativeDateInputRef.click();
+    const input = nativeDateInputRef ?? (document.getElementById(inputId) as HTMLInputElement | null);
+    if (!input) return;
+    try {
+      if (typeof input.showPicker === "function") {
+        input.showPicker();
+      } else {
+        input.focus();
+        input.click();
+      }
+    } catch (_) {
+      input.focus();
+      input.click();
     }
   }
 </script>
@@ -39,9 +47,9 @@
   class="input-container"
   class:disabled
   role="button"
-  tabindex="-1"
-  onclick={(e) => openPicker(e)}
-  onkeydown={(e) => e.key === "Enter" && openPicker(e)}
+  tabindex="0"
+  on:click={(e) => openPicker(e)}
+  on:keydown={(e) => e.key === "Enter" && (e.preventDefault(), openPicker(e))}
 >
   {#if icon}
     <div class="icon-wrapper">
@@ -87,8 +95,11 @@
     padding-bottom: 0.2rem;
     margin-top: 1.95rem;
     height: fit-content;
+    min-height: 2.5rem;
     overflow: visible;
     cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .input-container.disabled {
@@ -130,17 +141,16 @@
     color: var(--grav-crud-color-neutral);
   }
 
-  /* Input invisible: no recibe click; el wrapper sí y llama openPicker() → funciona en PC y móviles */
+  /* Input invisible y que no capture clicks: todo lo maneja el contenedor con openPicker() */
   .native-date-input {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     opacity: 0;
-    pointer-events: none; /* todo el click lo recibe el wrapper */
+    pointer-events: none;
     z-index: 0;
     font-size: 16px;
     cursor: pointer;
