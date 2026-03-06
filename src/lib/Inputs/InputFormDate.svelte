@@ -1,16 +1,48 @@
 <script lang="ts">
   import "../typography.css";
 
-  export let valueVar: string = "";
-  export let label: string;
-  export let disabled = false;
-  export let obligatory = false;
-  export let icon: string | null = null;
+  interface Props {
+    valueVar?: string;
+    label: string;
+    disabled?: boolean;
+    obligatory?: boolean;
+    icon?: string | null;
+  }
+
+  let {
+    valueVar = $bindable(""),
+    label,
+    disabled = false,
+    obligatory = false,
+    icon = null,
+  }: Props = $props();
 
   const inputId =
     typeof crypto !== "undefined" && crypto.randomUUID
       ? crypto.randomUUID()
       : `grav-date-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+  /** Formatea YYYY-MM-DD a DD/MM/YYYY para mostrar. Evita depender del input nativo en pantalla. */
+  function formatDisplayDate(iso: string): string {
+    if (!iso || iso.length < 10) return "";
+    const [y, m, d] = iso.slice(0, 10).split("-");
+    if (!y || !m || !d) return "";
+    return `${d}/${m}/${y}`;
+  }
+
+  const displayValue = $derived(formatDisplayDate(valueVar));
+
+  let nativeDateInputRef: HTMLInputElement;
+
+  function openPicker(e?: MouseEvent | KeyboardEvent) {
+    if (disabled || !nativeDateInputRef) return;
+    e?.preventDefault?.();
+    if (typeof nativeDateInputRef.showPicker === "function") {
+      nativeDateInputRef.showPicker();
+    } else {
+      nativeDateInputRef.click();
+    }
+  }
 </script>
 
 <div class="input-container">
@@ -19,20 +51,34 @@
       <i class="{icon} icon"></i>
     </div>
   {/if}
-  <div class="input-wrapper" class:has-value={!!valueVar}>
-    <input
-      id={inputId}
-      {disabled}
-      type="date"
-      bind:value={valueVar}
-      class="input-field"
-    />
+  <div
+    class="input-wrapper"
+    class:has-value={!!valueVar}
+    class:disabled
+    role="button"
+    tabindex="-1"
+    onclick={(e) => openPicker(e)}
+    onkeydown={(e) => e.key === "Enter" && openPicker(e)}
+  >
+    <!-- Texto visible -->
+    <span class="display-text" aria-hidden="true">{displayValue || "\u00A0"}</span>
     <label for={inputId} class="input-label">
       {label}
       {#if obligatory}
         <span class="required-mark"> *</span>
       {/if}
     </label>
+    <!-- Input encima y clickable: en móviles el toque va directo al input → abre el picker -->
+    <input
+      bind:this={nativeDateInputRef}
+      id={inputId}
+      type="date"
+      bind:value={valueVar}
+      {disabled}
+      class="native-date-input"
+      aria-label={label}
+      tabindex="-1"
+    />
   </div>
 </div>
 
@@ -67,86 +113,74 @@
 
   .input-wrapper {
     position: relative;
-    z-index: 0;
     width: 100%;
+    min-height: 2rem; /* ≥44px área táctil para móviles */
+    cursor: pointer;
   }
 
-  .input-field {
+  .input-wrapper.disabled {
+    cursor: not-allowed;
+  }
+
+  /* Texto visible de la fecha: sin pseudo-elementos WebKit */
+  .display-text {
     display: block;
-    padding: 0.3rem;
+    padding: 0.3rem 0;
     width: 100%;
     font-size: 1rem;
     color: var(--grav-crud-color-neutral);
-    background: transparent;
-    appearance: none;
-    position: relative;
-    z-index: 1;
+    pointer-events: none;
+    min-height: 1.5rem;
+    line-height: 1.5;
   }
 
-  /* Ocultar placeholder nativo cuando está vacío en WebKit/iOS */
-  .input-field::-webkit-datetime-edit {
-    color: transparent;
-  }
-
-  .input-field:focus::-webkit-datetime-edit,
-  .input-wrapper.has-value .input-field::-webkit-datetime-edit {
+  .input-wrapper.has-value .display-text {
     color: var(--grav-crud-color-neutral);
   }
 
-  .input-field::-webkit-calendar-picker-indicator {
-    color: var(--grav-crud-color-neutral);
+  /* Input encima e invisible: recibe el toque/click directo → abre picker en todos los móviles */
+  .native-date-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    pointer-events: auto; /* que reciba toques directamente en móviles */
+    z-index: 2;
+    font-size: 16px;
     cursor: pointer;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24' %3E%3Cg%3E%3Cpath d='M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-image: none;
-    background-color: var(--grav-crud-color-neutral);
-    mask-type: match-source;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .input-field:focus {
-    outline: none;
+  .native-date-input:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
-  /* Mismo estilo que InputFormText/InputFormNumber; z-index: 0 evita recorte en Safari/iPhone */
   .input-label {
     position: absolute;
     font-size: 1rem;
     text-align: left;
     color: var(--grav-crud-color-neutral);
-    transition: all 0.3s;
-    top: 0.25rem;
-    left: 0.25rem;
+    transition: transform 0.2s ease, top 0.2s ease, font-size 0.2s ease;
+    top: 0.35rem;
+    left: 0;
     z-index: 0;
     transform-origin: left;
     pointer-events: none;
   }
 
-  .input-field:focus + .input-label,
   .input-wrapper.has-value .input-label {
+    top: -1.5rem;
     left: 0;
-    top: 0;
+    font-size: 0.75rem;
     color: var(--grav-crud-color-neutral);
-    translate: -0.6rem -2.05rem;
-    scale: 1;
-    z-index: 1;
-    pointer-events: auto;
-  }
-
-  .input-wrapper:not(.has-value) .input-label {
-    transform: translateY(0) scale(1);
   }
 
   .required-mark {
     color: #dc2626;
-  }
-
-  .no-margin {
-    margin-top: 0;
-  }
-
-  .no-margin .input-field:focus + .input-label,
-  .no-margin.has-value .input-label {
-    translate: -0.6rem -1.4rem;
-    font-size: 0.7rem;
   }
 </style>
