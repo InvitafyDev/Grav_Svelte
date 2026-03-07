@@ -2,6 +2,8 @@
     import { page } from "$app/stores";
     import { ModalContainer } from "$lib/index.js";
     import { slide } from "svelte/transition";
+    import { onMount } from "svelte";
+    import { initFontAwesomeProtection } from "$lib/utils/fontAwesomeHelper.js";
     import "../app.css";
 
     let mobileMenuOpen = false;
@@ -9,6 +11,11 @@
     function toggleMobileMenu() {
         mobileMenuOpen = !mobileMenuOpen;
     }
+
+    onMount(() => {
+        // Inicializar protección contra duplicación de iconos de Font Awesome
+        initFontAwesomeProtection();
+    });
 </script>
 
 <div class="min-h-screen bg-gray-100">
