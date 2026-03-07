@@ -12,7 +12,6 @@
       ? crypto.randomUUID()
       : `grav-date-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-  /** Formatea YYYY-MM-DD a DD/MM/YYYY para mostrar. Evita depender del input nativo en pantalla. */
   function formatDisplayDate(iso: string): string {
     if (!iso || iso.length < 10) return "";
     const [y, m, d] = iso.slice(0, 10).split("-");
@@ -21,46 +20,17 @@
   }
 
   $: displayValue = formatDisplayDate(valueVar);
-
-  let nativeDateInputRef: HTMLInputElement;
-
-  function openPicker(e?: MouseEvent | KeyboardEvent) {
-    if (disabled) return;
-    e?.preventDefault?.();
-    const input = nativeDateInputRef ?? (document.getElementById(inputId) as HTMLInputElement | null);
-    if (!input) return;
-    try {
-      if (typeof input.showPicker === "function") {
-        input.showPicker();
-      } else {
-        input.focus();
-        input.click();
-      }
-    } catch (_) {
-      input.focus();
-      input.click();
-    }
-  }
 </script>
 
-<div
-  class="input-container"
-  class:disabled
-  role="button"
-  tabindex="0"
-  on:click={(e) => openPicker(e)}
-  on:keydown={(e) => e.key === "Enter" && (e.preventDefault(), openPicker(e))}
->
+<!-- Contenedor con position relative para que el input absoluto cubra todo -->
+<div class="input-container" class:disabled>
+  <!-- Contenido visible (debajo del input): icono, texto, label -->
   {#if icon}
     <div class="icon-wrapper">
       <i class="{icon} icon"></i>
     </div>
   {/if}
-  <div
-    class="input-wrapper"
-    class:has-value={!!valueVar}
-  >
-    <!-- Texto visible -->
+  <div class="input-wrapper" class:has-value={!!valueVar}>
     <span class="display-text" aria-hidden="true">{displayValue || "\u00A0"}</span>
     <label for={inputId} class="input-label">
       {label}
@@ -68,22 +38,21 @@
         <span class="required-mark"> *</span>
       {/if}
     </label>
-    <!-- Input encima y clickable: en móviles el toque va directo al input → abre el picker -->
-    <input
-      bind:this={nativeDateInputRef}
-      id={inputId}
-      type="date"
-      bind:value={valueVar}
-      {disabled}
-      class="native-date-input"
-      aria-label={label}
-      tabindex="-1"
-    />
   </div>
+  <!-- Input nativo encima de todo: cubre el 100% del contenedor y recibe click/toque directo en PC y móvil -->
+  <input
+    id={inputId}
+    type="date"
+    bind:value={valueVar}
+    {disabled}
+    class="native-date-input"
+    aria-label={label}
+  />
 </div>
 
 <style>
   .input-container {
+    position: relative;
     display: flex;
     align-items: center;
     border: var(--grav-crud-input-border-width) solid
@@ -94,10 +63,8 @@
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
     margin-top: 1.95rem;
-    height: fit-content;
-    min-height: 2.5rem;
+    min-height: 2.75rem;
     overflow: visible;
-    cursor: pointer;
     width: 100%;
     box-sizing: border-box;
   }
@@ -110,6 +77,7 @@
     width: 1rem;
     position: relative;
     margin-right: 0.5rem;
+    pointer-events: none;
   }
 
   .icon {
@@ -123,43 +91,21 @@
     position: relative;
     width: 100%;
     min-height: 2rem;
+    pointer-events: none;
   }
 
-  /* Texto visible de la fecha: sin pseudo-elementos WebKit */
   .display-text {
     display: block;
     padding: 0.3rem 0;
     width: 100%;
     font-size: 1rem;
     color: var(--grav-crud-color-neutral);
-    pointer-events: none;
     min-height: 1.5rem;
     line-height: 1.5;
   }
 
   .input-wrapper.has-value .display-text {
     color: var(--grav-crud-color-neutral);
-  }
-
-  /* Input invisible y que no capture clicks: todo lo maneja el contenedor con openPicker() */
-  .native-date-input {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 0;
-    font-size: 16px;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .native-date-input:disabled {
-    cursor: not-allowed;
-    pointer-events: none;
   }
 
   .input-label {
@@ -170,9 +116,7 @@
     transition: transform 0.2s ease, top 0.2s ease, font-size 0.2s ease;
     top: 0.35rem;
     left: 0;
-    z-index: 0;
     transform-origin: left;
-    pointer-events: none;
   }
 
   .input-wrapper.has-value .input-label {
@@ -184,5 +128,47 @@
 
   .required-mark {
     color: #dc2626;
+  }
+
+  /*
+   * Input nativo encima de todo el contenedor (icono + wrapper).
+   * inset: 0 + position absolute = cubre el 100% del .input-container.
+   * El usuario toca/clica directamente este input → abre el picker en todos los dispositivos.
+   */
+  .native-date-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    opacity: 0;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1;
+    -webkit-tap-highlight-color: transparent;
+    color: transparent;
+    caret-color: transparent;
+  }
+
+  .native-date-input::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  .native-date-input:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
   }
 </style>
