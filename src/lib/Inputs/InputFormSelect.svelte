@@ -7,17 +7,18 @@
     label: string;
   }
 
-  export let value: SelectValue | null = null;
-  export let justValue: any | null = null;
+  export let value: SelectValue | SelectValue[] | null = null;
+  export let justValue: any | any[] | null = null;
   export let res: any[] = [];
   export let changeFunction: (
-    e: CustomEvent<SelectValue | null>
+    e: CustomEvent<SelectValue | SelectValue[] | null>,
   ) => void = () => {};
   export let onClear: () => void = () => {};
   export let disabledVar = false;
   export let label = "";
   export let showPlusIcon = false;
   export let onPlusClick: () => void = () => {};
+  export let multiple = false;
 </script>
 
 <div class="select-container">
@@ -31,10 +32,11 @@
       on:change={changeFunction}
       on:clear={onClear}
       disabled={disabledVar}
+      {multiple}
       class="select-input"
       inputStyles="font-size: 12px; color: currentColor !important; background-color: transparent;"
       containerStyles="font-size: 12px; background-color: transparent; border: var(--grav-crud-input-border-width) solid currentColor; border-radius: 0.5rem;"
-      placeholder="Seleccione una opción"
+      placeholder={multiple ? "Seleccione opciones" : "Seleccione una opción"}
       --placeholder-color="currentColor"
       --chevron-color="currentColor"
       --item-color="black"
