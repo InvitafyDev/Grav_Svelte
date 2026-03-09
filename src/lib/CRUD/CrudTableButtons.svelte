@@ -29,28 +29,26 @@
 
       iconElements.forEach((icon, index) => {
         const iconClass = icon.getAttribute("class") || "";
+        const faClasses = iconClass.split(" ").filter((c) => c.startsWith("fa-"));
 
         // Si es un elemento <i> con clase fa-
-        if (icon.tagName === "I" && iconClass.includes("fa-")) {
-          // Verificar si ya hay un SVG para este icono
-          const existingSvg = button.querySelector(
-            `svg[data-icon="${iconClass.split(" ").find((c) => c.startsWith("fa-"))}"]`,
-          );
+        if (icon.tagName === "I" && faClasses.length > 0) {
+          const iconName = faClasses[faClasses.length - 1];
+          const existingSvg =
+            button.querySelector(`svg[data-icon="${iconName}"]`) ||
+            button.querySelector(`svg[data-icon="${iconName.replace(/^fa-/, "")}"]`);
 
           if (existingSvg) {
-            // Si ya existe un SVG, eliminar el <i>
             icon.remove();
             return;
           }
 
-          // Si es el primer icono con esta clase, marcarlo
-          if (!iconClasses.has(iconClass)) {
-            iconClasses.add(iconClass);
-            // Marcar como procesado
+          const faKey = faClasses.join(" ");
+          if (!iconClasses.has(faKey)) {
+            iconClasses.add(faKey);
             icon.setAttribute("data-fa-processed", "true");
             icon.setAttribute("data-fa-i2svg-processed", "true");
           } else {
-            // Si ya existe otro icono con la misma clase, eliminar este
             icon.remove();
           }
         }
@@ -76,9 +74,12 @@
       const allIcons = button.querySelectorAll('i[class*="fa-"]');
       allIcons.forEach((icon) => {
         const iconClass = icon.getAttribute("class") || "";
-        const faClass = iconClass.split(" ").find((c) => c.startsWith("fa-"));
-        if (faClass) {
-          const svg = button.querySelector(`svg[data-icon="${faClass}"]`);
+        const faClasses = iconClass.split(" ").filter((c) => c.startsWith("fa-"));
+        if (faClasses.length > 0) {
+          const iconName = faClasses[faClasses.length - 1];
+          const svg =
+            button.querySelector(`svg[data-icon="${iconName}"]`) ||
+            button.querySelector(`svg[data-icon="${iconName.replace(/^fa-/, "")}"]`);
           if (svg) {
             icon.remove();
           }
