@@ -43,11 +43,15 @@ function setupGlobalProtection() {
 
     // Función para limpiar iconos duplicados en un elemento
     const cleanDuplicates = (element: Element) => {
-        // Buscar todos los iconos
+        // Buscar todos los iconos (saltando completamente los que están dentro de sidebars)
         const allIcons = element.querySelectorAll('i[class*="fa-"]');
         const iconMap = new Map<string, Element>();
 
         allIcons.forEach((icon) => {
+            // Si el icono está dentro de un sidebar, no aplicar ninguna deduplicación allí
+            if (icon.closest('.sidebar')) {
+                return;
+            }
             const iconClass = icon.getAttribute('class') || '';
             const faClasses = iconClass.split(' ').filter(c => c.startsWith('fa-'));
             const faKey = faClasses.join(' ');
@@ -92,6 +96,10 @@ function setupGlobalProtection() {
         allSvgs.forEach((svg) => {
             const dataIcon = svg.getAttribute('data-icon');
             if (dataIcon) {
+                // No tocar SVGs que estén dentro del sidebar
+                if (svg.closest('.sidebar')) {
+                    return;
+                }
                 const isSectionCaret = svg.closest('.sidebar-section-btn');
                 const button = svg.closest('button');
                 const buttonGroup = button?.closest('.button-group');
@@ -162,11 +170,16 @@ function setupGlobalProtection() {
 export function cleanIconDuplicates(element: HTMLElement | Element) {
     if (!element) return;
 
-    // Limpiar iconos <i> duplicados
+    // Limpiar iconos <i> duplicados (pero nunca dentro del sidebar)
     const allIcons = element.querySelectorAll('i[class*="fa-"]');
     const iconMap = new Map<string, Element>();
 
     allIcons.forEach((icon) => {
+        // Saltar cualquier icono que esté dentro del sidebar
+        if (icon.closest('.sidebar')) {
+            return;
+        }
+
         const iconClass = icon.getAttribute('class') || '';
         const faClasses = iconClass.split(' ').filter(c => c.startsWith('fa-'));
         const faKey = faClasses.join(' ');
@@ -204,11 +217,16 @@ export function cleanIconDuplicates(element: HTMLElement | Element) {
         }
     });
 
-    // Limpiar SVGs duplicados
+    // Limpiar SVGs duplicados (pero nunca dentro del sidebar)
     const allSvgs = element.querySelectorAll('svg[data-icon]');
     const svgMap = new Map<string, Element>();
 
     allSvgs.forEach((svg) => {
+        // Saltar SVGs que estén dentro del sidebar
+        if (svg.closest('.sidebar')) {
+            return;
+        }
+
         const dataIcon = svg.getAttribute('data-icon');
         if (dataIcon) {
             const isSectionCaret = svg.closest('.sidebar-section-btn');

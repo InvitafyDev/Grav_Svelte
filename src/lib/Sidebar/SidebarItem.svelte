@@ -1,7 +1,5 @@
 <script lang="ts">
     import { base } from "$app/paths";
-    import { onMount, afterUpdate, onDestroy } from "svelte";
-    import { cleanIconDuplicates } from "$lib/utils/fontAwesomeHelper.js";
 
     export let nombreModulo;
     export let nombreRuta;
@@ -12,44 +10,10 @@
     /** En móvil, cerrar el menú al tocar el enlace */
     export let onLinkClick: (() => void) | undefined = undefined;
 
-    let sidebarItemElement: HTMLElement;
-    let mutationObserver: MutationObserver | null = null;
-
-    onMount(() => {
-        if (sidebarItemElement) {
-            cleanIconDuplicates(sidebarItemElement);
-            
-            // Observar cambios para limpiar duplicados
-            mutationObserver = new MutationObserver(() => {
-                setTimeout(() => {
-                    cleanIconDuplicates(sidebarItemElement);
-                }, 10);
-            });
-            
-            mutationObserver.observe(sidebarItemElement, {
-                childList: true,
-                subtree: true
-            });
-        }
-    });
-
-    afterUpdate(() => {
-        if (sidebarItemElement) {
-            setTimeout(() => {
-                cleanIconDuplicates(sidebarItemElement);
-            }, 10);
-        }
-    });
-
-    onDestroy(() => {
-        if (mutationObserver) {
-            mutationObserver.disconnect();
-        }
-    });
 </script>
 
 {#if permiso == true}
-    <div class="sidebar-item" bind:this={sidebarItemElement}>
+    <div class="sidebar-item">
         <a
             href={nombreRuta.startsWith('http') ? nombreRuta : `${base}/${baseRoute}/${nombreRuta}`}
             class="sidebar-link"
