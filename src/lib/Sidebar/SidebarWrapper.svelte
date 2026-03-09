@@ -3,8 +3,7 @@
   import SidebarItem from "./SidebarItem.svelte";
   import "./SidebarWrapper.css";
   import { Confirmacion_Alert } from "$lib/index.js";
-  import { onMount, afterUpdate, onDestroy } from "svelte";
-  import { cleanIconDuplicates } from "$lib/utils/fontAwesomeHelper.js";
+  import { onMount } from "svelte";
 
   // Props
   export let sections: SidebarSection[];
@@ -49,9 +48,6 @@
   // State: same pattern as Invitafy - string class for collapse (hidden vs overlay)
   let collapseShow = "hidden";
 
-  let sidebarElement: HTMLElement;
-  let mutationObserver: MutationObserver | null = null;
-
   onMount(() => {
     if (window.innerWidth >= 1024) collapseShow = "";
     const onResize = () => {
@@ -59,43 +55,9 @@
     };
     window.addEventListener("resize", onResize);
 
-    // Limpiar iconos duplicados en el sidebar
-    if (sidebarElement) {
-      cleanIconDuplicates(sidebarElement);
-
-      // Observar cambios para limpiar duplicados
-      mutationObserver = new MutationObserver(() => {
-        setTimeout(() => {
-          cleanIconDuplicates(sidebarElement);
-        }, 10);
-      });
-
-      mutationObserver.observe(sidebarElement, {
-        childList: true,
-        subtree: true,
-      });
-    }
-
     return () => {
       window.removeEventListener("resize", onResize);
-      if (mutationObserver) {
-        mutationObserver.disconnect();
-      }
     };
-  });
-
-  afterUpdate(() => {
-    if (sidebarElement) {
-      setTimeout(() => {
-        cleanIconDuplicates(sidebarElement);
-      }, 10);
-    }
-  });
-
-  onDestroy(() => {
-    if (mutationObserver) {
-      mutationObserver.disconnect();
-    }
   });
 
   function toggleCollapseShow(classes: string) {
@@ -136,11 +98,7 @@
   </div>
 {:else}
   <div class="sidebar-outer" style={themeStyle || ""}>
-    <nav
-      class="sidebar grav-sidebar-entrance {customClass}"
-      style={themeStyle || ""}
-      bind:this={sidebarElement}
-    >
+    <nav class="sidebar grav-sidebar-entrance {customClass}" style={themeStyle || ""}>
       <div class="sidebar-fullscreen-wrap">
         <button
           type="button"
