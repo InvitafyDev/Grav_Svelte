@@ -168,7 +168,7 @@
                         on:click={() => handleExport("excel")}
                         class="export-button excel-button"
                     >
-                        <i class="fas fa-file-excel"></i> EXCEL
+                        <span class="export-button-icon"><i class="fas fa-file-excel"></i></span> EXCEL
                     </button>
                 {/if}
                 {#if showPdfButton}
@@ -177,7 +177,7 @@
                         on:click={() => handleExport("pdf")}
                         class="export-button pdf-button"
                     >
-                        <i class="far fa-file-pdf"></i> PDF
+                        <span class="export-button-icon"><i class="far fa-file-pdf"></i></span> PDF
                     </button>
                 {/if}
             </div>
@@ -233,7 +233,13 @@
         color: var(--grav-crud-color-bg);
     }
 
-    .export-button i {
-        margin-right: 0.75rem;
+    .export-button i,
+    .export-button .export-button-icon {
+        margin-right: 0.5rem;
+    }
+
+    .export-button .export-button-icon {
+        display: inline-flex;
+        align-items: center;
     }
 </style>

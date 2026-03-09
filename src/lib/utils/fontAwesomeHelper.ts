@@ -49,27 +49,36 @@ function setupGlobalProtection() {
 
         allIcons.forEach((icon) => {
             const iconClass = icon.getAttribute('class') || '';
-            const faClass = iconClass.split(' ').find(c => c.startsWith('fa-'));
+            const faClasses = iconClass.split(' ').filter(c => c.startsWith('fa-'));
+            const faKey = faClasses.join(' ');
 
-            if (faClass) {
-                // Verificar si ya existe un SVG para este icono
+            if (faKey) {
                 const parent = icon.parentElement;
+                const button = icon.closest('button');
+                const buttonGroup = button?.closest('.button-group');
+                const isActionButton = button?.classList.contains('action-buttons-group') || !!buttonGroup;
+                const dedupeKey = isActionButton && button && buttonGroup
+                    ? `${faKey}::btn::${Array.from(buttonGroup.querySelectorAll('button')).indexOf(button)}`
+                    : (button && element.contains(button))
+                        ? `${faKey}::btn::${Array.from(element.querySelectorAll('button')).indexOf(button)}`
+                        : faKey;
+
                 if (parent) {
-                    const existingSvg = parent.querySelector(`svg[data-icon="${faClass}"]`);
+                    const iconName = faClasses[faClasses.length - 1];
+                    const existingSvg = parent.querySelector(`svg[data-icon="${iconName}"]`) ||
+                        parent.querySelector(`svg[data-icon="${iconName.replace(/^fa-/, '')}"]`);
                     if (existingSvg) {
-                        // Si ya hay un SVG, eliminar el <i>
                         icon.remove();
                         return;
                     }
                 }
 
-                // Verificar si ya tenemos un icono con esta clase
-                if (iconMap.has(faClass)) {
-                    // Eliminar el duplicado
-                    icon.remove();
+                if (iconMap.has(dedupeKey)) {
+                    if (!icon.classList.contains('sidebar-section-icon')) {
+                        icon.remove();
+                    }
                 } else {
-                    iconMap.set(faClass, icon);
-                    // Marcar como procesado
+                    iconMap.set(dedupeKey, icon);
                     icon.setAttribute('data-fa-processed', 'true');
                     icon.setAttribute('data-fa-i2svg-processed', 'true');
                 }
@@ -83,11 +92,20 @@ function setupGlobalProtection() {
         allSvgs.forEach((svg) => {
             const dataIcon = svg.getAttribute('data-icon');
             if (dataIcon) {
-                if (svgMap.has(dataIcon)) {
-                    // Eliminar el SVG duplicado
+                const isSectionCaret = svg.closest('.sidebar-section-btn');
+                const button = svg.closest('button');
+                const buttonGroup = button?.closest('.button-group');
+                const isActionButton = button?.classList.contains('action-buttons-group') || !!buttonGroup;
+                const svgKey = isActionButton && button && buttonGroup
+                    ? `${dataIcon}::btn::${Array.from(buttonGroup.querySelectorAll('button')).indexOf(button)}`
+                    : (button && element.contains(button))
+                        ? `${dataIcon}::btn::${Array.from(element.querySelectorAll('button')).indexOf(button)}`
+                        : dataIcon;
+
+                if (svgMap.has(svgKey) && !isSectionCaret) {
                     svg.remove();
-                } else {
-                    svgMap.set(dataIcon, svg);
+                } else if (!svgMap.has(svgKey) || isSectionCaret) {
+                    if (!svgMap.has(svgKey)) svgMap.set(svgKey, svg);
                 }
             }
         });
@@ -150,23 +168,36 @@ export function cleanIconDuplicates(element: HTMLElement | Element) {
 
     allIcons.forEach((icon) => {
         const iconClass = icon.getAttribute('class') || '';
-        const faClass = iconClass.split(' ').find(c => c.startsWith('fa-'));
+        const faClasses = iconClass.split(' ').filter(c => c.startsWith('fa-'));
+        const faKey = faClasses.join(' ');
 
-        if (faClass) {
-            // Verificar si ya existe un SVG para este icono
+        if (faKey) {
             const parent = icon.parentElement;
+            const button = icon.closest('button');
+            const buttonGroup = button?.closest('.button-group');
+            const isActionButton = button?.classList.contains('action-buttons-group') || !!buttonGroup;
+            const dedupeKey = isActionButton && button && buttonGroup
+                ? `${faKey}::btn::${Array.from(buttonGroup.querySelectorAll('button')).indexOf(button)}`
+                : (button && element.contains(button))
+                    ? `${faKey}::btn::${Array.from(element.querySelectorAll('button')).indexOf(button)}`
+                    : faKey;
+
             if (parent) {
-                const existingSvg = parent.querySelector(`svg[data-icon="${faClass}"]`);
+                const iconName = faClasses[faClasses.length - 1];
+                const existingSvg = parent.querySelector(`svg[data-icon="${iconName}"]`) ||
+                    parent.querySelector(`svg[data-icon="${iconName.replace(/^fa-/, '')}"]`);
                 if (existingSvg) {
                     icon.remove();
                     return;
                 }
             }
 
-            if (iconMap.has(faClass)) {
-                icon.remove();
+            if (iconMap.has(dedupeKey)) {
+                if (!icon.classList.contains('sidebar-section-icon')) {
+                    icon.remove();
+                }
             } else {
-                iconMap.set(faClass, icon);
+                iconMap.set(dedupeKey, icon);
                 icon.setAttribute('data-fa-processed', 'true');
                 icon.setAttribute('data-fa-i2svg-processed', 'true');
             }
@@ -180,10 +211,20 @@ export function cleanIconDuplicates(element: HTMLElement | Element) {
     allSvgs.forEach((svg) => {
         const dataIcon = svg.getAttribute('data-icon');
         if (dataIcon) {
-            if (svgMap.has(dataIcon)) {
+            const isSectionCaret = svg.closest('.sidebar-section-btn');
+            const button = svg.closest('button');
+            const buttonGroup = button?.closest('.button-group');
+            const isActionButton = button?.classList.contains('action-buttons-group') || !!buttonGroup;
+            const svgKey = isActionButton && button && buttonGroup
+                ? `${dataIcon}::btn::${Array.from(buttonGroup.querySelectorAll('button')).indexOf(button)}`
+                : (button && element.contains(button))
+                    ? `${dataIcon}::btn::${Array.from(element.querySelectorAll('button')).indexOf(button)}`
+                    : dataIcon;
+
+            if (svgMap.has(svgKey) && !isSectionCaret) {
                 svg.remove();
-            } else {
-                svgMap.set(dataIcon, svg);
+            } else if (!svgMap.has(svgKey) || isSectionCaret) {
+                if (!svgMap.has(svgKey)) svgMap.set(svgKey, svg);
             }
         }
     });
