@@ -58,5 +58,25 @@ Components follow consistent patterns:
 - `onClear`: `() => void`
 - `showPlusIcon` / `onPlusClick`: botón "+" al lado del select
 
+### CrudWrapper — Expandable Rows (subrows)
+Props for showing child data inline when expanding a row:
+- `expandEnabled={true}` — Enables expand/collapse arrows on each row
+- `subRowsField="subRows"` — Field name in each item containing the child array
+- `subRowHeaders: TableHeader[]` — Column definitions for subrows (if omitted, uses parent headers)
+- `idField="noFormularioA"` — Unique ID field for expand tracking
+
+Data must include a `subRows` array in each item. SubRows render using `SubRowsTable.svelte` with their own `CellRenderer` (supports Buttons, Text, etc.). Button `action` callback receives `(id, row)` — the `row` is the subrow item itself.
+
+### CrudWrapper — Drag-and-Drop Reorder
+Props for enabling drag-to-reorder rows:
+- `dragEnabled={true}` — Enables drag handles on each row
+- `orderField="nvOrden"` — Field name that stores the sort order (gets updated on drop)
+- `idField="noSeccionA"` — Unique ID field
+- `onReorder={(reorderedItems) => ...}` — Callback with only the items whose order changed
+
+**Important:** Drag only works on main rows, NOT on subrows. For reorderable child items, use a separate modal with its own CrudWrapper + `dragEnabled`.
+
+The `onReorder` callback receives items with updated `[orderField]` values. Typical pattern: map to `{ id, newOrder }[]` and POST to a bulk reorder endpoint.
+
 ### Development Workflow
 This is both a component library AND a documentation site. The `src/routes/` contains demo pages for each component group, while `src/lib/` contains the actual exportable components.
