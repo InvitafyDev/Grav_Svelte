@@ -80,3 +80,8 @@ The `onReorder` callback receives items with updated `[orderField]` values. Typi
 
 ### Development Workflow
 This is both a component library AND a documentation site. The `src/routes/` contains demo pages for each component group, while `src/lib/` contains the actual exportable components.
+
+## Gotchas
+
+- **`npm run check` tiene errores pre-existentes**: `generics.js` tiene implicit `any` types, varios Input components tienen warnings de a11y y unused CSS selectors. Estos NO son bloqueantes — `npm run build` compila correctamente. No investigar estos errores a menos que se pida explícitamente.
+- **Sidebar usa estilos en dos ubicaciones**: Estilos globales del layout en `SidebarWrapper.css`, estilos de cada item con `<style>` scoped en los `.svelte` individuales (ej: `SidebarItem.svelte`). Al modificar sidebar, verificar ambos archivos.
