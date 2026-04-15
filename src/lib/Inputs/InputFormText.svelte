@@ -7,6 +7,10 @@
   export let obligatory = false;
   export let icon: string | null = null;
   export let noMarginTop = false;
+
+  const inputId = typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `grav-input-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 </script>
 
 <div class="input-container" class:no-margin={noMarginTop}>
@@ -17,6 +21,7 @@
   {/if}
   <div class="input-wrapper">
     <input
+      id={inputId}
       {disabled}
       type="text"
       bind:value={valueVar}
@@ -24,7 +29,7 @@
       class="input-field"
     />
 
-    <label for={valueVar} class="input-label"
+    <label for={inputId} class="input-label"
       >{label}
       {#if obligatory}
         <span class="required-mark"> *</span>

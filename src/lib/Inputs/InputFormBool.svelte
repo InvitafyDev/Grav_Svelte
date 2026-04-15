@@ -7,26 +7,15 @@
 </script>
 
 <div class="input-container">
-  {#if valueVar}
-    <button
-      aria-label="checkbox"
-      {disabled}
-      on:click={() => (valueVar = false)}
-      class="checkbox-button checked"
-    >
-      <i class="fas fa-check checkwhite"></i>
-    </button>
-  {:else}
-    <button
-      aria-label="checkbox"
-      {disabled}
-      on:click={() => (valueVar = true)}
-      class="checkbox-button"
-    >
-      <i class="fas fa-minus"></i>
-    </button>
-  {/if}
-  <h1 class="label">{label}</h1>
+  <button
+    aria-label="checkbox"
+    {disabled}
+    on:click={() => (valueVar = !valueVar)}
+    class="checkbox-button {valueVar ? 'checked' : ''}"
+  >
+    <i class="fas {valueVar ? 'fa-check checkwhite' : 'fa-minus'}"></i>
+  </button>
+  <span class="label">{label}</span>
 </div>
 
 <style>

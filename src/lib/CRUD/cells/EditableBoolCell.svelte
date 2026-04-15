@@ -9,23 +9,14 @@
         const newValue = !item[header.campo];
         item[header.campo] = newValue;
         if (header.onUpdate) {
-            await header.onUpdate(item, header.campo, newValue);
+            await header.onUpdate(item[idField], header.campo, newValue);
         }
     }
 </script>
 
-{#if item[header.campo]}
-    <button
-        class="editable-checkbox {item[header.campo] ? 'checked' : ''}"
-        on:click={handleClick}
-    >
-        <i class="fas fa-check"></i>
-    </button>
-{:else}
-    <button
-        class="editable-checkbox {item[header.campo] ? 'checked' : ''}"
-        on:click={handleClick}
-    >
-        <i class="fas fa-minus"></i>
-    </button>
-{/if}
+<button
+    class="editable-checkbox {item[header.campo] ? 'checked' : ''}"
+    on:click={handleClick}
+>
+    <i class="fas {item[header.campo] ? 'fa-check' : 'fa-minus'}"></i>
+</button>

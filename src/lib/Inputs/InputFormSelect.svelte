@@ -26,7 +26,7 @@
   <div class="select-with-button">
     <Select
       items={res}
-      name="inCbArea"
+      name={label}
       bind:value
       bind:justValue
       on:change={changeFunction}

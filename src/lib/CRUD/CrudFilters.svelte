@@ -50,19 +50,15 @@
     }
 
     function clearFilters() {
-        console.log("clearFilters");
-
         Filtros = Filtros.map((filtro) => ({
             ...filtro,
             value: filtro.tipo === "bool" ? false : null,
         }));
         clearKey++; // Force re-render of select components
-        console.log(Filtros);
         dispatch("filtrar", { filtros: Filtros }); // puedes pasar los filtros actualizados
     }
 
     function actualizarFiltro() {
-        console.log(Filtros);
         PageSize = localPageSize;
         dispatch("filtrar", { filtros: Filtros }); // puedes pasar los filtros actualizados
     }
@@ -86,12 +82,10 @@
 
     let dataFetched: { value: any; label: string }[][] = [];
     onMount(async () => {
-        console.log("Filtros", Filtros);
         if (Filtros.length > 0) {
             isLoading = true;
             try {
                 const promises = Filtros.map(async (filtro) => {
-                    console.log("filtro", filtro);
                     if (filtro.service) {
                         const data = await filtro.service();
                         return data;
@@ -100,7 +94,6 @@
                 });
 
                 dataFetched = await Promise.all(promises);
-                console.log("dataFetched", dataFetched);
             } finally {
                 isLoading = false;
             }

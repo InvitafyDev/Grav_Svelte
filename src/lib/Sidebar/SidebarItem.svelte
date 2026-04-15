@@ -40,10 +40,10 @@
     }
 
     .sidebar-link {
-        text-transform: uppercase;
-        font-size: 0.75rem;
+        text-transform: none;
+        font-size: 0.8rem;
         padding: 0.75rem 0;
-        font-weight: bold;
+        font-weight: 500;
         display: block;
     }
 

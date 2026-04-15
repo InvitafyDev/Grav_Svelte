@@ -9,6 +9,10 @@
   export let validation: boolean = false;
   export let showToggle: boolean = true; // Show/hide eye toggle button
 
+  const inputId = typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `grav-input-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
   let validationMessage = "";
   let isValid = true;
   let showPassword = false;
@@ -27,25 +31,25 @@
       const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(valueVar);
 
       if (!hasMinLength) {
-        validationMessage = "Password must be at least 8 characters long";
+        validationMessage = "La contraseña debe tener al menos 8 caracteres";
         isValid = false;
       } else if (!hasUpperCase) {
         validationMessage =
-          "Password must contain at least one uppercase letter";
+          "La contraseña debe contener al menos una letra mayúscula";
         isValid = false;
       } else if (!hasLowerCase) {
         validationMessage =
-          "Password must contain at least one lowercase letter";
+          "La contraseña debe contener al menos una letra minúscula";
         isValid = false;
       } else if (!hasNumbers) {
-        validationMessage = "Password must contain at least one number";
+        validationMessage = "La contraseña debe contener al menos un número";
         isValid = false;
       } else if (!hasSpecialChar) {
         validationMessage =
-          "Password must contain at least one special character";
+          "La contraseña debe contener al menos un carácter especial";
         isValid = false;
       } else {
-        validationMessage = "Password is valid";
+        validationMessage = "Contraseña válida";
         isValid = true;
       }
     } else {
@@ -63,6 +67,7 @@
   {/if}
   <div class="input-wrapper">
     <input
+      id={inputId}
       {disabled}
       type={showPassword ? "text" : "password"}
       value={valueVar}
@@ -72,7 +77,7 @@
       style={showToggle ? "padding-right: 2.5rem;" : ""}
     />
 
-    <label for={valueVar} class="input-label"
+    <label for={inputId} class="input-label"
       >{label}
       {#if obligatory}
         <span class="required-mark"> *</span>

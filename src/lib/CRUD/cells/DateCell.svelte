@@ -13,8 +13,8 @@
     style="text-align: {header.align ?? 'left'}; {header.colorCampo && item[header.colorCampo] ? `background-color: ${item[header.colorCampo]}; color: white;` : ''}"
 >
     {#if isDatetime}
-        {item[header.campo]?.replace("T", ":") ?? ":"}
+        {item[header.campo]?.replace("T", " ") ?? ""}
     {:else}
-        {item[header.campo]?.split("T")[0] ?? ":"}
+        {item[header.campo]?.split("T")[0] ?? ""}
     {/if}
 </p>

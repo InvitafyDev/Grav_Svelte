@@ -7,6 +7,10 @@
   export let obligatory = false;
   export let rows: number = 1;
   export let icon: string | null = null;
+
+  const inputId = typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `grav-input-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 </script>
 
 <div class="input-container">
@@ -18,14 +22,13 @@
   <div class="input-wrapper">
     <textarea
       {disabled}
-      id={valueVar}
+      id={inputId}
       bind:value={valueVar}
-      name={valueVar}
       {rows}
       placeholder=""
       class="input-field"
     />
-    <label for={valueVar} class="input-label"
+    <label for={inputId} class="input-label"
       >{label}
       {#if obligatory}
         <span class="required-mark"> *</span>
