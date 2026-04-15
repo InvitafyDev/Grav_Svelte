@@ -26,7 +26,7 @@
       <i class="fas fa-minus"></i>
     </button>
   {/if}
-  <h1 class="label">{label}</h1>
+  <span class="label">{label}</span>
 </div>
 
 <style>
