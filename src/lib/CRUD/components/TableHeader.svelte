@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import type { TableHeader } from "../interfaces.js";
 
   export let tableHeaders: TableHeader[];
@@ -7,6 +8,47 @@
   export let selectedSort: string;
   export let selectedAscOrDesc: "asc" | "desc";
   export let onSort: (field: string) => void;
+  export let columnDragEnabled: boolean = false;
+
+  const dispatch = createEventDispatcher();
+
+  let colDraggedIndex: number | null = null;
+  let colDragOverIndex: number | null = null;
+
+  function handleColDragStart(e: DragEvent, index: number) {
+    if (!columnDragEnabled) return;
+    colDraggedIndex = index;
+    if (e.dataTransfer) {
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", "col-" + index);
+    }
+  }
+
+  function handleColDragOver(e: DragEvent, index: number) {
+    if (!columnDragEnabled || colDraggedIndex === null) return;
+    e.preventDefault();
+    colDragOverIndex = index;
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "move";
+  }
+
+  function handleColDragLeave() {
+    colDragOverIndex = null;
+  }
+
+  function handleColDrop(e: DragEvent, dropIndex: number) {
+    if (!columnDragEnabled || colDraggedIndex === null) return;
+    e.preventDefault();
+    if (colDraggedIndex !== dropIndex) {
+      dispatch("columnReorder", { from: colDraggedIndex, to: dropIndex });
+    }
+    colDraggedIndex = null;
+    colDragOverIndex = null;
+  }
+
+  function handleColDragEnd() {
+    colDraggedIndex = null;
+    colDragOverIndex = null;
+  }
 </script>
 
 <thead class="table-header">
@@ -46,23 +88,20 @@
       </th>
     {/if}
     {#each tableHeaders as tableHeader, index}
-      {#if tableHeader.biSort == false}
-        <th
-          class="table-header-cell {index == 0 && !dragEnabled && !expandEnabled
-            ? 'first-column-limited'
-            : ''} non-sortable"
-          style="text-align: {tableHeader.align ?? 'center'}"
-        >
-          {tableHeader.titulo}
-        </th>
-      {:else}
-        <th
-          on:click={() => onSort(tableHeader.campo)}
-          class="table-header-cell {index == 0 && !dragEnabled && !expandEnabled
-            ? 'first-column-limited'
-            : ''} sortable"
-          style="text-align: {tableHeader.align ?? 'left'}"
-        >
+      <th
+        on:click={() => { if (tableHeader.biSort) onSort(tableHeader.campo); }}
+        class="table-header-cell {index == 0 && !dragEnabled && !expandEnabled
+          ? 'first-column-limited'
+          : ''} {tableHeader.biSort ? 'sortable' : 'non-sortable'} {columnDragEnabled ? 'column-draggable' : ''} {colDragOverIndex === index && colDraggedIndex !== null && colDraggedIndex !== index ? 'column-drag-over' : ''} {colDraggedIndex === index ? 'column-dragging' : ''}"
+        style="text-align: {tableHeader.align ?? (tableHeader.biSort ? 'left' : 'center')}"
+        draggable={columnDragEnabled}
+        on:dragstart={(e) => handleColDragStart(e, index)}
+        on:dragover={(e) => handleColDragOver(e, index)}
+        on:dragleave={handleColDragLeave}
+        on:drop={(e) => handleColDrop(e, index)}
+        on:dragend={handleColDragEnd}
+      >
+        {#if tableHeader.biSort}
           <h1>{tableHeader.titulo}</h1>
           {#if selectedSort == tableHeader.campo}
             {#if selectedAscOrDesc == "asc"}
@@ -101,8 +140,31 @@
               </div>
             {/if}
           {/if}
-        </th>
-      {/if}
+        {:else}
+          {tableHeader.titulo}
+        {/if}
+      </th>
     {/each}
   </tr>
 </thead>
+
+<style>
+  .column-draggable {
+    cursor: grab;
+    transition: all 0.3s ease;
+  }
+  .column-draggable:active {
+    cursor: grabbing;
+  }
+  .column-dragging {
+    opacity: 0.5;
+    transform: scale(0.98);
+    background-color: var(--grav-crud-color-light);
+    cursor: grabbing;
+  }
+  .column-drag-over {
+    background-color: var(--grav-crud-color-light);
+    border-left: 2px solid var(--grav-crud-color-light);
+    border-right: 2px solid var(--grav-crud-color-light);
+  }
+</style>

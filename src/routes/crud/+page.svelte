@@ -1080,6 +1080,7 @@
     showAddButton={true}
     showImportButton={true}
     dragEnabled={true}
+    columnDragEnabled={true}
     orderField="inOrden"
     idField="noMesA"
     onFilter={enlistar}
@@ -1125,6 +1126,7 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     showAddButton={true}
     showImportButton={true}
     dragEnabled={true}
+    columnDragEnabled={true}
     expandEnabled={true}
     subRowsField="subRows"
     subRowHeaders={subRowH}
