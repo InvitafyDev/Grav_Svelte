@@ -31,6 +31,7 @@
     export let expandEnabled: boolean = false;
     export let subRowsField: string = "subRows";
     export let subRowHeaders: TableHeader[] | undefined = undefined;
+    export let columnDragEnabled: boolean = false;
 
     // Event handlers from parent
     export let onFilter: (filters: FiltrosI[]) => void;
@@ -38,6 +39,7 @@
     export let onImport: (() => void) | undefined = undefined;
     export let onSettings: (() => void) | undefined = undefined;
     export let onReorder: (reorderedItems: any[]) => void = () => {};
+    export let onColumnReorder: (orderedFields: string[]) => void = () => {};
     export let onCellUpdate: ((id: number | string, campo: string, newValue: any) => Promise<void> | void) | undefined = undefined;
 
     function handleFiltroAplicado() {
@@ -114,6 +116,10 @@
         onReorder(event.detail.reorderedItems);
     }
 
+    function handleColumnReorder(event: CustomEvent<{ order: string[] }>) {
+        onColumnReorder(event.detail.order);
+    }
+
     // Apply global onCellUpdate to headers that don't have their own onUpdate
     $: processedTableHeaders = tableH.map(header => {
         if ((header.tipo === 'EditableBool' || header.tipo === 'EditableText' || header.tipo === 'EditableNumber') && !header.onUpdate && onCellUpdate) {
@@ -143,8 +149,10 @@
             todosLosRegistros={todosLosObjetos}
             on:selectedSort={handleSort}
             on:reorderChange={handleReorder}
+            on:columnReorderChange={handleColumnReorder}
             {loading}
             {dragEnabled}
+            {columnDragEnabled}
             {orderField}
             {idField}
             {expandEnabled}

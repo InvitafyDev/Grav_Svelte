@@ -25,8 +25,32 @@
   export let expandEnabled: boolean = false;
   export let subRowsField: string = "subRows";
   export let subRowHeaders: TableHeader[] | undefined = undefined;
+  export let columnDragEnabled: boolean = false;
 
   let selectedRowId: string | number | null = null;
+
+  // Local column order (indices into tableHeaders). Null = use original order.
+  let columnOrder: number[] | null = null;
+
+  $: if (tableHeaders && (!columnOrder || columnOrder.length !== tableHeaders.length)) {
+    columnOrder = tableHeaders.map((_, i) => i);
+  }
+
+  $: orderedHeaders = columnOrder
+    ? columnOrder.map((i) => tableHeaders[i]).filter(Boolean)
+    : tableHeaders;
+
+  function handleColumnReorder(event: CustomEvent<{ from: number; to: number }>) {
+    if (!columnOrder) return;
+    const { from, to } = event.detail;
+    const newOrder = [...columnOrder];
+    const [moved] = newOrder.splice(from, 1);
+    newOrder.splice(to, 0, moved);
+    columnOrder = newOrder;
+    dispatch("columnReorderChange", {
+      order: newOrder.map((i) => tableHeaders[i]?.campo).filter(Boolean),
+    });
+  }
 
   // Use custom subRowHeaders if provided, otherwise use parent headers
   $: effectiveSubRowHeaders = subRowHeaders || tableHeaders;
@@ -159,12 +183,14 @@
   <div class="table-scroll">
     <table class="data-table" bind:this={tablaExport}>
       <TableHeaderComponent
-        {tableHeaders}
+        tableHeaders={orderedHeaders}
         {dragEnabled}
         {expandEnabled}
+        {columnDragEnabled}
         selectedSort={$selectedSort}
         selectedAscOrDesc={$selectedAscOrDesc}
         onSort={handleSort}
+        on:columnReorder={handleColumnReorder}
       />
 
       {#if todosLosRegistros && !loading}
@@ -173,7 +199,7 @@
             <TableRow
               {item}
               {index}
-              {tableHeaders}
+              tableHeaders={orderedHeaders}
               {idField}
               {dragEnabled}
               {expandEnabled}
