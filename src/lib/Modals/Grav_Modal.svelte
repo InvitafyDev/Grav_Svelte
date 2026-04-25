@@ -1,5 +1,27 @@
 <script lang="ts">
   import "./Grav_Modal.css";
+  import { fade } from "svelte/transition";
+  import { expoOut, cubicOut } from "svelte/easing";
+
+  // Apple-like modal entrance: scale + slight translateY + opacity
+  function appleModal(
+    _node: Element,
+    { duration = 400, reverse = false } = {},
+  ) {
+    return {
+      duration,
+      easing: reverse ? cubicOut : expoOut,
+      css: (t: number) => {
+        const scale = 0.92 + 0.08 * t;
+        const translate = 16 * (1 - t);
+        return `
+          opacity: ${t};
+          transform: scale(${scale}) translateY(${translate}px);
+          transform-origin: center center;
+        `;
+      },
+    };
+  }
 
   // Define size type
   type ModalSize = "lg" | "md" | "sm" | "xs";
@@ -80,7 +102,11 @@
   tabindex="0"
 >
   <!--content-->
-  <div class="modal-content {size}">
+  <div
+    class="modal-content {size}"
+    in:appleModal={{ duration: 400 }}
+    out:appleModal={{ duration: 250, reverse: true }}
+  >
     <!-- Encabezado Modal -->
     <div class="modal-header">
       <h3 class="modal-title">
@@ -163,4 +189,8 @@
     {/if}
   </div>
 </div>
-<div class="modal-backdrop" />
+<div
+  class="modal-backdrop"
+  in:fade={{ duration: 350, easing: expoOut }}
+  out:fade={{ duration: 200, easing: cubicOut }}
+/>
