@@ -34,8 +34,8 @@
       disabled={disabledVar}
       {multiple}
       class="select-input"
-      inputStyles="font-size: 12px; color: currentColor !important; background-color: transparent;"
-      containerStyles="font-size: 12px; background-color: transparent; border: var(--grav-crud-input-border-width) solid currentColor; border-radius: 0.5rem;"
+      inputStyles="font-size: 16px; color: currentColor !important; background-color: transparent;"
+      containerStyles="font-size: 16px; background-color: transparent; border: var(--grav-crud-input-border-width) solid currentColor; border-radius: 0.5rem;"
       placeholder={multiple ? "Seleccione opciones" : "Seleccione una opción"}
       --placeholder-color="currentColor"
       --chevron-color="currentColor"

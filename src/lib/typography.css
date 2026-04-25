@@ -98,6 +98,18 @@
     --grav-crud-scrollbar-thumb-hover: rgba(255, 255, 255, 0.5); /* Color de la barra en hover */
 }
 
+/* Mobile: forzar font-size mínimo de 16px en inputs para evitar el auto-zoom de iOS Safari al hacer focus.
+   iOS hace zoom automático cuando el font-size computado es < 16px. */
+@media (max-width: 768px) {
+    input,
+    select,
+    textarea,
+    .svelte-select input,
+    .svelte-select-list {
+        font-size: 16px !important;
+    }
+}
+
 /* Example usage for users to customize in their app.css:
 :root { 
     --grav-font-family: 'Roboto', sans-serif;
