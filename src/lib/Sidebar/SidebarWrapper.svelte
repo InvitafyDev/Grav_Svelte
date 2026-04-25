@@ -4,6 +4,8 @@
   import "./SidebarWrapper.css";
   import { Confirmacion_Alert } from "$lib/index.js";
   import { onMount } from "svelte";
+  import { fly, slide } from "svelte/transition";
+  import { cubicOut } from "svelte/easing";
 
   // Props
   export let sections: SidebarSection[];
@@ -81,7 +83,12 @@
 </script>
 
 {#if storefullScreen}
-  <div class="sidebar-reopen-wrap" style={themeStyle || ""}>
+  <div
+    class="sidebar-reopen-wrap"
+    style={themeStyle || ""}
+    in:fly={{ x: 30, duration: 300, delay: 200, easing: cubicOut }}
+    out:fly={{ x: 30, duration: 200, easing: cubicOut }}
+  >
     <button
       type="button"
       class="sidebar-reopen-btn"
@@ -98,7 +105,11 @@
   </div>
 {:else}
   <div class="sidebar-outer" style={themeStyle || ""}>
-    <nav class="sidebar grav-sidebar-entrance {customClass}" style={themeStyle || ""}>
+    <nav
+      class="sidebar grav-sidebar-entrance {customClass}"
+      style={themeStyle || ""}
+      out:fly={{ x: -30, duration: 300, easing: cubicOut }}
+    >
       <div class="sidebar-fullscreen-wrap">
         <button
           type="button"
@@ -132,6 +143,17 @@
         <a class="sidebar-brand" href={brandLink}>
           {brandName}
         </a>
+
+        {#if collapseShow === "sidebar-collapse-visible"}
+          <div
+            class="sidebar-backdrop"
+            role="button"
+            tabindex="0"
+            aria-label="Cerrar menú"
+            on:click={() => toggleCollapseShow("hidden")}
+            on:keydown={(e) => (e.key === "Enter" || e.key === " ") && toggleCollapseShow("hidden")}
+          ></div>
+        {/if}
 
         <div class="sidebar-menu {collapseShow}">
           <div class="sidebar-collapse-header">
@@ -186,7 +208,10 @@
                   </button>
                 {/if}
                 {#if section.biActivado}
-                  <ul class="sidebar-sublist">
+                  <ul
+                    class="sidebar-sublist"
+                    transition:slide={{ duration: 250, easing: cubicOut }}
+                  >
                     {#each section.modules as _module}
                       <li class="sidebar-menu-item">
                         <SidebarItem
