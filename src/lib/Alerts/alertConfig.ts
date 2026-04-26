@@ -1,53 +1,86 @@
-import Swal from 'sweetalert2';
-import './alertStyles.css';
+import * as svelte from 'svelte';
+import AppleAlert from './AppleAlert.svelte';
+import AppleToast from './AppleToast.svelte';
 
-export function Exito_Alert(titulo = 'Se guardo correctamente') {
-    Swal.fire({
-        icon: 'success',
+interface MountOptions {
+    target: HTMLElement;
+    props: Record<string, unknown>;
+    intro?: boolean;
+}
+
+const svelteAny = svelte as unknown as {
+    mount?: (component: unknown, opts: MountOptions) => unknown;
+    unmount?: (instance: unknown) => void;
+};
+
+const isSvelte5 = typeof svelteAny.mount === 'function';
+
+function mountComponent(
+    Component: unknown,
+    props: Record<string, unknown>
+): void {
+    if (typeof document === 'undefined') return;
+
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+
+    let instance: unknown;
+    let destroyed = false;
+
+    const cleanup = () => {
+        if (destroyed) return;
+        destroyed = true;
+        try {
+            if (isSvelte5 && svelteAny.unmount) {
+                svelteAny.unmount(instance);
+            } else if (instance && typeof (instance as { $destroy?: () => void }).$destroy === 'function') {
+                (instance as { $destroy: () => void }).$destroy();
+            }
+        } catch (err) {
+            console.error('Error destroying alert component:', err);
+        }
+        if (target.parentNode) target.parentNode.removeChild(target);
+    };
+
+    const finalProps = { ...props, onDestroy: cleanup };
+
+    if (isSvelte5 && svelteAny.mount) {
+        instance = svelteAny.mount(Component, { target, props: finalProps, intro: true });
+    } else {
+        const Ctor = Component as new (args: MountOptions) => unknown;
+        instance = new Ctor({ target, props: finalProps, intro: true });
+    }
+}
+
+export function Exito_Alert(titulo = 'Se guardó correctamente', mensaje = '') {
+    mountComponent(AppleToast, {
         title: titulo,
-        showConfirmButton: false,
-        timer: 1500
+        message: mensaje,
+        icon: 'success',
+        duration: 3500,
     });
 }
 
 export function Error_Alert(titulo = 'Algo salió mal') {
-    Swal.fire({
-        icon: 'error',
+    mountComponent(AppleAlert, {
         title: titulo,
-        confirmButtonColor: '#10b981',
-        cancelButtonColor: '#EF4444',
-        confirmButtonText: 'OK',
-        focusConfirm: false,
-        focusCancel: false,
-        buttonsStyling: false,
-        customClass: {
-            denyButton: 'hidden',
-            confirmButton: 'alert-error-button'
-        }
+        icon: 'error',
+        confirmText: 'OK',
+        cancelText: null,
     });
 }
 
-export function Confirmacion_Alert(titulo = 'Confirmación', texto = 'Desea guardar los cambios?', callback: () => void) {
-    return Swal.fire({
+export function Confirmacion_Alert(
+    titulo = 'Confirmación',
+    texto = '¿Desea guardar los cambios?',
+    callback: () => void
+) {
+    mountComponent(AppleAlert, {
         title: titulo,
-        text: texto,
+        message: texto,
         icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#10b981',
-        cancelButtonColor: '#EF4444',
-        confirmButtonText: 'Sí',
-        cancelButtonText: 'No',
-        focusConfirm: false,
-        focusCancel: false,
-        buttonsStyling: false,
-        customClass: {
-            denyButton: 'hidden',
-            confirmButton: 'alert-confirm-button',
-            cancelButton: 'alert-cancel-button'
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            callback();
-        }
+        confirmText: 'Sí',
+        cancelText: 'No',
+        onConfirm: callback,
     });
 }

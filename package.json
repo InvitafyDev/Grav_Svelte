@@ -1,6 +1,6 @@
 {
   "name": "grav-svelte",
-  "version": "0.1.226",
+  "version": "0.1.232",
   "description": "A collection of Svelte components",
   "license": "MIT",
   "scripts": {
@@ -52,7 +52,6 @@
   },
   "dependencies": {
     "grav-svelte": "^0.1.211",
-    "sweetalert2": "^11.22.0",
     "xlsx": "^0.18.5"
   },
   "peerDependencies": {
