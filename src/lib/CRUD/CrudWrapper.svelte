@@ -130,6 +130,7 @@
 </script>
 
 <div class="crud-wrapper" class:min-height-screen={minHeightScreen}>
+    <div class="crud-anim-item crud-anim-filters">
     <CrudFilters
         bind:PageSize
         bind:Filtros
@@ -143,7 +144,8 @@
         {showMostrandoInput}
         {Titulo_Crud}
     />
-    <div class="crud-table-container">
+    </div>
+    <div class="crud-table-container crud-anim-item crud-anim-table">
         <CrudTable
             tableHeaders={processedTableHeaders}
             todosLosRegistros={todosLosObjetos}
@@ -168,7 +170,7 @@
     </div>
 
     {#if showExcelButton || showPdfButton}
-        <div class="export-buttons">
+        <div class="export-buttons crud-anim-item crud-anim-export">
             <div class="buttons-right">
                 {#if showExcelButton}
                     <button
@@ -194,6 +196,83 @@
 </div>
 
 <style>
+    @keyframes -global-grav-crud-fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(14px);
+            filter: blur(4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+    }
+
+    @keyframes -global-grav-crud-scale-in {
+        from {
+            opacity: 0;
+            transform: translateY(10px) scale(0.97);
+            filter: blur(3px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+    }
+
+    @keyframes -global-grav-crud-row-in {
+        from {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .crud-anim-item {
+        opacity: 0;
+        animation: grav-crud-fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        will-change: transform, opacity, filter;
+    }
+
+    .crud-anim-filters { animation-delay: 40ms; }
+
+    .crud-anim-table {
+        animation: grav-crud-scale-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation-delay: 140ms;
+        transform-origin: top center;
+    }
+
+    .crud-anim-export { animation-delay: 280ms; }
+
+    /* Stagger row entry inside the table (works on any consumer page) */
+    :global(.crud-anim-table table tbody tr) {
+        opacity: 0;
+        animation: grav-crud-row-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    :global(.crud-anim-table table tbody tr:nth-child(1))  { animation-delay: 0.30s; }
+    :global(.crud-anim-table table tbody tr:nth-child(2))  { animation-delay: 0.35s; }
+    :global(.crud-anim-table table tbody tr:nth-child(3))  { animation-delay: 0.40s; }
+    :global(.crud-anim-table table tbody tr:nth-child(4))  { animation-delay: 0.45s; }
+    :global(.crud-anim-table table tbody tr:nth-child(5))  { animation-delay: 0.50s; }
+    :global(.crud-anim-table table tbody tr:nth-child(6))  { animation-delay: 0.55s; }
+    :global(.crud-anim-table table tbody tr:nth-child(7))  { animation-delay: 0.60s; }
+    :global(.crud-anim-table table tbody tr:nth-child(8))  { animation-delay: 0.65s; }
+    :global(.crud-anim-table table tbody tr:nth-child(9))  { animation-delay: 0.70s; }
+    :global(.crud-anim-table table tbody tr:nth-child(n+10)) { animation-delay: 0.75s; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .crud-anim-item,
+        :global(.crud-anim-table table tbody tr) {
+            animation: none;
+            opacity: 1;
+        }
+    }
+
     .crud-wrapper {
         min-height: auto;
     }
@@ -233,12 +312,23 @@
         background-color: var(--grav-crud-color-bg);
         color: var(--grav-crud-color-button);
         border: 1px solid var(--grav-crud-color-bg);
+        transition:
+            transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+            background-color 0.2s ease,
+            color 0.2s ease,
+            box-shadow 0.2s ease;
     }
 
     .export-button:hover {
-        transition: all 0.2s ease;
         background-color: transparent;
         color: var(--grav-crud-color-bg);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .export-button:active {
+        transform: translateY(0) scale(0.97);
+        transition-duration: 0.1s;
     }
 
     .export-button i,

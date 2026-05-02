@@ -1112,7 +1112,6 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
 </svelte:head>
 
 <div class="p-4 bg-gradient-to-br from-[#ff9878] to-[#fe6b91]">
-  <div class="crud-anim-wrapper">
   <CrudWrapper
     Titulo_Crud="Ejemplo de CRUD"
     {todosLosObjetos}
@@ -1141,7 +1140,6 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     onReorder={handleReorder}
     onCellUpdate={handleCellUpdate}
   />
-  </div>
 
   <div class="bg-white p-6 rounded-lg mt-6">
     <div class="flex justify-between items-center mb-4">
@@ -1188,87 +1186,5 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
 <style>
   .bg-blue-500 {
     background-color: #0284c7;
-  }
-
-  @keyframes -global-crud-page-in {
-    from {
-      opacity: 0;
-      transform: translateY(24px) scale(0.97);
-      filter: blur(6px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      filter: blur(0);
-    }
-  }
-
-  @keyframes -global-crud-page-glow {
-    0%, 100% {
-      box-shadow: 0 10px 40px rgba(254, 107, 145, 0.15);
-    }
-    50% {
-      box-shadow: 0 10px 60px rgba(255, 152, 120, 0.35);
-    }
-  }
-
-  :global(.crud-anim-wrapper) {
-    opacity: 0;
-    animation:
-      crud-page-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards,
-      crud-page-glow 4s ease-in-out 0.7s infinite;
-    border-radius: 0.75rem;
-    will-change: transform, opacity, filter;
-  }
-
-  :global(.crud-anim-wrapper .crud-wrapper > *) {
-    opacity: 0;
-    animation: crud-page-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  :global(.crud-anim-wrapper .crud-wrapper > *:nth-child(1)) { animation-delay: 0.15s; }
-  :global(.crud-anim-wrapper .crud-wrapper > *:nth-child(2)) { animation-delay: 0.3s; }
-  :global(.crud-anim-wrapper .crud-wrapper > *:nth-child(3)) { animation-delay: 0.45s; }
-
-  :global(.crud-anim-wrapper table tbody tr) {
-    opacity: 0;
-    animation: crud-page-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  :global(.crud-anim-wrapper table tbody tr:nth-child(1)) { animation-delay: 0.50s; }
-  :global(.crud-anim-wrapper table tbody tr:nth-child(2)) { animation-delay: 0.55s; }
-  :global(.crud-anim-wrapper table tbody tr:nth-child(3)) { animation-delay: 0.60s; }
-  :global(.crud-anim-wrapper table tbody tr:nth-child(4)) { animation-delay: 0.65s; }
-  :global(.crud-anim-wrapper table tbody tr:nth-child(5)) { animation-delay: 0.70s; }
-  :global(.crud-anim-wrapper table tbody tr:nth-child(6)) { animation-delay: 0.75s; }
-  :global(.crud-anim-wrapper table tbody tr:nth-child(7)) { animation-delay: 0.80s; }
-  :global(.crud-anim-wrapper table tbody tr:nth-child(8)) { animation-delay: 0.85s; }
-  :global(.crud-anim-wrapper table tbody tr:nth-child(9)) { animation-delay: 0.90s; }
-  :global(.crud-anim-wrapper table tbody tr:nth-child(n+10)) { animation-delay: 0.95s; }
-
-  :global(.crud-anim-wrapper button) {
-    transition:
-      transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.2s ease,
-      filter 0.2s ease !important;
-  }
-
-  :global(.crud-anim-wrapper button:hover) {
-    transform: translateY(-2px) scale(1.03);
-    filter: brightness(1.05);
-  }
-
-  :global(.crud-anim-wrapper button:active) {
-    transform: translateY(0) scale(0.96);
-    transition-duration: 0.1s !important;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    :global(.crud-anim-wrapper),
-    :global(.crud-anim-wrapper .crud-wrapper > *),
-    :global(.crud-anim-wrapper table tbody tr) {
-      animation: none;
-      opacity: 1;
-    }
   }
 </style>
