@@ -515,32 +515,105 @@
   margin: 0 auto;
   width: 100%;
   padding: 1rem;
+  animation: grav-loading-fade-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .loading-animation {
   display: flex;
   flex-direction: column;
   width: 100%;
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  gap: 0.6rem;
 }
 
 .loading-line {
-  height: 1rem;
-  border-radius: 0.25rem;
-  background-color: var(--grav-crud-color-border);
-  margin-bottom: 0.5rem;
+  height: 1.1rem;
+  border-radius: 0.5rem;
   width: 100%;
-  margin: 0 0 0.5rem 0;
   flex: none;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.06) 0%,
+    rgba(0, 0, 0, 0.12) 50%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  background-size: 200% 100%;
+  animation:
+    grav-shimmer 1.6s linear infinite,
+    grav-skeleton-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.loading-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: grav-shimmer-sweep 1.6s ease-in-out infinite;
+}
+
+.loading-line:nth-child(1) { width: 92%; animation-delay: 0s, 0.00s, 0s; }
+.loading-line:nth-child(2) { width: 96%; animation-delay: 0s, 0.04s, 0.05s; }
+.loading-line:nth-child(3) { width: 88%; animation-delay: 0s, 0.08s, 0.10s; }
+.loading-line:nth-child(4) { width: 94%; animation-delay: 0s, 0.12s, 0.15s; }
+.loading-line:nth-child(5) { width: 90%; animation-delay: 0s, 0.16s, 0.20s; }
+.loading-line:nth-child(6) { width: 95%; animation-delay: 0s, 0.20s, 0.25s; }
+.loading-line:nth-child(7) { width: 87%; animation-delay: 0s, 0.24s, 0.30s; }
+.loading-line:nth-child(8) { width: 93%; animation-delay: 0s, 0.28s, 0.35s; }
+.loading-line:nth-child(9) { width: 91%; animation-delay: 0s, 0.32s, 0.40s; }
+.loading-line:nth-child(10) { width: 96%; animation-delay: 0s, 0.36s, 0.45s; }
+.loading-line:nth-child(11) { width: 89%; animation-delay: 0s, 0.40s, 0.50s; }
+.loading-line:nth-child(12) { width: 94%; animation-delay: 0s, 0.44s, 0.55s; }
+.loading-line:nth-child(13) { width: 90%; animation-delay: 0s, 0.48s, 0.60s; }
+.loading-line:nth-child(14) { width: 92%; animation-delay: 0s, 0.52s, 0.65s; }
+.loading-line:nth-child(15) { width: 88%; animation-delay: 0s, 0.56s, 0.70s; }
+
+@keyframes grav-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes grav-shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+
+@keyframes grav-skeleton-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scaleX(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleX(1);
+  }
+}
+
+@keyframes grav-loading-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-line,
+  .loading-line::after {
+    animation: none;
   }
-  50% {
-    opacity: 0.5;
+  .loading-line {
+    background: var(--grav-crud-color-border);
+    opacity: 0.7;
   }
 }
 
