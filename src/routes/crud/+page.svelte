@@ -1190,7 +1190,7 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     background-color: #0284c7;
   }
 
-  @keyframes crud-page-in {
+  @keyframes -global-crud-page-in {
     from {
       opacity: 0;
       transform: translateY(24px) scale(0.97);
@@ -1203,7 +1203,7 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     }
   }
 
-  @keyframes crud-page-glow {
+  @keyframes -global-crud-page-glow {
     0%, 100% {
       box-shadow: 0 10px 40px rgba(254, 107, 145, 0.15);
     }
@@ -1212,7 +1212,7 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     }
   }
 
-  .crud-anim-wrapper {
+  :global(.crud-anim-wrapper) {
     opacity: 0;
     animation:
       crud-page-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards,
@@ -1264,7 +1264,7 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .crud-anim-wrapper,
+    :global(.crud-anim-wrapper),
     :global(.crud-anim-wrapper .crud-wrapper > *),
     :global(.crud-anim-wrapper table tbody tr) {
       animation: none;
