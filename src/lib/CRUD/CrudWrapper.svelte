@@ -32,6 +32,9 @@
     export let labelLimpiar: string = 'Limpiar';
     export let tooltipFiltrar: string = 'Aplicar filtro';
     export let labelFiltrar: string = 'Filtrar';
+    export let labelMostrando: string = 'Mostrando:';
+    export let labelDe: string = 'de';
+    export let labelRegistros: string = 'registros';
     export let dragEnabled: boolean = false;
     export let orderField: string = "inOrden";
     export let minHeightScreen: boolean = false;
@@ -159,6 +162,7 @@
         {labelLimpiar}
         {tooltipFiltrar}
         {labelFiltrar}
+        {labelMostrando}
     />
     </div>
     <div class="crud-table-container crud-anim-item crud-anim-table">
@@ -182,6 +186,9 @@
             {totalRows}
             bind:currentPage
             on:pageChange={handlePageChange}
+            {labelMostrando}
+            {labelDe}
+            {labelRegistros}
         />
     </div>
 

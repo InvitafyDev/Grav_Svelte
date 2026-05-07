@@ -1087,6 +1087,9 @@
     tooltipFiltrar="Apply filters"
     labelLimpiar="Clear "
     labelFiltrar="Filter"
+    labelMostrando="Showing:"
+    labelDe="of"
+    labelRegistros="records"
     dragEnabled={true}
     columnDragEnabled={true}
     orderField="inOrden"
@@ -1149,6 +1152,9 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     tooltipFiltrar="Apply filters"
     labelLimpiar="Clear "
     labelFiltrar="Filter"
+    labelMostrando="Showing:"
+    labelDe="of"
+    labelRegistros="records"
     onFilter={enlistar}
     onAdd={handleAdd}
     onImport={handleImport}

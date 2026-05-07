@@ -35,6 +35,7 @@
     export let labelLimpiar: string = 'Limpiar';
     export let tooltipFiltrar: string = 'Aplicar filtro';
     export let labelFiltrar: string = 'Filtrar';
+    export let labelMostrando: string = 'Showing:';
 
     // Dynamic grid columns calculation
     $: gridColumns = Math.min(Filtros.length, 6);
@@ -348,7 +349,7 @@
             {#if showMostrandoInput}
                 <div class="filter-item">
                     <InputFormText
-                        label="Mostrando:"
+                        label={labelMostrando}
                         bind:valueVar={localPageSizeStr}
                     />
                 </div>
