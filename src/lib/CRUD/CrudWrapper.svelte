@@ -24,6 +24,17 @@
     export let showSettingsButton: boolean = false;
     export let showMostrandoInput: boolean = true;
     export let Titulo_Crud: string;
+    export let tooltipAgregar: string = 'Agregar';
+    export let tooltipImportarExcel: string = 'Importar Excel';
+    export let tooltipVerFiltros: string = 'Ver filtros';
+    export let tooltipConfiguracion: string = 'Configuración';
+    export let tooltipLimpiar: string = 'Borrar filtro';
+    export let labelLimpiar: string = 'Limpiar';
+    export let tooltipFiltrar: string = 'Aplicar filtro';
+    export let labelFiltrar: string = 'Filtrar';
+    export let labelMostrando: string = 'Mostrando:';
+    export let labelDe: string = 'de';
+    export let labelRegistros: string = 'registros';
     export let dragEnabled: boolean = false;
     export let orderField: string = "inOrden";
     export let minHeightScreen: boolean = false;
@@ -143,6 +154,15 @@
         {showSettingsButton}
         {showMostrandoInput}
         {Titulo_Crud}
+        {tooltipAgregar}
+        {tooltipImportarExcel}
+        {tooltipVerFiltros}
+        {tooltipConfiguracion}
+        {tooltipLimpiar}
+        {labelLimpiar}
+        {tooltipFiltrar}
+        {labelFiltrar}
+        {labelMostrando}
     />
     </div>
     <div class="crud-table-container crud-anim-item crud-anim-table">
@@ -166,6 +186,9 @@
             {totalRows}
             bind:currentPage
             on:pageChange={handlePageChange}
+            {labelMostrando}
+            {labelDe}
+            {labelRegistros}
         />
     </div>
 

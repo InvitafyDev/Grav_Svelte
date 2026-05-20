@@ -79,6 +79,7 @@
           onClear={() => handleChange(0, null, level.field)}
           showPlusIcon={level.showPlusIcon ?? false}
           onPlusClick={level.onPlusClick ?? (() => {})}
+          placeholder={level.placeholder}
         />
       {/await}
     {/if}
@@ -99,6 +100,7 @@
             onClear={() => handleChange(i, null, level.field)}
             showPlusIcon={level.showPlusIcon ?? false}
             onPlusClick={level.onPlusClick ?? (() => {})}
+            placeholder={level.placeholder}
           />
         {/await}
       {:else}

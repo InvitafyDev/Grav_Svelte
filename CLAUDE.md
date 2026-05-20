@@ -67,6 +67,29 @@ Props for showing child data inline when expanding a row:
 
 Data must include a `subRows` array in each item. SubRows render using `SubRowsTable.svelte` with their own `CellRenderer` (supports Buttons, Text, etc.). Button `action` callback receives `(id, row)` — the `row` is the subrow item itself.
 
+### CrudWrapper — Props de traducción (i18n)
+
+Los componentes de la librería NO usan `svelte-i18n` internamente. El patrón es: exportar props string con valores por defecto en inglés; el consumidor pasa `$_('clave')` desde su propio sistema de i18n.
+
+Props traducibles de `CrudWrapper` (completos):
+```svelte
+<!-- Tooltips de botones de acción -->
+tooltipAgregar="Add"
+tooltipImportarExcel="Import Excel"
+tooltipVerFiltros="View filters"
+tooltipConfiguracion="Settings"
+tooltipLimpiar="Clear filters"
+tooltipFiltrar="Apply filter"
+<!-- Labels visibles -->
+labelLimpiar="Clear"
+labelFiltrar="Filter"
+labelMostrando="Showing:"   <!-- texto antes del rango en paginación -->
+labelDe="of"                <!-- separador en "1 - 50 of 100" -->
+labelRegistros="records"    <!-- al final de la línea de paginación -->
+```
+
+Estos props se pasan en cascada internamente: `CrudWrapper` → `CrudFilters` (labelMostrando, labelFiltrar, etc.) y `CrudWrapper` → `PaginationCRUD` (labelMostrando, labelDe, labelRegistros).
+
 ### CrudWrapper — Drag-and-Drop Reorder
 Props for enabling drag-to-reorder rows:
 - `dragEnabled={true}` — Enables drag handles on each row
@@ -89,4 +112,5 @@ This is both a component library AND a documentation site. The `src/routes/` con
 ## Gotchas
 
 - **`npm run check` tiene errores pre-existentes**: `generics.js` tiene implicit `any` types, varios Input components tienen warnings de a11y y unused CSS selectors. Estos NO son bloqueantes — `npm run build` compila correctamente. No investigar estos errores a menos que se pida explícitamente.
+- **Cambios en `src/lib/` requieren copiar manualmente a `node_modules` del consumidor**: Editar fuente en `Grav_Svelte/src/lib/CRUD/*.svelte` no afecta a `plataforma.invitafy` hasta copiar los archivos a `plataforma.invitafy/node_modules/grav-svelte/dist/CRUD/`. La librería no se reconstruye automáticamente en desarrollo.
 - **Sidebar usa estilos en dos ubicaciones**: Estilos globales del layout en `SidebarWrapper.css`, estilos de cada item con `<style>` scoped en los `.svelte` individuales (ej: `SidebarItem.svelte`). Al modificar sidebar, verificar ambos archivos.

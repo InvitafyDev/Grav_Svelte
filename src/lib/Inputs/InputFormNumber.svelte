@@ -26,6 +26,7 @@
       bind:value={valueVar}
       placeholder=" "
       class="input-field"
+      on:wheel|preventDefault={() => {}}
     />
 
     <label for={inputId} class="input-label"

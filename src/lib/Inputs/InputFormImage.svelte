@@ -2,8 +2,11 @@
   import "../typography.css";
 
   export let base64Preview: string = "";
-
   export let inputFile: HTMLInputElement;
+  export let labelSeleccionar: string = "Selecciona, arrastra o pega una imagen (Ctrl+V)";
+  export let labelCargar: string = "Cargar Imagen";
+  export let labelEliminar: string = "Eliminar Imagen";
+  export let labelDropZone: string = "Arrastra, pega o carga una imagen para previsualizar";
 
   // Manejar carga desde archivo
   function onFileChange(): void {
@@ -83,7 +86,7 @@
   <div>
     <!-- Input para cargar archivos -->
     <label class="file-label" for="fileInput">
-      Selecciona, arrastra o pega una imagen (Ctrl+V)
+      {labelSeleccionar}
     </label>
     <input
       id="fileInput"
@@ -98,7 +101,7 @@
       on:click={() => inputFile.click()}
       class="load-button"
     >
-      Cargar Imagen
+      {labelCargar}
     </button>
   </div>
 
@@ -107,7 +110,7 @@
     {#if base64Preview}
       <img src={base64Preview} alt="Preview" class="preview-image" />
       <button type="button" class="remove-button" on:click={reset}>
-        Eliminar Imagen
+        {labelEliminar}
       </button>
     {:else}
       <div
@@ -117,7 +120,7 @@
         on:drop={onDrop}
       >
         <h1 class="drop-zone-text">
-          Arrastra, pega o carga una imagen para previsualizar
+          {labelDropZone}
         </h1>
       </div>
     {/if}

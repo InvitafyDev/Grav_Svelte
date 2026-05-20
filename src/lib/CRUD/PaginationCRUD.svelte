@@ -7,6 +7,9 @@
     export let perPage;
     export let totalRows;
     export let currentPage = 1;
+    export let labelMostrando = 'Showing:';
+    export let labelDe = 'of';
+    export let labelRegistros = 'records';
 
     $: totalPages = Math.ceil(totalRows / perPage);
     $: start = (currentPage - 1) * perPage;
@@ -85,7 +88,7 @@
 
 <div class="pagination-info-container">
     <p class="pagination-info">
-        Mostrando: {start + 1} - {end + 1} de {totalRows} registros
+        {labelMostrando} {start + 1} - {end + 1} {labelDe} {totalRows} {labelRegistros}
     </p>
 </div>
 

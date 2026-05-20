@@ -176,6 +176,7 @@ export interface FiltrosI {
     value: any;
     options?: { value: any; label: string }[];
     service?: () => Promise<{ value: any; label: string }[]>;
+    placeholder?: string;
 };
 
 export interface CrudWrapperProps {

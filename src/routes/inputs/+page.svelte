@@ -159,7 +159,7 @@
       'let colorPickerInput = "#3B82F6";\n\n<InputFormColorPicker \n    label="Color Picker with Presets" \n    bind:valueVar={colorPickerInput} \n/>',
     bool: 'let boolInput = false;\n\n<InputFormBool \n    label="Boolean Input" \n    bind:valueVar={boolInput} \n/>',
     select:
-      'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\n<InputFormSelect\n    label="Select Input"\n    bind:value={selectInput}\n    res={selectOptions}\n/>',
+      'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectInput: SelectValue | null = null;\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\n<InputFormSelect\n    label="Select Input"\n    bind:value={selectInput}\n    res={selectOptions}\n    placeholder="Select an option"\n/>',
     selectMultiple:
       'interface SelectValue {\n    value: string;\n    label: string;\n}\n\nlet selectMultipleInput: SelectValue[] = [];\nconst selectOptions = [\n    { value: "1", label: "Option 1" },\n    { value: "2", label: "Option 2" },\n    { value: "3", label: "Option 3" },\n];\n\n<InputFormSelect\n    label="Select Multiple"\n    bind:value={selectMultipleInput}\n    res={selectOptions}\n    multiple={true}\n/>',
     selectWithPlus:
@@ -169,7 +169,7 @@
     cascadeWithDefaults:
       'let cascadeInputWithDefaults: Record<string, string | null> = {\n    country: "1",\n    state: "2"\n};\n\nconst cascadeLevels = [\n    {\n        label: "Country",\n        field: "country",\n        fetchFn: async () => [\n            { value: "1", label: "USA" },\n            { value: "2", label: "Canada" },\n        ],\n        showPlusIcon: true,\n        onPlusClick: () => {\n            alert("Add new Country clicked!");\n        }\n    },\n    {\n        label: "State",\n        field: "state",\n        fetchFn: async (countryId?: string) => {\n            if (countryId === "1") {\n                return [\n                    { value: "1", label: "California" },\n                    { value: "2", label: "New York" },\n                ];\n            }\n            return [];\n        },\n        showPlusIcon: true,\n        onPlusClick: () => {\n            alert("Add new State clicked!");\n        }\n    },\n];\n\n<InputFormCascade\n    levels={cascadeLevels}\n    bind:selectedValues={cascadeInputWithDefaults}\n/>',
     image:
-      'let imageInput: HTMLInputElement;\nlet base64Preview = "";\n\n<InputFormImage \n    bind:inputFile={imageInput} \n    bind:base64Preview \n/>',
+      'let imageInput: HTMLInputElement;\nlet base64Preview = "";\n\n<InputFormImage \n    bind:inputFile={imageInput} \n    bind:base64Preview \n    labelSeleccionar="Selecciona, arrastra o pega una imagen (Ctrl+V)" \n    labelCargar="Cargar Imagen" \n    labelEliminar="Eliminar Imagen" \n    labelDropZone="Arrastra, pega o carga una imagen para previsualizar" \n/>',
   };
 
   function handleAddNewOption() {
@@ -421,6 +421,7 @@
         label="Select Input"
         bind:value={selectInput}
         res={selectOptions}
+        placeholder="Select an option"
       />
       <span class="block mt-1 text-sm text-gray-600"
         >Selected: {selectInput?.label}</span
@@ -441,6 +442,7 @@
         res={selectOptions}
         showPlusIcon={true}
         onPlusClick={handleAddNewOption}
+        placeholder="Select an option"
       />
       <span class="block mt-1 text-sm text-gray-600"
         >Selected: {selectWithPlusInput?.label}</span
@@ -460,6 +462,7 @@
         bind:value={selectMultipleInput}
         res={selectOptions}
         multiple={true}
+        placeholder="Select an option"
       />
       <span class="block mt-1 text-sm text-gray-600"
         >Selected: {selectMultipleInput.map((s) => s.label).join(", ") ||
@@ -543,7 +546,14 @@
     <h2 class="text-xl font-semibold text-gray-700 mb-4">Image Input</h2>
 
     <div class="mb-6">
-      <InputFormImage bind:inputFile={imageInput} bind:base64Preview />
+      <InputFormImage bind:inputFile={imageInput} bind:base64Preview 
+      labelSeleccionar="Select, drag or paste an image (Ctrl+V)" 
+      labelCargar="Upload Image" 
+      labelEliminar="Delete Image" 
+      labelDropZone="Drag, paste or upload an image for preview" 
+ 
+      />
+
       <span class="block mt-1 text-sm text-gray-600">
         {#if base64Preview}
           Image loaded successfully
