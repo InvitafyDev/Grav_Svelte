@@ -104,6 +104,11 @@ The `onReorder` callback receives items with updated `[orderField]` values. Typi
 ### Development Workflow
 This is both a component library AND a documentation site. The `src/routes/` contains demo pages for each component group, while `src/lib/` contains the actual exportable components.
 
+### PhoneMockup — Preview iframe (`src/lib/Preview/`)
+- Muestra un iframe con proporción móvil; en desktop usa `--phone-mockup-h` (CSS custom prop, default `90vh`), en mobile (≤768px) muestra iframe directo centrado.
+- **Sandbox debe incluir `allow-forms`**: sin él, el usuario no puede interactuar con formularios ni botones dentro del iframe.
+- **Scrollbar hiding**: usa patrón clip — contenedor con `pointer-events: none` + `overflow: hidden`, iframe sobredimensionado `+20px` con `pointer-events: auto`. No intentar ocultar scrollbar del iframe con CSS (es cross-origin).
+
 ## Gotchas
 
 - **`npm run check` tiene errores pre-existentes**: `generics.js` tiene implicit `any` types, varios Input components tienen warnings de a11y y unused CSS selectors. Estos NO son bloqueantes — `npm run build` compila correctamente. No investigar estos errores a menos que se pida explícitamente.
