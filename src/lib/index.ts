@@ -3,3 +3,4 @@ export * from './Inputs/index.js';
 export * from './CRUD/index.js';
 export * from './Sidebar/index.js';
 export * from './Alerts/index.js';
+export * from './Preview/index.js';

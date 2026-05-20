@@ -16,6 +16,7 @@
     InputFormPhone,
     InputFormTime,
   } from "../../lib/Inputs/index.js";
+  import { PhoneMockup } from "../../lib/Preview/index.js";
 
   interface SelectValue {
     value: string;
@@ -176,7 +177,7 @@
   }
 </script>
 
-<div class="max-w-4xl mx-auto p-8 colorTodo">
+<div class="max-w-4xl mx-auto sm:p-8 p-4 colorTodo">
   <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">
     Ejemplo de Inputs
   </h1>
@@ -511,6 +512,28 @@
         <pre
           class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
             >{codeExamples.cascadeWithDefaults}</code
+          ></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class=" bg-gray-50 rounded-lg">
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">
+      Phone Mockup (Preview)
+    </h2>
+
+    <div class="mb-6">
+      <p class="text-sm text-gray-600 mb-4">
+        Componente que muestra un iframe dentro de un mockup estilo iPhone. En
+        pantallas grandes se ve el marco del teléfono; en móvil se muestra el
+        iframe directamente.
+      </p>
+      <PhoneMockup src="https://invitafy.com/Demos/BPRMIN/" />
+      <div class="mt-4">
+        <h4 class="text-sm font-medium text-gray-700 mb-2">Code:</h4>
+        <pre
+          class="bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto text-sm"><code
+            >{'import { PhoneMockup } from "grav-svelte/Preview";\n\n<PhoneMockup\n    src="https://invitafy.com/Demos/BPRMIN/"\n/>'}</code
           ></pre>
       </div>
     </div>
