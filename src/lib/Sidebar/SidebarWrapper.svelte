@@ -178,35 +178,19 @@
           <ul class="sidebar-list">
             {#each sections as section}
               <li class="sidebar-section-item">
-                {#if section.biActivado}
-                  <button
-                    type="button"
-                    class="sidebar-section-btn"
-                    on:click={() => (section.biActivado = !section.biActivado)}
-                  >
-                    <i
-                      class="fas fa-caret-down sidebar-section-icon"
-                      aria-hidden="true"
-                      data-fa-processed="true"
-                      data-fa-i2svg-processed="true"
-                    ></i>
-                    {section.nombre}
-                  </button>
-                {:else}
-                  <button
-                    type="button"
-                    class="sidebar-section-btn"
-                    on:click={() => (section.biActivado = !section.biActivado)}
-                  >
-                    <i
-                      class="fas fa-caret-right sidebar-section-icon"
-                      aria-hidden="true"
-                      data-fa-processed="true"
-                      data-fa-i2svg-processed="true"
-                    ></i>
-                    {section.nombre}
-                  </button>
-                {/if}
+                <button
+                  type="button"
+                  class="sidebar-section-btn"
+                  on:click={() => (section.biActivado = !section.biActivado)}
+                >
+                  <i
+                    class="fas {section.biActivado ? 'fa-caret-down' : 'fa-caret-right'} sidebar-section-icon"
+                    aria-hidden="true"
+                    data-fa-processed="true"
+                    data-fa-i2svg-processed="true"
+                  ></i>
+                  {section.nombre}
+                </button>
                 {#if section.biActivado}
                   <ul
                     class="sidebar-sublist"
