@@ -163,7 +163,9 @@
         {tooltipFiltrar}
         {labelFiltrar}
         {labelMostrando}
-    />
+    >
+        <slot name="headerActions" slot="headerActions" />
+    </CrudFilters>
     </div>
     <div class="crud-table-container crud-anim-item crud-anim-table">
         <CrudTable

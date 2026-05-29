@@ -270,6 +270,7 @@
                         </button>
                     </Tooltip>
                 {/if}
+                <slot name="headerActions" />
             </div>
             <!-- Show Filters Button -->
             <div class="filter-group" role="group"></div>
