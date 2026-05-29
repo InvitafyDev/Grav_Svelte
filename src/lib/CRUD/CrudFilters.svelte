@@ -11,7 +11,7 @@
     import Tooltip from "./Tooltip.svelte";
 
     import { createEventDispatcher, onMount, tick } from "svelte";
-    import type { FiltrosI } from "./interfaces.js";
+    import type { FiltrosI, CustomButtonI } from "./interfaces.js";
     const dispatch = createEventDispatcher();
 
     export let PageSize = 50;
@@ -26,6 +26,8 @@
     export let showImportButton: boolean = true;
     export let showSettingsButton: boolean = false;
     export let showMostrandoInput: boolean = true;
+    /** Botones extra (con badge opcional) que se agregan a la barra de acciones. */
+    export let customButtons: CustomButtonI[] = [];
     export let Titulo_Crud: string;
     export let tooltipAgregar: string = 'Agregar';
     export let tooltipImportarExcel: string = 'Importar Excel';
@@ -270,6 +272,20 @@
                         </button>
                     </Tooltip>
                 {/if}
+                {#each customButtons as btn}
+                    <Tooltip text={btn.tooltip ?? ''}>
+                        <button
+                            type="button"
+                            on:click={btn.onClick}
+                            class="filter-button custom-button"
+                        >
+                            <i class={btn.icon}></i>
+                            {#if btn.badge && btn.badge > 0}
+                                <span class="custom-button-badge">{btn.badge}</span>
+                            {/if}
+                        </button>
+                    </Tooltip>
+                {/each}
                 <slot name="headerActions" />
             </div>
             <!-- Show Filters Button -->

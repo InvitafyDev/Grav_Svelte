@@ -9,6 +9,21 @@ export interface ButtonConfig {
     show?: boolean;
 }
 
+/**
+ * Botón extra para la barra de acciones del CrudWrapper (junto a "Ver filtros" y configuración).
+ * Se renderiza con el mismo estilo nativo (.filter-button) y muestra un badge de conteo si `badge > 0`.
+ */
+export interface CustomButtonI {
+    /** Clase de icono font-awesome, ej. 'fas fa-pause'. */
+    icon: string;
+    /** Texto del tooltip al pasar el mouse. */
+    tooltip?: string;
+    /** Si es > 0 se muestra el globito de conteo en la esquina del botón. */
+    badge?: number;
+    /** Acción al hacer click. */
+    onClick: () => void;
+}
+
 export interface TableHeader {
     titulo: string;
     biSort: boolean;

@@ -5,6 +5,7 @@
     import type {
         FiltrosI,
         TableHeader,
+        CustomButtonI,
     } from "./interfaces.js";
     import PaginationCrud from "./PaginationCRUD.svelte";
 
@@ -23,6 +24,8 @@
     export let showPdfButton: boolean = true;
     export let showSettingsButton: boolean = false;
     export let showMostrandoInput: boolean = true;
+    /** Botones extra (con badge opcional) para la barra de acciones del Crud. */
+    export let customButtons: CustomButtonI[] = [];
     export let Titulo_Crud: string;
     export let tooltipAgregar: string = 'Agregar';
     export let tooltipImportarExcel: string = 'Importar Excel';
@@ -153,6 +156,7 @@
         {showImportButton}
         {showSettingsButton}
         {showMostrandoInput}
+        {customButtons}
         {Titulo_Crud}
         {tooltipAgregar}
         {tooltipImportarExcel}
