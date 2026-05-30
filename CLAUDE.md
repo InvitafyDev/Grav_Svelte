@@ -115,3 +115,24 @@ This is both a component library AND a documentation site. The `src/routes/` con
 - **Cambios en `src/lib/` requieren copiar manualmente a `node_modules` del consumidor**: Editar fuente en `Grav_Svelte/src/lib/CRUD/*.svelte` no afecta a `plataforma.invitafy` hasta copiar los archivos a `plataforma.invitafy/node_modules/grav-svelte/dist/CRUD/`. La librería no se reconstruye automáticamente en desarrollo.
 - **NUNCA copiar `src/` sobre `dist/` o `node_modules/`**: Los archivos en `src/lib/` usan `$lib/` aliases (ej: `$lib/index.js`) que solo resuelve SvelteKit. Los archivos en `dist/` y `node_modules/` usan paths relativos (ej: `../index.js`). Copiar `src/` sobre `dist/` rompe todos los imports. Siempre aplicar el fix directamente en `dist/` o copiar desde `dist/` hacia `node_modules/`.
 - **Sidebar usa estilos en dos ubicaciones**: Estilos globales del layout en `SidebarWrapper.css`, estilos de cada item con `<style>` scoped en los `.svelte` individuales (ej: `SidebarItem.svelte`). Al modificar sidebar, verificar ambos archivos.
+
+## CrudWrapper — prop `customButtons` (botones extra en la barra) — v0.1.249
+
+Además del slot `headerActions`, `CrudWrapper`/`CrudFilters` aceptan una prop **`customButtons: CustomButtonI[]`**
+que renderiza botones extra dentro de `.filters-actions` (junto a Ver filtros / engranaje), con el estilo
+nativo `.filter-button` y un **badge de conteo** opcional. Interfaz en `interfaces.ts`:
+```ts
+export interface CustomButtonI { icon: string; tooltip?: string; badge?: number; onClick: () => void; }
+```
+Render en `CrudFilters.svelte` (clase `filter-button custom-button` + `<span class="custom-button-badge">`
+cuando `badge > 0`; CSS en `CrudFilters.css`). Se pasa en cascada desde `CrudWrapper`.
+Uso: `<CrudWrapper customButtons={[{icon:'fas fa-pause', tooltip:'En Espera', badge:n, onClick:fn}]} ... />`.
+Preferir esta prop sobre `headerActions` cuando quieras look nativo + badge sin replicar CSS.
+
+**Gotcha — celdas `tipo:'Component'` solo reciben `row`:** `ComponentCell.svelte` hace
+`<svelte:component this={header.component} row={item} />`. **`componentProps` del `TableHeader` NO se
+propaga** al componente de la celda. Para pasarle datos/callbacks, usar un store de módulo, o una columna
+`tipo:'Buttons'` cuyo `action(id)` abra un modal.
+
+**Versión:** estos cambios están en grav-svelte **0.1.249**. admin.invitafy quedó en `^0.1.249` (local vía
+symlink). **Para prod hay que publicar la librería a npm** (`npm publish`) antes de desplegar al consumidor.
