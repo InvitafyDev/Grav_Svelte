@@ -58,6 +58,24 @@
     { value: "+32", label: "🇧🇪 +32" },
   ];
 
+  // Hidratar el estado interno desde un valor entrante (edición / prellenado).
+  // DEBE correr antes del bloque reactivo de abajo: de lo contrario ese bloque
+  // sobrescribiría valueVar con el dial code por defecto al montar.
+  const valorInicial =
+    valueVar || (phoneNumber ? (dialCode || defaultDialCode) + phoneNumber : "");
+  if (valorInicial) {
+    const dialCodes = [...new Set(countries.map((c) => c.value))].sort(
+      (a, b) => b.length - a.length
+    );
+    const codigo = dialCodes.find((c) => valorInicial.startsWith(c));
+    if (codigo) {
+      selectedDialCode = codigo;
+      internalPhoneNumber = valorInicial.slice(codigo.length).replace(/\D/g, "");
+    } else {
+      internalPhoneNumber = valorInicial.replace(/\D/g, "");
+    }
+  }
+
   // Update all exported values reactively
   $: {
     const cleanNumber = internalPhoneNumber.replace(/\D/g, "");
