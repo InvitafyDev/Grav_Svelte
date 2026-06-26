@@ -57,6 +57,11 @@
     export let onCellUpdate: ((id: number | string, campo: string, newValue: any) => Promise<void> | void) | undefined = undefined;
 
     function handleFiltroAplicado() {
+        // Al filtrar / limpiar / cambiar tamaño de página, volver SIEMPRE a la
+        // primera página. Si no, cuando el filtro reduce el total de páginas el
+        // usuario queda atrapado en una "página fantasma" (currentPage > totalPages)
+        // que se ve vacía y sin botones para salir.
+        currentPage = 1;
         onFilter(Filtros);
     }
 
