@@ -12,8 +12,13 @@
       ? crypto.randomUUID()
       : `grav-date-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-  function formatDisplayDate(iso: string): string {
-    if (!iso || iso.length < 10) return "";
+  function formatDisplayDate(iso: string | Date): string {
+    if (!iso) return "";
+    if (iso instanceof Date) {
+      if (isNaN(iso.getTime())) return "";
+      return `${String(iso.getDate()).padStart(2, "0")}/${String(iso.getMonth() + 1).padStart(2, "0")}/${iso.getFullYear()}`;
+    }
+    if (typeof iso !== "string" || iso.length < 10) return "";
     const [y, m, d] = iso.slice(0, 10).split("-");
     if (!y || !m || !d) return "";
     return `${d}/${m}/${y}`;
