@@ -20,11 +20,30 @@
     $: start = (safePage - 1) * perPage;
     $: end = Math.min(start + perPage - 1, totalRows - 1);
 
-    // Helper function to determine if a page number should be visible
-    function shouldShowPage(pageNum) {
-        if (totalPages <= 7) return true;
-        if (pageNum <= 2 || pageNum >= totalPages - 1) return true;
-        return Math.abs(pageNum - safePage) <= 2;
+    // Lista de items a renderizar (páginas visibles + ellipsis), calculada en un
+    // `$:` con totalPages y safePage EXPLÍCITOS en la expresión. En Svelte 3 una
+    // condición `{#if fn(x)}` en el template NO rastrea las variables internas de
+    // fn — la ventana quedaba congelada en el primer render al cambiar de página.
+    $: pageItems = buildPageItems(totalPages, safePage);
+
+    function buildPageItems(total, current) {
+        const items = [];
+        let prevVisible = false;
+        for (let p = 1; p <= total; p++) {
+            const visible =
+                total <= 7 ||
+                p <= 2 ||
+                p >= total - 1 ||
+                Math.abs(p - current) <= 2;
+            if (visible) {
+                items.push({ type: 'page', num: p });
+                prevVisible = true;
+            } else {
+                if (prevVisible) items.push({ type: 'ellipsis', num: p });
+                prevVisible = false;
+            }
+        }
+        return items;
     }
 
     function handlePageChange(page) {
@@ -56,18 +75,17 @@
             <i class="fas fa-chevron-left"></i>
         </button>
 
-        {#each Array(totalPages) as _, i}
-            {@const pageNum = i + 1}
-            {#if shouldShowPage(pageNum)}
+        {#each pageItems as item (item.type + '-' + item.num)}
+            {#if item.type === 'page'}
                 <button
-                    on:click={() => handlePageChange(pageNum)}
-                    class="pagination-button pagination-button-page {pageNum === safePage ? 'active' : ''}"
-                    aria-label="Go to page {pageNum}"
-                    aria-current={pageNum === safePage ? "page" : undefined}
+                    on:click={() => handlePageChange(item.num)}
+                    class="pagination-button pagination-button-page {item.num === safePage ? 'active' : ''}"
+                    aria-label="Go to page {item.num}"
+                    aria-current={item.num === safePage ? "page" : undefined}
                 >
-                    {pageNum}
+                    {item.num}
                 </button>
-            {:else if shouldShowPage(i) && !shouldShowPage(i + 1)}
+            {:else}
                 <span class="pagination-ellipsis">...</span>
             {/if}
         {/each}
