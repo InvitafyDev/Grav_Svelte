@@ -1,6 +1,6 @@
 {
   "name": "grav-svelte",
-  "version": "0.1.251",
+  "version": "0.1.252",
   "description": "A collection of Svelte components",
   "license": "MIT",
   "scripts": {
@@ -51,6 +51,10 @@
     "./Preview": {
       "types": "./dist/Preview/index.d.ts",
       "svelte": "./dist/Preview/index.js"
+    },
+    "./Accordion": {
+      "types": "./dist/Accordion/index.d.ts",
+      "svelte": "./dist/Accordion/index.js"
     },
     "./typography.css": "./dist/typography.css"
   },
