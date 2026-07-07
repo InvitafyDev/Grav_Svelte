@@ -73,7 +73,16 @@
 }
 
 .pagination-button-page.active {
-    border-bottom-color: var(--grav-crud-color-neutral);
+    background-color: var(--grav-crud-color-neutral);
+    color: #fff;
+    border-radius: var(--grav-crud-button-border-radius, 0.5rem);
+    border-bottom-color: transparent;
+    font-weight: 700;
+}
+
+.pagination-button-page.active:hover {
+    background-color: var(--grav-crud-color-neutral);
+    color: #fff;
 }
 
 .pagination-button-arrow {
