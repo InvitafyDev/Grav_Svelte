@@ -5,32 +5,29 @@
     // Example usage of Grav_Accordion:
     // Generic accordion checklist — expandable items with status badge,
     // "done" check toggle and lazy content via the default slot (let:item).
-    let items: AccordionItemI[] = [
-        {
-            id: 1,
-            title: "Portada",
-            subtitle: "Foto principal y nombres",
-            badgeText: "Completada",
-            badgeType: "success",
-            checked: true,
-        },
-        {
-            id: 2,
-            title: "Itinerario",
-            subtitle: "Horarios del evento",
-            badgeText: "Pendiente",
-            badgeType: "warning",
-            checked: false,
-        },
-        {
-            id: 3,
-            title: "Mesa de regalos",
-            badgeText: "No requerida",
-            badgeType: "neutral",
-            checked: false,
-            checkable: false,
-        },
+    const NOMBRES = [
+        "Portada",
+        "Itinerario",
+        "Mesa de regalos",
+        "Galería",
+        "Hospedaje",
+        "Dress code",
+        "Padrinos",
+        "Confirmación",
+        "Ubicaciones",
+        "Música",
+        "Despedida",
+        "Extras",
     ];
+    let items: AccordionItemI[] = NOMBRES.map((title, i) => ({
+        id: i + 1,
+        title,
+        subtitle: i % 2 === 0 ? "Descripción de la sección" : "",
+        badgeText: i % 3 === 0 ? "Completada" : i % 3 === 1 ? "Pendiente" : "No requerida",
+        badgeType: i % 3 === 0 ? "success" : i % 3 === 1 ? "warning" : "neutral",
+        checked: i % 3 === 0,
+        checkable: i % 3 !== 2,
+    }));
 
     // onCheck: the consumer owns the state — toggle and reassign to update the UI.
     function handleCheck(item: AccordionItemI) {
@@ -50,10 +47,14 @@
     <h1 class="mb-6 text-2xl font-bold">Grav_Accordion</h1>
     <Grav_Accordion
         {items}
+        showMinimap={true}
+        minimapTitle="Secciones"
         onCheck={handleCheck}
         onExpand={handleExpand}
         let:item
     >
-        <p>Contenido de <strong>{item.title}</strong> (slot con let:item).</p>
+        <p style="min-height: 12rem;">
+            Contenido de <strong>{item.title}</strong> (slot con let:item).
+        </p>
     </Grav_Accordion>
 </div>
