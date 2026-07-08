@@ -1,7 +1,7 @@
 <script lang="ts">
     import './Grav_Accordion.css';
-    import { slide } from 'svelte/transition';
-    import { tick } from 'svelte';
+    import { slide, fly } from 'svelte/transition';
+    import { tick, onMount } from 'svelte';
     import type { AccordionItemI } from './interfaces.js';
 
     export let items: AccordionItemI[] = [];
@@ -65,6 +65,15 @@
 
     // Refs a los items para el scroll del minimapa.
     let itemEls: Record<string | number, HTMLElement> = {};
+
+    // El minimapa es colapsable: en pantallas anchas inicia abierto; en angostas
+    // (ventana a media pantalla, etc.) inicia como botón flotante para no tapar contenido.
+    let minimapAbierto = true;
+    onMount(() => {
+        if (typeof window !== 'undefined' && window.matchMedia) {
+            minimapAbierto = window.matchMedia('(min-width: 1024px)').matches;
+        }
+    });
 
     async function irAItem(item: AccordionItemI) {
         if (expandedIds.indexOf(item.id) === -1) {
@@ -169,9 +178,39 @@
         {/each}
     </div>
 
-    {#if showMinimap && items.length > 0}
-        <nav class="grav-acc-minimap" aria-label={minimapTitle}>
-            <div class="grav-acc-minimap-title">{minimapTitle}</div>
+    {#if showMinimap && items.length > 0 && !minimapAbierto}
+        <button
+            type="button"
+            class="grav-acc-minimap-fab"
+            title={minimapTitle}
+            on:click={() => (minimapAbierto = true)}
+            transition:fly={{ x: 24, duration: 180 }}
+        >
+            <svg class="grav-acc-minimap-fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h10M4 18h14" />
+            </svg>
+        </button>
+    {/if}
+
+    {#if showMinimap && items.length > 0 && minimapAbierto}
+        <nav
+            class="grav-acc-minimap"
+            aria-label={minimapTitle}
+            transition:fly={{ x: 24, duration: 180 }}
+        >
+            <div class="grav-acc-minimap-header">
+                <span class="grav-acc-minimap-title">{minimapTitle}</span>
+                <button
+                    type="button"
+                    class="grav-acc-minimap-close"
+                    title="Ocultar minimapa"
+                    on:click={() => (minimapAbierto = false)}
+                >
+                    <svg class="grav-acc-minimap-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
             <div class="grav-acc-minimap-list">
                 {#each items as item (item.id)}
                     <div
