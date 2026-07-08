@@ -1,9 +1,13 @@
 <script lang="ts">
     import './Grav_Accordion.css';
     import { slide } from 'svelte/transition';
+    import { tick } from 'svelte';
     import type { AccordionItemI } from './interfaces.js';
 
     export let items: AccordionItemI[] = [];
+    /** Minimapa flotante a la derecha (estilo VS Code): click = ir a la sección; toggle = abrir/cerrar. */
+    export let showMinimap = false;
+    export let minimapTitle = 'Contenido';
     /** Permite tener varios items abiertos a la vez. */
     export let multiple = true;
     /** Muestra el toggle de check (realizado) en cada item. */
@@ -58,6 +62,21 @@
         event.stopPropagation();
         onCheck(item);
     }
+
+    // Refs a los items para el scroll del minimapa.
+    let itemEls: Record<string | number, HTMLElement> = {};
+
+    async function irAItem(item: AccordionItemI) {
+        if (expandedIds.indexOf(item.id) === -1) {
+            expandedIds = multiple ? [...expandedIds, item.id] : [item.id];
+            onExpand(item);
+            await tick();
+        }
+        const el = itemEls[item.id];
+        if (el && el.scrollIntoView) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
 </script>
 
 <div class="grav-acc">
@@ -91,7 +110,10 @@
 
     <div class="grav-acc-list">
         {#each items as item (item.id)}
-            <div class="grav-acc-item {expandedIds.indexOf(item.id) !== -1 ? 'grav-acc-item--open' : ''}">
+            <div
+                class="grav-acc-item {expandedIds.indexOf(item.id) !== -1 ? 'grav-acc-item--open' : ''}"
+                bind:this={itemEls[item.id]}
+            >
                 <div
                     class="grav-acc-header"
                     role="button"
@@ -146,4 +168,51 @@
             </div>
         {/each}
     </div>
+
+    {#if showMinimap && items.length > 0}
+        <nav class="grav-acc-minimap" aria-label={minimapTitle}>
+            <div class="grav-acc-minimap-title">{minimapTitle}</div>
+            <div class="grav-acc-minimap-list">
+                {#each items as item (item.id)}
+                    <div
+                        class="grav-acc-minimap-row {expandedIds.indexOf(item.id) !== -1
+                            ? 'grav-acc-minimap-row--open'
+                            : ''}"
+                    >
+                        <button
+                            type="button"
+                            class="grav-acc-minimap-link"
+                            title={item.title}
+                            on:click={() => irAItem(item)}
+                        >
+                            <span
+                                class="grav-acc-minimap-dot {item.checked
+                                    ? 'grav-acc-minimap-dot--done'
+                                    : ''}"
+                            />
+                            <span class="grav-acc-minimap-text">{item.title}</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="grav-acc-minimap-toggle"
+                            title={expandedIds.indexOf(item.id) !== -1 ? 'Cerrar sección' : 'Abrir sección'}
+                            on:click={() => toggle(item)}
+                        >
+                            <svg
+                                class="grav-acc-minimap-chevron {expandedIds.indexOf(item.id) !== -1
+                                    ? 'grav-acc-minimap-chevron--open'
+                                    : ''}"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                {/each}
+            </div>
+        </nav>
+    {/if}
 </div>
