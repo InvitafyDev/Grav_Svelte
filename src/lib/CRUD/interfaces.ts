@@ -24,6 +24,17 @@ export interface CustomButtonI {
     onClick: () => void;
 }
 
+export interface ExportButtonI {
+    /** Texto del botón, ej. 'Excel personalizado'. */
+    label: string;
+    /** Clase de icono font-awesome, ej. 'fas fa-file-excel'. Opcional. */
+    icon?: string;
+    /** Texto del tooltip al pasar el mouse. */
+    tooltip?: string;
+    /** Acción al hacer click. */
+    onClick: () => void;
+}
+
 export interface TableHeader {
     titulo: string;
     biSort: boolean;

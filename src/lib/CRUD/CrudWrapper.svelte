@@ -6,6 +6,7 @@
         FiltrosI,
         TableHeader,
         CustomButtonI,
+        ExportButtonI,
     } from "./interfaces.js";
     import PaginationCrud from "./PaginationCRUD.svelte";
 
@@ -26,6 +27,8 @@
     export let showMostrandoInput: boolean = true;
     /** Botones extra (con badge opcional) para la barra de acciones del Crud. */
     export let customButtons: CustomButtonI[] = [];
+    /** Botones extra de exportación; se pintan junto a EXCEL/PDF con el mismo estilo. */
+    export let customExportButtons: ExportButtonI[] = [];
     export let Titulo_Crud: string;
     export let tooltipAgregar: string = 'Agregar';
     export let tooltipImportarExcel: string = 'Importar Excel';
@@ -203,7 +206,7 @@
         />
     </div>
 
-    {#if showExcelButton || showPdfButton}
+    {#if showExcelButton || showPdfButton || customExportButtons.length > 0}
         <div class="export-buttons crud-anim-item crud-anim-export">
             <div class="buttons-right">
                 {#if showExcelButton}
@@ -224,6 +227,19 @@
                         <span class="export-button-icon"><i class="far fa-file-pdf"></i></span> PDF
                     </button>
                 {/if}
+                {#each customExportButtons as btn}
+                    <button
+                        type="button"
+                        on:click={btn.onClick}
+                        title={btn.tooltip}
+                        class="export-button custom-export-button"
+                    >
+                        {#if btn.icon}
+                            <span class="export-button-icon"><i class={btn.icon}></i></span>
+                        {/if}
+                        {btn.label}
+                    </button>
+                {/each}
             </div>
         </div>
     {/if}
