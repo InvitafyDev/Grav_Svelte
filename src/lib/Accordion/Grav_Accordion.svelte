@@ -71,6 +71,17 @@
     // comportamiento por ancho: abierto en pantallas anchas, botón flotante en angostas.
     let minimapAbierto = true;
     let hoverCapaz = false;
+
+    // Ancho del minimapa redimensionable (solo PC): se arrastra el borde izquierdo y se
+    // recuerda en localStorage. En touch/angosto manda el CSS (no se aplica ancho inline).
+    const MINIMAP_ANCHO_DEFAULT = 208; // 13rem
+    const MINIMAP_ANCHO_MIN = 150;
+    const MINIMAP_ANCHO_MAX = 460;
+    let minimapAncho = MINIMAP_ANCHO_DEFAULT;
+    let redimensionando = false;
+    let _resizeStartX = 0;
+    let _resizeStartAncho = 0;
+
     onMount(() => {
         if (typeof window !== 'undefined' && window.matchMedia) {
             hoverCapaz = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -78,6 +89,14 @@
                 ? false
                 : window.matchMedia('(min-width: 1024px)').matches;
         }
+        try {
+            const guardado = localStorage.getItem('gravAccMinimapAncho');
+            if (guardado) {
+                const n = parseInt(guardado, 10);
+                if (!isNaN(n))
+                    minimapAncho = Math.min(MINIMAP_ANCHO_MAX, Math.max(MINIMAP_ANCHO_MIN, n));
+            }
+        } catch (_) {}
     });
 
     // Hover-to-open SOLO en PC (dispositivos con cursor): abrir al entrar el mouse al botón
@@ -86,7 +105,49 @@
         if (hoverCapaz) minimapAbierto = true;
     }
     function cerrarMinimapHover() {
-        if (hoverCapaz) minimapAbierto = false;
+        // No cerrar mientras se arrastra el borde para redimensionar.
+        if (hoverCapaz && !redimensionando) minimapAbierto = false;
+    }
+
+    // Redimensionar arrastrando el borde izquierdo (el panel está anclado a la derecha,
+    // así que arrastrar hacia la IZQUIERDA lo agranda). El ancho se guarda al soltar.
+    function iniciarResize(e) {
+        redimensionando = true;
+        _resizeStartX = e.clientX;
+        _resizeStartAncho = minimapAncho;
+        try {
+            e.currentTarget.setPointerCapture(e.pointerId);
+        } catch (_) {}
+        e.preventDefault();
+    }
+    function alRedimensionar(e) {
+        if (!redimensionando) return;
+        const delta = _resizeStartX - e.clientX;
+        minimapAncho = Math.min(
+            MINIMAP_ANCHO_MAX,
+            Math.max(MINIMAP_ANCHO_MIN, _resizeStartAncho + delta)
+        );
+    }
+    function terminarResize(e) {
+        if (!redimensionando) return;
+        redimensionando = false;
+        try {
+            e.currentTarget.releasePointerCapture(e.pointerId);
+        } catch (_) {}
+        try {
+            localStorage.setItem('gravAccMinimapAncho', String(minimapAncho));
+        } catch (_) {}
+    }
+    // Accesibilidad: flechas ←/→ para ensanchar/angostar con foco en el borde.
+    function ajustarAnchoTeclado(e) {
+        const paso = 16;
+        if (e.key === 'ArrowLeft') minimapAncho = Math.min(MINIMAP_ANCHO_MAX, minimapAncho + paso);
+        else if (e.key === 'ArrowRight') minimapAncho = Math.max(MINIMAP_ANCHO_MIN, minimapAncho - paso);
+        else return;
+        e.preventDefault();
+        try {
+            localStorage.setItem('gravAccMinimapAncho', String(minimapAncho));
+        } catch (_) {}
     }
 
     async function irAItem(item: AccordionItemI) {
@@ -211,9 +272,24 @@
         <nav
             class="grav-acc-minimap"
             aria-label={minimapTitle}
+            style={hoverCapaz ? `width: ${minimapAncho}px` : ''}
             on:mouseleave={cerrarMinimapHover}
             transition:fly={{ x: 24, duration: 180 }}
         >
+            {#if hoverCapaz}
+                <div
+                    class="grav-acc-minimap-resize"
+                    role="separator"
+                    aria-orientation="vertical"
+                    aria-label="Redimensionar ancho"
+                    title="Arrastrá para cambiar el ancho"
+                    tabindex="0"
+                    on:pointerdown={iniciarResize}
+                    on:pointermove={alRedimensionar}
+                    on:pointerup={terminarResize}
+                    on:keydown={ajustarAnchoTeclado}
+                />
+            {/if}
             <div class="grav-acc-minimap-header">
                 <span class="grav-acc-minimap-title">{minimapTitle}</span>
                 <button
