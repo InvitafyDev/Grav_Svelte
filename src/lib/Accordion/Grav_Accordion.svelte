@@ -66,14 +66,28 @@
     // Refs a los items para el scroll del minimapa.
     let itemEls: Record<string | number, HTMLElement> = {};
 
-    // El minimapa es colapsable: en pantallas anchas inicia abierto; en angostas
-    // (ventana a media pantalla, etc.) inicia como botón flotante para no tapar contenido.
+    // El minimapa es colapsable. En PC (dispositivo con cursor/hover) inicia colapsado como
+    // botón flotante y se ABRE al pasar el cursor por encima (flyout). En touch conserva el
+    // comportamiento por ancho: abierto en pantallas anchas, botón flotante en angostas.
     let minimapAbierto = true;
+    let hoverCapaz = false;
     onMount(() => {
         if (typeof window !== 'undefined' && window.matchMedia) {
-            minimapAbierto = window.matchMedia('(min-width: 1024px)').matches;
+            hoverCapaz = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+            minimapAbierto = hoverCapaz
+                ? false
+                : window.matchMedia('(min-width: 1024px)').matches;
         }
     });
+
+    // Hover-to-open SOLO en PC (dispositivos con cursor): abrir al entrar el mouse al botón
+    // flotante y cerrar al salir del panel. En touch no aplica (hoverCapaz queda false).
+    function abrirMinimapHover() {
+        if (hoverCapaz) minimapAbierto = true;
+    }
+    function cerrarMinimapHover() {
+        if (hoverCapaz) minimapAbierto = false;
+    }
 
     async function irAItem(item: AccordionItemI) {
         if (expandedIds.indexOf(item.id) === -1) {
@@ -184,6 +198,7 @@
             class="grav-acc-minimap-fab"
             title={minimapTitle}
             on:click={() => (minimapAbierto = true)}
+            on:mouseenter={abrirMinimapHover}
             transition:fly={{ x: 24, duration: 180 }}
         >
             <svg class="grav-acc-minimap-fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -196,6 +211,7 @@
         <nav
             class="grav-acc-minimap"
             aria-label={minimapTitle}
+            on:mouseleave={cerrarMinimapHover}
             transition:fly={{ x: 24, duration: 180 }}
         >
             <div class="grav-acc-minimap-header">
