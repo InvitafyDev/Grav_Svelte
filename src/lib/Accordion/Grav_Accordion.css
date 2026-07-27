@@ -236,6 +236,40 @@
   overflow: hidden;
 }
 
+/* Borde izquierdo arrastrable para redimensionar el ancho del panel (solo se monta en PC). */
+.grav-acc-minimap-resize {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  cursor: ew-resize;
+  z-index: 3;
+  touch-action: none;
+  background: transparent;
+}
+.grav-acc-minimap-resize::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background-color: #cbd5e1;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.grav-acc-minimap:hover .grav-acc-minimap-resize::before,
+.grav-acc-minimap-resize:hover::before,
+.grav-acc-minimap-resize:focus-visible::before {
+  opacity: 1;
+}
+.grav-acc-minimap-resize:focus-visible {
+  outline: none;
+}
+
 .grav-acc-minimap-header {
   display: flex;
   align-items: center;
