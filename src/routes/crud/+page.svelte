@@ -6,6 +6,9 @@
   import ModalCrud from "./ModalCrud.svelte";
   import fakeComponent from "./fakeComponent.svelte";
 
+  // Tema del demo: oscuro por defecto.
+  let dark = true;
+
   let Filtros: FiltrosI[] = [
     {
       label: "Mes",
@@ -1123,7 +1126,47 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
 </svelte:head>
 
 <div class="p-4 bg-gradient-to-br from-[#ff9878] to-[#fe6b91]">
-  <CrudWrapper
+  <div class="crud-shell {dark ? 'crud-dark' : ''}">
+    <button
+      class="theme-toggle"
+      type="button"
+      aria-pressed={dark}
+      aria-label={dark ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+      title={dark ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+      on:click={() => (dark = !dark)}
+    >
+      {#if dark}
+        <svg
+          class="tt-i"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+          />
+        </svg>
+      {:else}
+        <svg
+          class="tt-i"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+        </svg>
+      {/if}
+    </button>
+    <CrudWrapper
     Titulo_Crud="Ejemplo de CRUD"
     {todosLosObjetos}
     {tableH}
@@ -1162,6 +1205,7 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
     onReorder={handleReorder}
     onCellUpdate={handleCellUpdate}
   />
+  </div>
 
   <div class="bg-white p-6 rounded-lg mt-6">
     <div class="flex justify-between items-center mb-4">
@@ -1208,5 +1252,90 @@ async function handleCellUpdate(id: number | string, campo: string, newValue: an
 <style>
   .bg-blue-500 {
     background-color: #0284c7;
+  }
+
+  /* Contenedor de la tabla: ancla para el botón flotante de tema. */
+  .crud-shell {
+    position: relative;
+  }
+  /* Botón de tema: flotante en la esquina superior derecha, arriba de la tabla. */
+  .theme-toggle {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    z-index: 25;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 9px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.45);
+    transform: translateY(-1px);
+  }
+  .tt-i {
+    width: 17px;
+    height: 17px;
+  }
+
+  /* ===== TEMA OSCURO — SOLO LA TABLA (CRUD) =====
+     Redefine las variables --grav-crud-* solo en el wrapper del CrudWrapper.
+     NO pone fondo propio: el degradado de la página se mantiene alrededor.
+     Los contenedores del CRUD usan var(--grav-crud-color-bg) → se oscurecen;
+     el `color` claro cubre cualquier texto que herede del wrapper. */
+  .crud-dark {
+    --grav-crud-color-bg: #171b26;
+    --grav-crud-color-neutral: #e6e9f2;
+    --grav-crud-color-button: #e6e9f2;
+    --grav-crud-color-border: rgba(255, 255, 255, 0.12);
+    --grav-crud-color-light: #212838;
+    --grav-crud-color-tooltip: #0b0e14;
+    --grav-crud-color-icon-hover: #7c3aed;
+    --grav-crud-box-shadow: 0 22px 48px -26px rgba(0, 0, 0, 0.78);
+    --grav-crud-scrollbar-track: rgba(255, 255, 255, 0.06);
+    --grav-crud-scrollbar-thumb: rgba(255, 255, 255, 0.2);
+    --grav-crud-scrollbar-thumb-hover: rgba(255, 255, 255, 0.34);
+    color: var(--grav-crud-color-neutral);
+  }
+
+  /* DynamicButton usa --neutral como fondo (ahora claro) → decoplar a un acento. */
+  :global(.crud-dark .dynamic-button) {
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+  }
+  /* Botones de exportar: en hover el texto tomaba el color de fondo (oscuro) y
+     desaparecía; forzar texto claro. */
+  :global(.crud-dark .export-button:hover) {
+    color: #e6e9f2;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  /* Inputs de filtro con fondo oscuro sutil. */
+  :global(.crud-dark input),
+  :global(.crud-dark textarea) {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: #e6e9f2;
+  }
+  :global(.crud-dark input::placeholder) {
+    color: #7f889d;
+  }
+  /* svelte-select (dropdowns de filtro) en oscuro. */
+  :global(.crud-dark .svelte-select) {
+    --background: #1b2130;
+    --border: 1px solid rgba(255, 255, 255, 0.14);
+    --list-background: #1b2130;
+    --item-color: #e6e9f2;
+    --item-hover-bg: #262d3f;
+    --selected-item-color: #e6e9f2;
+    --input-color: #e6e9f2;
+    --placeholder-color: #7f889d;
   }
 </style>

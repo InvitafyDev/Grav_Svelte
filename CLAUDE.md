@@ -135,4 +135,14 @@ propaga** al componente de la celda. Para pasarle datos/callbacks, usar un store
 `tipo:'Buttons'` cuyo `action(id)` abra un modal.
 
 **Versión:** estos cambios están en grav-svelte **0.1.249**. admin.invitafy quedó en `^0.1.249` (local vía
-symlink). **Para prod hay que publicar la librería a npm** (`npm publish`) antes de desplegar al consumidor.
+symlink). **Para prod hay que publicar la librería a npm** antes de desplegar al consumidor.
+
+**Publicar a npm = flujo por CI, NO `npm publish` a mano:** el workflow **`.github/workflows/deploy.yml`** publica
+solo cuando **cambia la versión de `package.json`**. El paso *"Check if version changed"* compara
+`git show HEAD^:package.json` vs `jq -r .version package.json`; si difieren, corre *"Publish to npm"*
+(`if: steps.version-check.outputs.publish == 'true'`). O sea, para publicar: **subí la versión en `package.json`**
+(o `npm version patch`, que toca ambos archivos + commitea) y pushealo/mergealo a `main`.
+**Gotcha (costó varios runs):** editar la versión **solo en `package-lock.json`** NO dispara el publish (el CI
+mira `package.json`) → *"Publish to npm"* aparece **saltado** (círculo hueco, no check verde) y npm queda en la
+versión vieja. `npm i grav-svelte@latest` en el consumidor trae lo que hay **publicado en el registro**, no tu
+código local — sin el publish, no lo ve.
