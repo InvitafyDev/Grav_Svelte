@@ -135,4 +135,57 @@ propaga** al componente de la celda. Para pasarle datos/callbacks, usar un store
 `tipo:'Buttons'` cuyo `action(id)` abra un modal.
 
 **Versión:** estos cambios están en grav-svelte **0.1.249**. admin.invitafy quedó en `^0.1.249` (local vía
-symlink). **Para prod hay que publicar la librería a npm** (`npm publish`) antes de desplegar al consumidor.
+symlink). **Para prod hay que publicar la librería a npm** antes de desplegar al consumidor — ver abajo:
+la publicación es automática al pushear a `main`, no se corre `npm publish` a mano.
+
+## Publicación — autodeploy desde `main` (NO correr `npm publish` a mano)
+
+`.github/workflows/deploy.yml` se dispara con **cada push a `main`** y hace dos cosas:
+
+1. `npm run build` → sube `./build/` por **FTP al VPS** (el sitio de demos de la librería). Esto pasa
+   siempre, aunque no cambies la versión.
+2. Compara `package.json:version` contra la del commit anterior (`git show HEAD^:package.json`). **Solo si
+   cambió**, corre `npm publish` con `secrets.NPM_TOKEN`.
+
+Consecuencias prácticas:
+
+- **Un bump de versión sin push no publica nada**, y un push sin bump despliega el sitio pero no publica.
+- El consumidor no ve el cambio hasta que el run termine. Verificar con `npm view grav-svelte version`.
+- Mientras tanto, para probar en un consumidor sin esperar al registro, usar el symlink (documentado en
+  `admin.invitafy/CLAUDE.md`), no copiar archivos a mano.
+
+⚠️ **`npm install` reformatea `package-lock.json` de tabs a 2 espacios** → diff de ~5000 líneas de puro
+ruido. El lock del repo va con tabs y suele estar desincronizado de `package.json` (en agosto 2026 decía
+0.1.259 con package.json en 0.1.262), así que no aporta: revertirlo con `git checkout package-lock.json`
+antes de commitear. Lo mismo si editas `package.json` con un script Node — `JSON.stringify(p, null, 2)`
+reindenta el archivo entero; hacer el bump con un reemplazo textual de la línea de versión.
+
+## SidebarWrapper — slot `menuHeader` (contenido entre el brand y la lista) — v0.1.263
+
+`SidebarWrapper` acepta un slot **`menuHeader`** para inyectar contenido propio (un buscador, un selector de
+empresa, lo que sea) **debajo del título del sidebar y encima de las secciones**, sin tocar la librería:
+
+```svelte
+<SidebarWrapper {sections} {brandName} ... bind:storefullScreen>
+  <MiComponente slot="menuHeader" />
+</SidebarWrapper>
+```
+
+Detalles del diseño, por si hay que tocarlo:
+
+- Va **dentro de `.sidebar-menu`, justo antes de `ul.sidebar-list`**. Ese único punto sirve para escritorio
+  y móvil: en desktop `.sidebar-menu` está justo debajo de `a.sidebar-brand`; en móvil es el drawer y su
+  primer hijo es `.sidebar-collapse-header` (que lleva el brand móvil). Poner el slot en dos sitios lo
+  renderizaría dos veces, con estado duplicado.
+- El contenedor se envuelve en `{#if $$slots.menuHeader}` para no meter un div vacío en los consumidores
+  que no lo usan. **Es retrocompatible**: quien siga usando `<SidebarWrapper ... />` self-closing no nota
+  nada (el `.d.ts` pasó de `slots: {}` a declarar el slot).
+- El `position: sticky` lo pone la librería (`.sidebar-menu-header` en `SidebarWrapper.css`), no el
+  consumidor: `.sidebar-menu` es quien tiene el `overflow-y` en escritorio, así que sin sticky el contenido
+  del slot se iría con el scroll de las secciones. Lleva `background: var(--grav-sidebar-bg)` para tapar
+  los ítems que pasan por debajo.
+- **Ojo con `position: fixed` dentro del slot**: el sidebar tiene transiciones `fly`, y un `fixed` anidado
+  se ancla al ancestro transformado en vez del viewport (mismo problema del `Grav_Modal` anidado). Los
+  dropdowns del contenido del slot deben ir en flujo.
+
+Primer consumidor: el buscador de módulos de `admin.invitafy` (`src/routes/BuscadorModulos.svelte`).
