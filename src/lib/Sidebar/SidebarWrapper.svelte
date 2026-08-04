@@ -175,6 +175,12 @@
             </button>
           </div>
 
+          {#if $$slots.menuHeader}
+            <div class="sidebar-menu-header">
+              <slot name="menuHeader" />
+            </div>
+          {/if}
+
           <ul class="sidebar-list">
             {#each sections as section}
               <li class="sidebar-section-item">
