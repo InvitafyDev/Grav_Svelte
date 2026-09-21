@@ -7,8 +7,14 @@
 </script>
 
 <div class="input-container">
+  <!-- role + aria-checked: sin ellos el estado marcado solo vivia en la clase
+       CSS y no habia forma de saberlo salvo mirando la pantalla. Y el nombre sale
+       del label, no de un "checkbox" fijo: en una matriz de permisos los 45
+       controles se anunciaban todos igual. -->
   <button
-    aria-label="checkbox"
+    role="checkbox"
+    aria-checked={valueVar}
+    aria-label={label}
     {disabled}
     on:click={() => (valueVar = !valueVar)}
     class="checkbox-button {valueVar ? 'checked' : ''}"

@@ -21,12 +21,12 @@
             {text}
         </div>
     {/if}
-    <div
-        on:mouseenter={handleMouseEnter}
-        on:mouseleave={handleMouseLeave}
-        role="button"
-        tabindex="0"
-    >
+    <!-- Sin role ni tabindex: este div solo escucha el mouse para mostrar el
+         tooltip, no es un control. Ponerle role="button" anidaba un boton dentro
+         de otro (el del slot), duplicaba la parada de tabulacion de cada boton de
+         la tabla y hacia que un lector de pantalla anunciara "boton" dos veces.
+         El nombre accesible ya lo pone el propio elemento del slot. -->
+    <div on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave}>
         <slot />
     </div>
 </div>

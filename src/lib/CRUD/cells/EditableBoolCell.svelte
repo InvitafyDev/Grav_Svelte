@@ -14,7 +14,12 @@
     }
 </script>
 
+<!-- Igual que InputFormBool: el estado vivia solo en la clase, y la celda no
+     tenia nombre accesible ninguno porque su contenido es un icono. -->
 <button
+    role="checkbox"
+    aria-checked={Boolean(item[header.campo])}
+    aria-label={header.titulo}
     class="editable-checkbox {item[header.campo] ? 'checked' : ''}"
     on:click={handleClick}
 >

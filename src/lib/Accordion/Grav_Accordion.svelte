@@ -201,6 +201,7 @@
                 <div
                     class="grav-acc-header"
                     role="button"
+                    aria-expanded={expandedIds.indexOf(item.id) !== -1}
                     tabindex="0"
                     on:click={() => toggle(item)}
                     on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggle(item)}
