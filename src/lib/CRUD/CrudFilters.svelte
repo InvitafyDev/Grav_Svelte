@@ -15,8 +15,10 @@
     const dispatch = createEventDispatcher();
 
     export let PageSize = 50;
-    let localPageSize = 50;
-    let localPageSizeStr = "50";
+    // Arranca en el tamaño que trae el padre: antes era un 50 fijo, y una
+    // tabla con PageSize 10 decía "Mostrando: 50" mientras enseñaba 10.
+    let localPageSize = PageSize;
+    let localPageSizeStr = String(PageSize);
     let showFilters = false;
     let isLoading = false;
     let clearKey = 0;
@@ -193,6 +195,7 @@
                         <button
                             class="action-button"
                             type="button"
+                            aria-label={tooltipAgregar}
                             on:click={() => dispatch("add")}
                         >
                             <svg
@@ -218,6 +221,7 @@
                         <button
                             class="action-button"
                             type="button"
+                            aria-label={tooltipImportarExcel}
                             on:click={() => dispatch("import")}
                         >
                             <svg
@@ -247,6 +251,8 @@
                                 type="button"
                                 on:click={toggleFilters}
                                 class="filter-button filter-button-active"
+                                aria-label={tooltipVerFiltros}
+                                aria-expanded="true"
                             >
                                 <i class="fa-solid fa-sliders"></i>
                             </button>
@@ -255,6 +261,8 @@
                                 type="button"
                                 on:click={toggleFilters}
                                 class="filter-button"
+                                aria-label={tooltipVerFiltros}
+                                aria-expanded="false"
                             >
                                 <i class="fa-solid fa-sliders"></i>
                             </button>
@@ -267,6 +275,7 @@
                             type="button"
                             on:click={() => dispatch("settings")}
                             class="filter-button"
+                            aria-label={tooltipConfiguracion}
                         >
                             <i class="fas fa-cog"></i>
                         </button>
@@ -278,6 +287,7 @@
                             type="button"
                             on:click={btn.onClick}
                             class="filter-button custom-button"
+                            aria-label={btn.tooltip}
                         >
                             <i class={btn.icon}></i>
                             {#if btn.badge && btn.badge > 0}

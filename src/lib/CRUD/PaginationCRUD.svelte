@@ -10,6 +10,11 @@
     export let labelMostrando = 'Showing:';
     export let labelDe = 'of';
     export let labelRegistros = 'records';
+    export let ariaPrimeraPagina = 'Go to first page';
+    export let ariaPaginaAnterior = 'Go to previous page';
+    export let ariaPaginaSiguiente = 'Go to next page';
+    export let ariaUltimaPagina = 'Go to last page';
+    export let ariaIrAPagina = 'Go to page';
 
     $: totalPages = Math.max(1, Math.ceil(totalRows / perPage));
     // currentPage efectivo, SIEMPRE dentro de [1, totalPages]. Evita la "página
@@ -60,7 +65,7 @@
             on:click={() => handlePageChange(1)}
             disabled={safePage <= 1}
             class="pagination-button pagination-button-nav first"
-            aria-label="Go to first page"
+            aria-label={ariaPrimeraPagina}
         >
             <i class="fas fa-chevron-left"></i>
             <i class="fas fa-chevron-left"></i>
@@ -70,7 +75,7 @@
             on:click={() => handlePageChange(safePage - 1)}
             disabled={safePage <= 1}
             class="pagination-button pagination-button-arrow"
-            aria-label="Go to previous page"
+            aria-label={ariaPaginaAnterior}
         >
             <i class="fas fa-chevron-left"></i>
         </button>
@@ -80,7 +85,7 @@
                 <button
                     on:click={() => handlePageChange(item.num)}
                     class="pagination-button pagination-button-page {item.num === safePage ? 'active' : ''}"
-                    aria-label="Go to page {item.num}"
+                    aria-label="{ariaIrAPagina} {item.num}"
                     aria-current={item.num === safePage ? "page" : undefined}
                 >
                     {item.num}
@@ -94,7 +99,7 @@
             on:click={() => handlePageChange(safePage + 1)}
             disabled={safePage >= totalPages}
             class="pagination-button pagination-button-arrow"
-            aria-label="Go to next page"
+            aria-label={ariaPaginaSiguiente}
         >
             <i class="fas fa-chevron-right"></i>
         </button>
@@ -103,7 +108,7 @@
             on:click={() => handlePageChange(totalPages)}
             disabled={safePage >= totalPages}
             class="pagination-button pagination-button-nav last"
-            aria-label="Go to last page"
+            aria-label={ariaUltimaPagina}
         >
             <i class="fas fa-chevron-right"></i>
             <i class="fas fa-chevron-right"></i>
@@ -113,7 +118,12 @@
 
 <div class="pagination-info-container">
     <p class="pagination-info">
-        {labelMostrando} {start + 1} - {end + 1} {labelDe} {totalRows} {labelRegistros}
+        <!-- Sin registros el rango saldría "1 - 0 de 0". -->
+        {#if totalRows > 0}
+            {labelMostrando} {start + 1} - {end + 1} {labelDe} {totalRows} {labelRegistros}
+        {:else}
+            {labelMostrando} 0 {labelDe} 0 {labelRegistros}
+        {/if}
     </p>
 </div>
 

@@ -7,7 +7,9 @@
   export let align: "left" | "right" | "center" = "center";
   export let row: any = undefined;
 
-  $: visibleButtons = buttonsConfig.filter((btn) => btn.show ?? true);
+  $: visibleButtons = buttonsConfig.filter(
+    (btn) => (btn.show ?? true) && (btn.showIf ? btn.showIf(row) : true),
+  );
 
   function handleClick(event: MouseEvent, button: ButtonConfig) {
     event.stopPropagation();

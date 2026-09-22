@@ -7,6 +7,12 @@ export interface ButtonConfig {
      * When set to false the button will not be rendered. Defaults to true.
      */
     show?: boolean;
+    /**
+     * Visibilidad por renglón: si devuelve false, el botón no se pinta en ese
+     * renglón (p. ej. "Cancelar" solo en lo que sigue abierto). Se evalúa además
+     * de `show`, que aplica a toda la columna.
+     */
+    showIf?: (row: any) => boolean;
 }
 
 /**
@@ -58,8 +64,11 @@ export interface TableHeader {
      * @param id - The ID of the row being edited
      * @param campo - The field name being edited
      * @param newValue - The new value
+     * @param row - El renglón completo. En sub-renglones (expandEnabled) el `id`
+     *   sale del idField del padre y no distingue un sub-renglón de otro; con el
+     *   renglón sí.
      */
-    onUpdate?: (id: number | string, campo: string, newValue: any) => Promise<void> | void;
+    onUpdate?: (id: number | string, campo: string, newValue: any, row?: any) => Promise<void> | void;
     /**
      * Field name that contains the dynamic button text.
      * Used for DynamicButton type.

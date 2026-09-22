@@ -12,7 +12,8 @@
             await header.onUpdate(
                 item[idField],
                 header.campo,
-                isNaN(numValue) ? null : numValue
+                isNaN(numValue) ? null : numValue,
+                item
             );
         }
     }

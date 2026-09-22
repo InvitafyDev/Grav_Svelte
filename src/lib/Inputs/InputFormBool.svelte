@@ -12,6 +12,7 @@
        del label, no de un "checkbox" fijo: en una matriz de permisos los 45
        controles se anunciaban todos igual. -->
   <button
+    type="button"
     role="checkbox"
     aria-checked={valueVar}
     aria-label={label}
@@ -21,7 +22,17 @@
   >
     <i class="fas {valueVar ? 'fa-check checkwhite' : 'fa-minus'}"></i>
   </button>
-  <span class="label">{label}</span>
+  <!-- La etiqueta también cambia la casilla, como un <label> nativo: antes solo
+       respondía el cuadrito. Queda fuera del árbol accesible (el botón ya lleva
+       el nombre) para que no se anuncie dos veces. -->
+  <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+  <span
+    class="label {disabled ? '' : 'label-clickable'}"
+    aria-hidden="true"
+    on:click={() => {
+      if (!disabled) valueVar = !valueVar;
+    }}>{label}</span
+  >
 </div>
 
 <style>
@@ -62,6 +73,11 @@
     font-size: 1rem;
     margin: 0;
     color: var(--grav-crud-color-neutral);
+  }
+
+  .label-clickable {
+    cursor: pointer;
+    user-select: none;
   }
 
   button:disabled {

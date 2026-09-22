@@ -41,6 +41,11 @@
     export let labelMostrando: string = 'Mostrando:';
     export let labelDe: string = 'de';
     export let labelRegistros: string = 'registros';
+    export let ariaPrimeraPagina: string = 'Primera página';
+    export let ariaPaginaAnterior: string = 'Página anterior';
+    export let ariaPaginaSiguiente: string = 'Página siguiente';
+    export let ariaUltimaPagina: string = 'Última página';
+    export let ariaIrAPagina: string = 'Ir a la página';
     export let dragEnabled: boolean = false;
     export let orderField: string = "inOrden";
     export let minHeightScreen: boolean = false;
@@ -57,7 +62,7 @@
     export let onSettings: (() => void) | undefined = undefined;
     export let onReorder: (reorderedItems: any[]) => void = () => {};
     export let onColumnReorder: (orderedFields: string[]) => void = () => {};
-    export let onCellUpdate: ((id: number | string, campo: string, newValue: any) => Promise<void> | void) | undefined = undefined;
+    export let onCellUpdate: ((id: number | string, campo: string, newValue: any, row?: any) => Promise<void> | void) | undefined = undefined;
 
     function handleFiltroAplicado() {
         // Al filtrar / limpiar / cambiar tamaño de página, volver SIEMPRE a la
@@ -186,6 +191,8 @@
             on:selectedSort={handleSort}
             on:reorderChange={handleReorder}
             on:columnReorderChange={handleColumnReorder}
+            sortField={selectedSort}
+            sortDirection={selectedAscOrDesc}
             {loading}
             {dragEnabled}
             {columnDragEnabled}
@@ -203,6 +210,11 @@
             {labelMostrando}
             {labelDe}
             {labelRegistros}
+            {ariaPrimeraPagina}
+            {ariaPaginaAnterior}
+            {ariaPaginaSiguiente}
+            {ariaUltimaPagina}
+            {ariaIrAPagina}
         />
     </div>
 

@@ -189,3 +189,28 @@ Detalles del diseño, por si hay que tocarlo:
   dropdowns del contenido del slot deben ir en flujo.
 
 Primer consumidor: el buscador de módulos de `admin.invitafy` (`src/routes/BuscadorModulos.svelte`).
+
+## v0.1.265 — tablas: orden, paginación, accesibilidad y botones por renglón (2026-09-22)
+
+Salió de la revisión E2E de Inventory. Todo es retrocompatible.
+
+- **`ButtonConfig.showIf?: (row) => boolean`** — visibilidad por renglón en una columna
+  `Buttons` (p. ej. «Cancelar conteo» solo en los abiertos). Se evalúa además de `show`, que
+  sigue siendo para toda la columna.
+- **`onUpdate` / `onCellUpdate` reciben el renglón como 4.º argumento** en `EditableNumber`. En
+  sub-renglones (`expandEnabled`) el `id` sale del `idField` del padre y no distingue un
+  sub-renglón de otro; con el renglón sí.
+- **Orden**: cambiar de columna empieza **ascendente**; solo la misma columna alterna. Antes
+  siempre alternaba, así que la columna nueva arrancaba al revés. Además `CrudTable` recibe el
+  orden vigente del padre (`sortField`/`sortDirection`, los pasa `CrudWrapper`): pinta la flecha
+  de la columna inicial y el primer clic sobre ella ya no pide el mismo sentido.
+- **«Mostrando»** arranca en el `PageSize` del padre (era un 50 fijo: una tabla de 10 decía 50).
+- **Paginación en español** (`ariaPrimeraPagina`… en `CrudWrapper`; `PaginationCRUD` conserva
+  los defaults en inglés) y sin registros dice «Mostrando: 0 de 0 registros», no «1 - 0 de 0».
+- **Nombres accesibles** en los botones de la barra (agregar, importar, filtros con
+  `aria-expanded`, configuración, `customButtons`) y en la X de `Grav_Modal` («Cerrar»).
+- **`InputFormBool`**: la etiqueta también cambia la casilla (antes solo el cuadrito) y el botón
+  lleva `type="button"` (dentro de un `<form>` hacía submit).
+- **Columnas `Number` con separador de miles** (`es-MX`, hasta 3 decimales) cuando el valor es
+  número; un texto ya formateado se respeta. Afecta a toda columna `tipo: 'Number'` de los
+  consumidores (conteos, cantidades, órdenes): revisar si alguna mostraba un año o un id.

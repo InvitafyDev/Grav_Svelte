@@ -113,7 +113,7 @@
         {title}
       </h3>
       <!-- Cerrar Modal -->
-      <button class="modal-close-button" on:click={onClose}>
+      <button class="modal-close-button" type="button" aria-label="Cerrar" on:click={onClose}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="modal-close-icon"

@@ -26,6 +26,11 @@
   export let subRowsField: string = "subRows";
   export let subRowHeaders: TableHeader[] | undefined = undefined;
   export let columnDragEnabled: boolean = false;
+  /** Orden vigente que decide el padre. Sin esto la tabla creía que no había
+   *  orden, no pintaba la flecha de la columna inicial y el primer clic sobre
+   *  ella pedía el mismo sentido que ya tenía. */
+  export let sortField: string | undefined = undefined;
+  export let sortDirection: "asc" | "desc" | string | undefined = undefined;
 
   let selectedRowId: string | number | null = null;
 
@@ -71,6 +76,8 @@
   );
 
   const { selectedAscOrDesc, selectedSort, dispatchSort } = sortComposable;
+  $: if (sortField !== undefined) selectedSort.set(sortField);
+  $: if (sortDirection === "asc" || sortDirection === "desc") selectedAscOrDesc.set(sortDirection);
 
   // Expand composable
   const expandComposable = useTableExpand();
