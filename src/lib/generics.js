@@ -28,6 +28,20 @@ function html_table_to_excel(type, nombreArchivo, tablaExport) {
 }
 
 /**
+ * El texto de una celda se escribe como texto, nunca como HTML: la ventana del PDF
+ * es del mismo origen que la app y un dato con etiquetas se ejecutaría ahí.
+ * @param {string} texto
+ */
+function escapeHtml(texto) {
+    return texto
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+/**
  * @param {HTMLElement} tablaExport
  * @param {string} nombreArchivo
  */
@@ -41,7 +55,7 @@ function createPDF(tablaExport, nombreArchivo = "PDF") {
 
         // Recorrer las celdas de cada fila
         row.querySelectorAll("td, th").forEach((cell) => {
-            cleanTable += `<td>${cell.textContent.trim()}</td>`; // Extraer solo el texto limpio
+            cleanTable += `<td>${escapeHtml(cell.textContent.trim())}</td>`; // Extraer solo el texto limpio
         });
 
         cleanTable += "</tr>";
@@ -59,7 +73,7 @@ function createPDF(tablaExport, nombreArchivo = "PDF") {
 
     // Crear una nueva ventana para el contenido limpio
     const win = window.open("", "", "height=700,width=700");
-    win.document.write(`<html><head><title>${nombreArchivo}</title>`);
+    win.document.write(`<html><head><title>${escapeHtml(nombreArchivo)}</title>`);
     win.document.write(style); // Agregar estilos
     win.document.write("</head><body>");
     win.document.write(cleanTable); // Insertar la tabla limpia
