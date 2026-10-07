@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { expoOut, cubicOut } from "svelte/easing";
 
   export let title: string = "";
@@ -13,12 +13,33 @@
   export let onDestroy: () => void = () => {};
 
   let visible = false;
+  let cerrando = false;
+  let dialogo: HTMLElement;
+  let botonCancelar: HTMLButtonElement;
+  let botonConfirmar: HTMLButtonElement;
 
+  // Lo que tenía el foco antes de la alerta (un campo de un modal, el botón de
+  // eliminar…): se le devuelve al cerrar.
+  const focoPrevio: HTMLElement | null =
+    typeof document !== "undefined" &&
+    document.activeElement instanceof HTMLElement &&
+    document.activeElement !== document.body
+      ? document.activeElement
+      : null;
+
+  // Una sola vez: un doble clic, o Enter después de un clic, durante la animación
+  // de salida ya no vuelve a correr la acción (un DELETE o un POST repetidos).
   function close(callback: () => void) {
+    if (cerrando) return;
+    cerrando = true;
     visible = false;
     setTimeout(() => {
-      callback();
-      onDestroy();
+      if (focoPrevio && focoPrevio.isConnected) focoPrevio.focus({ preventScroll: true });
+      try {
+        callback();
+      } finally {
+        onDestroy();
+      }
     }, 240);
   }
 
@@ -34,21 +55,46 @@
     if (cancelText !== null) handleCancel();
   }
 
+  function enfocarBotonSeguro() {
+    // En una confirmación, el seguro es «No»; en un aviso solo hay «OK».
+    const boton = cancelText !== null ? botonCancelar : botonConfirmar;
+    if (boton) boton.focus({ preventScroll: true });
+  }
+
   function handleKeydown(e: KeyboardEvent) {
+    if (cerrando || e.isComposing) return;
+    const enfocado = document.activeElement;
+    const dentro = !!dialogo && enfocado instanceof Node && dialogo.contains(enfocado);
+
     if (e.key === "Enter") {
+      // Con el foco en uno de los botones, Enter lo activa como a cualquier botón:
+      // el click nativo llama a handleConfirm o a handleCancel.
+      if (dentro && enfocado instanceof HTMLButtonElement) return;
       e.preventDefault();
-      handleConfirm();
+      // Fuera de los botones, Enter solo cierra un aviso de un botón; una
+      // confirmación nunca se acepta sin el foco en «Sí».
+      if (cancelText === null) handleConfirm();
+      else enfocarBotonSeguro();
     } else if (e.key === "Escape") {
       e.preventDefault();
       if (cancelText !== null) handleCancel();
       else handleConfirm();
+    } else if (e.key === "Tab") {
+      // El foco no se sale a la página de atrás, que el fondo tapa.
+      e.preventDefault();
+      const botones = [botonCancelar, botonConfirmar].filter(Boolean);
+      const i = botones.indexOf(enfocado as HTMLButtonElement);
+      const siguiente = e.shiftKey ? i - 1 : i + 1;
+      botones[(siguiente + botones.length) % botones.length].focus();
     }
   }
 
   onMount(() => {
     // Disparar el {#if} en el siguiente frame garantiza que la transición de entrada se ejecute
-    requestAnimationFrame(() => {
+    requestAnimationFrame(async () => {
       visible = true;
+      await tick();
+      enfocarBotonSeguro();
     });
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
@@ -127,6 +173,7 @@
     ></div>
 
     <div
+      bind:this={dialogo}
       class="modern-alert-dialog"
       in:dialogIn={{ duration: 550 }}
       out:dialogOut={{ duration: 220 }}
@@ -221,12 +268,14 @@
           <button
             type="button"
             class="modern-alert-btn modern-alert-btn-cancel"
+            bind:this={botonCancelar}
             on:click={handleCancel}>{cancelText}</button
           >
         {/if}
         <button
           type="button"
           class="modern-alert-btn modern-alert-btn-confirm"
+          bind:this={botonConfirmar}
           class:destructive={destructive || icon === "error"}
           on:click={handleConfirm}>{confirmText}</button
         >
