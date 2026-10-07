@@ -39,8 +39,11 @@
   }
 }
 
+/* xs y sm: el porcentaje se queda corto en tablet (192 y 256 px a 768) y corta
+   el pie; nunca más angostos que 20 y 24 rem, sin pasarse de la pantalla. */
 .modal-content.sm {
   width: 75%;
+  min-width: min(24rem, calc(100vw - 2rem));
   min-height: 60vh;
 }
 
@@ -52,6 +55,7 @@
 
 .modal-content.xs {
   width: 75%;
+  min-width: min(20rem, calc(100vw - 2rem));
   min-height: 40vh;
 }
 
@@ -142,6 +146,7 @@
 
 .modal-footer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   padding: 0.75rem;

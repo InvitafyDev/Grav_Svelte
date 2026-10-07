@@ -1,5 +1,10 @@
+<script context="module" lang="ts">
+  let siguienteId = 0;
+</script>
+
 <script lang="ts">
   import "./Grav_Modal.css";
+  import { onMount, onDestroy } from "svelte";
   import { fade } from "svelte/transition";
   import { expoOut, cubicOut } from "svelte/easing";
 
@@ -61,55 +66,124 @@
   // Get the current size class
   $: currentSizeClass = sizeClasses[size];
 
-  // Handle keydown event
-  function handleKeydown(event: KeyboardEvent) {
-    const target = event.target as HTMLElement;
-    const isInputElement = target.tagName === "TEXTAREA";
+  const tituloId = `grav-modal-titulo-${++siguienteId}`;
+  let dialogo: HTMLElement;
 
-    if (
+  // Al abrir, el foco entra al modal (así Escape y Tab funcionan sin un clic previo);
+  // al cerrar, regresa a lo que lo tenía, normalmente el botón que lo abrió.
+  // Se lee al crear el componente: el onMount del contenido corre antes que el de aquí.
+  const focoPrevio: HTMLElement | null =
+    typeof document !== "undefined" &&
+    document.activeElement instanceof HTMLElement &&
+    document.activeElement !== document.body
+      ? document.activeElement
+      : null;
+
+  onMount(() => {
+    // Si el contenido ya enfocó un campo (autofocus propio), se respeta.
+    if (!dialogo.contains(document.activeElement)) dialogo.focus({ preventScroll: true });
+  });
+
+  onDestroy(() => {
+    if (typeof document === "undefined") return;
+    if (focoPrevio && focoPrevio.isConnected) focoPrevio.focus({ preventScroll: true });
+  });
+
+  const ENFOCABLES = [
+    "a[href]",
+    "button:not([disabled])",
+    'input:not([disabled]):not([type="hidden"])',
+    "select:not([disabled])",
+    "textarea:not([disabled])",
+    '[tabindex]:not([tabindex="-1"])',
+    '[contenteditable="true"]',
+  ].join(",");
+
+  function enfocables(): HTMLElement[] {
+    return Array.from(dialogo.querySelectorAll<HTMLElement>(ENFOCABLES)).filter(
+      (el) => el.getClientRects().length > 0,
+    );
+  }
+
+  // Tab y Shift+Tab dan la vuelta dentro del modal, sin salirse a la página de atrás.
+  function atraparTab(event: KeyboardEvent) {
+    const lista = enfocables();
+    const activo = document.activeElement;
+    if (lista.length === 0) {
+      event.preventDefault();
+      dialogo.focus();
+      return;
+    }
+    const primero = lista[0];
+    const ultimo = lista[lista.length - 1];
+    const fuera = !(activo instanceof Node) || !dialogo.contains(activo);
+    if (event.shiftKey && (fuera || activo === primero || activo === dialogo)) {
+      event.preventDefault();
+      ultimo.focus();
+    } else if (!event.shiftKey && (fuera || activo === ultimo)) {
+      event.preventDefault();
+      primero.focus();
+    }
+  }
+
+  const TIPOS_SIN_TEXTO = [
+    "checkbox", "radio", "button", "submit", "reset", "file", "color", "range", "image",
+  ];
+
+  // Enter guarda solo desde un campo donde se escribe. Sobre un botón (Cancelar, la X,
+  // el ojo de la contraseña, el "+" del select) o un checkbox, Enter activa ese control.
+  function esCampoDeTexto(el: EventTarget | null): boolean {
+    if (!(el instanceof HTMLInputElement)) return false;
+    return !TIPOS_SIN_TEXTO.includes(el.type);
+  }
+
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.defaultPrevented || event.isComposing) return;
+    // Con una alerta abierta (Error_Alert, Confirmacion_Alert) las teclas son suyas:
+    // la alerta escucha en window y este handler no debe frenar el evento antes.
+    if (document.querySelector(".modern-alert-dialog")) return;
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      onClose();
+    } else if (event.key === "Tab") {
+      event.stopPropagation();
+      atraparTab(event);
+    } else if (
       event.key === "Enter" &&
       !saveButtonDisabled &&
       !loading &&
-      !isInputElement
+      esCampoDeTexto(event.target)
     ) {
       event.preventDefault();
       event.stopPropagation();
       onSave();
-    } else if (event.key === "Escape") {
-      event.preventDefault();
-      event.stopPropagation();
-      onClose();
     }
   }
 
-  // Handle click to focus the modal
+  // Un clic en el fondo del overlay devuelve el foco al modal
   function handleClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    const currentTarget = event.currentTarget as HTMLElement;
-
-    // Only focus if clicking directly on the modal container
-    if (target === currentTarget) {
-      target.focus();
-    }
+    if (event.target === event.currentTarget) dialogo.focus({ preventScroll: true });
   }
 </script>
 
-<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<div
-  class="modal-overlay"
-  on:keydown={handleKeydown}
-  on:click={handleClick}
-  tabindex="0"
->
+<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events a11y_no_static_element_interactions a11y_click_events_have_key_events -->
+<div class="modal-overlay" on:keydown={handleKeydown} on:click={handleClick}>
   <!--content-->
   <div
+    bind:this={dialogo}
     class="modal-content {size}"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby={tituloId}
+    tabindex="-1"
     in:appleModal={{ duration: 400 }}
     out:appleModal={{ duration: 250, reverse: true }}
   >
     <!-- Encabezado Modal -->
     <div class="modal-header">
-      <h3 class="modal-title">
+      <h3 class="modal-title" id={tituloId}>
         {title}
       </h3>
       <!-- Cerrar Modal -->
