@@ -50,24 +50,6 @@
     gap: 0.1rem;
   }
 
-  .tooltip-container {
-    position: relative;
-  }
-
-  .tooltip {
-    position: absolute;
-    z-index: 10000;
-    padding: 0.25rem;
-    color: white;
-    text-align: center;
-    font-size: 0.75rem;
-    background-color: var(--grav-crud-color-tooltip);
-    border-radius: var(--grav-crud-tooltip-border-radius, 0.25rem);
-    top: -1.8rem;
-    right: -2.5rem;
-    pointer-events: none;
-  }
-
   .action-buttons-group {
     display: inline-flex;
     align-items: center;

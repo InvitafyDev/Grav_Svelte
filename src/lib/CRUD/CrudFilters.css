@@ -145,19 +145,6 @@
   position: relative;
 }
 
-.tooltip {
-  position: absolute;
-  z-index: 10000;
-  padding: 0.25rem;
-  color: white;
-  font-size: 0.75rem;
-  background-color: var(--grav-crud-color-icon-hover);
-  border-radius: var(--grav-crud-tooltip-border-radius, 0.25rem);
-  top: -1.25rem;
-  left: -2.5rem;
-  pointer-events: none;
-}
-
 .action-button {
   display: flex;
   justify-content: center;
