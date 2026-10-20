@@ -50,15 +50,26 @@
   // State: same pattern as Invitafy - string class for collapse (hidden vs overlay)
   let collapseShow = "hidden";
 
+  // storefullScreen solo aplica en escritorio: debajo de 1024 px no hay botón
+  // para volver a mostrar el menú, así que se ignora (sin cambiar su valor).
+  const ESCRITORIO = "(min-width: 1024px)";
+  let esEscritorio =
+    typeof window === "undefined" || window.matchMedia(ESCRITORIO).matches;
+  $: oculto = storefullScreen && esEscritorio;
+
   onMount(() => {
-    if (window.innerWidth >= 1024) collapseShow = "";
-    const onResize = () => {
-      if (window.innerWidth >= 1024) collapseShow = "";
+    const mq = window.matchMedia(ESCRITORIO);
+    // Al cruzar los 1024 px (achicar la ventana, girar un iPad), el cajón
+    // vuelve a su estado base: visible en escritorio y cerrado en móvil.
+    const onChange = () => {
+      esEscritorio = mq.matches;
+      collapseShow = mq.matches ? "" : "hidden";
     };
-    window.addEventListener("resize", onResize);
+    onChange();
+    mq.addEventListener("change", onChange);
 
     return () => {
-      window.removeEventListener("resize", onResize);
+      mq.removeEventListener("change", onChange);
     };
   });
 
@@ -82,7 +93,7 @@
   }
 </script>
 
-{#if storefullScreen}
+{#if oculto}
   <div
     class="sidebar-reopen-wrap"
     style={themeStyle || ""}
