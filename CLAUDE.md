@@ -214,3 +214,25 @@ Salió de la revisión E2E de Inventory. Todo es retrocompatible.
 - **Columnas `Number` con separador de miles** (`es-MX`, hasta 3 decimales) cuando el valor es
   número; un texto ya formateado se respeta. Afecta a toda columna `tipo: 'Number'` de los
   consumidores (conteos, cantidades, órdenes): revisar si alguna mostraba un año o un id.
+
+## v0.1.267 — el tooltip de los botones se pinta fuera de la tabla (2026-10-16)
+
+`Tooltip.svelte` (lo usan `CrudTableButtons` y la barra de `CrudFilters`) pasa su globo a `<body>`
+con `position: fixed`. Antes vivía dentro de la celda: el `overflow: hidden` de `.table-cell` lo
+cortaba, heredaba el `overflow-wrap: break-word` («Finaliza / r») y, ya en varias líneas, tapaba el
+propio botón (reportado en el tablero de diseñadores de admin.invitafy, cuadrícula 6 x 2).
+
+- Va arriba del botón, centrado y a 6 px; si no cabe, abajo. Nunca encima del botón, y se recorre
+  para no salirse de la ventana (`clientWidth`, sin la barra de scroll).
+- Se cierra al salir el mouse, al hacer `pointerdown` (el clic suele abrir un `Grav_Modal`, z-index
+  50, y el tooltip en `<body>` quedaría encima) y con cualquier scroll o resize.
+- Solo con mouse (`pointerType === 'mouse'`): en táctil el toque lo dejaba pegado.
+- Como ya no hereda del contenedor, copia del botón `--grav-crud-color-tooltip` y
+  `--grav-crud-tooltip-border-radius` (el `.modal-content` de `Grav_Modal` pone su propio color).
+- El `destroy` del action `portal` quita el nodo: al destruir el renglón (refresco de la tabla)
+  Svelte 3 no lo quita solo, porque ya no está dentro de la celda.
+- La clase es `.grav-tooltip`; se borraron los `.tooltip` muertos de `CrudFilters.css` y
+  `CrudTableButtons.svelte`. `.tooltip-container` y su `> div` siguen igual (admin.invitafy los usa).
+
+Se probó compilando con el Svelte 3.59 de admin.invitafy (los consumidores son Svelte 3) y en el
+sitio de demos (Svelte 5).
