@@ -122,10 +122,13 @@
 
     // La tabla propia: con document.querySelector, un CrudWrapper dentro de un
     // modal exportaba la tabla de la página de fondo.
+    // Sin `?.`: con `wrapperEl?.querySelector`, el compilador de Svelte 3.55 de las
+    // apps se comía el resto de la función y EXCEL y PDF no hacían nada (0.1.268).
     let wrapperEl: HTMLDivElement;
 
     function handleExport(type: "excel" | "pdf") {
-        const table = wrapperEl?.querySelector("table");
+        const contenedor = wrapperEl;
+        const table = contenedor ? contenedor.querySelector("table") : null;
         if (!table) return;
 
         const fileName = generateFileName(Titulo_Crud);
