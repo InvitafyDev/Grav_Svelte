@@ -50,6 +50,18 @@
   });
 
   let cacheResults = {};
+
+  // Opciones del nivel i. Si el cambio fue en este nivel o más abajo, las del
+  // padre no cambiaron y salen del caché. Se guardan aquí y no en el template:
+  // asignar dentro del template hacía un bucle en Svelte 5 y en Svelte 3
+  // pintaba «[object Object]».
+  function cargarNivel(i, valorPadre, ultimo) {
+    if (ultimo >= i && cacheResults[i]) return cacheResults[i];
+    return Promise.resolve(fetchFnCloned[i].fetchFn(valorPadre)).then((res) => {
+      cacheResults[i] = res;
+      return res;
+    });
+  }
   // Función para actualizar valores y cargar el siguiente nivel
   let ultimoIndexActualizado = 0;
   function handleChange(index, value, field) {
@@ -86,12 +98,9 @@
 
     {#if i > 0}
       {#if levels[i - 1]?.default?.value}
-        {#await ultimoIndexActualizado >= i ? cacheResults[i] : fetchFnCloned[i].fetchFn(levels[i - 1]?.default?.value)}
+        {#await cargarNivel(i, levels[i - 1]?.default?.value, ultimoIndexActualizado)}
           <p class="loading-message">Cargando {level.label}...</p>
         {:then res}
-          <div class=" hidden">
-            {(cacheResults[i] = res)}
-          </div>
           <InputFormSelect
             value={level?.default}
             label={level.label}
