@@ -58,44 +58,53 @@
     { value: "+32", label: "🇧🇪 +32" },
   ];
 
+  // Lada más larga primero: "+593" antes que "+59".
+  const dialCodes = [...new Set(countries.map((c) => c.value))].sort(
+    (a, b) => b.length - a.length
+  );
+
   // Hidratar el estado interno desde un valor entrante (edición / prellenado).
-  // DEBE correr antes del bloque reactivo de abajo: de lo contrario ese bloque
-  // sobrescribiría valueVar con el dial code por defecto al montar.
-  const valorInicial =
-    valueVar || (phoneNumber ? (dialCode || defaultDialCode) + phoneNumber : "");
-  if (valorInicial) {
-    const dialCodes = [...new Set(countries.map((c) => c.value))].sort(
-      (a, b) => b.length - a.length
-    );
-    const codigo = dialCodes.find((c) => valorInicial.startsWith(c));
+  // Corre al montar y cada vez que valueVar cambia desde fuera (un fetch que
+  // llega después, un reset del formulario); no cuando lo cambia el propio
+  // componente (`emitido`).
+  let emitido: string | null = null;
+
+  function hidratar(valor: string) {
+    const codigo = dialCodes.find((c) => valor.startsWith(c));
     if (codigo) {
       selectedDialCode = codigo;
-      internalPhoneNumber = valorInicial.slice(codigo.length).replace(/\D/g, "");
+      internalPhoneNumber = valor.slice(codigo.length).replace(/\D/g, "");
     } else {
-      internalPhoneNumber = valorInicial.replace(/\D/g, "");
+      selectedDialCode = valor ? selectedDialCode : defaultDialCode;
+      internalPhoneNumber = valor.replace(/\D/g, "");
     }
   }
 
-  // Update all exported values reactively
-  $: {
-    const cleanNumber = internalPhoneNumber.replace(/\D/g, "");
+  const valorInicial =
+    valueVar || (phoneNumber ? (dialCode || defaultDialCode) + phoneNumber : "");
+  if (valorInicial) hidratar(valorInicial);
+
+  $: emitir(selectedDialCode, internalPhoneNumber, validation);
+  $: if (valueVar !== emitido) {
+    hidratar(valueVar ?? "");
+    emitir(selectedDialCode, internalPhoneNumber, validation);
+  }
+
+  // Update all exported values
+  function emitir(codigo: string, numero: string, validar: boolean) {
+    const cleanNumber = numero.replace(/\D/g, "");
 
     // Update separate values
-    dialCode = selectedDialCode;
+    dialCode = codigo;
     phoneNumber = cleanNumber;
 
-    // Update concatenated value
-    if (selectedDialCode && cleanNumber) {
-      valueVar = selectedDialCode + cleanNumber;
-    } else if (selectedDialCode) {
-      valueVar = selectedDialCode;
-    } else {
-      valueVar = "";
-    }
+    // Un teléfono vacío vale "", no la lada sola: con "+52" un campo opcional
+    // nunca quedaba vacío y uno obligatorio pasaba la validación.
+    valueVar = emitido = codigo && cleanNumber ? codigo + cleanNumber : "";
 
     // Validation logic
-    if (validation) {
-      if (internalPhoneNumber && !/^\d+$/.test(cleanNumber)) {
+    if (validar) {
+      if (numero && !/^\d+$/.test(cleanNumber)) {
         validationMessage = "Phone number must contain only digits";
         isValid = false;
       } else if (cleanNumber && cleanNumber.length < 7) {
@@ -117,7 +126,17 @@
   // Clean phone number input (only allow digits)
   function handlePhoneInput(event: Event) {
     const input = event.target as HTMLInputElement;
-    const cleaned = input.value.replace(/\D/g, "");
+    const texto = input.value.trim();
+    let cleaned = texto.replace(/\D/g, "");
+    // Pegado o autocompletado con lada ("+52 844 461 2811"): la lada va al
+    // selector y no se suma al número.
+    const codigo = texto.startsWith("+")
+      ? dialCodes.find((c) => cleaned.startsWith(c.slice(1)))
+      : undefined;
+    if (codigo) {
+      selectedDialCode = codigo;
+      cleaned = cleaned.slice(codigo.length - 1);
+    }
     internalPhoneNumber = cleaned;
   }
 </script>

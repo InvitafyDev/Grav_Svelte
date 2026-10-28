@@ -1,11 +1,25 @@
+<script context="module" lang="ts">
+  let avisado = false;
+</script>
+
 <script lang="ts">
   import type { ButtonConfig } from "./interfaces.js";
   import Tooltip from "./Tooltip.svelte";
 
-  export let id = 1;
+  // Sin valor por defecto: con `id = 1`, un `campo` con errata hacía que
+  // «Eliminar» apuntara al registro 1 desde cualquier renglón.
+  export let id: any = undefined;
   export let buttonsConfig: ButtonConfig[];
   export let align: "left" | "right" | "center" = "center";
   export let row: any = undefined;
+
+  $: if (id === undefined && row !== undefined && !avisado) {
+    avisado = true;
+    console.warn(
+      "grav-svelte: el `campo` de la columna Buttons no existe en los datos; las acciones reciben id undefined.",
+      row,
+    );
+  }
 
   $: visibleButtons = buttonsConfig.filter(
     (btn) => (btn.show ?? true) && (btn.showIf ? btn.showIf(row) : true),

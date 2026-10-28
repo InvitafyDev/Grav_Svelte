@@ -120,8 +120,12 @@
         return `${cleanTitle} - ${dateStr}`;
     }
 
+    // La tabla propia: con document.querySelector, un CrudWrapper dentro de un
+    // modal exportaba la tabla de la página de fondo.
+    let wrapperEl: HTMLDivElement;
+
     function handleExport(type: "excel" | "pdf") {
-        const table = document.querySelector("table");
+        const table = wrapperEl?.querySelector("table");
         if (!table) return;
 
         const fileName = generateFileName(Titulo_Crud);
@@ -156,7 +160,7 @@
     });
 </script>
 
-<div class="crud-wrapper" class:min-height-screen={minHeightScreen}>
+<div class="crud-wrapper" class:min-height-screen={minHeightScreen} bind:this={wrapperEl}>
     <div class="crud-anim-item crud-anim-filters">
     <CrudFilters
         bind:PageSize

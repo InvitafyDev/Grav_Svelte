@@ -26,6 +26,52 @@
 
   let containerEl: HTMLDivElement;
 
+  // justValue es entrada y salida. Antes iba con bind:justValue a svelte-select,
+  // que lo recalcula desde `value`: sin `value`, al montar ponía el ID del padre
+  // en null. Ahora el que cambió manda: un `value` nuevo da su justValue, y un
+  // justValue que llega (o un `res` que llega después) busca su item en `res`.
+  const valorDe = (v: SelectValue | SelectValue[] | null) =>
+    v == null ? null : Array.isArray(v) ? v.map((i) => i.value) : v.value;
+
+  const coincide = (v: SelectValue | SelectValue[] | null, jv: any) => {
+    const actual = valorDe(v);
+    if (Array.isArray(actual) || Array.isArray(jv)) {
+      return (
+        Array.isArray(actual) &&
+        Array.isArray(jv) &&
+        actual.length === jv.length &&
+        actual.every((x, i) => x == jv[i])
+      );
+    }
+    return actual == jv;
+  };
+
+  if (value != null) justValue = valorDe(value);
+  let ultimoValue = value;
+  let ultimoJust = justValue;
+
+  function sincronizar(v: typeof value, jv: any, items: any[]) {
+    if (v !== ultimoValue) {
+      ultimoValue = v;
+      justValue = ultimoJust = valorDe(v);
+      return;
+    }
+    if (jv === ultimoJust && coincide(v, jv)) return;
+    ultimoJust = jv;
+    if (jv == null || (Array.isArray(jv) && jv.length === 0)) {
+      value = ultimoValue = null;
+      return;
+    }
+    const encontrado = Array.isArray(jv)
+      ? jv.map((x) => items.find((i) => i.value == x)).filter(Boolean)
+      : items.find((i) => i.value == jv);
+    if (encontrado && (!Array.isArray(encontrado) || encontrado.length)) {
+      value = ultimoValue = encontrado;
+    }
+  }
+
+  $: sincronizar(value, justValue, res);
+
   onMount(() => {
     if (typeof window === "undefined") return;
     if ((window as any).__gravSelectCloseHookInstalled) return;
@@ -124,7 +170,6 @@
       items={res}
       name={label}
       bind:value
-      bind:justValue
       on:change={changeFunction}
       on:clear={onClear}
       disabled={disabledVar}

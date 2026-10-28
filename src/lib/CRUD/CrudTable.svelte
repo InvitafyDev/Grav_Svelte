@@ -97,6 +97,19 @@
     openModal("crud-image-modal", ImageModal, { src });
   }
 
+  // Los órdenes de los renglones visibles, como número. Al soltar se reparten
+  // entre los mismos renglones en su nuevo orden: así la página 2 conserva
+  // 11-20 y, con un filtro, los renglones ocultos no chocan. null si faltan
+  // o se repiten (datos sin orden todavía): entonces se numera desde 1.
+  function ordenesDeLaPagina(items: any[]): number[] | null {
+    const ordenes = items.map((item) => Number(item[orderField]));
+    if (ordenes.some((o) => !Number.isFinite(o))) return null;
+    if (new Set(ordenes).size !== ordenes.length) return null;
+    return ordenes;
+  }
+
+  let avisoOrden = false;
+
   // Drag and drop functions
   function handleDragStart(event: DragEvent, index: number) {
     if (
@@ -106,6 +119,20 @@
       loading
     ) {
       event.preventDefault();
+      return;
+    }
+
+    // Con la tabla ordenada por otra columna, soltar reescribiría el orden
+    // con el de esa columna (por ejemplo, el alfabético).
+    const ordenes = ordenesDeLaPagina(todosLosRegistros);
+    if (ordenes && ordenes.some((o, i) => i > 0 && o < ordenes[i - 1])) {
+      event.preventDefault();
+      if (!avisoOrden) {
+        avisoOrden = true;
+        console.warn(
+          `grav-svelte: para reordenar, la tabla debe estar ordenada por ${orderField} ascendente.`,
+        );
+      }
       return;
     }
 
@@ -153,10 +180,11 @@
     newItems.splice(dropIndex, 0, draggedItem);
 
     const changes: any[] = [];
+    const ordenes = ordenesDeLaPagina(todosLosRegistros);
 
     newItems.forEach((item, index) => {
-      const newOrder = index + 1;
-      const originalOrder = item[orderField];
+      const newOrder = ordenes ? ordenes[index] : index + 1;
+      const originalOrder = Number(item[orderField]);
 
       if (originalOrder !== newOrder) {
         changes.push({
