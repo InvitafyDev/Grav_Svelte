@@ -176,13 +176,17 @@
       {multiple}
       class="select-input"
       inputStyles="font-size: 16px; color: currentColor !important; background-color: transparent;"
-      containerStyles="font-size: 16px; background-color: transparent; border: var(--grav-crud-input-border-width) solid currentColor; border-radius: 0.5rem;"
+      containerStyles="font-size: 16px; background-color: var(--grav-input-bg, transparent); border: var(--grav-crud-input-border-width) solid var(--_grav-select-border, var(--grav-input-border-color, currentColor)); border-radius: var(--grav-select-radius, var(--grav-input-radius, 0.5rem)); box-shadow: var(--_grav-select-ring, none); min-height: var(--grav-select-min-height, var(--height, 42px)); transition: var(--grav-input-transition, all 0s);"
       placeholder={placeholder ?? (multiple ? placeholderMultiple : placeholderSingle)}
       --placeholder-color="currentColor"
       --chevron-color="currentColor"
       --item-color="black"
       --item-hover-bg=" lightgray"
       --item-is-active-bg="black"
+      --padding="var(--grav-select-padding, 0 0 0 16px)"
+      --list-border-radius="var(--grav-select-list-radius, 4px)"
+      --list-border="var(--grav-select-list-border)"
+      --list-shadow="var(--grav-select-list-shadow, 0 2px 3px 0 rgba(44, 62, 80, 0.24))"
       --list-z-index="9999"
       --list-max-height="320px"
       listAutoPlacement={true}
@@ -223,9 +227,25 @@
     color: var(--grav-crud-color-neutral);
   }
 
+  /* El borde del select va en línea (containerStyles) y ningún :hover lo pisa:
+     aquí se cambia el valor de la variable que ese estilo lee. */
+  .select-container :global(.svelte-select:hover) {
+    --_grav-select-border: var(--grav-input-border-color-hover);
+  }
+
+  .select-container :global(.svelte-select.focused) {
+    --_grav-select-border: var(--grav-input-border-color-focus);
+    --_grav-select-ring: var(--grav-input-focus-ring);
+  }
+
+  .select-container :global(.svelte-select-list) {
+    padding: var(--grav-select-list-padding, 0);
+  }
+
   .select-label {
-    font-size: 1rem;
-    color: var(--grav-crud-color-neutral);
+    font-size: var(--grav-select-label-font-size, 1rem);
+    font-weight: var(--grav-select-label-font-weight, inherit);
+    color: var(--grav-select-label-color, var(--grav-crud-color-neutral));
     margin-bottom: 0.25rem;
   }
 
@@ -240,8 +260,9 @@
     flex-shrink: 0;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: var(--grav-border-radius-md);
-    border: var(--grav-crud-input-border-width) solid currentColor;
+    border-radius: var(--grav-select-plus-radius, var(--grav-border-radius-md));
+    border: var(--grav-crud-input-border-width) solid
+      var(--grav-select-plus-border-color, currentColor);
     background-color: transparent;
     color: var(--grav-crud-color-neutral);
     font-size: 1.5rem;

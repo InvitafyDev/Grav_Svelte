@@ -1,10 +1,9 @@
 .crud-filters-container {
   border-radius: 0.5rem;
-  background-color: var(--grav-crud-color-bg);
-  padding: 0.5rem;
-  box-shadow: var(--grav-crud-box-shadow);
-  margin-bottom: 0.5rem;
-  padding-top: 0.7rem;
+  background-color: var(--grav-crud-filters-bg, var(--grav-crud-color-bg));
+  padding: var(--grav-crud-filters-padding, 0.7rem 0.5rem 0.5rem);
+  box-shadow: var(--grav-crud-filters-shadow, var(--grav-crud-box-shadow));
+  margin-bottom: var(--grav-crud-filters-margin-bottom, 0.5rem);
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -14,7 +13,7 @@
 
 @media (min-width: 640px) {
   .crud-filters-container {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--grav-crud-filters-margin-bottom, 0.5rem);
     margin-top: 0.25rem;
     width: fit-content;
   }
@@ -90,7 +89,7 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--grav-crud-color-neutral);
+  color: var(--grav-crud-title-color, var(--grav-crud-color-neutral));
 }
 
 @media (max-width: 640px) {
@@ -98,7 +97,7 @@
     white-space: normal;
     word-break: break-word;
     overflow-wrap: anywhere;
-    font-size: 1.1rem;
+    font-size: var(--grav-crud-title-font-size-mobile, 1.1rem);
     overflow: visible;
     text-overflow: clip;
   }
@@ -152,11 +151,21 @@
   cursor: pointer;
   border-width: var(--grav-crud-filter-border-width, 1.5px);
   border-style: solid;
-  border-color: var(--grav-crud-color-neutral);
-  color: var(--grav-crud-color-neutral);
-  width: 3rem;
+  border-color: var(--grav-crud-action-border-color, var(--grav-crud-color-neutral));
+  background: var(--grav-crud-action-bg, transparent);
+  color: var(--grav-crud-action-color, var(--grav-crud-color-neutral));
+  width: var(--grav-crud-action-width, 3rem);
   height: 2.5rem;
   border-radius: var(--grav-crud-filter-border-radius, 0.5rem);
+  transition: var(--grav-crud-action-transition, all 0s);
+}
+
+.action-button:hover {
+  background: var(--grav-crud-action-bg-hover, var(--grav-crud-action-bg, transparent));
+  border-color: var(
+    --grav-crud-action-border-color-hover,
+    var(--grav-crud-action-border-color, var(--grav-crud-color-neutral))
+  );
 }
 
 .filter-group {

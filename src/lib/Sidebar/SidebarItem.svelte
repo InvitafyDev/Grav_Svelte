@@ -1,5 +1,6 @@
 <script lang="ts">
     import { base } from "$app/paths";
+    import { page } from "$app/stores";
 
     export let nombreModulo;
     export let nombreRuta;
@@ -10,20 +11,26 @@
     /** En móvil, cerrar el menú al tocar el enlace */
     export let onLinkClick: (() => void) | undefined = undefined;
 
+    const sinBarraFinal = (ruta: string) => ruta.replace(/\/+$/, "");
+
+    $: externo = nombreRuta.startsWith('http');
+    $: destino = externo ? nombreRuta : `${base}/${baseRoute}/${nombreRuta}`;
+    $: activo = !externo && sinBarraFinal(destino) === sinBarraFinal($page.url.pathname);
 </script>
 
 {#if permiso == true}
     <div class="sidebar-item">
         <a
-            href={nombreRuta.startsWith('http') ? nombreRuta : `${base}/${baseRoute}/${nombreRuta}`}
+            href={destino}
             class="sidebar-link"
-            target={nombreRuta.startsWith('http') ? '_blank' : undefined}
-            rel={nombreRuta.startsWith('http') ? 'noopener' : undefined}
+            aria-current={activo ? 'page' : undefined}
+            target={externo ? '_blank' : undefined}
+            rel={externo ? 'noopener' : undefined}
             on:click={() => onLinkClick?.()}
         >
             <i class="sidebar-icon {nombreIcono}" data-fa-processed="true" data-fa-i2svg-processed="true"></i>
             {nombreModulo}
-            {#if nombreRuta.startsWith('http')}
+            {#if externo}
                 <i class="fas fa-external-link-alt external-icon" data-fa-processed="true" data-fa-i2svg-processed="true"></i>
             {/if}
         </a>
@@ -40,11 +47,11 @@
     }
 
     .sidebar-link {
-        text-transform: none;
-        font-size: 0.8rem;
-        padding: 0.75rem 0;
-        font-weight: 500;
-        display: block;
+        text-transform: var(--grav-sidebar-link-text-transform, none);
+        font-size: var(--grav-sidebar-link-font-size, 0.8rem);
+        padding: var(--grav-sidebar-link-padding, 0.75rem 0);
+        font-weight: var(--grav-sidebar-link-font-weight, 500);
+        display: var(--grav-sidebar-link-display, block);
     }
 
     .sidebar-icon {

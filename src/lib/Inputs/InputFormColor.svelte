@@ -57,7 +57,7 @@
     position: absolute;
     top: -0.4rem;
     left: 0.25rem;
-    color: var(--grav-crud-color-neutral);
+    color: var(--grav-input-icon-color, var(--grav-crud-color-neutral));
   }
 
   .input-wrapper {
@@ -69,9 +69,9 @@
   .input-field {
     display: block;
     width: 100%;
-    font-size: 1rem;
+    font-size: var(--grav-input-font-size, 1rem);
     height: 1.8rem;
-    color: var(--grav-crud-color-neutral);
+    color: var(--grav-input-color, var(--grav-crud-color-neutral));
     background: transparent;
     appearance: none;
   }
@@ -82,9 +82,10 @@
 
   .input-label {
     position: absolute;
-    font-size: 1rem;
+    font-size: var(--grav-input-label-font-size, 1rem);
+    font-weight: var(--_grav-label-weight, inherit);
     text-align: left;
-    color: var(--grav-crud-color-neutral);
+    color: var(--grav-input-label-color, var(--grav-crud-color-neutral));
     transition: all 0.3s;
     top: 0.25rem;
     left: 0.25rem;
@@ -96,9 +97,18 @@
   .input-field:not(:placeholder-shown) + .input-label {
     left: 0;
     top: 0;
-    color: var(--grav-crud-color-neutral);
-    translate: -0.6rem -2.05rem;
+    color: var(
+      --grav-input-label-float-color,
+      var(--grav-input-label-color, var(--grav-crud-color-neutral))
+    );
+    translate: var(--grav-input-label-float-x, -0.6rem)
+      var(--grav-input-label-float-y, -2.05rem);
     scale: 1;
+    font-size: var(
+      --grav-input-label-float-font-size,
+      var(--grav-input-label-font-size, 1rem)
+    );
+    --_grav-label-weight: var(--grav-input-label-float-font-weight);
   }
 
   .input-field:placeholder-shown + .input-label {
@@ -115,7 +125,8 @@
 
   .no-margin .input-field:focus + .input-label,
   .no-margin .input-field:not(:placeholder-shown) + .input-label {
-    translate: -0.6rem -1.4rem;
-    font-size: 0.7rem;
+    translate: var(--grav-input-label-float-x, -0.6rem)
+      var(--grav-input-label-float-y-compact, -1.4rem);
+    font-size: var(--grav-input-label-float-font-size-compact, 0.7rem);
   }
 </style>

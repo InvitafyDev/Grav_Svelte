@@ -19,7 +19,7 @@
   outline: none;
   max-height: 90vh;
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: var(--grav-modal-radius, 1rem);
 }
 
 .modal-content.lg {
@@ -69,15 +69,15 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: var(--grav-modal-header-padding, 1rem);
+  border-bottom: 1px solid var(--grav-modal-header-border-color, #e2e8f0);
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
 }
 
 .modal-title {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: var(--grav-modal-title-font-size, 1.25rem);
+  font-weight: var(--grav-modal-title-font-weight, 600);
 }
 
 .modal-close-button {
@@ -149,38 +149,41 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  padding: 0.75rem;
+  padding: var(--grav-modal-footer-padding, 0.75rem);
   gap: 0.75rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--grav-modal-footer-border-color, #e2e8f0);
 }
 
 .modal-save-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #10b981;
+  background-color: var(--grav-modal-save-bg, #10b981);
   cursor: pointer;
-  color: white;
+  color: var(--grav-modal-save-color, white);
+  font-family: var(--grav-modal-button-font-family, inherit);
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: var(--grav-modal-button-text-transform, uppercase);
   font-size: 0.875rem;
-  padding: 0.75rem 1.5rem;
+  padding: var(--grav-modal-button-padding, 0.75rem 1.5rem);
   border: none;
-  border-radius: var(--grav-border-radius-md);
+  border-radius: var(--grav-modal-button-radius, var(--grav-border-radius-md));
+  box-shadow: var(--grav-modal-save-shadow, none);
   outline: none;
   transition: all 0.15s ease-linear;
 }
 
 .modal-save-button:hover {
-  background-color: #059669;
+  background-color: var(--grav-modal-save-bg-hover, #059669);
 }
 
 .modal-save-button:active {
-  background-color: #059669;
+  background-color: var(--grav-modal-save-bg-hover, #059669);
 }
 
 .modal-save-button:disabled {
-  background-color: #6ee7b7;
+  background-color: var(--grav-modal-save-bg-disabled, #6ee7b7);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
@@ -188,22 +191,27 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
+  background-color: var(--grav-modal-cancel-bg, transparent);
   cursor: pointer;
-  color: #ef4444;
+  color: var(--grav-modal-cancel-color, #ef4444);
+  font-family: var(--grav-modal-button-font-family, inherit);
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: var(--grav-modal-button-text-transform, uppercase);
   font-size: 0.875rem;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid #ef4444;
-  border-radius: var(--grav-border-radius-md);
+  padding: var(--grav-modal-button-padding, 0.75rem 1.5rem);
+  border: 1px solid var(--grav-modal-cancel-border-color, #ef4444);
+  border-radius: var(--grav-modal-button-radius, var(--grav-border-radius-md));
   outline: none;
   transition: all 0.75s ease-linear;
 }
 
 .modal-cancel-button:hover {
-  color: #d13b3b;
-  border: 1px solid #d13b3b;
+  background-color: var(
+    --grav-modal-cancel-bg-hover,
+    var(--grav-modal-cancel-bg, transparent)
+  );
+  color: var(--grav-modal-cancel-color-hover, #d13b3b);
+  border: 1px solid var(--grav-modal-cancel-border-color-hover, #d13b3b);
 }
 
 .modal-backdrop {

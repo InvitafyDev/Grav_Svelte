@@ -7,7 +7,11 @@
   z-index: 30;
   width: 100%;
   margin-bottom: 0.75rem;
-  margin-top: 0.75rem;
+  margin-top: var(--grav-crud-table-margin-top, 0.75rem);
+  background: var(--grav-crud-table-bg, transparent);
+  border: var(--grav-crud-table-border, 0 none);
+  border-radius: var(--grav-crud-table-container-radius, 0);
+  overflow: var(--grav-crud-table-overflow, visible);
 }
 
 .table-scroll {
@@ -61,23 +65,26 @@
   border-bottom-style: solid;
   border-bottom-color: var(--grav-crud-color-border);
   border-bottom-width: var(--grav-crud-cell-border-width, 1.5px);
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--grav-crud-header-bg, rgba(255, 255, 255, 0.8));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--grav-crud-header-shadow, 0 2px 6px rgba(0, 0, 0, 0.08));
 }
 
 @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
   .table-header {
-    background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+    background-color: var(
+      --grav-crud-header-bg,
+      var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85))
+    );
   }
 }
 
 .table-header-cell {
   padding: 0.75rem;
   text-align: center;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  padding-top: var(--grav-crud-header-padding-y, 0.25rem);
+  padding-bottom: var(--grav-crud-header-padding-y, 0.25rem);
   font-family: var(--grav-crud-header-font-family, var(--grav-font-family));
   font-size: var(--grav-crud-header-font-size, 0.75rem);
   font-weight: var(--grav-crud-header-font-weight, 400);
@@ -165,8 +172,8 @@
   overflow-wrap: break-word;
   vertical-align: middle;
   z-index: 10;
-  padding-top: 7px;
-  padding-bottom: 7px;
+  padding-top: var(--grav-crud-cell-padding-y, 7px);
+  padding-bottom: var(--grav-crud-cell-padding-y, 7px);
   overflow: hidden; /* Prevenir que el contenido se desborde */
   max-width: 300px; /* Ancho máximo para evitar expansión excesiva */
   min-width: 80px; /* Ancho mínimo para contenido pequeño */
@@ -203,7 +210,10 @@
 
 @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
   .sticky-cell {
-    background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+    background-color: var(
+      --grav-crud-header-bg,
+      var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85))
+    );
   }
 }
 
@@ -238,7 +248,10 @@
 
   @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
     .first-column-limited {
-      background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+      background-color: var(
+      --grav-crud-header-bg,
+      var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85))
+    );
     }
   }
 }
@@ -693,7 +706,10 @@
 
 @supports (backdrop-filter: blur(8px)) or (-webkit-backdrop-filter: blur(8px)) {
   .drag-handle-cell {
-    background-color: var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85));
+    background-color: var(
+      --grav-crud-header-bg,
+      var(--grav-crud-color-bg, rgba(255, 255, 255, 0.85))
+    );
   }
 }
 

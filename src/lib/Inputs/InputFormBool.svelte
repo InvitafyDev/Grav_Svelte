@@ -49,24 +49,25 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-right: 0.5rem;
-    height: 2.7rem;
-    width: 2.7rem;
-    background: transparent;
+    margin-right: var(--grav-check-margin-right, 0.5rem);
+    height: var(--grav-check-size, 2.7rem);
+    width: var(--grav-check-size, 2.7rem);
+    background: var(--grav-check-bg, transparent);
     border: var(--grav-crud-input-border-width) solid
-      var(--grav-crud-color-neutral);
-    color: var(--grav-crud-color-neutral);
+      var(--grav-check-border-color, var(--grav-crud-color-neutral));
+    color: var(--grav-check-color, var(--grav-crud-color-neutral));
     cursor: pointer;
-    border-radius: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
+    border-radius: var(--grav-check-radius, 0.5rem);
+    padding: var(--grav-check-padding, 0.2rem 0.5rem);
   }
 
   .checkbox-button.checked {
-    background-color: var(--grav-crud-color-neutral);
-    color: var(--grav-crud-color-bg);
+    background-color: var(--grav-check-bg-checked, var(--grav-crud-color-neutral));
+    border-color: var(
+      --grav-check-border-color-checked,
+      var(--grav-check-border-color, var(--grav-crud-color-neutral))
+    );
+    color: var(--grav-check-color-checked, var(--grav-crud-color-bg));
   }
 
   .label {

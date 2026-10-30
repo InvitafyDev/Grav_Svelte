@@ -61,17 +61,34 @@
     display: flex;
     align-items: center;
     border: var(--grav-crud-input-border-width) solid
-      var(--grav-crud-color-neutral);
-    border-radius: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
+      var(--grav-input-border-color, var(--grav-crud-color-neutral));
+    border-radius: var(--grav-input-radius, 0.5rem);
+    padding-left: var(--grav-input-padding-x, 0.5rem);
+    padding-right: var(--grav-input-padding-x, 0.5rem);
+    padding-top: var(--grav-input-padding-y, 0.2rem);
+    padding-bottom: var(--grav-input-padding-y, 0.2rem);
     margin-top: 1.95rem;
+    background: var(--grav-input-bg, transparent);
+    transition: var(--grav-input-transition, all 0s);
     min-height: 2.75rem;
     overflow: visible;
     width: 100%;
     box-sizing: border-box;
+  }
+
+  .input-container:hover {
+    border-color: var(
+      --grav-input-border-color-hover,
+      var(--grav-input-border-color, var(--grav-crud-color-neutral))
+    );
+  }
+
+  .input-container:focus-within {
+    border-color: var(
+      --grav-input-border-color-focus,
+      var(--grav-input-border-color, var(--grav-crud-color-neutral))
+    );
+    box-shadow: var(--grav-input-focus-ring, none);
   }
 
   .input-container.disabled {
@@ -89,7 +106,7 @@
     position: absolute;
     top: -0.4rem;
     left: 0.25rem;
-    color: var(--grav-crud-color-neutral);
+    color: var(--grav-input-icon-color, var(--grav-crud-color-neutral));
   }
 
   .input-wrapper {
@@ -103,21 +120,22 @@
     display: block;
     padding: 0.3rem 0;
     width: 100%;
-    font-size: 1rem;
-    color: var(--grav-crud-color-neutral);
+    font-size: var(--grav-input-font-size, 1rem);
+    color: var(--grav-input-color, var(--grav-crud-color-neutral));
     min-height: 1.5rem;
     line-height: 1.5;
   }
 
   .input-wrapper.has-value .display-text {
-    color: var(--grav-crud-color-neutral);
+    color: var(--grav-input-color, var(--grav-crud-color-neutral));
   }
 
   .input-label {
     position: absolute;
-    font-size: 1rem;
+    font-size: var(--grav-input-label-font-size, 1rem);
+    font-weight: var(--_grav-label-weight, inherit);
     text-align: left;
-    color: var(--grav-crud-color-neutral);
+    color: var(--grav-input-label-color, var(--grav-crud-color-neutral));
     transition: transform 0.2s ease, top 0.2s ease, font-size 0.2s ease;
     top: 0.35rem;
     left: 0;
@@ -127,8 +145,8 @@
   .input-wrapper.has-value .input-label {
     top: -1.5rem;
     left: 0;
-    font-size: 0.75rem;
-    color: var(--grav-crud-color-neutral);
+    font-size: var(--grav-input-date-label-font-size, 0.75rem);
+    color: var(--grav-input-label-color, var(--grav-crud-color-neutral));
   }
 
   .required-mark {

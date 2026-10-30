@@ -211,14 +211,14 @@
     display: grid;
     grid-template-columns: 80px 1fr;
     border: var(--grav-crud-input-border-width) solid
-      var(--grav-crud-color-neutral);
-    border-radius: 0.5rem;
+      var(--grav-input-border-color, var(--grav-crud-color-neutral));
+    border-radius: var(--grav-input-radius, 0.5rem);
     overflow: hidden;
   }
 
   .country-select-wrapper {
     border-right: var(--grav-crud-input-border-width) solid
-      var(--grav-crud-color-neutral);
+      var(--grav-input-border-color, var(--grav-crud-color-neutral));
     background-color: transparent;
   }
 

@@ -249,10 +249,10 @@
 
 /* Brand */
 .sidebar-brand {
-    font-size: 0.875rem;
+    font-size: var(--grav-sidebar-brand-font-size, 0.875rem);
     text-align: left;
-    padding-bottom: 0.5rem;
-    color: var(--grav-sidebar-primary-600);
+    padding: var(--grav-sidebar-brand-padding, 0 0 0.5rem 0);
+    color: var(--grav-sidebar-brand-color, var(--grav-sidebar-primary-600));
     margin-right: 0;
     white-space: nowrap;
     text-transform: uppercase;
@@ -262,7 +262,7 @@
 
 @media (min-width: 768px) {
     .sidebar-brand {
-        font-size: 0.875rem;
+        font-size: var(--grav-sidebar-brand-font-size, 0.875rem);
     }
 }
 
@@ -380,8 +380,9 @@
 .sidebar-collapse-brand {
     display: block;
     text-align: left;
-    padding: 1rem 0 0.5rem 0;
-    color: var(--grav-sidebar-text);
+    font-size: var(--grav-sidebar-brand-font-size, inherit);
+    padding: var(--grav-sidebar-brand-padding, 1rem 0 0.5rem 0);
+    color: var(--grav-sidebar-brand-color, var(--grav-sidebar-text));
     white-space: nowrap;
     text-transform: uppercase;
     font-weight: 700;
@@ -490,20 +491,63 @@
 }
 
 /* Logout */
+/* Enlaces del menú. Van aquí y no en SidebarItem.svelte porque una regla con el hash de Svelte
+   pesa más que html .sidebar-link, y le ganaría a lo que una app ya tenga sobre esta clase. */
+.sidebar-link {
+    align-items: var(--grav-sidebar-link-align-items, normal);
+    gap: var(--grav-sidebar-link-gap, normal);
+    width: var(--grav-sidebar-link-width, auto);
+    margin: var(--grav-sidebar-link-margin, 0);
+    border-radius: var(--grav-sidebar-link-radius, 0);
+    color: var(--grav-sidebar-link-color, inherit);
+    transition: var(--grav-sidebar-link-transition, all 0s);
+}
+
+.sidebar-link:hover {
+    background: var(--grav-sidebar-link-bg-hover, transparent);
+    color: var(--grav-sidebar-link-color-hover, var(--grav-sidebar-link-color, inherit));
+}
+
+.sidebar-link[aria-current='page'] {
+    background: var(--grav-sidebar-active-bg, transparent);
+    color: var(--grav-sidebar-active-color, var(--grav-sidebar-link-color, inherit));
+    box-shadow: var(--grav-sidebar-active-shadow, none);
+}
+
+.sidebar-icon {
+    color: var(--grav-sidebar-icon-color, inherit);
+}
+
+.sidebar-link:hover .sidebar-icon {
+    color: var(--grav-sidebar-icon-color-hover, var(--grav-sidebar-icon-color, inherit));
+}
+
+.sidebar-link[aria-current='page'] .sidebar-icon {
+    color: var(--grav-sidebar-active-icon-color, var(--grav-sidebar-icon-color, inherit));
+}
+
 .sidebar-logout-item {
     margin-top: 1.25rem;
 }
 
 .sidebar-logout-link {
     text-align: left;
-    padding: 1rem 0 0.5rem 0;
-    color: var(--grav-sidebar-text);
+    padding: var(--grav-sidebar-logout-padding, 1rem 0 0.5rem 0);
+    color: var(--grav-sidebar-logout-color, var(--grav-sidebar-text));
     white-space: nowrap;
-    font-size: 0.875rem;
+    font-size: var(--grav-sidebar-logout-font-size, 0.875rem);
+    letter-spacing: var(--grav-sidebar-logout-letter-spacing, normal);
     text-transform: uppercase;
     font-weight: 700;
     text-decoration: none;
     display: block;
+}
+
+.sidebar-logout-link:hover {
+    color: var(
+        --grav-sidebar-logout-color-hover,
+        var(--grav-sidebar-logout-color, var(--grav-sidebar-text))
+    );
 }
 
 .sidebar-logout-icon {
