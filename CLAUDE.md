@@ -236,3 +236,20 @@ propio botón (reportado en el tablero de diseñadores de admin.invitafy, cuadr�
 
 Se probó compilando con el Svelte 3.59 de admin.invitafy (los consumidores son Svelte 3) y en el
 sitio de demos (Svelte 5).
+
+## v0.1.270 — marca de una app solo con variables
+
+Cada producto define su marca en el `:root` de su `app.css`, sin `!important` ni reglas sobre clases
+internas. La lista de variables está en `scripts/llms-intro.md`, y de ahí sale `static/llms.txt`.
+
+- **Una variable nueva lleva como respaldo el valor que había**, y no se declara en `typography.css`:
+  ese CSS carga después del `app.css` de la app.
+- **Una propiedad que la regla no declaraba no se agrega con un respaldo neutro** si el elemento es
+  `h1`-`h6`, `th` u otra etiqueta: `inherit` o `normal` le ganan a una regla por etiqueta de la app. Lo
+  mismo con `.input-label`: el peso de la etiqueta flotante pasa por `--_grav-label-weight` para no
+  ganarle a una regla de la app.
+- **Las propiedades nuevas del sidebar van en `SidebarWrapper.css`**, no en el `<style>` del componente:
+  con el hash de Svelte le ganarían a `html .sidebar-link`.
+- **El borde del select va en línea (`containerStyles`)**: hover y foco cambian `--_grav-select-border`
+  y `--_grav-select-ring`, las variables que ese estilo lee.
+- **`SidebarItem` marca la sección actual con `aria-current="page"`**: compara la ruta exacta de `$page`.
