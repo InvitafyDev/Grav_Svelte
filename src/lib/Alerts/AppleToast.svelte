@@ -146,8 +146,8 @@
     align-items: flex-start;
     gap: 0.75rem;
     padding: 0.875rem 0.875rem 0.875rem 1rem;
-    background: #ffffff;
-    border-radius: 12px;
+    background: var(--grav-alert-bg, #ffffff);
+    border-radius: var(--grav-alert-toast-radius, 12px);
     box-shadow:
       0 10px 25px -5px rgba(0, 0, 0, 0.12),
       0 4px 10px -3px rgba(0, 0, 0, 0.06),
@@ -170,16 +170,16 @@
   }
 
   .modern-toast-icon-success {
-    color: #16a34a;
+    color: var(--grav-alert-toast-success-color, #16a34a);
   }
   .modern-toast-icon-error {
-    color: #dc2626;
+    color: var(--grav-alert-toast-error-color, #dc2626);
   }
   .modern-toast-icon-warning {
-    color: #d97706;
+    color: var(--grav-alert-toast-warning-color, #d97706);
   }
   .modern-toast-icon-info {
-    color: #2563eb;
+    color: var(--grav-alert-toast-info-color, #2563eb);
   }
 
   .modern-toast-text {
@@ -193,14 +193,14 @@
   .modern-toast-title {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #0f172a;
+    color: var(--grav-alert-title-color, #0f172a);
     line-height: 1.4;
     letter-spacing: -0.005em;
   }
 
   .modern-toast-description {
     font-size: 0.8125rem;
-    color: #64748b;
+    color: var(--grav-alert-message-color, #64748b);
     line-height: 1.45;
   }
 
@@ -209,7 +209,7 @@
     border: none;
     cursor: pointer;
     padding: 2px;
-    color: #94a3b8;
+    color: var(--grav-alert-toast-close-color, #94a3b8);
     border-radius: 6px;
     transition: all 0.15s ease;
     flex-shrink: 0;
@@ -228,8 +228,8 @@
   }
 
   .modern-toast-close:hover {
-    color: #475569;
-    background: #f1f5f9;
+    color: var(--grav-alert-toast-close-color-hover, #475569);
+    background: var(--grav-alert-toast-close-bg-hover, #f1f5f9);
   }
 
   @media (max-width: 640px) {
@@ -248,36 +248,36 @@
 
   @media (prefers-color-scheme: dark) {
     .modern-toast-card {
-      background: #18181b;
+      background: var(--grav-alert-bg-dark, #18181b);
       box-shadow:
         0 10px 25px -5px rgba(0, 0, 0, 0.5),
         0 4px 10px -3px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.06);
     }
     .modern-toast-title {
-      color: #fafafa;
+      color: var(--grav-alert-title-color-dark, #fafafa);
     }
     .modern-toast-description {
-      color: #a1a1aa;
+      color: var(--grav-alert-message-color-dark, #a1a1aa);
     }
     .modern-toast-close {
-      color: #71717a;
+      color: var(--grav-alert-toast-close-color-dark, #71717a);
     }
     .modern-toast-close:hover {
-      color: #d4d4d8;
-      background: #27272a;
+      color: var(--grav-alert-toast-close-color-hover-dark, #d4d4d8);
+      background: var(--grav-alert-toast-close-bg-hover-dark, #27272a);
     }
     .modern-toast-icon-success {
-      color: #4ade80;
+      color: var(--grav-alert-toast-success-color-dark, #4ade80);
     }
     .modern-toast-icon-error {
-      color: #f87171;
+      color: var(--grav-alert-toast-error-color-dark, #f87171);
     }
     .modern-toast-icon-warning {
-      color: #fbbf24;
+      color: var(--grav-alert-toast-warning-color-dark, #fbbf24);
     }
     .modern-toast-icon-info {
-      color: #60a5fa;
+      color: var(--grav-alert-toast-info-color-dark, #60a5fa);
     }
   }
 </style>

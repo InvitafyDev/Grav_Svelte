@@ -301,7 +301,7 @@
   .modern-alert-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(15, 23, 42, 0.3);
+    background: var(--grav-alert-backdrop, rgba(15, 23, 42, 0.3));
     backdrop-filter: blur(8px) saturate(140%);
     -webkit-backdrop-filter: blur(8px) saturate(140%);
     cursor: pointer;
@@ -311,8 +311,8 @@
     position: relative;
     width: 100%;
     max-width: 420px;
-    background: #ffffff;
-    border-radius: 20px;
+    background: var(--grav-alert-bg, #ffffff);
+    border-radius: var(--grav-alert-radius, 20px);
     box-shadow:
       0 30px 60px -15px rgba(0, 0, 0, 0.3),
       0 12px 24px -10px rgba(0, 0, 0, 0.12),
@@ -370,48 +370,81 @@
     );
   }
   .modern-alert-icon-success .modern-alert-icon-circle {
-    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-    color: #15803d;
-    box-shadow: 0 8px 24px -6px rgba(34, 197, 94, 0.35);
+    background: var(
+      --grav-alert-success-bg,
+      linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)
+    );
+    color: var(--grav-alert-success-color, #15803d);
+    box-shadow: var(
+      --grav-alert-success-shadow,
+      0 8px 24px -6px rgba(34, 197, 94, 0.35)
+    );
   }
 
   .modern-alert-icon-error .modern-alert-icon-ring {
-    background: radial-gradient(
+    background: var(
+      --grav-alert-error-ring,
+      radial-gradient(
       circle,
       rgba(239, 68, 68, 0.45) 0%,
       rgba(239, 68, 68, 0) 70%
+      )
     );
   }
   .modern-alert-icon-error .modern-alert-icon-circle {
-    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-    color: #b91c1c;
-    box-shadow: 0 8px 24px -6px rgba(239, 68, 68, 0.35);
+    background: var(
+      --grav-alert-error-bg,
+      linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)
+    );
+    color: var(--grav-alert-error-color, #b91c1c);
+    box-shadow: var(
+      --grav-alert-error-shadow,
+      0 8px 24px -6px rgba(239, 68, 68, 0.35)
+    );
   }
 
   .modern-alert-icon-warning .modern-alert-icon-ring {
-    background: radial-gradient(
+    background: var(
+      --grav-alert-warning-ring,
+      radial-gradient(
       circle,
       rgba(245, 158, 11, 0.45) 0%,
       rgba(245, 158, 11, 0) 70%
+      )
     );
   }
   .modern-alert-icon-warning .modern-alert-icon-circle {
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-    color: #b45309;
-    box-shadow: 0 8px 24px -6px rgba(245, 158, 11, 0.35);
+    background: var(
+      --grav-alert-warning-bg,
+      linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)
+    );
+    color: var(--grav-alert-warning-color, #b45309);
+    box-shadow: var(
+      --grav-alert-warning-shadow,
+      0 8px 24px -6px rgba(245, 158, 11, 0.35)
+    );
   }
 
   .modern-alert-icon-info .modern-alert-icon-ring {
-    background: radial-gradient(
+    background: var(
+      --grav-alert-info-ring,
+      radial-gradient(
       circle,
       rgba(59, 130, 246, 0.45) 0%,
       rgba(59, 130, 246, 0) 70%
+      )
     );
   }
   .modern-alert-icon-info .modern-alert-icon-circle {
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-    color: #1d4ed8;
-    box-shadow: 0 8px 24px -6px rgba(59, 130, 246, 0.35);
+    background: var(
+      --grav-alert-info-bg,
+      linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)
+    );
+    color: var(--grav-alert-info-color, #1d4ed8);
+    box-shadow: var(
+      --grav-alert-info-shadow,
+      0 8px 24px -6px rgba(59, 130, 246, 0.35)
+    );
   }
 
   /* Animación de dibujo de los iconos SVG */
@@ -485,7 +518,7 @@
     font-size: 1.375rem;
     font-weight: 700;
     line-height: 1.3;
-    color: #0f172a;
+    color: var(--grav-alert-title-color, #0f172a);
     letter-spacing: -0.02em;
   }
 
@@ -494,7 +527,7 @@
     padding: 0;
     font-size: 0.9375rem;
     line-height: 1.55;
-    color: #64748b;
+    color: var(--grav-alert-message-color, #64748b);
   }
 
   /* Acciones — botones centrados, mismo ancho */
@@ -520,7 +553,7 @@
   .modern-alert-btn {
     height: 44px;
     padding: 0 1.25rem;
-    border-radius: 10px;
+    border-radius: var(--grav-alert-button-radius, 10px);
     font-size: 0.9375rem;
     font-weight: 600;
     cursor: pointer;
@@ -539,92 +572,125 @@
   }
 
   .modern-alert-btn-cancel {
-    background: #f1f5f9;
-    color: #334155;
+    background: var(--grav-alert-cancel-bg, #f1f5f9);
+    color: var(--grav-alert-cancel-color, #334155);
   }
   .modern-alert-btn-cancel:hover {
-    background: #e2e8f0;
+    background: var(--grav-alert-cancel-bg-hover, #e2e8f0);
   }
 
   .modern-alert-btn-confirm {
-    background: #0f172a;
-    color: #ffffff;
-    box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.3);
+    background: var(--grav-alert-confirm-bg, #0f172a);
+    color: var(--grav-alert-confirm-color, #ffffff);
+    box-shadow: var(
+      --grav-alert-confirm-shadow,
+      0 4px 12px -2px rgba(15, 23, 42, 0.3)
+    );
   }
   .modern-alert-btn-confirm:hover {
-    background: #1e293b;
-    box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.4);
+    background: var(--grav-alert-confirm-bg-hover, #1e293b);
+    box-shadow: var(
+      --grav-alert-confirm-shadow-hover,
+      0 6px 16px -2px rgba(15, 23, 42, 0.4)
+    );
   }
 
   .modern-alert-btn-confirm.destructive {
-    background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
-    box-shadow: 0 4px 12px -2px rgba(220, 38, 38, 0.4);
+    background: var(
+      --grav-alert-destructive-bg,
+      linear-gradient(180deg, #ef4444 0%, #dc2626 100%)
+    );
+    box-shadow: var(
+      --grav-alert-destructive-shadow,
+      0 4px 12px -2px rgba(220, 38, 38, 0.4)
+    );
   }
   .modern-alert-btn-confirm.destructive:hover {
-    background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
-    box-shadow: 0 6px 16px -2px rgba(220, 38, 38, 0.5);
+    background: var(
+      --grav-alert-destructive-bg-hover,
+      linear-gradient(180deg, #dc2626 0%, #b91c1c 100%)
+    );
+    box-shadow: var(
+      --grav-alert-destructive-shadow-hover,
+      0 6px 16px -2px rgba(220, 38, 38, 0.5)
+    );
   }
 
   @media (prefers-color-scheme: dark) {
     .modern-alert-dialog {
-      background: #18181b;
+      background: var(--grav-alert-bg-dark, #18181b);
       box-shadow:
         0 30px 60px -15px rgba(0, 0, 0, 0.7),
         0 12px 24px -10px rgba(0, 0, 0, 0.5),
         0 0 0 1px rgba(255, 255, 255, 0.06);
     }
     .modern-alert-title {
-      color: #fafafa;
+      color: var(--grav-alert-title-color-dark, #fafafa);
     }
     .modern-alert-message {
-      color: #a1a1aa;
+      color: var(--grav-alert-message-color-dark, #a1a1aa);
     }
     .modern-alert-icon-success .modern-alert-icon-circle {
-      background: linear-gradient(
+      background: var(
+        --grav-alert-success-bg-dark,
+        linear-gradient(
         135deg,
         rgba(34, 197, 94, 0.2) 0%,
         rgba(34, 197, 94, 0.1) 100%
+        )
       );
-      color: #4ade80;
+      color: var(--grav-alert-success-color-dark, #4ade80);
     }
     .modern-alert-icon-error .modern-alert-icon-circle {
-      background: linear-gradient(
+      background: var(
+        --grav-alert-error-bg-dark,
+        linear-gradient(
         135deg,
         rgba(239, 68, 68, 0.2) 0%,
         rgba(239, 68, 68, 0.1) 100%
+        )
       );
-      color: #f87171;
+      color: var(--grav-alert-error-color-dark, #f87171);
     }
     .modern-alert-icon-warning .modern-alert-icon-circle {
-      background: linear-gradient(
+      background: var(
+        --grav-alert-warning-bg-dark,
+        linear-gradient(
         135deg,
         rgba(245, 158, 11, 0.2) 0%,
         rgba(245, 158, 11, 0.1) 100%
+        )
       );
-      color: #fbbf24;
+      color: var(--grav-alert-warning-color-dark, #fbbf24);
     }
     .modern-alert-icon-info .modern-alert-icon-circle {
-      background: linear-gradient(
+      background: var(
+        --grav-alert-info-bg-dark,
+        linear-gradient(
         135deg,
         rgba(59, 130, 246, 0.2) 0%,
         rgba(59, 130, 246, 0.1) 100%
+        )
       );
-      color: #60a5fa;
+      color: var(--grav-alert-info-color-dark, #60a5fa);
     }
     .modern-alert-btn-cancel {
-      background: #27272a;
-      color: #e4e4e7;
+      background: var(--grav-alert-cancel-bg-dark, #27272a);
+      color: var(--grav-alert-cancel-color-dark, #e4e4e7);
     }
     .modern-alert-btn-cancel:hover {
-      background: #3f3f46;
+      background: var(--grav-alert-cancel-bg-hover-dark, #3f3f46);
     }
     .modern-alert-btn-confirm {
-      background: #fafafa;
-      color: #0f172a;
-      box-shadow: 0 4px 12px -2px rgba(255, 255, 255, 0.15);
+      background: var(--grav-alert-confirm-bg-dark, #fafafa);
+      color: var(--grav-alert-confirm-color-dark, #0f172a);
+      box-shadow: var(
+        --grav-alert-confirm-shadow-dark,
+        0 4px 12px -2px rgba(255, 255, 255, 0.15)
+      );
     }
     .modern-alert-btn-confirm:hover {
-      background: #e4e4e7;
+      background: var(--grav-alert-confirm-bg-hover-dark, #e4e4e7);
     }
   }
 </style>

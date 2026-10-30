@@ -26,6 +26,44 @@ Todo se exporta también desde `grav-svelte`. Los componentes importan su propia
 - **Colores y medidas:** variables CSS `--grav-*` en el contenedor (por ejemplo
   `--grav-crud-color-neutral`, `--grav-crud-color-bg`, `--grav-border-radius-md`,
   `--grav-font-family`). No son clases de Tailwind.
+- **Marca de una app:** se define solo con variables en el `:root` de su `app.css`, sin `!important`
+  ni reglas sobre las clases internas. Cada variable tiene su valor por defecto en el componente:
+  - Campos: `--grav-input-bg`, `-border-color`, `-border-color-hover`, `-border-color-focus`,
+    `-focus-ring`, `-radius`, `-textarea-radius`, `-padding-x`, `-padding-y`, `-textarea-padding-y`,
+    `-color`, `-font-size`, `-icon-color`, `-transition`, `-label-color`, `-label-font-size`,
+    `-label-float-color`, `-label-float-font-size`, `-label-float-font-weight`, `-label-float-x`,
+    `-label-float-y`, `-label-float-y-compact`, `-label-float-font-size-compact`,
+    `-date-label-font-size`.
+  - Select: usa las de campos para borde, fondo y foco, y además `--grav-select-radius`,
+    `-min-height`, `-padding`, `-label-color`, `-label-font-size`, `-label-font-weight`,
+    `-list-radius`, `-list-border`, `-list-shadow`, `-list-padding`, `-plus-radius`,
+    `-plus-border-color`.
+  - Casilla (`InputFormBool`): `--grav-check-size`, `-radius`, `-padding`, `-margin-right`, `-bg`,
+    `-bg-checked`, `-border-color`, `-border-color-checked`, `-color`, `-color-checked`.
+  - Modal: `--grav-modal-radius`, `-header-padding`, `-header-border-color`, `-footer-padding`,
+    `-footer-border-color`, `-title-font-size`, `-title-font-weight`, `-button-radius`,
+    `-button-padding`, `-button-font-family`, `-button-text-transform`, `-save-bg`, `-save-bg-hover`,
+    `-save-bg-disabled`, `-save-color`, `-save-shadow`, `-cancel-bg`, `-cancel-bg-hover`,
+    `-cancel-color`, `-cancel-color-hover`, `-cancel-border-color`, `-cancel-border-color-hover`.
+  - Sidebar: `--grav-sidebar-link-*` (`color`, `color-hover`, `bg-hover`, `font-size`, `font-weight`,
+    `padding`, `margin`, `radius`, `display`, `align-items`, `gap`, `width`, `text-transform`,
+    `transition`), `--grav-sidebar-icon-color`, `-icon-color-hover`, `--grav-sidebar-active-bg`,
+    `-active-color`, `-active-shadow`, `-active-icon-color`, `--grav-sidebar-brand-color`,
+    `-brand-font-size`, `-brand-padding` y `--grav-sidebar-logout-*` (`color`, `color-hover`,
+    `font-size`, `letter-spacing`, `padding`). La sección actual lleva `aria-current="page"`.
+  - CRUD: `--grav-crud-filters-bg`, `-filters-padding`, `-filters-shadow`, `-filters-margin-bottom`,
+    `-title-color`, `-title-font-size-mobile`, `-action-bg`, `-action-bg-hover`, `-action-color`,
+    `-action-border-color`, `-action-border-color-hover`, `-action-width`, `-action-transition`,
+    `-table-bg`, `-table-border`, `-table-container-radius`, `-table-margin-top`, `-table-overflow`,
+    `-header-bg`, `-header-shadow`, `-header-padding-y`, `-cell-padding-y`.
+  - Alertas y toasts: `--grav-alert-bg`, `-radius`, `-backdrop`, `-title-color`, `-message-color`,
+    `-button-radius`, `-cancel-bg`, `-cancel-bg-hover`, `-cancel-color`, `-confirm-bg`,
+    `-confirm-bg-hover`, `-confirm-color`, `-confirm-shadow`, `-confirm-shadow-hover`,
+    `-destructive-bg`, `-destructive-bg-hover`, `-destructive-shadow`, `-destructive-shadow-hover`;
+    por tipo (`success`, `error`, `warning`, `info`): `--grav-alert-<tipo>-bg`, `-color`, `-ring`,
+    `-shadow` y `--grav-alert-toast-<tipo>-color`; del toast: `--grav-alert-toast-radius`,
+    `-toast-close-color`, `-toast-close-color-hover`, `-toast-close-bg-hover`. En modo oscuro, la
+    misma variable con `-dark` al final.
 - **Textos:** los componentes no traen i18n; los textos visibles son props con valor por defecto
   y la app pasa los suyos.
 
